@@ -4,33 +4,50 @@ ESBOCO A MAO LIVRE - representacao inicial do produto
 Item D | Projeto de Produto e Processo | Poli-USP
 
 RODAR:  python desenhos/esboco.py
-SAIDA:  desenhos/esboco.svg  +  desenhos/preview.html
 
-Convencao de desenho tecnico - vistas ortograficas alinhadas, linhas de
-centro, cotas com linha de extensao e legenda - mas tracado a mao livre,
-porque e' esboco inicial.
+SAIDA (em desenhos/):
+    esboco.svg          folha inteira, para olhar no navegador
+    esboco.pdf          folha inteira, para \\includegraphics no LaTeX
+    fig-planta.pdf      cada vista sozinha, com sua propria legenda
+    fig-frontal.pdf
+    fig-lateral.pdf
+    fig-perspectiva.pdf
+    fig-detalhe.pdf
+    preview.html
+    incluir.tex         trecho pronto para colar no Overleaf
 
-As medidas NAO estao digitadas aqui: sao lidas de fusion/Antifurto.py, o
-mesmo arquivo que gera o CAD. Mudou la, muda aqui.
+DUAS COISAS QUE ESTE SCRIPT FAZ E VALE SABER
+--------------------------------------------
+1. Os ROTULOS SE POSICIONAM SOZINHOS. Voce so diz "anote este ponto com
+   este texto"; o script separa os rotulos em duas colunas (esquerda e
+   direita), ordena por altura e distribui sem sobreposicao, puxando a
+   linha de chamada ate cada um. E' o que impede o desenho de virar um
+   amontoado de setas cruzadas.
 
-Cada quadro registra tudo que desenha e o script confere no fim se algo
-vazou da moldura. Sem dependencia externa - so a biblioteca padrao.
+2. As COTAS VEM DO CAD. Nenhuma medida esta digitada aqui - todas sao
+   lidas de fusion/Antifurto.py. Mudou a carcaca la, o esboco acompanha.
+
+Sem dependencia externa: so a biblioteca padrao. O PDF e' escrito na mao.
 """
 
 import io
 import os
 import re
 import math
+import zlib
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 FONTE_CAD = os.path.join(RAIZ, 'fusion', 'Antifurto.py')
-SVG = os.path.join(AQUI, 'esboco.svg')
-HTML = os.path.join(AQUI, 'preview.html')
 
-TINTA, COTA, CENTRO = '#1b1b1b', '#1d6fa5', '#9aa0a6'
-DESTAQ, VERDE = '#b5341f', '#2f6b46'
-PAPEL, MOLDURA = '#fcfbf7', '#c9c4b8'
+TINTA, COTA, CENTRO = (0.10, 0.10, 0.10), (0.11, 0.44, 0.65), (0.60, 0.63, 0.65)
+DESTAQ, VERDE = (0.71, 0.20, 0.12), (0.18, 0.42, 0.27)
+CINZA, MOLDURA = (0.52, 0.52, 0.52), (0.79, 0.77, 0.72)
+PAPEL = (0.988, 0.984, 0.969)
+
+
+def hexcor(c):
+    return '#%02x%02x%02x' % tuple(int(round(v * 255)) for v in c)
 
 
 # ============================================================================
@@ -57,7 +74,7 @@ def _bloco(src, nome):
 def parametros():
     src = io.open(FONTE_CAD, encoding='utf-8').read()
     ns = {}
-    for nome in ('P', 'PAR', 'GARRA', 'PINO', 'TECIDO', 'CUR', 'BUCHA', 'UI', 'REC'):
+    for nome in ('P', 'PAR', 'GARRA', 'PINO', 'TECIDO', 'CUR', 'BUCHA', 'UI'):
         b = _bloco(src, nome)
         if not b:
             raise SystemExit('nao achei o bloco %s' % nome)
@@ -70,14 +87,23 @@ def parametros():
 
 
 # ============================================================================
-# LAPIS
+# TELA - guarda primitivas e depois emite SVG ou PDF
 # ============================================================================
 
-class Lapis:
-    def __init__(self, semente=20260909):
-        self.s = semente
-        self.out = []
+LARG_CHAR = 0.50    # largura media de caractere, em fracao do corpo
 
+
+def larg_txt(s, tam):
+    return len(s) * tam * LARG_CHAR
+
+
+class Tela:
+    def __init__(self, w, h, semente=20260909):
+        self.w, self.h = w, h
+        self.s = semente
+        self.prims = []
+
+    # ---- ruido reprodutivel ----
     def _r(self):
         self.s = (1103515245 * self.s + 12345) % 2147483648
         return self.s / 2147483648.0
@@ -99,19 +125,16 @@ class Lapis:
         r.append(pts[-1])
         return r
 
+    # ---- primitivas ----
     def path(self, pts, cor=TINTA, larg=1.6, fechar=False, duplo=True,
-             fill='none', op=1.0, tracejado=None, amp=1.0):
+             fill=None, op=1.0, tracejado=None, amp=1.0):
         if fechar:
             pts = list(pts) + [pts[0]]
-        dash = ' stroke-dasharray="%s"' % tracejado if tracejado else ''
         for i in range(2 if duplo else 1):
-            d = 'M ' + ' L '.join('%.1f %.1f' % p
-                                  for p in self._tremido(pts, amp if i == 0 else amp * 1.5))
-            self.out.append(
-                '<path d="%s" fill="%s" stroke="%s" stroke-width="%.2f"%s '
-                'stroke-linecap="round" stroke-linejoin="round" opacity="%.2f"/>'
-                % (d, fill if i == 0 else 'none', cor,
-                   larg if i == 0 else larg * 0.5, dash, op if i == 0 else op * 0.4))
+            self.prims.append(('p', self._tremido(pts, amp if i == 0 else amp * 1.5),
+                               cor, larg if i == 0 else larg * 0.5,
+                               fill if i == 0 else None,
+                               op if i == 0 else op * 0.4, tracejado))
 
     def reta(self, x1, y1, x2, y2, **k):
         self.path([(x1, y1), (x2, y2)], **k)
@@ -125,11 +148,24 @@ class Lapis:
                     cy + r * math.sin(2 * math.pi * i / n)) for i in range(n)],
                   fechar=True, **k)
 
-    def hach(self, pts, passo=8.0, cor='#8d8d8d', larg=0.8):
+    def txt(self, x, y, s, tam=12.0, cor=TINTA, anc='start', peso='normal'):
+        self.prims.append(('t', x, y, s, tam, cor, anc, peso))
+
+    def seta(self, x, y, ang, tam=6.5, cor=TINTA, larg=1.0):
+        for k in (+1, -1):
+            self.reta(x, y, x - tam * math.cos(ang + k * 0.4),
+                      y - tam * math.sin(ang + k * 0.4),
+                      cor=cor, larg=larg, duplo=False, amp=0.3)
+
+    def flecha(self, x1, y1, x2, y2, cor=TINTA, larg=1.4, tam=7.0):
+        self.reta(x1, y1, x2, y2, cor=cor, larg=larg, duplo=False, amp=0.6)
+        self.seta(x2, y2, math.atan2(y2 - y1, x2 - x1), tam, cor, larg)
+
+    def hach(self, pts, passo=8.0, cor=CINZA, larg=0.8):
         xs = [p[0] for p in pts]
         ys = [p[1] for p in pts]
         x0, x1, y0, y1 = min(xs), max(xs), min(ys), max(ys)
-        d = (math.cos(math.radians(45)), math.sin(math.radians(45)))
+        d = (0.7071, 0.7071)
         t = -(x1 - x0) - (y1 - y0)
         while t < (x1 - x0) + (y1 - y0):
             seg = self._corta(pts, (x0 + t, y0), d)
@@ -138,8 +174,7 @@ class Lapis:
             t += passo
 
     def _corta(self, poly, p0, d):
-        ts = []
-        n = len(poly)
+        ts, n = [], len(poly)
         for i in range(n):
             ax, ay = poly[i]
             bx, by = poly[(i + 1) % n]
@@ -159,53 +194,122 @@ class Lapis:
         return ((p0[0] + d[0] * a, p0[1] + d[1] * a),
                 (p0[0] + d[0] * b, p0[1] + d[1] * b))
 
-    def centro(self, x1, y1, x2, y2):
-        self.reta(x1, y1, x2, y2, cor=CENTRO, larg=0.9, duplo=False,
-                  tracejado='11 4 2 4', amp=0.35)
+    # ---- saida ----
+    def svg(self):
+        out = ['<rect width="%d" height="%d" fill="%s"/>' % (self.w, self.h, hexcor(PAPEL))]
+        for pr in self.prims:
+            if pr[0] == 'p':
+                _, pts, cor, larg, fill, op, tr = pr
+                d = 'M ' + ' L '.join('%.1f %.1f' % p for p in pts)
+                dash = ' stroke-dasharray="%s"' % tr if tr else ''
+                out.append('<path d="%s" fill="%s" stroke="%s" stroke-width="%.2f"%s '
+                           'stroke-linecap="round" stroke-linejoin="round" '
+                           'opacity="%.2f"/>'
+                           % (d, hexcor(fill) if fill else 'none', hexcor(cor),
+                              larg, dash, op))
+            else:
+                _, x, y, s, tam, cor, anc, peso = pr
+                out.append('<text x="%.1f" y="%.1f" font-size="%.1f" fill="%s" '
+                           'text-anchor="%s" font-weight="%s" font-family="Segoe Print, '
+                           'Bradley Hand, Comic Sans MS, Chalkboard, cursive">%s</text>'
+                           % (x, y, tam, hexcor(cor), anc, peso, _esc(s)))
+        return ('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" '
+                'viewBox="0 0 %d %d">%s</svg>'
+                % (self.w, self.h, self.w, self.h, ''.join(out)))
 
-    def txt(self, x, y, s, tam=12.5, cor=TINTA, anc='start', peso='normal', it=False):
-        self.out.append(
-            '<text x="%.1f" y="%.1f" font-size="%.1f" fill="%s" text-anchor="%s" '
-            'font-weight="%s" font-style="%s" transform="rotate(%.2f %.1f %.1f)" '
-            'font-family="Segoe Print, Bradley Hand, Comic Sans MS, Chalkboard, cursive">'
-            '%s</text>' % (x, y, tam, cor, anc, peso, 'italic' if it else 'normal',
-                           self._n(0.55), x, y, _esc(s)))
+    def pdf(self):
+        """PDF minimo, escrito na mao. Tracado igual; texto em Helvetica-Oblique,
+        que e' base-14 e nao precisa ser embutido."""
+        W, H = self.w, self.h
+        c = ['%.3f %.3f %.3f rg 0 0 %d %d re f' % (PAPEL + (W, H))]
+        c.append('1 J 1 j')
+        for pr in self.prims:
+            if pr[0] == 'p':
+                _, pts, cor, larg, fill, op, tr = pr
+                c.append('q')
+                if op < 0.999:
+                    c.append('/GS%d gs' % int(round(op * 100)))
+                c.append('%.3f %.3f %.3f RG %.2f w' % (cor + (larg,)))
+                if tr:
+                    c.append('[%s] 0 d' % tr.replace(' ', ' '))
+                if fill:
+                    c.append('%.3f %.3f %.3f rg' % fill)
+                c.append('%.2f %.2f m ' % (pts[0][0], H - pts[0][1])
+                         + ' '.join('%.2f %.2f l' % (p[0], H - p[1]) for p in pts[1:]))
+                c.append('B' if fill else 'S')
+                c.append('Q')
+            else:
+                _, x, y, s, tam, cor, anc, peso = pr
+                w = larg_txt(s, tam)
+                px = x - w if anc == 'end' else (x - w / 2 if anc == 'middle' else x)
+                fonte = 'F2' if peso == 'bold' else 'F1'
+                c.append('q %.3f %.3f %.3f rg BT /%s %.1f Tf %.2f %.2f Td (%s) Tj ET Q'
+                         % (cor + (fonte, tam, px, H - y, _pdftxt(s))))
+        stream = zlib.compress(('\n'.join(c)).encode('latin-1', 'replace'))
 
-    def seta(self, x, y, ang, tam=7.0, cor=TINTA, larg=1.1):
-        for s in (+1, -1):
-            self.reta(x, y, x - tam * math.cos(ang + s * 0.4),
-                      y - tam * math.sin(ang + s * 0.4),
-                      cor=cor, larg=larg, duplo=False, amp=0.35)
+        objs = []
+        objs.append('<</Type/Catalog/Pages 2 0 R>>')
+        objs.append('<</Type/Pages/Kids[3 0 R]/Count 1>>')
+        gs = ' '.join('/GS%d %d 0 R' % (i, 7 + n) for n, i in enumerate(range(10, 100, 10)))
+        objs.append('<</Type/Page/Parent 2 0 R/MediaBox[0 0 %d %d]/Resources<</Font<</F1 '
+                    '5 0 R/F2 6 0 R>>/ExtGState<<%s>>>>/Contents 4 0 R>>' % (W, H, gs))
+        objs.append(('<</Length %d/Filter/FlateDecode>>' % len(stream), stream))
+        objs.append('<</Type/Font/Subtype/Type1/BaseFont/Helvetica-Oblique>>')
+        objs.append('<</Type/Font/Subtype/Type1/BaseFont/Helvetica-BoldOblique>>')
+        for i in range(10, 100, 10):
+            objs.append('<</Type/ExtGState/ca %.2f/CA %.2f>>' % (i / 100.0, i / 100.0))
 
-    def flecha(self, x1, y1, x2, y2, cor=TINTA, larg=1.5, tam=8.0):
-        self.reta(x1, y1, x2, y2, cor=cor, larg=larg, duplo=False, amp=0.7)
-        self.seta(x2, y2, math.atan2(y2 - y1, x2 - x1), tam, cor, larg)
+        buf = bytearray(b'%PDF-1.4\n')
+        pos = []
+        for i, o in enumerate(objs, 1):
+            pos.append(len(buf))
+            if isinstance(o, tuple):
+                buf += ('%d 0 obj\n%s\nstream\n' % (i, o[0])).encode('latin-1')
+                buf += o[1] + b'\nendstream\nendobj\n'
+            else:
+                buf += ('%d 0 obj\n%s\nendobj\n' % (i, o)).encode('latin-1')
+        xref = len(buf)
+        buf += ('xref\n0 %d\n0000000000 65535 f \n' % (len(objs) + 1)).encode()
+        for p in pos:
+            buf += ('%010d 00000 n \n' % p).encode()
+        buf += ('trailer\n<</Size %d/Root 1 0 R>>\nstartxref\n%d\n%%%%EOF\n'
+                % (len(objs) + 1, xref)).encode()
+        return bytes(buf)
 
 
 def _esc(s):
     return s.replace('&', '&amp;').replace('<', '&lt;').replace('>', '&gt;')
 
 
+def _pdftxt(s):
+    s = (s.replace('\\', r'\\').replace('(', r'\(').replace(')', r'\)'))
+    return s.encode('latin-1', 'replace').decode('latin-1')
+
+
 # ============================================================================
-# QUADRO - cada vista com origem e escala proprias, em mm
+# QUADRO - vista com origem e escala proprias, em mm, e rotulos automaticos
 # ============================================================================
 
 class Quadro:
-    def __init__(self, L, x, y, w, h, titulo, cx_mm=0.0, cy_mm=0.0, esc=1.0,
-                 ox=0.5, oy=0.5):
-        self.L, self.x, self.y, self.w, self.h = L, x, y, w, h
-        self.esc = esc
-        self.px, self.py = x + w * ox, y + h * oy
-        self.cx_mm, self.cy_mm = cx_mm, cy_mm
+    def __init__(self, T, x, y, w, h, titulo, cy_mm=0.0, esc=1.0, oy=0.5,
+                 col_esq=112, col_dir=112):
+        self.T, self.x, self.y, self.w, self.h = T, x, y, w, h
+        self.esc, self.cy_mm = esc, cy_mm
+        self.col_esq, self.col_dir = col_esq, col_dir
+        # a area de desenho fica entre as duas colunas de rotulo
+        self.dx0 = x + col_esq
+        self.dx1 = x + w - col_dir
+        self.px = (self.dx0 + self.dx1) / 2.0
+        self.py = y + h * oy
+        self.notas = []
         self.marcas = []
-        L.ret(x, y, w, h, cor=MOLDURA, larg=1.1, duplo=False, amp=0.5)
-        L.txt(x + 14, y + 25, titulo, tam=15, peso='bold')
-        L.reta(x + 14, y + 32, x + 14 + len(titulo) * 7.2, y + 32,
-               cor='#d9a520', larg=2.4, duplo=False, amp=0.5)
+        T.ret(x, y, w, h, cor=MOLDURA, larg=1.1, duplo=False, amp=0.5)
+        T.txt(x + 14, y + 24, titulo, tam=14, peso='bold')
+        T.reta(x + 14, y + 31, x + 14 + larg_txt(titulo, 14), y + 31,
+               cor=(0.85, 0.65, 0.13), larg=2.2, duplo=False, amp=0.5)
 
     def p(self, xm, ym):
-        """mm -> pixel. +Y do modelo aponta para CIMA na folha."""
-        px = self.px + (xm - self.cx_mm) * self.esc
+        px = self.px + xm * self.esc
         py = self.py - (ym - self.cy_mm) * self.esc
         self.marcas.append((px, py))
         return px, py
@@ -214,15 +318,48 @@ class Quadro:
         self.marcas.append((px, py))
         return px, py
 
-    def rotulo(self, px, py, s, tam=12, **k):
-        anc = k.get('anc', 'start')
-        w = len(s) * tam * 0.5
-        esq = px - w if anc == 'end' else (px - w / 2 if anc == 'middle' else px)
-        self.reg(esq, py - tam)
-        self.reg(esq + w, py + 3)
-        self.L.txt(px, py, s, tam=tam, **k)
+    # ---- rotulos automaticos ----
+    def nota(self, xm, ym, texto, lado=None, cor=TINTA):
+        """Anota um ponto. A posicao do texto e' resolvida depois, em coluna."""
+        px, py = self.p(xm, ym)
+        if lado is None:
+            lado = 'dir' if px >= self.px else 'esq'
+        self.notas.append([px, py, texto, cor, lado])
 
-    def vazou(self, folga=8.0):
+    def resolver(self, topo=None, base=None, passo=17.0):
+        """Distribui os rotulos em duas colunas, sem sobreposicao, mantendo
+        a ordem vertical dos pontos anotados."""
+        T = self.T
+        y0 = topo if topo is not None else self.y + 46
+        y1 = base if base is not None else self.y + self.h - 12
+        for lado in ('esq', 'dir'):
+            itens = [n for n in self.notas if n[4] == lado]
+            if not itens:
+                continue
+            itens.sort(key=lambda n: n[1])
+            n = len(itens)
+            alt = min(passo, (y1 - y0) / n) if n > 1 else 0
+            alt = max(alt, 15.0)
+            total = alt * (n - 1)
+            centro = sum(i[1] for i in itens) / float(n)
+            ini = min(max(centro - total / 2.0, y0), y1 - total)
+            for k, (px, py, txt, cor, _) in enumerate(itens):
+                ly = ini + k * alt
+                if lado == 'esq':
+                    lx = self.x + 10
+                    anc, ponta = 'start', lx + larg_txt(txt, 11.5) + 5
+                else:
+                    lx = self.x + self.w - 10
+                    anc, ponta = 'end', lx - larg_txt(txt, 11.5) - 5
+                T.circ(px, py, 1.9, cor=CINZA, larg=0.8, duplo=False)
+                T.path([(px, py), (ponta, ly - 3)], cor=CINZA, larg=0.8,
+                       duplo=False, op=0.85, amp=0.6)
+                T.txt(lx, ly, txt, tam=11.5, cor=cor, anc=anc)
+                self.reg(lx if anc == 'start' else lx - larg_txt(txt, 11.5), ly - 11)
+                self.reg(lx + larg_txt(txt, 11.5) if anc == 'start' else lx, ly + 3)
+        self.notas = []
+
+    def vazou(self, folga=6.0):
         if not self.marcas:
             return None
         xs = [m[0] for m in self.marcas]
@@ -232,52 +369,46 @@ class Quadro:
             v.append('esq %.0f' % (self.x + folga - min(xs)))
         if max(xs) > self.x + self.w - folga:
             v.append('dir %.0f' % (max(xs) - self.x - self.w + folga))
-        if min(ys) < self.y + 40:
-            v.append('topo %.0f' % (self.y + 40 - min(ys)))
+        if min(ys) < self.y + 36:
+            v.append('topo %.0f' % (self.y + 36 - min(ys)))
         if max(ys) > self.y + self.h - folga:
             v.append('baixo %.0f' % (max(ys) - self.y - self.h + folga))
         return ', '.join(v) if v else None
 
     # ---- cotas ----
-    def cota_h(self, x1m, x2m, ym, rot, fora=26.0):
-        L = self.L
+    def cota_h(self, x1m, x2m, ym, rot, fora=24.0):
+        T = self.T
         a, b = self.p(x1m, ym), self.p(x2m, ym)
         yl = a[1] - fora
+        s = 1 if fora > 0 else -1
         self.reg(a[0], yl); self.reg(b[0], yl)
         for px in (a[0], b[0]):
-            L.reta(px, a[1] - 4 * (1 if fora > 0 else -1), px, yl - 4 * (1 if fora > 0 else -1),
-                   cor=COTA, larg=0.7, duplo=False, op=0.7, amp=0.3)
-        L.reta(a[0], yl, b[0], yl, cor=COTA, larg=1.0, duplo=False, amp=0.45)
-        L.seta(a[0], yl, math.pi, 6.5, COTA, 1.0)
-        L.seta(b[0], yl, 0.0, 6.5, COTA, 1.0)
-        self.rotulo((a[0] + b[0]) / 2, yl - 7 if fora > 0 else yl + 15, rot,
-                    tam=12, cor=COTA, anc='middle')
+            T.reta(px, a[1] - 4 * s, px, yl - 4 * s, cor=COTA, larg=0.7,
+                   duplo=False, op=0.7, amp=0.3)
+        T.reta(a[0], yl, b[0], yl, cor=COTA, larg=1.0, duplo=False, amp=0.45)
+        T.seta(a[0], yl, math.pi, 6.0, COTA, 1.0)
+        T.seta(b[0], yl, 0.0, 6.0, COTA, 1.0)
+        ty = yl - 6 if fora > 0 else yl + 14
+        T.txt((a[0] + b[0]) / 2, ty, rot, tam=11.5, cor=COTA, anc='middle')
+        self.reg((a[0] + b[0]) / 2, ty - 11)
 
-    def cota_v(self, y1m, y2m, xm, rot, fora=26.0):
-        L = self.L
+    def cota_v(self, y1m, y2m, xm, rot, fora=24.0):
+        T = self.T
         a, b = self.p(xm, y1m), self.p(xm, y2m)
         xl = a[0] + fora
         s = 1 if fora > 0 else -1
         self.reg(xl, a[1]); self.reg(xl, b[1])
         for py in (a[1], b[1]):
-            L.reta(a[0] + 4 * s, py, xl + 4 * s, py,
-                   cor=COTA, larg=0.7, duplo=False, op=0.7, amp=0.3)
-        L.reta(xl, a[1], xl, b[1], cor=COTA, larg=1.0, duplo=False, amp=0.45)
-        L.seta(xl, a[1], math.pi / 2, 6.5, COTA, 1.0)
-        L.seta(xl, b[1], -math.pi / 2, 6.5, COTA, 1.0)
-        self.rotulo(xl + 7 * s, (a[1] + b[1]) / 2 + 4, rot, tam=12, cor=COTA,
-                    anc='start' if s > 0 else 'end')
-
-    def chamada(self, xm, ym, dx, dy, txt, cor=TINTA, anc='start'):
-        L = self.L
-        a = self.p(xm, ym)
-        b = (a[0] + dx, a[1] + dy)
-        self.reg(*b)
-        L.reta(a[0], a[1], b[0], b[1], cor='#7a7a7a', larg=0.8, duplo=False,
-               op=0.85, amp=0.5)
-        L.circ(a[0], a[1], 2.0, cor='#7a7a7a', larg=0.8, duplo=False)
-        self.rotulo(b[0] + (4 if anc == 'start' else -4), b[1] + 4, txt,
-                    tam=11.5, cor=cor, anc=anc)
+            T.reta(a[0] + 4 * s, py, xl + 4 * s, py, cor=COTA, larg=0.7,
+                   duplo=False, op=0.7, amp=0.3)
+        T.reta(xl, a[1], xl, b[1], cor=COTA, larg=1.0, duplo=False, amp=0.45)
+        T.seta(xl, a[1], math.pi / 2, 6.0, COTA, 1.0)
+        T.seta(xl, b[1], -math.pi / 2, 6.0, COTA, 1.0)
+        tx = xl + 6 * s
+        T.txt(tx, (a[1] + b[1]) / 2 + 4, rot, tam=11.5, cor=COTA,
+              anc='start' if s > 0 else 'end')
+        self.reg(tx + (larg_txt(rot, 11.5) if s > 0 else -larg_txt(rot, 11.5)),
+                 (a[1] + b[1]) / 2)
 
 
 # ============================================================================
@@ -285,18 +416,19 @@ class Quadro:
 # ============================================================================
 
 def planta(Q, ns):
-    L, P, UI, FUROS, PAR = Q.L, ns['P'], ns['UI'], ns['FUROS'], ns['PAR']
+    T, P, UI, FUROS, PAR = Q.T, ns['P'], ns['UI'], ns['FUROS'], ns['PAR']
     a, b = P['larg'] / 2, P['prof'] / 2
-
-    L.path([Q.p(-a, -b), Q.p(a, -b), Q.p(a, b), Q.p(-a, b)], fechar=True, larg=2.0)
-    L.path([Q.p(-a + 2.4, -b + 2.4), Q.p(a - 2.4, -b + 2.4),
+    T.path([Q.p(-a, -b), Q.p(a, -b), Q.p(a, b), Q.p(-a, b)], fechar=True, larg=2.0)
+    T.path([Q.p(-a + 2.4, -b + 2.4), Q.p(a - 2.4, -b + 2.4),
             Q.p(a - 2.4, b - 2.4), Q.p(-a + 2.4, b - 2.4)],
-           fechar=True, cor='#a8a8a8', larg=0.8, duplo=False)
-    L.centro(*(Q.p(-a - 7, 0) + Q.p(a + 7, 0)))
-    L.centro(*(Q.p(0, -b - 7) + Q.p(0, b + 7)))
+           fechar=True, cor=(0.66, 0.66, 0.66), larg=0.8, duplo=False)
+    T.reta(*(Q.p(-a - 6, 0) + Q.p(a + 6, 0)), cor=CENTRO, larg=0.9,
+           duplo=False, tracejado='11 4 2 4', amp=0.3)
+    T.reta(*(Q.p(0, -b - 6) + Q.p(0, b + 6)), cor=CENTRO, larg=0.9,
+           duplo=False, tracejado='11 4 2 4', amp=0.3)
 
     qw, qh, qx, qy = UI['qr']
-    L.path([Q.p(qx - qw / 2, qy - qh / 2), Q.p(qx + qw / 2, qy - qh / 2),
+    T.path([Q.p(qx - qw / 2, qy - qh / 2), Q.p(qx + qw / 2, qy - qh / 2),
             Q.p(qx + qw / 2, qy + qh / 2), Q.p(qx - qw / 2, qy + qh / 2)],
            fechar=True, larg=1.5)
     for i in range(5):
@@ -305,270 +437,363 @@ def planta(Q, ns):
                 x0, y0 = qx - qw / 2 + i * qw / 5, qy - qh / 2 + j * qh / 5
                 p1 = Q.p(x0 + 0.6, y0 + 0.6)
                 p2 = Q.p(x0 + qw / 5 - 0.6, y0 + qh / 5 - 0.6)
-                L.path([p1, (p2[0], p1[1]), p2, (p1[0], p2[1])], fechar=True,
-                       cor='#2b2b2b', larg=0.6, duplo=False, fill='#2b2b2b', op=0.8)
-    Q.chamada(qx, qy + qh / 2, 4, -34, 'QR impresso')
-    Q.chamada(qx, qy + qh / 2, 4, -20, '(o celular le este)')
+                T.path([p1, (p2[0], p1[1]), p2, (p1[0], p2[1])], fechar=True,
+                       cor=(0.17, 0.17, 0.17), larg=0.6, duplo=False,
+                       fill=(0.17, 0.17, 0.17), op=0.8)
+    Q.nota(qx - qw / 2, qy + qh / 2, 'QR impresso - o celular le', lado='esq')
 
     lx, ly = UI['xy_led']
     pl = Q.p(lx, ly)
-    L.circ(pl[0], pl[1], UI['furo_led'] * Q.esc / 2, larg=1.5)
-    Q.chamada(lx, ly, -18, 32, 'LED vermelho/verde', anc='end')
+    T.circ(pl[0], pl[1], UI['furo_led'] * Q.esc / 2, larg=1.5)
+    Q.nota(lx, ly, 'LED vermelho / verde', lado='esq')
 
     bx, by = UI['xy_botao']
     pb = Q.p(bx, by)
-    L.circ(pb[0], pb[1], UI['furo_botao'] * Q.esc / 2, larg=2.0)
-    L.circ(pb[0], pb[1], UI['furo_botao'] * Q.esc / 2 - 4, cor='#8d8d8d',
+    T.circ(pb[0], pb[1], UI['furo_botao'] * Q.esc / 2, larg=2.0)
+    T.circ(pb[0], pb[1], UI['furo_botao'] * Q.esc / 2 - 4, cor=CINZA,
            larg=0.9, duplo=False)
-    Q.chamada(bx, by, 26, 26, 'BOTAO')
+    Q.nota(bx, by, 'botao de liberacao', lado='dir')
 
     for fx, fy in FUROS:
         pf = Q.p(fx, fy)
-        L.circ(pf[0], pf[1], PAR['d_cabeca'] * Q.esc / 2, larg=1.2)
-        L.reta(pf[0] - 4, pf[1], pf[0] + 4, pf[1], larg=0.9, duplo=False, amp=0.4)
-    Q.chamada(FUROS[1][0], FUROS[1][1], 6, 26, '4x M2 c/ inserto', anc='end')
+        T.circ(pf[0], pf[1], PAR['d_cabeca'] * Q.esc / 2, larg=1.2)
+        T.reta(pf[0] - 4, pf[1], pf[0] + 4, pf[1], larg=0.9, duplo=False, amp=0.4)
+    Q.nota(FUROS[1][0], FUROS[1][1], '4x M2 com inserto', lado='dir')
 
-    Q.cota_h(-a, a, b, 'L = %.0f' % P['larg'], fora=30)
-    Q.cota_v(-b, b, a, 'P = %.0f' % P['prof'], fora=16)
-    Q.cota_h(qx - qw / 2, qx + qw / 2, qy - qh / 2, '%.0f' % qw, fora=-18)
+    Q.cota_h(-a, a, b, 'L = %.0f' % P['larg'], fora=28)
+    Q.cota_v(-b, b, a, 'P = %.0f' % P['prof'], fora=20)
+    Q.cota_h(qx - qw / 2, qx + qw / 2, qy - qh / 2, '%.0f' % qw, fora=-16)
+    Q.resolver()
 
 
 def frontal(Q, ns):
-    L, P, PINO, TEC, GAR = Q.L, ns['P'], ns['PINO'], ns['TECIDO'], ns['GARRA']
+    T, P, PINO, TEC, GAR = Q.T, ns['P'], ns['PINO'], ns['TECIDO'], ns['GARRA']
     a, H, zs, t = P['larg'] / 2, P['alt'], P['z_split'], P['t_parede']
-
-    L.path([Q.p(-a, zs), Q.p(a, zs), Q.p(a, H), Q.p(-a, H)], fechar=True, larg=1.9)
-    L.path([Q.p(-a, 0), Q.p(a, 0), Q.p(a, zs), Q.p(-a, zs)], fechar=True, larg=1.9)
-    Q.rotulo(*(Q.p(-a + 3, H - 5) + ('carcaca superior',)), tam=10.5, cor='#666666')
-    Q.rotulo(*(Q.p(-a + 3, 3) + ('carcaca inferior',)), tam=10.5, cor='#666666')
+    T.path([Q.p(-a, zs), Q.p(a, zs), Q.p(a, H), Q.p(-a, H)], fechar=True, larg=1.9)
+    T.path([Q.p(-a, 0), Q.p(a, 0), Q.p(a, zs), Q.p(-a, zs)], fechar=True, larg=1.9)
+    Q.nota(-a + 6, (zs + H) / 2, 'carcaca superior', lado='esq', cor=CINZA)
+    Q.nota(-a + 6, zs / 2, 'carcaca inferior', lado='esq', cor=CINZA)
 
     te = TEC['esp'] * 3.5
     tw = P['larg'] * 0.84
     quad = [Q.p(-tw / 2, 0), Q.p(tw / 2, 0), Q.p(tw / 2, -te), Q.p(-tw / 2, -te)]
-    L.path(quad, fechar=True, larg=1.6, cor=DESTAQ)
-    L.hach(quad, passo=9, cor=DESTAQ, larg=1.0)
-    Q.chamada(-tw / 2 + 8, -te / 2, -8, 24, 'A CAMISA', cor=DESTAQ, anc='end')
+    T.path(quad, fechar=True, larg=1.6, cor=DESTAQ)
+    T.hach(quad, passo=9, cor=DESTAQ, larg=1.0)
+    Q.nota(-tw / 2 + 10, -te / 2, 'A CAMISA ENTRA AQUI', lado='esq', cor=DESTAQ)
 
     dw, dh = PINO['d_cabeca'], PINO['t_cabeca'] * 3.5
     disco = [Q.p(-dw / 2, -te), Q.p(dw / 2, -te), Q.p(dw / 2, -te - dh),
              Q.p(-dw / 2, -te - dh)]
-    L.path(disco, fechar=True, larg=1.7)
-    L.hach(disco, passo=6)
-    Q.chamada(dw / 2, -te - dh / 2, 30, 20, 'disco do pino')
+    T.path(disco, fechar=True, larg=1.7)
+    T.hach(disco, passo=6)
+    Q.nota(dw / 2, -te - dh / 2, 'disco do pino, por baixo', lado='dir')
 
     hw = PINO['d_haste'] * 1.8
-    L.path([Q.p(-hw / 2, -te), Q.p(hw / 2, -te), Q.p(hw / 2, PINO['h_haste'] - te),
+    T.path([Q.p(-hw / 2, -te), Q.p(hw / 2, -te), Q.p(hw / 2, PINO['h_haste'] - te),
             Q.p(-hw / 2, PINO['h_haste'] - te)], fechar=True, larg=1.5)
+    Q.nota(hw / 2, PINO['h_haste'] / 2, 'haste atravessa o tecido', lado='dir')
 
     gw, gh = GAR['diam'], GAR['alt']
-    L.path([Q.p(-gw / 2, t), Q.p(gw / 2, t), Q.p(gw / 2, t + gh), Q.p(-gw / 2, t + gh)],
+    T.path([Q.p(-gw / 2, t), Q.p(gw / 2, t), Q.p(gw / 2, t + gh), Q.p(-gw / 2, t + gh)],
            fechar=True, larg=1.5, cor=VERDE)
-    Q.chamada(-gw / 2, t + gh / 2, -40, 14, 'garra', cor=VERDE, anc='end')
+    Q.nota(-gw / 2, t + gh / 2, 'garra', lado='esq', cor=VERDE)
 
-    L.centro(*(Q.p(0, -te - dh - 5) + Q.p(0, H + 5)))
-    Q.cota_v(0, H, a, 'A = %.0f' % H, fora=14)
+    T.reta(*(Q.p(0, -te - dh - 5) + Q.p(0, H + 5)), cor=CENTRO, larg=0.9,
+           duplo=False, tracejado='11 4 2 4', amp=0.3)
+    Q.cota_v(0, H, a, 'A = %.0f' % H, fora=16)
+    Q.resolver()
 
 
 def lateral(Q, ns):
-    L, P, GAR, BU, CU = Q.L, ns['P'], ns['GARRA'], ns['BUCHA'], ns['CUR']
+    T, P, GAR, BU, CU = Q.T, ns['P'], ns['GARRA'], ns['BUCHA'], ns['CUR']
     b, H, zs, t = P['prof'] / 2, P['alt'], P['z_split'], P['t_parede']
     gy = ns['XY_GARRA'][1]
-
-    L.path([Q.p(-b, zs), Q.p(b, zs), Q.p(b, H), Q.p(-b, H)], fechar=True, larg=1.9)
-    L.path([Q.p(-b, 0), Q.p(b, 0), Q.p(b, zs), Q.p(-b, zs)], fechar=True, larg=1.9)
-
-    L.path([Q.p(gy - GAR['diam'] / 2, t), Q.p(gy + GAR['diam'] / 2, t),
+    T.path([Q.p(-b, zs), Q.p(b, zs), Q.p(b, H), Q.p(-b, H)], fechar=True, larg=1.9)
+    T.path([Q.p(-b, 0), Q.p(b, 0), Q.p(b, zs), Q.p(-b, zs)], fechar=True, larg=1.9)
+    T.path([Q.p(gy - GAR['diam'] / 2, t), Q.p(gy + GAR['diam'] / 2, t),
             Q.p(gy + GAR['diam'] / 2, t + GAR['alt']),
             Q.p(gy - GAR['diam'] / 2, t + GAR['alt'])], fechar=True, larg=1.4, cor=VERDE)
+    Q.nota(gy - GAR['diam'] / 2, t + GAR['alt'] / 2, 'garra', lado='esq', cor=VERDE)
     zc = t + GAR['alt'] + BU['alt']
-    L.path([Q.p(gy - CU['prof'] / 2, zc), Q.p(gy + CU['prof'] / 2, zc),
+    T.path([Q.p(gy - CU['prof'] / 2, zc), Q.p(gy + CU['prof'] / 2, zc),
             Q.p(gy + CU['prof'] / 2, zc + CU['t_fino'] + GAR['curso']),
             Q.p(gy - CU['prof'] / 2, zc + CU['t_fino'])], fechar=True, larg=1.4, cor=COTA)
-    Q.chamada(gy + CU['prof'] / 2, zc + 1, 18, -22, 'cursor', cor=COTA)
-    L.centro(*(Q.p(gy, -5) + Q.p(gy, H + 5)))
-    Q.cota_h(-b, b, H, 'P = %.0f' % P['prof'], fora=28)
+    Q.nota(gy + CU['prof'] / 2, zc + 2, 'cursor com rampa', lado='dir', cor=COTA)
+    T.reta(*(Q.p(gy, -5) + Q.p(gy, H + 5)), cor=CENTRO, larg=0.9,
+           duplo=False, tracejado='11 4 2 4', amp=0.3)
+    Q.cota_h(-b, b, H, 'P = %.0f' % P['prof'], fora=26)
+    Q.resolver()
 
 
 def perspectiva(Q, ns):
-    L, P, UI = Q.L, ns['P'], ns['UI']
+    T, P, UI = Q.T, ns['P'], ns['UI']
     a, b, h = P['larg'] / 2, P['prof'] / 2, P['alt']
-    ca, sa = math.cos(math.radians(30)), math.sin(math.radians(30))
+    ca, sa = 0.866, 0.5
 
     def iso(x, y, z):
         return Q.reg(Q.px + (x - y) * ca * Q.esc,
                      Q.py - ((x + y) * sa - z * 1.2) * Q.esc)
 
-    L.path([iso(-a, -b, h), iso(a, -b, h), iso(a, b, h), iso(-a, b, h)],
+    T.path([iso(-a, -b, h), iso(a, -b, h), iso(a, b, h), iso(-a, b, h)],
            fechar=True, larg=1.9)
     for sx, sy in ((a, -b), (a, b), (-a, b)):
-        L.reta(*(iso(sx, sy, h) + iso(sx, sy, 0)), larg=1.7)
-    L.path([iso(a, -b, 0), iso(a, b, 0), iso(-a, b, 0)], larg=1.7)
+        T.reta(*(iso(sx, sy, h) + iso(sx, sy, 0)), larg=1.7)
+    T.path([iso(a, -b, 0), iso(a, b, 0), iso(-a, b, 0)], larg=1.7)
 
     qw, qh, qx, qy = UI['qr']
-    L.path([iso(qx - qw / 2, qy - qh / 2, h), iso(qx + qw / 2, qy - qh / 2, h),
+    T.path([iso(qx - qw / 2, qy - qh / 2, h), iso(qx + qw / 2, qy - qh / 2, h),
             iso(qx + qw / 2, qy + qh / 2, h), iso(qx - qw / 2, qy + qh / 2, h)],
            fechar=True, larg=1.3)
     for i in range(4):
         for j in range(4):
             if (i + j * 3) % 3 < 2:
                 x0, y0 = qx - qw / 2 + i * qw / 4, qy - qh / 2 + j * qh / 4
-                L.path([iso(x0 + 1, y0 + 1, h), iso(x0 + qw / 4 - 1, y0 + 1, h),
+                T.path([iso(x0 + 1, y0 + 1, h), iso(x0 + qw / 4 - 1, y0 + 1, h),
                         iso(x0 + qw / 4 - 1, y0 + qh / 4 - 1, h),
                         iso(x0 + 1, y0 + qh / 4 - 1, h)], fechar=True,
-                       cor='#2b2b2b', larg=0.5, duplo=False, fill='#2b2b2b', op=0.75)
-
-    pbt = iso(*UI['xy_botao'], h)
-    L.circ(pbt[0], pbt[1], UI['furo_botao'] * Q.esc / 2, larg=1.8)
-    pl = iso(*UI['xy_led'], h)
-    L.circ(pl[0], pl[1], UI['furo_led'] * Q.esc / 2, larg=1.4)
-    Q.rotulo(Q.x + Q.w / 2, Q.y + Q.h - 18,
-             'a peca fica pendurada por baixo, presa pelo pino',
-             tam=11.5, cor='#666666', anc='middle', it=True)
+                       cor=(0.17, 0.17, 0.17), larg=0.5, duplo=False,
+                       fill=(0.17, 0.17, 0.17), op=0.75)
+    pbt = iso(UI['xy_botao'][0], UI['xy_botao'][1], h)
+    T.circ(pbt[0], pbt[1], UI['furo_botao'] * Q.esc / 2, larg=1.8)
+    pl = iso(UI['xy_led'][0], UI['xy_led'][1], h)
+    T.circ(pl[0], pl[1], UI['furo_led'] * Q.esc / 2, larg=1.4)
+    s = 'a peca fica pendurada por baixo, presa pelo pino'
+    T.txt(Q.x + Q.w / 2, Q.y + Q.h - 16, s, tam=11, cor=CINZA, anc='middle')
+    Q.reg(Q.x + Q.w / 2 - larg_txt(s, 11) / 2, Q.y + Q.h - 26)
+    Q.reg(Q.x + Q.w / 2 + larg_txt(s, 11) / 2, Q.y + Q.h - 13)
 
 
 def detalhe(Q, ns):
-    L, GAR = Q.L, ns['GARRA']
+    T, GAR = Q.T, ns['GARRA']
     E = Q.esc
-
-    L.path([Q.p(-16, 20), Q.p(-9, -1), Q.p(9, -1), Q.p(16, 20)], larg=1.8)
-    Q.chamada(-13, 16, -22, -14, 'copo conico', anc='end')
+    T.path([Q.p(-16, 20), Q.p(-9, -1), Q.p(9, -1), Q.p(16, 20)], larg=1.8)
+    Q.nota(-13, 14, 'copo conico', lado='esq')
     for dx in (-6, 0, 6):
         pc = Q.p(dx, 5)
-        L.circ(pc[0], pc[1], 3.1 * E, larg=1.5)
-    Q.chamada(14, 7, 22, -20, '3 esferas de aco')
-    L.path([Q.p(-8, -1), Q.p(8, -1), Q.p(8, 5), Q.p(-8, 5)], fechar=True,
-           larg=1.6, cor='#8a5a1a')
-    Q.chamada(8, 1, 30, 36, 'carretel')
-
+        T.circ(pc[0], pc[1], 3.1 * E, larg=1.5)
+    Q.nota(9, 7, '3 esferas de aco', lado='dir')
+    T.path([Q.p(-8, -1), Q.p(8, -1), Q.p(8, 5), Q.p(-8, 5)], fechar=True,
+           larg=1.6, cor=(0.54, 0.35, 0.10))
+    Q.nota(8, 2, 'carretel', lado='dir', cor=(0.54, 0.35, 0.10))
     mx = -21
     pts = [Q.p(mx, 6)]
     for i in range(8):
         pts.append(Q.p(mx + (2.2 if i % 2 == 0 else -2.2), 6 + (i + 1) * 1.6))
-    L.path(pts, larg=1.2, duplo=False)
-    Q.chamada(mx, 16, -16, 20, 'mola', anc='end')
-
-    L.path([Q.p(-6, -7), Q.p(6, -7), Q.p(6, -1), Q.p(-6, -1)], fechar=True,
+    T.path(pts, larg=1.2, duplo=False)
+    Q.nota(mx, 14, 'mola', lado='esq')
+    T.path([Q.p(-6, -7), Q.p(6, -7), Q.p(6, -1), Q.p(-6, -1)], fechar=True,
            larg=1.6, cor=COTA)
-    L.path([Q.p(-30, -16), Q.p(16, -16), Q.p(16, -9), Q.p(-20, -9)],
+    Q.nota(-6, -4, 'bucha', lado='esq', cor=COTA)
+    T.path([Q.p(-30, -16), Q.p(16, -16), Q.p(16, -9), Q.p(-20, -9)],
            fechar=True, larg=1.7, cor=COTA)
-    Q.chamada(-30, -13, -8, 22, 'cursor com rampa', cor=COTA, anc='end')
-    Q.chamada(6, -4, 34, 12, 'bucha', cor=COTA)
-
-    p1, p2 = Q.p(31, -12), Q.p(18, -12)
-    L.flecha(p1[0], p1[1], p2[0], p2[1], cor=DESTAQ, larg=2.1)
-    Q.chamada(31, -12, 2, -16, 'o atuador empurra', cor=DESTAQ)
-
+    Q.nota(-28, -13, 'cursor com rampa', lado='esq', cor=COTA)
+    p1, p2 = Q.p(30, -12), Q.p(18, -12)
+    T.flecha(p1[0], p1[1], p2[0], p2[1], cor=DESTAQ, larg=2.0)
+    Q.nota(30, -12, 'o atuador empurra', lado='dir', cor=DESTAQ)
     pa, pb = Q.p(11, -7), Q.p(11, -1)
-    L.flecha(pa[0], pa[1], pb[0], pb[1], cor=DESTAQ, larg=2.0, tam=6)
-    Q.rotulo(pa[0] + 7, (pa[1] + pb[1]) / 2 + 4, '%.1f mm' % GAR['curso'],
-             tam=11.5, cor=DESTAQ)
-
-    y = Q.y + Q.h - 56
-    for i, (s, cor, peso) in enumerate([
-            ('A rampa converte o curso do atuador em %.1f mm de queda.' % GAR['curso'],
-             TINTA, 'normal'),
-            ('As esferas ganham folga no cone e o pino sai.', TINTA, 'normal'),
-            ('Nao ha ima aqui - o movimento e mecanico.', DESTAQ, 'bold')]):
-        Q.rotulo(Q.x + 16, y + i * 18, s, tam=11.5, cor=cor, peso=peso)
+    T.flecha(pa[0], pa[1], pb[0], pb[1], cor=DESTAQ, larg=1.9, tam=6)
+    Q.nota(11, -4, '%.1f mm de queda' % GAR['curso'], lado='dir', cor=DESTAQ)
+    Q.resolver(base=Q.y + Q.h - 66)
+    y = Q.y + Q.h - 50
+    for i, (s, cor) in enumerate([
+            ('A rampa converte o curso do atuador em %.1f mm.' % GAR['curso'], TINTA),
+            ('As esferas ganham folga no cone e o pino sai.', TINTA),
+            ('Nao ha ima aqui - o movimento e mecanico.', DESTAQ)]):
+        T.txt(Q.x + 14, y + i * 16, s, tam=11, cor=cor)
+        Q.reg(Q.x + 14 + larg_txt(s, 11), y + i * 16)
 
 
 def fluxo(Q):
-    L = Q.L
+    T = Q.T
     passos = ['1   aponta o celular no QR impresso',
               '2   paga no app',
               '3   o app manda o token por Bluetooth',
               '4   o LED passa de vermelho a VERDE',
               '5   aperta o botao e a camisa solta']
-    y = Q.y + 66
+    y = Q.y + 60
     for s in passos:
-        Q.rotulo(Q.x + 22, y, s, tam=12.5)
-        y += 28
-    Q.rotulo(Q.x + 22, y + 10, 'Sem internet na hora de liberar:', tam=11.5, cor=VERDE)
-    Q.rotulo(Q.x + 22, y + 26, 'o token ja esta no celular.', tam=11.5, cor=VERDE)
+        T.txt(Q.x + 20, y, s, tam=12)
+        Q.reg(Q.x + 20 + larg_txt(s, 12), y)
+        y += 26
+    for i, s in enumerate(['Sem internet na hora de liberar:',
+                           'o token ja esta no celular.']):
+        T.txt(Q.x + 20, y + 8 + i * 15, s, tam=11, cor=VERDE)
+        Q.reg(Q.x + 20 + larg_txt(s, 11), y + 8 + i * 15)
 
 
-def legenda(L, ns, x, y, w, h):
-    L.ret(x, y, w, h, cor=MOLDURA, larg=1.1, duplo=False, amp=0.5)
-    L.reta(x, y + 30, x + w, y + 30, cor=MOLDURA, larg=0.9, duplo=False, amp=0.4)
-    L.txt(x + 14, y + 21, 'Tag&Go - etiqueta antifurto autoliberavel',
-          tam=13.5, peso='bold')
-    yy = y + 50
+def legenda(T, ns, x, y, w, h):
+    T.ret(x, y, w, h, cor=MOLDURA, larg=1.1, duplo=False, amp=0.5)
+    T.reta(x, y + 28, x + w, y + 28, cor=MOLDURA, larg=0.9, duplo=False, amp=0.4)
+    T.txt(x + 14, y + 20, 'Tag&Go - etiqueta antifurto autoliberavel',
+          tam=13, peso='bold')
+    yy = y + 47
     for k, v in (('desenho', 'esboco inicial, a mao livre'),
                  ('cotas', 'em milimetros, sem escala'),
                  ('mecanismo', str(ns.get('MECANISMO', '?'))),
                  ('origem das cotas', 'fusion/Antifurto.py')):
-        L.txt(x + 14, yy, k, tam=11, cor='#8d8d8d')
-        L.txt(x + 138, yy, v, tam=11.5)
-        yy += 19
+        T.txt(x + 14, yy, k, tam=10.5, cor=CINZA)
+        T.txt(x + 136, yy, v, tam=11)
+        yy += 18
 
 
 # ============================================================================
-# FOLHA
+# FOLHAS
 # ============================================================================
+
+def folha_completa(ns):
+    W, H = 1440, 1000
+    T = Tela(W, H)
+    T.ret(18, 18, W - 36, H - 36, cor=MOLDURA, larg=1.4, duplo=False, amp=0.6)
+    T.txt(44, 60, 'Esboco inicial do produto', tam=24, peso='bold')
+    T.reta(44, 70, 370, 70, cor=(0.85, 0.65, 0.13), larg=3.0, duplo=False)
+    T.txt(44, 90, 'Etiqueta antifurto que o proprio cliente libera depois de pagar.',
+          tam=13, cor=(0.33, 0.33, 0.33))
+    T.txt(W - 44, 60, 'Projeto de Produto e Processo | Poli-USP',
+          tam=12, anc='end', cor=(0.47, 0.47, 0.47))
+
+    P = ns['P']
+    qs = []
+    q = Quadro(T, 40, 108, 470, 462, 'A) planta', esc=3.2, oy=0.55,
+               col_esq=118, col_dir=104)
+    planta(q, ns); qs.append(('A planta', q))
+    q = Quadro(T, 40, 584, 470, 250, 'B) frontal - onde entra a camisa',
+               esc=3.0, cy_mm=P['alt'] / 2, oy=0.56, col_esq=126, col_dir=118)
+    frontal(q, ns); qs.append(('B frontal', q))
+    q = Quadro(T, 526, 584, 392, 250, 'C) lateral', esc=2.6,
+               cy_mm=P['alt'] / 2, oy=0.56, col_esq=52, col_dir=92)
+    lateral(q, ns); qs.append(('C lateral', q))
+    q = Quadro(T, 526, 108, 392, 462, 'D) perspectiva', esc=1.8, oy=0.48,
+               col_esq=10, col_dir=10)
+    perspectiva(q, ns); qs.append(('D perspectiva', q))
+    q = Quadro(T, 934, 108, 466, 462, 'E) detalhe - como a garra solta',
+               esc=3.4, oy=0.40, col_esq=108, col_dir=118)
+    detalhe(q, ns); qs.append(('E detalhe', q))
+    q = Quadro(T, 934, 584, 466, 250, 'F) fluxo de uso', col_esq=10, col_dir=10)
+    fluxo(q); qs.append(('F fluxo', q))
+
+    legenda(T, ns, 40, 848, 878, 116)
+    for i, s in enumerate(['medidas em milimetros',
+                           'tracado a mao livre - representacao inicial',
+                           'gerado por desenhos/esboco.py']):
+        T.txt(934, 868 + i * 19, s, tam=11, cor=(0.62, 0.62, 0.62))
+    return T, qs
+
+
+def folha_solta(ns, qual):
+    """Uma vista por folha, para entrar no LaTeX como figura propria."""
+    conf = {
+        'planta':      (560, 470, 'Planta', planta, dict(esc=3.4, oy=0.55,
+                                                         col_esq=126, col_dir=112)),
+        'frontal':     (560, 340, 'Vista frontal - onde entra a camisa', frontal,
+                        dict(esc=3.2, oy=0.56, col_esq=134, col_dir=126)),
+        'lateral':     (470, 300, 'Vista lateral', lateral,
+                        dict(esc=2.8, oy=0.56, col_esq=56, col_dir=100)),
+        'perspectiva': (470, 380, 'Perspectiva', perspectiva,
+                        dict(esc=2.0, oy=0.50, col_esq=10, col_dir=10)),
+        'detalhe':     (560, 430, 'Detalhe - como a garra solta', detalhe,
+                        dict(esc=3.6, oy=0.40, col_esq=118, col_dir=126)),
+    }
+    W, H, titulo, fn, kw = conf[qual]
+    T = Tela(W, H)
+    if qual in ('frontal', 'lateral'):
+        kw['cy_mm'] = ns['P']['alt'] / 2
+    q = Quadro(T, 8, 8, W - 16, H - 16, titulo, **kw)
+    if qual == 'perspectiva':
+        fn(q, ns)
+    else:
+        fn(q, ns)
+    return T, q
+
+
+TEX = r"""% ---------------------------------------------------------------
+% Esbocos gerados por desenhos/esboco.py - cole onde couber.
+% Os PDFs ficam em desenhos/. No Overleaf, o \graphicspath do
+% preambulo ja aponta para imagens/, entao ou copie os PDFs para
+% imagens/ ou use o caminho completo, como abaixo.
+% ---------------------------------------------------------------
+
+\begin{figure}[h!]
+    \centering
+    \caption{Esboco inicial do produto: vistas, detalhe do mecanismo e fluxo de uso}
+    \includegraphics[width=\textwidth]{desenhos/esboco.pdf}
+    \label{fig:proposta-esboco-geral}
+    \source{Autor}
+\end{figure}
+
+\begin{figure}[h!]
+    \caption{Vistas do dispositivo}
+    \begin{subfigure}{0.48\textwidth}
+        \includegraphics[width=0.95\textwidth]{desenhos/fig-planta.pdf}
+        \caption{Planta}
+        \label{fig:proposta-planta}
+    \end{subfigure}%
+    \begin{subfigure}{0.48\textwidth}
+        \includegraphics[width=0.95\textwidth]{desenhos/fig-perspectiva.pdf}
+        \caption{Perspectiva}
+        \label{fig:proposta-perspectiva}
+    \end{subfigure}
+    \begin{subfigure}{0.48\textwidth}
+        \includegraphics[width=0.95\textwidth]{desenhos/fig-frontal.pdf}
+        \caption{Vista frontal, mostrando onde a peca de roupa e presa}
+        \label{fig:proposta-frontal}
+    \end{subfigure}%
+    \begin{subfigure}{0.48\textwidth}
+        \includegraphics[width=0.95\textwidth]{desenhos/fig-lateral.pdf}
+        \caption{Vista lateral}
+        \label{fig:proposta-lateral}
+    \end{subfigure}
+    \label{fig:proposta-vistas}
+    \source{Autor}
+\end{figure}
+
+\begin{figure}[h!]
+    \centering
+    \caption{Detalhe do mecanismo de destravamento}
+    \includegraphics[width=0.8\textwidth]{desenhos/fig-detalhe.pdf}
+    \label{fig:proposta-detalhe}
+    \source{Autor}
+\end{figure}
+"""
+
 
 def gerar():
     ns = parametros()
-    W, H = 1400, 990
-    L = Lapis()
-    L.out.append('<rect width="%d" height="%d" fill="%s"/>' % (W, H, PAPEL))
-    L.ret(18, 18, W - 36, H - 36, cor=MOLDURA, larg=1.4, duplo=False, amp=0.6)
-    L.txt(44, 62, 'Esboco inicial do produto', tam=26, peso='bold')
-    L.reta(44, 72, 400, 72, cor='#d9a520', larg=3.0, duplo=False)
-    L.txt(44, 92, 'Etiqueta antifurto que o proprio cliente libera depois de pagar.',
-          tam=13.5, cor='#555555')
-    L.txt(W - 44, 62, 'Projeto de Produto e Processo | Poli-USP',
-          tam=12.5, anc='end', cor='#777777')
+    saidas = []
 
-    P = ns['P']
-    E = 3.4
-    qs = []
-
-    q = Quadro(L, 40, 112, 470, 452, 'A) planta', esc=E, oy=0.56)
-    planta(q, ns); qs.append(('A planta', q))
-
-    q = Quadro(L, 40, 578, 470, 250, 'B) frontal - onde entra a camisa',
-               esc=E, cy_mm=P['alt'] / 2, oy=0.56)
-    frontal(q, ns); qs.append(('B frontal', q))
-
-    q = Quadro(L, 526, 578, 372, 250, 'C) lateral', esc=E,
-               cy_mm=P['alt'] / 2, oy=0.56)
-    lateral(q, ns); qs.append(('C lateral', q))
-
-    q = Quadro(L, 526, 112, 372, 452, 'D) perspectiva', esc=1.75, oy=0.50)
-    perspectiva(q, ns); qs.append(('D perspectiva', q))
-
-    q = Quadro(L, 914, 112, 446, 452, 'E) detalhe - como a garra solta',
-               esc=3.6, oy=0.44)
-    detalhe(q, ns); qs.append(('E detalhe', q))
-
-    q = Quadro(L, 914, 578, 446, 250, 'F) fluxo de uso')
-    fluxo(q); qs.append(('F fluxo', q))
-
-    legenda(L, ns, 40, 842, 858, 118)
-    L.txt(914, 862, 'medidas em milimetros', tam=11.5, cor='#9d9d9d')
-    L.txt(914, 882, 'tracado a mao livre - representacao inicial', tam=11.5, cor='#9d9d9d')
-    L.txt(914, 902, 'gerado por desenhos/esboco.py', tam=11.5, cor='#9d9d9d')
-
-    svg = ('<svg xmlns="http://www.w3.org/2000/svg" width="%d" height="%d" '
-           'viewBox="0 0 %d %d">%s</svg>' % (W, H, W, H, ''.join(L.out)))
-    io.open(SVG, 'w', encoding='utf-8').write(svg)
-    io.open(HTML, 'w', encoding='utf-8').write(
+    T, qs = folha_completa(ns)
+    io.open(os.path.join(AQUI, 'esboco.svg'), 'w', encoding='utf-8').write(T.svg())
+    io.open(os.path.join(AQUI, 'esboco.pdf'), 'wb').write(T.pdf())
+    io.open(os.path.join(AQUI, 'preview.html'), 'w', encoding='utf-8').write(
         '<body style="margin:0;background:#e9e6de;padding:12px">'
-        + svg.replace('<svg ', '<svg style="width:100%;height:auto;display:block;'
-                               'box-shadow:0 2px 18px rgba(0,0,0,.18)" ', 1)
+        + T.svg().replace('<svg ', '<svg style="width:100%;height:auto;display:block;'
+                                   'box-shadow:0 2px 18px rgba(0,0,0,.18)" ', 1)
         + '</body>')
-    return qs, len(svg)
+    saidas += ['esboco.svg', 'esboco.pdf', 'preview.html']
+
+    for qual in ('planta', 'frontal', 'lateral', 'perspectiva', 'detalhe'):
+        Ts, q = folha_solta(ns, qual)
+        nome = 'fig-%s' % qual
+        io.open(os.path.join(AQUI, nome + '.pdf'), 'wb').write(Ts.pdf())
+        io.open(os.path.join(AQUI, nome + '.svg'), 'w', encoding='utf-8').write(Ts.svg())
+        qs.append((nome, q))
+        saidas.append(nome + '.pdf')
+
+    io.open(os.path.join(AQUI, 'incluir.tex'), 'w', encoding='utf-8').write(TEX)
+    saidas.append('incluir.tex')
+    return qs, saidas
 
 
 if __name__ == '__main__':
-    qs, n = gerar()
-    print('esboco: %s  (%.0f KB)' % (SVG, n / 1024.0))
+    qs, saidas = gerar()
+    print('arquivos gerados em desenhos/:')
+    for s in saidas:
+        print('   ' + s)
     print()
-    print('vazamento por quadro:')
+    print('conferencia - conteudo que passa da moldura:')
     ruim = 0
     for nome, q in qs:
         v = q.vazou()
-        print('  %-15s %s' % (nome, v if v else 'ok'))
+        print('   %-16s %s' % (nome, v if v else 'ok'))
         if v:
             ruim += 1
     print()
