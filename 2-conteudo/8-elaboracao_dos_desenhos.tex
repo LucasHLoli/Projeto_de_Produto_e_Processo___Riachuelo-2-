@@ -1,16 +1,7 @@
 \section{Elaboração dos desenhos}
 \label{sec:elaboracao_desenhos}
 
-Com os requisitos técnicos e as especificações-meta já estabelecidos na Seção~\ref{sec:definicao_requisitos}, tornou-se possível produzir uma primeira representação do produto. O objetivo desta etapa não é especificar a solução definitiva, mas dar forma ao conceito de maneira suficientemente concreta para que decisões de arranjo, de volume e de sequência de uso possam ser discutidas pela equipe antes que se invista esforço em modelagem detalhada ou em fabricação.
-
-O esquema à mão livre cumpre três funções nesta fase. A primeira é obrigar o projetista a assumir um arranjo. Enquanto o produto existe apenas como lista de requisitos, componentes que disputam o mesmo espaço nunca entram em conflito, e o problema permanece invisível. A segunda é tornar comunicável para todo o grupo aquilo que estava disperso em anotações individuais. A terceira, talvez a mais útil, é expor as perguntas ainda sem resposta, que passam a aparecer como lacunas do desenho em vez de omissões silenciosas.
-
-Os desenhos apresentados nesta seção foram gerados de forma paramétrica, a partir do mesmo conjunto de medidas que alimenta o modelo tridimensional do produto. Qualquer alteração dimensional decidida pela equipe é refletida simultaneamente no modelo e nas representações aqui apresentadas, o que evita a divergência entre desenho e projeto que costuma surgir quando as duas representações são mantidas manualmente.
-
-\subsection{Esquema à mão livre}
-\label{subsec:esquema_mao_livre}
-
-A Figura~\ref{fig:esboco-mao-livre} apresenta o esquema inicial do produto em três vistas, propositalmente reduzido à forma, sem cotas nem anotações. A intenção é permitir que a proporção geral e a relação entre as partes sejam avaliadas antes que a atenção se desloque para os números.
+Definidos os requisitos técnicos na Seção~\ref{sec:definicao_requisitos}, elaborou-se a representação inicial do produto. A Figura~\ref{fig:esboco-mao-livre} apresenta o esquema à mão livre em três vistas, reduzido à forma, sem cotas nem anotações.
 
 \begin{figure}[H]
     \centering
@@ -20,94 +11,28 @@ A Figura~\ref{fig:esboco-mao-livre} apresenta o esquema inicial do produto em tr
     \source{Autoria Própria}
 \end{figure}
 
-O produto é um dispositivo antifurto rígido, preso à peça de roupa da mesma maneira que as etiquetas hoje utilizadas no varejo de vestuário, porém dotado de eletrônica própria, que permite ao consumidor liberá-lo por conta própria após a confirmação do pagamento. Suas dimensões externas são de 98\,mm por 82\,mm por 26\,mm.
+O produto é um dispositivo antifurto rígido, de 98\,mm por 82\,mm por 26\,mm, preso à peça de roupa da mesma maneira que as etiquetas hoje utilizadas no varejo. Sua face superior concentra os três elementos de interação com o cliente: um código gráfico impresso, um indicador luminoso e um botão. As dimensões são maiores que as de uma etiqueta convencional porque o dispositivo incorpora bateria, controle e mecanismo de acionamento, isto é, as funções que hoje cabem ao operador do caixa.
 
-Esse volume é superior ao das etiquetas convencionais, e convém tratar o assunto diretamente. A etiqueta usual é um objeto puramente mecânico, ao passo que o dispositivo proposto incorpora funções que hoje são executadas pelo operador do caixa, o que exige bateria, controle e mecanismo de acionamento. O acréscimo de tamanho é, portanto, consequência assumida do conceito, e não descuido de projeto. O esquema permite verificar que, mesmo assim, o dispositivo continua compatível com o manuseio em arara e com a operação por uma única pessoa.
+\subsection{Funcionamento}
+\label{subsec:funcionamento}
 
-\subsection{Vistas cotadas}
-\label{subsec:vistas_cotadas}
+A peça de roupa é presa por uma haste metálica que atravessa o tecido e penetra o corpo do dispositivo, onde fica retida por um mecanismo de garra. O tecido permanece prensado entre a face inferior do dispositivo e o disco da haste, sem perfuração adicional, adesivo ou costura. É o mesmo princípio das etiquetas convencionais, o que preserva a compatibilidade com a operação de loja já existente.
 
-Definida a forma, as Figuras~\ref{fig:esboco-planta} a~\ref{fig:esboco-lateral} retomam as mesmas vistas com as medidas principais indicadas.
-
-\begin{figure}[H]
-    \caption{Vistas cotadas do dispositivo}
-    \begin{subfigure}{0.48\textwidth}
-        \includegraphics[width=0.95\textwidth]{esboco/fig-planta.pdf}
-        \caption{Planta}
-        \label{fig:esboco-planta}
-    \end{subfigure}%
-    \begin{subfigure}{0.48\textwidth}
-        \includegraphics[width=0.95\textwidth]{esboco/fig-perspectiva.pdf}
-        \caption{Perspectiva}
-        \label{fig:esboco-perspectiva}
-    \end{subfigure}
-    \begin{subfigure}{0.48\textwidth}
-        \includegraphics[width=0.95\textwidth]{esboco/fig-frontal.pdf}
-        \caption{Vista frontal em corte}
-        \label{fig:esboco-frontal}
-    \end{subfigure}%
-    \begin{subfigure}{0.48\textwidth}
-        \includegraphics[width=0.95\textwidth]{esboco/fig-lateral.pdf}
-        \caption{Vista lateral}
-        \label{fig:esboco-lateral}
-    \end{subfigure}
-    \label{fig:esboco-vistas}
-    \source{Autoria Própria}
-\end{figure}
-
-\paragraph{Interface com o usuário}
-\label{par:interface_usuario}
-
-A planta reúne, em uma única face, todos os elementos com os quais o consumidor interage. Essa concentração responde à necessidade de interação simples e intuitiva identificada na pesquisa, evitando que a tecnologia se converta em nova fonte de dificuldade, sobretudo para o perfil de cliente com menor autonomia.
-
-São apenas três elementos. O primeiro é um código gráfico impresso, com 28\,mm de lado, rebaixado meio milímetro em relação à superfície para reduzir o desgaste causado pelo atrito na arara e no manuseio. O segundo é um indicador luminoso, cuja função é comunicar o estado da autorização por meio de uma transição de vermelho para verde. O terceiro é um botão de acionamento, dimensionado para ser operado com um dedo e sem exigência de precisão.
-
-A opção por um indicador cromático, em lugar de mensagens escritas, atende a duas restrições ao mesmo tempo. Reduz a dependência de leitura, o que amplia a acessibilidade da solução, e dispensa a inclusão de um mostrador, preservando espaço interno e autonomia de bateria.
-
-\paragraph{Fixação à peça de roupa}
-\label{par:fixacao_peca}
-
-A vista frontal em corte, apresentada na Figura~\ref{fig:esboco-frontal}, esclarece o aspecto do produto que mais gera dúvida quando descrito apenas em palavras, que é a maneira como a peça de roupa fica presa.
-
-O tecido é atravessado por uma haste metálica que parte de um disco posicionado sob ele e penetra o corpo do dispositivo por um orifício na face inferior. No interior, essa haste é retida por um mecanismo de garra. O tecido permanece prensado entre a face inferior do dispositivo e o disco da haste, sem qualquer perfuração adicional, adesivo ou costura. É o mesmo princípio empregado nas etiquetas antifurto convencionais, o que preserva a compatibilidade com os procedimentos já adotados na operação de loja.
-
-Essa continuidade não é acidental. A adoção de uma solução por uma rede varejista tende a ser tanto mais provável quanto menor for a alteração exigida nos processos existentes. Manter o princípio de fixação elimina a necessidade de requalificar a equipe responsável por aplicar as etiquetas nas peças, o que reduz uma barreira relevante à implantação.
-
-\subsection{Detalhe do mecanismo de liberação}
-\label{subsec:detalhe_mecanismo}
-
-A Figura~\ref{fig:esboco-detalhe} apresenta em escala ampliada o mecanismo responsável por liberar a haste após a autorização, que é o elemento central do conceito e também o de maior exigência técnica.
+A retenção funciona como uma embreagem de esferas, detalhada na Figura~\ref{fig:esboco-detalhe}. Três esferas de aço são comprimidas contra a haste por um copo cônico, e quanto maior a força aplicada para extraí-la, mais firme fica a retenção. Liberar a haste exige deslocar o carretel contra a mola que o sustenta. Nas etiquetas convencionais quem faz isso é o destravador magnético do caixa; aqui, um atuador interno movimenta um cursor com rampa, que converte seu deslocamento horizontal em 1,2\,mm de deslocamento vertical aplicado ao carretel.
 
 \begin{figure}[H]
     \centering
-    \caption{Detalhe ampliado do mecanismo de liberação}
-    \includegraphics[width=0.85\textwidth]{esboco/fig-detalhe.pdf}
+    \caption{Detalhe do mecanismo de liberação}
+    \includegraphics[width=0.8\textwidth]{esboco/fig-detalhe.pdf}
     \label{fig:esboco-detalhe}
     \source{Autoria Própria}
 \end{figure}
 
-O princípio de retenção é o de uma embreagem de esferas. Três esferas de aço alojam-se em um copo de parede cônica, e uma mola desloca o carretel que as sustenta em direção à porção estreita do cone. Quanto maior a força aplicada para extrair a haste, mais as esferas são comprimidas contra ela. O mecanismo, portanto, autobloqueia-se sob tração, e é essa característica que confere às etiquetas convencionais sua resistência ao arrancamento.
+Como o acionamento passa a ser mecânico, e não magnético, abre-se a possibilidade de tornar o dispositivo imune ao destravador comercial, hoje vendido livremente. Isso depende de substituir o carretel por peça não ferromagnética, alteração ainda em avaliação.
 
-Liberar a haste exige deslocar o carretel contra a mola, aliviando a compressão das esferas. Nas etiquetas convencionais, esse deslocamento é obtido por um destravador magnético operado pelo funcionário do caixa. No dispositivo proposto, o mesmo deslocamento é produzido internamente. Um atuador movimenta um cursor dotado de rampa, que converte o movimento horizontal do atuador em um deslocamento vertical de 1,2\,mm aplicado ao carretel por meio de uma bucha.
+\subsection{Processo de uso}
+\label{subsec:processo_uso}
 
-Duas consequências dessa arquitetura merecem registro. A primeira é que o acionamento passa a ser inteiramente mecânico, sem participação de campo magnético. Isso abre a possibilidade de tornar o dispositivo imune ao destravador magnético comercial, que hoje é vendido livremente e representa o vetor de furto mais acessível. Tal imunidade, contudo, depende de substituir o carretel por peça não ferromagnética, alteração ainda não incorporada ao desenho e registrada entre as pendências da Subseção~\ref{subsec:esboco_pendencias}.
+O consumidor lê o código impresso com o celular, realiza o pagamento no aplicativo e leva a peça ao dispositivo, que recebe a autorização diretamente do aparelho. O indicador passa de vermelho a verde e o botão libera a peça. Como a autorização trafega entre o celular e o dispositivo, sem passar pela rede da loja no momento da liberação, eventual queda de conexão após o pagamento não impede a conclusão da compra.
 
-A segunda consequência diz respeito ao requisito de tempo entre a confirmação do pagamento e a liberação da etiqueta, que a Seção~\ref{sec:definicao_requisitos} apontou como o de maior importância técnica do produto. O mecanismo aqui representado é justamente aquele que deverá cumprir essa especificação-meta. A razão de transmissão da rampa constitui o parâmetro de projeto que determina, ao mesmo tempo, o tempo de acionamento e a força disponível para vencer a mola, de modo que os dois aspectos não podem ser tratados isoladamente.
-
-\subsection{Sequência de uso}
-\label{subsec:sequencia_uso}
-
-A sequência prevista para o consumidor compõe-se de cinco passos. O primeiro é a leitura do código impresso pelo aparelho celular. O segundo é a realização do pagamento no aplicativo. O terceiro é a transmissão da autorização ao dispositivo. O quarto é a alteração do indicador luminoso para verde. O quinto é o acionamento do botão, com a consequente liberação da peça.
-
-Representar essa sequência junto às vistas do produto foi uma decisão deliberada. Ela permite verificar que cada elemento físico desenhado possui função identificável no fluxo de uso e, no sentido inverso, que nenhum passo do fluxo depende de elemento ausente do desenho. Essa verificação cruzada entre forma e função é um dos propósitos do esboço nesta fase.
-
-Cabe destacar que a transmissão da autorização ocorre diretamente entre o aparelho celular e o dispositivo, sem intermediação da rede da loja no momento da liberação. A característica atende à necessidade de confiabilidade percebida identificada na pesquisa, pois eventual indisponibilidade de conexão posterior à confirmação do pagamento não impede que o consumidor conclua a operação.
-
-\subsection{Considerações e pendências}
-\label{subsec:esboco_pendencias}
-
-O esboço consolida as decisões de arranjo já tomadas e registra, com igual clareza, aquilo que permanece em aberto. Explicitar essas pendências é parte do propósito da representação inicial, e não uma deficiência dela.
-
-Três conjuntos de definições dependem de verificação experimental. O primeiro refere-se às características do mecanismo de garra, cujas dimensões e força de mola foram adotadas a partir de valores de referência e deverão ser substituídas por medições realizadas sobre exemplares comerciais. O segundo refere-se à seleção do atuador, para a qual foram identificadas alternativas distintas cujo desempenho depende justamente daqueles parâmetros. O terceiro refere-se à substituição do carretel por material não ferromagnético, discutida na Subseção~\ref{subsec:detalhe_mecanismo}, cuja viabilidade depende de verificar se a capacidade de retenção se mantém.
-
-Registra-se, por fim, que o dimensionamento apresentado corresponde a um protótipo funcional, e não a um produto destinado à produção em escala. A versão industrial admitiria envelope reduzido, mediante integração dos componentes eletrônicos em placa dedicada e substituição da união parafusada por encaixes obtidos diretamente no processo de moldagem. Essa distinção entre a representação do conceito e a especificação para manufatura é usual nesta etapa e será retomada quando da definição do processo de fabricação.
+As dimensões do mecanismo de garra e a escolha do atuador ainda dependem de medições sobre exemplares comerciais, e serão consolidadas na etapa de prototipagem.
