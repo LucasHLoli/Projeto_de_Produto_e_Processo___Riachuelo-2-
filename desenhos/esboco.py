@@ -72,17 +72,27 @@ def _bloco(src, nome):
 
 
 def parametros():
+    """Le os parametros de Antifurto.py. A ordem importa: XY_ATUADOR depende
+    de XY_GARRA, de MEC e de Y_FRENTE_CURSOR, entao os escalares vem antes."""
     src = io.open(FONTE_CAD, encoding='utf-8').read()
-    ns = {}
-    for nome in ('P', 'PAR', 'GARRA', 'PINO', 'TECIDO', 'CUR', 'BUCHA', 'UI'):
+    ns = {'math': math}
+    for nome in ('MM', 'MU', 'MECANISMO', 'XY_GARRA'):
+        m = re.search(r'^%s\s*= .*$' % nome, src, re.M)
+        if m:
+            exec(m.group(0), ns)
+    for nome in ('P', 'PAR', 'GARRA', 'PINO', 'TECIDO', 'CUR', 'BUCHA',
+                 'UI', 'COMP', 'POS', 'MEC'):
         b = _bloco(src, nome)
         if not b:
             raise SystemExit('nao achei o bloco %s' % nome)
         exec(b, ns)
-    for nome in ('FUROS', 'XY_GARRA', 'MECANISMO'):
+    for nome in ('FUROS', 'Y_FRENTE_CURSOR'):
         m = re.search(r'^%s\s*= .*$' % nome, src, re.M)
         if m:
             exec(m.group(0), ns)
+    b = _bloco(src, 'XY_ATUADOR')
+    if b:
+        exec(b, ns)
     return ns
 
 
