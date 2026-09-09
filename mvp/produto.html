@@ -1,0 +1,423 @@
+<title>Tag&amp;Go Etiqueta Viva</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+
+<style>
+:root{
+  --paper:#F4F6F9;      --card:#FFFFFF;      --sunk:#EAEEF3;
+  --ink:#12151C;        --ink-2:#454E5C;     --ink-3:#79838F;
+  --line:#D9E0E8;       --line-2:#C3CDD8;
+  --amber:#A8500B;      --amber-soft:#FBEEDF;  --amber-line:#E8C79B;
+  --go:#12703F;         --go-soft:#DFF3E7;     --go-line:#9CCFB4;
+  --stop:#A2231D;       --stop-soft:#FBE6E4;
+  --steel:#3E4A5A;
+  --shadow:0 1px 2px rgba(18,21,28,.05), 0 8px 24px -12px rgba(18,21,28,.18);
+  color-scheme:light;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --paper:#0D1015;    --card:#161B22;      --sunk:#1D242D;
+    --ink:#EDF1F6;      --ink-2:#AEB9C6;     --ink-3:#77828F;
+    --line:#262F3A;     --line-2:#374252;
+    --amber:#E9A25C;    --amber-soft:#2A1E11;  --amber-line:#4E3银;
+    --amber-line:#4E3richtig;
+    --go:#5FCE94;       --go-soft:#0F2419;     --go-line:#2A5540;
+    --stop:#F08B84;     --stop-soft:#2A1513;
+    --steel:#93A3B6;
+    --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#0D1015;    --card:#161B22;      --sunk:#1D242D;
+  --ink:#EDF1F6;      --ink-2:#AEB9C6;     --ink-3:#77828F;
+  --line:#262F3A;     --line-2:#374252;
+  --amber:#E9A25C;    --amber-soft:#2A1E11;  --amber-line:#4E3A22;
+  --go:#5FCE94;       --go-soft:#0F2419;     --go-line:#2A5540;
+  --stop:#F08B84;     --stop-soft:#2A1513;
+  --steel:#93A3B6;
+  --shadow:0 1px 2px rgba(0,0,0,.4), 0 10px 28px -14px rgba(0,0,0,.7);
+  color-scheme:dark;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){ --amber-line:#4E3A22; }
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:"IBM Plex Sans",system-ui,-apple-system,Segoe UI,sans-serif;
+  font-size:15px; line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:452px; margin:0 auto; padding:18px 16px 56px; display:flex; flex-direction:column; gap:16px}
+
+/* ---- topo ---- */
+.top{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.mark{display:flex; align-items:baseline; gap:2px; font-family:Archivo,sans-serif; font-weight:700; font-size:20px; letter-spacing:-.02em}
+.mark .amp{color:var(--amber)}
+.chip{
+  font-family:"IBM Plex Mono",monospace; font-size:10px; font-weight:500;
+  text-transform:uppercase; letter-spacing:.09em;
+  color:var(--amber); background:var(--amber-soft);
+  border:1px solid var(--amber-line); border-radius:3px; padding:4px 7px; white-space:nowrap;
+}
+
+/* ---- cartao do produto ---- */
+.card{background:var(--card); border:1px solid var(--line); border-radius:12px; box-shadow:var(--shadow); overflow:hidden}
+.art{background:var(--sunk); border-bottom:1px solid var(--line); display:block; width:100%; height:auto}
+.body{padding:18px; display:flex; flex-direction:column; gap:14px}
+.eyebrow{font-family:"IBM Plex Mono",monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-3)}
+h1{font-family:Archivo,sans-serif; font-weight:600; font-size:23px; line-height:1.18; letter-spacing:-.015em; margin:2px 0 0; text-wrap:balance}
+.price{font-family:Archivo,sans-serif; font-weight:700; font-size:30px; letter-spacing:-.02em; font-variant-numeric:tabular-nums}
+.price small{font-size:14px; font-weight:500; color:var(--ink-3); margin-right:3px}
+
+.specs{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:8px; overflow:hidden}
+.spec{background:var(--card); padding:9px 10px}
+.spec dt{font-size:10px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-3); margin:0 0 2px}
+.spec dd{margin:0; font-weight:500; font-size:13px}
+
+/* ---- painel da etiqueta ---- */
+.tagpanel{border:1px solid var(--line); border-radius:10px; background:var(--sunk); padding:12px 13px; display:flex; flex-direction:column; gap:9px}
+.tagrow{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.tagrow .k{font-size:11px; text-transform:uppercase; letter-spacing:.07em; color:var(--ink-3)}
+.mono{font-family:"IBM Plex Mono",monospace; font-size:12.5px; font-weight:500; letter-spacing:.01em}
+.state{display:inline-flex; align-items:center; gap:6px; font-size:12px; font-weight:600; padding:3px 9px; border-radius:20px; border:1px solid}
+.state.locked{color:var(--amber); background:var(--amber-soft); border-color:var(--amber-line)}
+.state.paid{color:var(--go); background:var(--go-soft); border-color:var(--go-line)}
+.dot{width:6px; height:6px; border-radius:50%; background:currentColor; flex:none}
+.dot.live{animation:pulse 1.7s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.35}}
+@media (prefers-reduced-motion:reduce){ .dot.live{animation:none} }
+
+/* ---- acao ---- */
+button{font:inherit; cursor:pointer}
+.pay{
+  width:100%; border:none; border-radius:9px; padding:15px;
+  background:var(--ink); color:var(--paper);
+  font-family:Archivo,sans-serif; font-weight:600; font-size:16px; letter-spacing:-.01em;
+  display:flex; align-items:center; justify-content:center; gap:9px;
+  transition:transform .12s ease, opacity .12s ease;
+}
+.pay:hover{opacity:.9}
+.pay:active{transform:translateY(1px)}
+.pay:disabled{opacity:.45; cursor:not-allowed}
+.pay:focus-visible, .ghost:focus-visible{outline:2.5px solid var(--amber); outline-offset:2px}
+.ghost{
+  background:none; border:1px solid var(--line-2); color:var(--ink-2);
+  border-radius:7px; padding:8px 13px; font-size:12.5px; font-weight:500;
+}
+.ghost:hover{border-color:var(--ink-3); color:var(--ink)}
+
+/* ---- liberado ---- */
+.released{border:1px solid var(--go-line); background:var(--go-soft); border-radius:12px; padding:17px; display:flex; flex-direction:column; gap:13px}
+.released h2{font-family:Archivo,sans-serif; font-size:17px; font-weight:600; margin:0; color:var(--go); letter-spacing:-.01em}
+.steps{margin:0; padding:0; list-style:none; display:flex; flex-direction:column; gap:9px; counter-reset:s}
+.steps li{display:flex; gap:10px; align-items:flex-start; font-size:13.5px; color:var(--ink-2); counter-increment:s}
+.steps li::before{
+  content:counter(s); flex:none; width:19px; height:19px; border-radius:50%;
+  background:var(--go); color:var(--go-soft);
+  font-family:"IBM Plex Mono",monospace; font-size:10.5px; font-weight:600;
+  display:grid; place-items:center; margin-top:1px;
+}
+.token{
+  background:var(--card); border:1px dashed var(--go-line); border-radius:7px;
+  padding:11px 13px; font-family:"IBM Plex Mono",monospace;
+  font-size:16px; font-weight:600; letter-spacing:.13em; text-align:center; color:var(--ink);
+}
+
+/* ---- painel da estacao ---- */
+.station{border:1px solid var(--line); border-radius:11px; background:var(--card); overflow:hidden}
+.sthead{
+  padding:10px 13px; border-bottom:1px solid var(--line); background:var(--sunk);
+  display:flex; align-items:center; justify-content:space-between; gap:10px;
+}
+.sthead h3{margin:0; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-2)}
+.stbody{padding:12px 13px; display:flex; flex-direction:column; gap:11px}
+pre{
+  margin:0; background:var(--sunk); border:1px solid var(--line); border-radius:7px;
+  padding:11px; overflow-x:auto; font-family:"IBM Plex Mono",monospace;
+  font-size:11.5px; line-height:1.62; color:var(--ink-2);
+}
+.hint{font-size:12px; color:var(--ink-3); line-height:1.5}
+.hint b{color:var(--ink-2); font-weight:600}
+
+/* ---- catalogo ---- */
+.others{display:flex; flex-direction:column; gap:8px}
+.others h3{margin:0; font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:.08em; color:var(--ink-3)}
+.grid{display:grid; grid-template-columns:1fr 1fr; gap:8px}
+.mini{
+  display:block; text-decoration:none; color:inherit; background:var(--card);
+  border:1px solid var(--line); border-radius:9px; padding:10px 11px;
+  transition:border-color .12s ease;
+}
+.mini:hover{border-color:var(--line-2)}
+.mini[aria-current="true"]{border-color:var(--amber); background:var(--amber-soft)}
+.mini .n{font-size:12.5px; font-weight:500; line-height:1.3; display:block}
+.mini .c{font-family:"IBM Plex Mono",monospace; font-size:10px; color:var(--ink-3); margin-top:3px; display:block}
+
+footer{border-top:1px solid var(--line); padding-top:14px; font-size:11.5px; color:var(--ink-3); line-height:1.6}
+footer b{color:var(--ink-2); font-weight:600}
+</style>
+
+<div class="wrap">
+
+  <div class="top">
+    <div class="mark">Tag<span class="amp">&amp;</span>Go</div>
+    <span class="chip">Protótipo acadêmico</span>
+  </div>
+
+  <div class="card">
+    <svg class="art" viewBox="0 0 420 260" role="img" aria-label="Ilustração da peça" id="art">
+      <rect width="420" height="260" fill="var(--sunk)"/>
+      <g id="garment"></g>
+      <g id="tagvis" transform="translate(286 150)">
+        <path d="M0 0 L34 0 L34 30 Q34 44 17 50 Q0 44 0 30 Z" fill="var(--steel)" opacity=".9"/>
+        <circle cx="17" cy="15" r="5.5" fill="var(--paper)" opacity=".75"/>
+        <rect x="6" y="27" width="22" height="13" rx="2" fill="var(--paper)" opacity=".92"/>
+        <g fill="var(--steel)">
+          <rect x="8" y="29" width="3" height="3"/><rect x="13" y="29" width="3" height="3"/><rect x="18" y="29" width="3" height="3"/>
+          <rect x="23" y="29" width="3" height="3"/><rect x="8" y="34" width="3" height="3"/><rect x="18" y="34" width="3" height="3"/>
+          <rect x="23" y="34" width="3" height="3"/><rect x="13" y="34" width="3" height="3" opacity=".35"/>
+        </g>
+      </g>
+    </svg>
+
+    <div class="body">
+      <div>
+        <div class="eyebrow" id="cat">—</div>
+        <h1 id="nome">—</h1>
+      </div>
+
+      <div class="price"><small>R$</small><span id="preco">—</span></div>
+
+      <dl class="specs">
+        <div class="spec"><dt>Tamanho</dt><dd id="tam">—</dd></div>
+        <div class="spec"><dt>Cor</dt><dd id="cor">—</dd></div>
+        <div class="spec"><dt>Composição</dt><dd id="comp">—</dd></div>
+      </dl>
+
+      <div class="tagpanel">
+        <div class="tagrow">
+          <span class="k">Etiqueta</span>
+          <span class="mono" id="tagid">—</span>
+        </div>
+        <div class="tagrow">
+          <span class="k">SKU</span>
+          <span class="mono" id="sku">—</span>
+        </div>
+        <div class="tagrow">
+          <span class="k">Situação</span>
+          <span class="state locked" id="estado"><span class="dot live"></span><span id="estadotxt">Travada</span></span>
+        </div>
+      </div>
+
+      <button class="pay" id="btn">Pagar com Pix</button>
+      <div id="released"></div>
+    </div>
+  </div>
+
+  <div class="station">
+    <div class="sthead">
+      <h3>O que a Estação lê</h3>
+      <button class="ghost" id="reset">Reiniciar demo</button>
+    </div>
+    <div class="stbody">
+      <pre id="json">—</pre>
+      <p class="hint" id="dbhint"></p>
+    </div>
+  </div>
+
+  <div class="others">
+    <h3>Outras peças no catálogo de teste</h3>
+    <div class="grid" id="grid"></div>
+  </div>
+
+  <footer>
+    Peças e preços são <b>fictícios</b>, criados para ensaio do sistema. Esta página não é
+    uma loja e não processa pagamento real — o botão simula a confirmação que viria de um
+    provedor em ambiente <i>sandbox</i>.<br><br>
+    <b>Tag&amp;Go</b> · Projeto de Produto e Processo · Escola Politécnica da USP
+  </footer>
+
+</div>
+
+<script>
+/* ------------------------------------------------------------------ *
+ * Catalogo de teste. Cada peca tem um tag_id proprio — e o QR impresso
+ * na etiqueta fisica aponta para ?item=<tag_id>.
+ * ------------------------------------------------------------------ */
+var CATALOGO = {
+  "A17F03C2": { sku:"CAM-AZ-M-0042", nome:"Camisa de linho manga longa", cat:"Camisaria masculina",
+                preco:"189,90", tam:"M", cor:"Azul-índigo", comp:"100% linho",
+                forma:"camisa", tom:"#3E5C87" },
+  "B2C41D0A": { sku:"VES-PR-P-0117", nome:"Vestido midi de viscose", cat:"Vestidos",
+                preco:"249,90", tam:"P", cor:"Preto", comp:"Viscose com elastano",
+                forma:"vestido", tom:"#2B2E36" },
+  "C93E70B5": { sku:"JAQ-JE-G-0231", nome:"Jaqueta jeans com bolsos", cat:"Jaquetas",
+                preco:"329,90", tam:"G", cor:"Jeans claro", comp:"Algodão e elastano",
+                forma:"jaqueta", tom:"#5B7FA6" },
+  "D40B8E17": { sku:"CAL-BE-40-0088", nome:"Calça alfaiataria reta", cat:"Calçaria",
+                preco:"279,90", tam:"40", cor:"Bege", comp:"Poliéster e viscose",
+                forma:"calca", tom:"#A08B6B" },
+  "E51C29F3": { sku:"TRI-VD-M-0305", nome:"Tricô gola alta canelado", cat:"Malharia",
+                preco:"219,90", tam:"M", cor:"Verde musgo", comp:"Acrílico e algodão",
+                forma:"trico", tom:"#4A6350" },
+  "F62A47D9": { sku:"SAI-XA-P-0163", nome:"Saia plissada midi", cat:"Saias",
+                preco:"199,90", tam:"P", cor:"Xadrez vinho", comp:"Poliéster",
+                forma:"saia", tom:"#7A3644" }
+};
+
+var FORMAS = {
+  camisa:  "M150 44 L186 30 Q210 52 234 30 L270 44 L286 92 L262 100 L258 214 L162 214 L158 100 L134 92 Z",
+  vestido: "M156 44 L186 30 Q210 50 234 30 L264 44 L272 96 L252 102 L268 216 L152 216 L168 102 L148 96 Z",
+  jaqueta: "M144 46 L186 30 Q210 54 234 30 L276 46 L290 104 L266 112 L262 212 L158 212 L154 112 L130 104 Z",
+  calca:   "M164 36 L256 36 L262 118 L250 220 L216 220 L210 132 L204 220 L170 220 L158 118 Z",
+  trico:   "M148 48 L186 32 Q210 54 234 32 L272 48 L288 100 L262 108 L258 208 L162 208 L158 108 L132 100 Z",
+  saia:    "M172 40 L248 40 L254 84 L276 214 L144 214 L166 84 Z"
+};
+
+function param(){
+  var m = /[?&]item=([A-Za-z0-9]+)/.exec(location.search || "");
+  var id = m ? m[1].toUpperCase() : null;
+  return (id && CATALOGO[id]) ? id : "A17F03C2";
+}
+
+var TAG = param();
+var P = CATALOGO[TAG];
+var pedido = null;
+var dbRef = null;
+
+/* ---------- render ---------- */
+function desenhar(){
+  var g = document.getElementById("garment");
+  g.innerHTML =
+    '<path d="' + FORMAS[P.forma] + '" fill="' + P.tom + '" opacity=".92"/>' +
+    '<path d="' + FORMAS[P.forma] + '" fill="none" stroke="var(--ink)" stroke-opacity=".14" stroke-width="1.5"/>';
+}
+
+function texto(id, v){ document.getElementById(id).textContent = v; }
+
+function pintar(){
+  document.title = P.nome + " — Tag&Go";
+  texto("cat", P.cat); texto("nome", P.nome); texto("preco", P.preco);
+  texto("tam", P.tam); texto("cor", P.cor); texto("comp", P.comp);
+  texto("tagid", TAG); texto("sku", P.sku);
+  desenhar();
+
+  var grid = document.getElementById("grid");
+  grid.innerHTML = "";
+  Object.keys(CATALOGO).forEach(function(id){
+    var a = document.createElement("a");
+    a.className = "mini";
+    a.href = "?item=" + id;
+    if (id === TAG) a.setAttribute("aria-current", "true");
+    a.innerHTML = '<span class="n">' + CATALOGO[id].nome + '</span><span class="c">' + id + '</span>';
+    grid.appendChild(a);
+  });
+}
+
+function estado(){
+  var pago = pedido && pedido.status === "pago";
+  var el = document.getElementById("estado");
+  el.className = "state " + (pago ? "paid" : "locked");
+  texto("estadotxt", pago ? "Pagamento confirmado" : "Travada");
+
+  var btn = document.getElementById("btn");
+  btn.disabled = !!pago;
+  btn.textContent = pago ? "Pago" : "Pagar com Pix";
+
+  document.getElementById("released").innerHTML = pago
+    ? '<div class="released">' +
+        '<h2>Pode liberar a etiqueta</h2>' +
+        '<ol class="steps">' +
+          '<li>Leve a peça até a Estação de Liberação.</li>' +
+          '<li>Encaixe a etiqueta no berço, com o código para cima.</li>' +
+          '<li>Espere a luz ficar <b>verde</b> e aperte o botão.</li>' +
+          '<li>Retire a peça. A etiqueta cai sozinha na caixa de coleta.</li>' +
+        '</ol>' +
+        '<div class="token">' + pedido.autorizacao + '</div>' +
+      '</div>'
+    : "";
+
+  document.getElementById("json").textContent = pedido
+    ? JSON.stringify(pedido, null, 2)
+    : JSON.stringify({ tag_id: TAG, sku: P.sku, status: "travada", pago_em: null }, null, 2);
+}
+
+/* ---------- persistencia ---------- */
+function chave(){ return "tagandgo:" + TAG; }
+
+function local(obj){
+  try {
+    if (obj === undefined) {
+      var v = localStorage.getItem(chave());
+      return v ? JSON.parse(v) : null;
+    }
+    if (obj === null) localStorage.removeItem(chave());
+    else localStorage.setItem(chave(), JSON.stringify(obj));
+  } catch (e) {}
+  return null;
+}
+
+function codigo(){
+  var s = "", abc = "ACDEFGHJKLMNPQRSTUVWXYZ2345679";
+  for (var i = 0; i < 6; i++) s += abc[Math.floor(Math.random() * abc.length)];
+  return s.slice(0, 3) + "-" + s.slice(3);
+}
+
+function pagar(){
+  pedido = {
+    tag_id: TAG,
+    sku: P.sku,
+    peca: P.nome,
+    valor_brl: P.preco,
+    status: "pago",
+    pago_em: new Date().toISOString(),
+    autorizacao: codigo(),
+    origem: "sandbox"
+  };
+  local(pedido);
+  estado();
+  if (dbRef) dbRef.doc("pedidos/" + TAG).set(pedido).catch(function(){});
+}
+
+function reiniciar(){
+  pedido = null;
+  local(null);
+  estado();
+  if (dbRef) dbRef.doc("pedidos/" + TAG).delete().catch(function(){});
+}
+
+/* ---------- inicio ---------- */
+pintar();
+pedido = local();
+estado();
+document.getElementById("btn").addEventListener("click", pagar);
+document.getElementById("reset").addEventListener("click", reiniciar);
+
+document.getElementById("dbhint").innerHTML =
+  "Este é o registro que a Estação consulta antes de acender a luz verde. " +
+  "Guardado <b>neste navegador</b> — sem armazenamento compartilhado, cada celular vê o próprio estado.";
+
+if (window.claude && window.claude.use) {
+  window.claude.use("db").then(function(db){
+    if (!db) return;
+    dbRef = db;
+    document.getElementById("dbhint").innerHTML =
+      "Este é o registro que a Estação consulta antes de acender a luz verde. " +
+      "Guardado no <b>armazenamento compartilhado</b> — qualquer aparelho que abrir esta " +
+      "peça vê o mesmo estado, e é dele que o firmware lê.";
+    db.doc("pedidos/" + TAG).get().then(function(snap){
+      if (snap.exists) { pedido = snap.data(); local(pedido); estado(); }
+      else if (pedido) { db.doc("pedidos/" + TAG).set(pedido).catch(function(){}); }
+    }).catch(function(){});
+    db.doc("pedidos/" + TAG).onSnapshot(function(snap){
+      pedido = snap.exists ? snap.data() : null;
+      local(pedido);
+      estado();
+    }, function(){});
+  }).catch(function(){});
+}
+</script>
