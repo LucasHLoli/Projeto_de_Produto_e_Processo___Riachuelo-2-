@@ -1,0 +1,3 @@
+Coloque aqui as imagens usadas em 2-conteudo/1-diagnostico.tex
+Nomeie assim: fig01-nome-descritivo.png, fig02-outro-nome.png ...
+Pode apagar este arquivo assim que a primeira imagem de verdade for adicionada.
