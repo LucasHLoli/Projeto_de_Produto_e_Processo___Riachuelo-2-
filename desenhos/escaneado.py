@@ -46,11 +46,14 @@ SVG = os.path.join(AQUI, 'escaneado.svg')
 PDF = os.path.join(AQUI, 'escaneado.pdf')
 HTML = os.path.join(AQUI, 'escaneado.html')
 
-PAPEL = (0.937, 0.929, 0.914)    # cinza de papel, nunca branco puro
-TINTA = (0.106, 0.102, 0.098)    # quase preto
-FRACA = (0.35, 0.34, 0.33)       # traco que saiu fraco
-GRAO  = (0.55, 0.54, 0.52)       # os pontinhos do sensor
+# Preto no branco, limpo. O fundo tem de ser branco de verdade: qualquer
+# cinza vira uma caixa visivel no meio da pagina do relatorio.
+PAPEL = (1.0, 1.0, 1.0)
+TINTA = (0.0, 0.0, 0.0)
+FRACA = (0.42, 0.42, 0.42)       # linha de apoio, o unico meio-tom
+GRAO  = (0.72, 0.72, 0.72)
 
+GRANULADO = False                # ruido de sensor: atrapalha na impressao
 INCLINACAO = -0.55               # graus - a folha nunca fica reta no vidro
 
 
@@ -100,6 +103,18 @@ class Caneta(Tela):
                 cy + r * math.sin(2 * math.pi * i / n))
                for i in range(n - falta)]
         self.tinta(pts, larg=larg, **k)
+
+    def flecha_mao(self, x1, y1, x2, y2, larg=1.8, cabeca=9.0):
+        """Seta rabiscada: haste e duas barbas, cada uma com seu proprio
+        tremor. Indica movimento sem precisar de legenda."""
+        import math as _m
+        self.tinta([(x1, y1), (x2, y2)], larg=larg, amp=0.9, alem=1.2)
+        a = _m.atan2(y2 - y1, x2 - x1)
+        for k in (+1, -1):
+            self.tinta([(x2, y2),
+                        (x2 - cabeca * _m.cos(a + k * 0.42),
+                         y2 - cabeca * _m.sin(a + k * 0.42))],
+                       larg=larg * 0.9, amp=0.6, alem=0.8, passadas=1)
 
     def graos(self, n=900):
         """O ruido do sensor: pontinhos escuros espalhados pela folha."""
@@ -286,6 +301,61 @@ def vista_perspectiva(T, ns, cx, cy, e):
     T.tinta_circ(px, py, UI['furo_led'] * e / 2, larg=1.2)
 
 
+def vista_detalhe(T, ns, cx, cy, e):
+    """A garra por dentro, ampliada. Sem uma palavra: o texto da secao
+    explica, o desenho so mostra.
+
+    A ordem vertical segue a do modelo: garra embaixo, bucha em cima dela
+    e cursor por cima de tudo. O cursor empurra a bucha para BAIXO, e e'
+    isso que solta o pino.
+    """
+    GAR = ns['GARRA']
+
+    def p(x, y):
+        return (cx + x * e, cy - y * e)
+
+    # --- copo conico, aberto para cima ---
+    T.tinta([p(-17, 20), p(-9.5, 0)], larg=2.0, alem=2.6)
+    T.tinta([p(9.5, 0), p(17, 20)], larg=2.0, alem=2.6)
+    T.tinta([p(-9.5, 0), p(9.5, 0)], larg=1.6, alem=2.0)
+
+    # --- carretel, no fundo, e a mola que o empurra ---
+    T.tinta([p(-8, 0), p(8, 0), p(8, 5), p(-8, 5)], fechar=True,
+            larg=1.7, alem=2.2)
+    mx = -12.5
+    pts = [p(mx, 0)]
+    for i in range(7):
+        pts.append(p(mx + (2.0 if i % 2 == 0 else -2.0), 0.6 + (i + 1) * 1.4))
+    pts.append(p(mx, 11))
+    T.tinta(pts, larg=1.2, amp=0.7, alem=0.8, passadas=1)
+    T.tinta([p(mx - 3.4, 11), p(mx + 3.4, 11)], larg=1.3, alem=1.4)
+
+    # --- tres esferas apertadas contra a haste ---
+    for dx in (-6.2, 0, 6.2):
+        px, py = p(dx, 8.4)
+        T.tinta_circ(px, py, 3.1 * e, larg=1.5)
+
+    # --- haste do pino, subindo pelo meio ---
+    T.tinta([p(-1.1, 0), p(-1.1, 30)], larg=1.4, alem=1.4)
+    T.tinta([p(1.1, 0), p(1.1, 30)], larg=1.4, alem=1.4)
+
+    # --- bucha, acima do carretel, abracando a haste ---
+    for lado in (-1, 1):
+        T.tinta([p(lado * 1.9, 13), p(lado * 6.5, 13),
+                 p(lado * 6.5, 17.5), p(lado * 1.9, 17.5)],
+                fechar=True, larg=1.6, alem=2.0)
+
+    # --- cursor com rampa, por cima, correndo na horizontal ---
+    T.tinta([p(-30, 19), p(20, 19), p(20, 25), p(-22, 25)],
+            fechar=True, larg=1.8, alem=2.6)
+
+    # --- as duas setas do acionamento ---
+    a1, a2 = p(35, 22), p(23, 22)
+    T.flecha_mao(a1[0], a1[1], a2[0], a2[1], larg=2.0, cabeca=10)
+    b1, b2 = p(11.5, 18.5), p(11.5, 11.5)
+    T.flecha_mao(b1[0], b1[1], b2[0], b2[1], larg=1.8, cabeca=8)
+
+
 # ============================================================================
 # FOLHA
 # ============================================================================
@@ -295,11 +365,13 @@ def gerar():
     W, H = 1500, 640
     T = Caneta(W, H, semente=4471903)
 
-    T.graos(1100)
+    if GRANULADO:
+        T.graos(1100)
     vista_planta(T, ns, 272, 322, 3.55)
     vista_frontal(T, ns, 762, 322, 3.55)
     vista_perspectiva(T, ns, 1232, 330, 2.55)
-    T.sombra_borda()
+    if GRANULADO:
+        T.sombra_borda()
 
     io.open(SVG, 'w', encoding='utf-8').write(svg_papel(T))
     io.open(PDF, 'wb').write(pdf_papel(T))
@@ -308,7 +380,23 @@ def gerar():
         + svg_papel(T).replace('<svg ', '<svg style="width:100%;height:auto;display:block;'
                                         'box-shadow:0 3px 22px rgba(0,0,0,.35)" ', 1)
         + '</body>')
-    return W, H, len(T.prims)
+    n_det = folha_detalhe(ns)
+    return W, H, len(T.prims), n_det
+
+
+def folha_detalhe(ns):
+    """O detalhe do mecanismo em folha propria, no mesmo estilo."""
+    W, H = 720, 560
+    T = Caneta(W, H, semente=9930517)
+    if GRANULADO:
+        T.graos(520)
+    vista_detalhe(T, ns, 330, 300, 7.4)
+    if GRANULADO:
+        T.sombra_borda()
+    base = os.path.join(AQUI, 'escaneado-detalhe')
+    io.open(base + '.svg', 'w', encoding='utf-8').write(svg_papel(T))
+    io.open(base + '.pdf', 'wb').write(pdf_papel(T))
+    return len(T.prims)
 
 
 def pdf_papel(T):
@@ -323,9 +411,10 @@ def pdf_papel(T):
 
 
 if __name__ == '__main__':
-    w, h, n = gerar()
+    w, h, n, n_det = gerar()
     print('escaneado: %d x %d, %d tracos' % (w, h, n))
-    for f in (SVG, PDF, HTML):
+    for f in (SVG, PDF, HTML, 'escaneado-detalhe.svg', 'escaneado-detalhe.pdf'):
         print('   ' + os.path.basename(f))
+    print('detalhe do mecanismo: %d tracos' % n_det)
     print()
     print('preto e branco, sem texto, sem cota - folha girada %.2f grau' % INCLINACAO)
