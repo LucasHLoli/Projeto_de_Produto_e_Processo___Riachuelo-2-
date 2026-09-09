@@ -228,7 +228,9 @@ class Tela:
                 _, pts, cor, larg, fill, op, tr = pr
                 c.append('q')
                 if op < 0.999:
-                    c.append('/GS%d gs' % int(round(op * 100)))
+                    # so existem os estados de 10 em 10; arredondar para o
+                    # mais proximo, senao o PDF referencia recurso inexistente
+                    c.append('/GS%d gs' % max(10, min(90, int(round(op * 10)) * 10)))
                 c.append('%.3f %.3f %.3f RG %.2f w' % (cor + (larg,)))
                 if tr:
                     c.append('[%s] 0 d' % tr.replace(' ', ' '))
