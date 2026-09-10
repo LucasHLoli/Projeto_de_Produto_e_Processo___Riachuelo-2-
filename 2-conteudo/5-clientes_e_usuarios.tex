@@ -1,0 +1,102 @@
+% =============================================================================
+% Clientes e usuarios do projeto (projeto Riachuelo, PRO3474).
+%
+% Consolida o conteudo de "5-Refinar_ciclo_de_vida.tex" (subsecao "Definicao
+% dos clientes do projeto") e de "6-segmentacao_quatro_grupos.tex" numa unica
+% secao. Remove desta secao as discussoes sobre ciclo de vida do produto,
+% mercado e segmentacao de mercado: essas discussoes pertencem a secoes
+% proprias, ainda nao escritas, e nao sao antecipadas aqui.
+%
+% Os arquivos originais 5-Refinar_ciclo_de_vida.tex e
+% 6-segmentacao_quatro_grupos.tex permanecem na pasta, fora do documento.tex,
+% para reaproveitamento quando as secoes de ciclo de vida e mercado forem
+% escritas.
+%
+% Labels preservados (referenciados por 6-pesquisa_clientes_usuarios.tex):
+%   subsec:segmentacao_clientes_usuarios, subsubsec:segmentacao_hipoteses
+% =============================================================================
+
+\section{Clientes e usuários do projeto}
+\label{sec:clientes_usuarios}
+
+Esta seção apresenta uma primeira caracterização de quem o projeto atende. O nível é exploratório e propositalmente superficial: o objetivo não é esgotar o entendimento sobre o cliente, e sim estabelecer uma base conceitual e empírica para as etapas seguintes de pesquisa.
+
+\subsection{Cliente, usuário e outros atores}
+\label{subsec:conceitos_cliente_usuario}
+
+O projeto opera em dois níveis que não podem se confundir. No primeiro nível, o produto (a solução de trava antifurto conectada ao aplicativo) é vendido em modelo B2B à Riachuelo. Nesse nível, o cliente é a própria Riachuelo, como organização que decide adquirir e implementar a solução. No segundo nível, dentro da loja, a solução serve a jornada de compra do consumidor, que escolhe, paga e leva a peça de roupa. Cada análise deste relatório precisa deixar claro em qual dos dois níveis está operando.
+
+Adotamos, seguindo a classificação de Rozenfeld et al. \cite{rozenfeld2006gestao}, as seguintes distinções:
+
+\begin{itemize}
+    \item \textbf{Cliente externo}: no nível da jornada de compra, os consumidores que compram roupa na loja. São externos à Riachuelo, mas internos ao escopo de uso da solução.
+    \item \textbf{Cliente interno}: as áreas da Riachuelo que operam ou decidem sobre o sistema, sem comprar roupa na loja. Não usam a peça, mas usam ou decidem sobre a solução.
+    \item \textbf{Usuário}: quem manuseia o produto físico e o aplicativo no dia a dia. Nesse projeto, tanto o consumidor quanto parte do cliente interno são usuários, cada um em um ponto diferente da jornada. Essa sobreposição distingue o projeto de um caso típico de produto de consumo, em que cliente e usuário costumam ser a mesma pessoa e usuário e cliente interno raramente coincidem.
+    \item \textbf{Comprador e consumidor}: em geral coincidem (quem paga pela peça também a veste), mas nem sempre. Um adulto pode comprar roupa infantil para uma criança; nesse caso, quem paga e interage com o aplicativo não é quem usa a peça. Essa distinção ainda não foi investigada em campo, mas é relevante o suficiente para registrar como pergunta em aberto (Seção~\ref{subsec:clientes_lacunas}).
+    \item \textbf{Cliente intermediário}: a classificação de Rozenfeld et al. também prevê esse papel, típico de canais de distribuição entre fabricante e consumidor final. Não identificamos um ator equivalente neste projeto: a Riachuelo já opera a loja onde a solução funciona, sem um elo adicional de distribuição entre ela e o consumidor. A categoria não se aplica aqui, e não a forçamos por completude teórica.
+\end{itemize}
+
+\subsection{Cliente externo: o varejista}
+\label{subsec:cliente_externo}
+
+O cliente do projeto, no sentido de quem decide a aquisição e paga pela solução, são as empresas do varejo de roupas que adotam o sistema. A Riachuelo serve de referência para o desenvolvimento, sem que a solução fique restrita a ela: outros varejistas com necessidades semelhantes podem adotar o mesmo sistema.
+
+\subsection{Usuários externos: os consumidores da loja}
+\label{subsec:usuarios_externos}
+
+Os consumidores finais das lojas usam o aplicativo para identificar a peça pelo código associado à tag, realizar ou confirmar o pagamento, e retirar a peça após a confirmação. São, portanto, usuários e clientes externos ao mesmo tempo: decidem a compra e manuseiam o produto na sequência.
+
+\subsection{Clientes internos: operação e gestão da Riachuelo}
+\label{subsec:clientes_internos}
+
+Duas frentes da Riachuelo interagem com a solução sem comprar roupa na loja.
+
+\textbf{Operação da Riachuelo.} Reúne vendas, estoque, reposição, caixa e segurança, as funções que tocam a loja no dia a dia. Manuseia, monitora ou sofre o impacto direto de qualquer mudança de processo físico na loja, efeito que não aparece na voz do consumidor.
+
+\textbf{Gestão da Riachuelo.} Reúne a média e a alta gestão, que avaliam a solução por indicadores, resultado operacional, retorno econômico, risco e impacto estratégico. Em um modelo B2B, esse grupo aprova a compra da solução; quem usa o produto na loja não participa dessa decisão.
+
+Esta etapa de pesquisa ainda não investigou Operação nem Gestão da Riachuelo: a equipe não tem, até o momento, acesso estruturado à operação interna para conduzir entrevistas ou surveys consistentes com esses dois grupos. Os dois permanecem registrados como atores relevantes, a investigar quando esse acesso existir.
+
+\subsection{Consumidores investigados: Cliente Premium e Cliente Popular}
+\label{subsec:segmentacao_clientes_usuarios}
+
+Esta etapa de pesquisa concentra o esforço de campo em dois clusters de consumidores.
+
+\textbf{Cliente Premium.} Consumidor de lojas ou formatos voltados a público de maior poder aquisitivo. Interage com a jornada completa em estudo: escolhe o produto, paga e sairia da loja sem passar pelo caixa, caso a solução avance. A observação de campo aponta expectativas diferentes de autonomia, atendimento e tecnologia em relação ao Cliente Popular.
+
+\textbf{Cliente Popular.} Consumidor do varejo de massa, também usuário final da jornada. A observação de campo indica um padrão de compra mais assistido pelo vendedor, inclusive na oferta de crédito.
+
+A Tabela~\ref{tab:segmentacao_grupos} resume o que já foi observado em campo e o que ainda é hipótese a testar.
+
+\begin{table}[h!]
+    \centering
+    \caption{Cliente Premium e Cliente Popular: observações e hipóteses}
+    \begin{tabular}{p{2.6cm}p{4.6cm}p{4.6cm}}
+        \toprule
+        \textbf{Dimensão} & \textbf{Cliente Premium} & \textbf{Cliente Popular}\\
+        \midrule
+        Papel do vendedor (observação de campo) & Menor influência sobre a decisão de cartão de crédito & Maior influência sobre a decisão de cartão de crédito\\
+        Autoatendimento (observação de campo) & Maior preferência declarada & Menor preferência declarada\\
+        Dependência do vendedor (hipótese a testar) & Pode estar diminuindo, com valorização crescente de autonomia & Padrão de dependência ainda não medido, pode seguir tendência semelhante em outro ritmo\\
+        Lógica de exposição de produto (observação de campo) & Não caracterizada nesta etapa & Prefere ver muitas peças expostas (lógica de abundância)\\
+        \bottomrule
+    \end{tabular}
+    \label{tab:segmentacao_grupos}
+\end{table}
+
+A preferência entre autonomia e atendimento assistido varia por momento da jornada e por cluster. Tratar autonomia como vantagem automática arrisca construir uma solução que remove suporte no momento em que o cliente ainda precisa dele.
+
+\subsection{Hipóteses}
+\label{subsec:clientes_lacunas}
+\label{subsubsec:segmentacao_hipoteses}
+
+As hipóteses a seguir orientam a pesquisa com Cliente Premium e Cliente Popular. Elas não definem o problema do projeto: são pontos de partida, a confirmar, refutar ou ajustar com a investigação que segue.
+
+\begin{itemize}
+    \item \textbf{H1}: no Cliente Premium, a dependência do vendedor para a decisão de compra está diminuindo, com valorização crescente de autonomia durante a jornada.
+    \item \textbf{H2}: o mesmo movimento pode ocorrer no Cliente Popular, em velocidade ou intensidade diferente.
+    \item \textbf{H3}: a fricção mais relevante da jornada de compra pode incluir disponibilidade de produto, dificuldade de encontrar itens na loja ou integração entre canal físico e digital, além de fila e pagamento.
+    \item \textbf{H4}: os dois clusters valorizam atendimento humano em momentos distintos da jornada, como escolha e prova de roupa em contraste com pagamento, e essa valorização muda ao longo do percurso de compra.
+\end{itemize}
+
+Além das hipóteses, dois pontos permanecem em aberto por falta de dado de campo. Primeiro, se comprador e consumidor coincidem na maioria dos casos investigados, ou se casos como a compra de roupa infantil por um adulto aparecem com frequência relevante. Segundo, se a segmentação por Cliente Premium e Cliente Popular captura as diferenças que mais importam para o produto, ou se outras dimensões (familiaridade com tecnologia, por exemplo) explicam melhor o comportamento observado.

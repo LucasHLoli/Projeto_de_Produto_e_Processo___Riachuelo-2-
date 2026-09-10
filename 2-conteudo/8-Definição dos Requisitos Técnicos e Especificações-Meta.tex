@@ -1,0 +1,166 @@
+\section{Definição de requisitos técnicos e especificações-meta}
+\label{sec:definicao_requisitos}
+
+A definição dos requisitos técnicos e das especificações-meta é uma etapa fundamental para garantir que o produto desenvolvido esteja alinhado às necessidades identificadas junto aos usuários e, simultaneamente, seja tecnicamente factível. Nesse processo, busca-se transformar as expectativas e dificuldades relatadas pelos consumidores em características objetivas que possam orientar o desenvolvimento e a avaliação do produto.
+
+A partir da pesquisa e entrevistas realizadas com os potenciais usuários, foram identificadas diferentes necessidades relacionadas à jornada de compra no varejo de roupas, especialmente nos aspectos de localização dos produtos, autonomia, pagamento, uso de tecnologia e segurança. Para evitar que essas necessidades sejam traduzidas diretamente em soluções sem uma análise técnica, será utilizado o método \textit{Quality Function Deployment} (QFD). O QFD permite estruturar a chamada ``voz do cliente'' e relacioná-la a requisitos técnicos mensuráveis, possibilitando que as expectativas dos usuários sejam incorporadas ao desenvolvimento do produto.
+
+Além de considerar a importância atribuída pelos clientes, os requisitos técnicos devem ser avaliados quanto à sua factibilidade. Como o presente projeto será desenvolvido em escala de protótipo, as especificações devem ser compatíveis com os recursos financeiros, tecnológicos e materiais disponíveis para a equipe. Dessa forma, o objetivo não é estabelecer requisitos para uma solução industrial definitiva, mas definir metas que permitam verificar se o conceito proposto é capaz de solucionar as principais dores identificadas na pesquisa.
+
+\subsection{Voz do cliente
+}
+\label{subsec:voz_do_cliente}
+
+
+
+A análise da voz do cliente teve como objetivo consolidar os principais achados obtidos por meio do questionário e das entrevistas realizadas com os consumidores. Essa etapa é fundamental para o desenvolvimento do produto, pois permite compreender não apenas quais aspectos da jornada de compra são percebidos como problemáticos, mas também em quais situações essas dificuldades se manifestam e quais comportamentos estão associados a elas.
+
+Os resultados obtidos reforçam a existência de diferentes perfis de consumidores, com comportamentos distintos em relação à autonomia, ao atendimento humano, à utilização de tecnologias e à busca por produtos. Os achados também mostram que essas características não são necessariamente excludentes. Um mesmo consumidor pode valorizar autonomia e rapidez em uma compra simples, mas preferir atendimento humano em uma compra que envolva maior incerteza, como a escolha de uma peça de maior valor ou a necessidade de uma segunda opinião. Dessa forma, a solução não deve partir da premissa de que a substituição do atendimento humano pela tecnologia será desejável em todas as situações.
+
+Outro ponto relevante identificado nas entrevistas é a existência de dificuldades relacionadas à disponibilidade e à localização dos produtos. Parte dos consumidores relatou experiências em que o produto desejado não estava exposto ou em que houve necessidade de recorrer a um vendedor para verificar a existência de determinada peça no estoque. Também foram identificados casos de perda de confiança em informações digitais de disponibilidade quando estas não correspondiam à realidade encontrada na loja. Esses resultados mostram que uma eventual solução digital precisa apresentar informações confiáveis para efetivamente reduzir a fricção da jornada.
+
+No processo de compra, também foram identificadas oportunidades relacionadas à redução do tempo de espera e à autonomia durante o pagamento. Alguns entrevistados relataram situações concretas de desistência de compra devido a filas, especialmente em períodos de maior movimento. Ao mesmo tempo, outros consumidores demonstraram interesse em realizar etapas da compra sem a necessidade de interação constante com vendedores, desde que exista suporte disponível caso algo dê errado. Assim, os achados apontam para a necessidade de uma solução capaz de combinar autonomia e rapidez com segurança e possibilidade de atendimento.
+
+A partir desse conjunto de evidências, foram selecionadas oito vozes do cliente consideradas prioritárias para o desenvolvimento da solução. A seleção foi realizada buscando representar três dimensões distintas: necessidades fundamentais percebidas pelos consumidores, desejos relacionados à experiência de compra e demandas associadas a comportamentos concretos ou contextos recorrentes. Além disso, foram priorizadas vozes que possuem relação direta com as funcionalidades que podem ser contempladas pela integração entre a bolacha RFID e o aplicativo.
+
+\subsubsection{Necessidades prioritárias}
+
+\paragraph{N01 -- Encontrar o tamanho, a cor ou o modelo procurado dentro de um esforço razoável}
+
+Essa necessidade foi selecionada devido à sua relação direta com a etapa de busca pelo produto. A pesquisa qualitativa identificou consumidores que enfrentam dificuldades recorrentes para encontrar determinados tamanhos, cores ou modelos, especialmente quando essas características são menos comuns. Esse problema é particularmente relevante porque pode impedir a concretização da compra mesmo quando existe interesse pelo produto. Para a solução estudada, essa voz do cliente é importante porque o aplicativo pode funcionar como um mecanismo de apoio à identificação do produto e à localização de informações relacionadas à peça. A evidência foi especialmente concentrada no Cluster 3, no qual a dificuldade foi relatada de forma intensa.
+
+\paragraph{N02 -- Confiar que a informação de estoque exibida em canais digitais corresponde à realidade da loja física}
+
+Essa necessidade foi selecionada porque a confiabilidade da informação de disponibilidade é uma condição necessária para que uma solução digital agregue valor ao consumidor. As entrevistas identificaram casos em que divergências entre a informação apresentada no site ou aplicativo e a disponibilidade real na loja fizeram com que os consumidores perdessem confiança no canal digital. Como o projeto prevê a utilização de um aplicativo, a simples disponibilização de informações sobre produtos não será suficiente se o usuário não confiar em sua precisão. Dessa maneira, a confiabilidade da informação de estoque constitui uma necessidade fundamental para a solução.
+
+\paragraph{N03 -- Preservar a opção de contar com atendimento humano mesmo quando existem alternativas de autoatendimento}
+
+Essa necessidade foi selecionada porque o produto proposto busca ampliar a autonomia do consumidor, mas as entrevistas mostram que autonomia tecnológica não significa necessariamente rejeição ao atendimento humano. Consumidores que demonstram confiança em tecnologias ainda podem preferir que exista uma pessoa disponível para auxiliar em situações de dúvida ou dificuldade. Portanto, a solução deve ser concebida de modo a complementar o atendimento existente, e não necessariamente eliminá-lo. Essa necessidade é especialmente relevante para garantir que o uso da bolacha e do aplicativo não gere insegurança ou abandono da compra entre consumidores menos confortáveis com o autoatendimento.
+
+\paragraph{N06 -- Concluir a compra sem risco de ser mal interpretado ou constrangido por uma falha ou checagem no momento da saída}
+
+Essa necessidade foi selecionada por estar diretamente relacionada à experiência do consumidor durante a saída da loja e à confiança na solução proposta. Embora o questionário tenha apresentado pouca variação nesse aspecto, as entrevistas revelaram situações em que os consumidores demonstraram preocupação com a possibilidade de serem interpretados como pessoas que não realizaram o pagamento corretamente ou se sentiram desconfortáveis diante de verificações adicionais. Essa questão é especialmente relevante para o projeto porque a utilização da bolacha com mecanismo de liberação após o pagamento pode modificar o procedimento tradicional de saída da loja. Dessa forma, além de garantir que a transação ocorra corretamente, a solução deve transmitir ao consumidor segurança e legitimidade durante a saída, evitando situações de constrangimento ou desconfiança.
+
+\subsubsection{Desejos prioritários}
+
+
+\paragraph{D02 -- Ter confirmação clara e imediata de que o pagamento foi processado corretamente}
+
+Esse desejo foi selecionado por apresentar relação direta com a experiência de pagamento proposta pelo aplicativo e com a confiança do consumidor durante a saída da loja. As entrevistas indicaram a expectativa de receber uma confirmação clara de que a operação foi concluída e que o consumidor está autorizado a deixar a loja com o produto. Essa confirmação contribui para reduzir incertezas e desconfortos durante uma jornada de compra menos assistida. A voz é classificada como desejo porque representa uma condição desejável para aumentar o conforto e a segurança percebida, mas não foi identificada como uma barreira universal à realização da compra.
+
+\subsubsection{Demandas prioritárias}
+
+\paragraph{DE01 -- Reduzir o tempo de espera no caixa em períodos de alta demanda}
+
+Essa demanda foi selecionada por estar associada a comportamentos concretos de abandono da compra. O questionário identificou maior incidência de desistência por filas entre consumidores do Cluster 2, enquanto as entrevistas apresentaram situações específicas de abandono durante períodos de maior movimento, como promoções e horário de almoço. Diferentemente de uma simples preferência por rapidez, existe aqui um comportamento observável de desistência quando o tempo de espera se torna elevado. A demanda possui, portanto, relação direta com a proposta central do projeto de reduzir a fricção no pagamento.
+
+
+
+\paragraph{DE03 -- Ter uma opção de pagamento rápida para compras simples, sem abrir mão de atendimento em compras mais elaboradas}
+
+Essa demanda foi selecionada por sintetizar uma característica importante observada na pesquisa: o mesmo consumidor pode desejar diferentes níveis de autonomia de acordo com o contexto da compra. Nas entrevistas, alguns consumidores diferenciaram situações de reposição rápida, nas quais valorizam agilidade e autonomia, de compras mais complexas, nas quais preferem manter o apoio de um vendedor. Essa demanda é particularmente relevante para o projeto porque evidencia que a solução não deve ser posicionada como substituta universal do atendimento humano. A proposta deve permitir uma jornada rápida e autônoma quando esse for o desejo do consumidor, mantendo alternativas de atendimento nos casos em que a assistência seja valorizada.
+
+\subsubsection{Síntese das vozes selecionadas}
+
+As necessidades selecionadas concentram-se principalmente na obtenção de informações confiáveis, na busca pelo produto e na disponibilidade de suporte humano. Os desejos estão relacionados à qualidade da experiência, especialmente à autonomia durante a exploração e à confirmação da transação. Já as demandas estão associadas a comportamentos concretos de compra, como abandono diante de filas, alteração da decisão de deslocamento em função da disponibilidade e busca por maior agilidade em compras simples.
+
+Essa seleção fornece uma base para as etapas seguintes do desenvolvimento do produto, pois transforma os achados da pesquisa em um conjunto mais enxuto de vozes do cliente que podem ser posteriormente relacionados aos requisitos técnicos da bolacha RFID e do aplicativo. A partir dessas vozes, o QFD poderá ser utilizado para estabelecer quais características técnicas possuem maior impacto sobre a satisfação dos consumidores, permitindo priorizar os aspectos do produto com maior potencial de geração de valor.
+
+
+\subsection{Requisitos Técnicos}
+\label{subsec:requisitos_tecnicos}
+
+A partir das oito vozes do cliente selecionadas na etapa anterior, foram definidos requisitos técnicos capazes de traduzir as expectativas dos usuários em características objetivamente mensuráveis. Como a solução proposta é composta pela integração entre uma bolacha equipada com RFID e um aplicativo responsável pela localização da peça e pelo processo de pagamento, os requisitos técnicos devem avaliar o desempenho conjunto desses elementos ao longo da jornada de compra.
+
+Nesse sentido, os requisitos não foram definidos apenas como características construtivas dos componentes, mas como indicadores capazes de mensurar a habilidade do produto em satisfazer as necessidades, desejos e demandas identificados na pesquisa. As especificações-meta estabelecem parâmetros que poderão ser verificados durante os testes do protótipo, permitindo avaliar se a solução apresenta desempenho compatível com as expectativas dos usuários.
+
+\paragraph{Precisão da localização do produto}
+
+Esse requisito mede a capacidade do sistema de auxiliar o consumidor a encontrar corretamente o produto desejado dentro da loja. A avaliação será realizada pela proporção de tentativas nas quais o aplicativo indica corretamente a localização da peça a partir da identificação do produto por meio da bolacha RFID. A especificação-meta é que pelo menos \textbf{90\% das solicitações apresentem a localização correta do produto} nos testes realizados.
+
+\paragraph{Precisão da informação de disponibilidade}
+
+Esse requisito mede a capacidade do aplicativo de informar corretamente ao consumidor se determinada peça está disponível na unidade. Será calculado pela proporção de consultas nas quais a informação apresentada pelo aplicativo corresponde à situação real da peça no estoque considerado para o teste. A especificação-meta é que pelo menos \textbf{95\% das consultas apresentem informações corretas de disponibilidade}.
+
+\paragraph{Tempo total para conclusão do pagamento}
+
+Esse requisito mede a capacidade da solução de reduzir o tempo necessário para que o consumidor conclua o pagamento. Será medido pelo intervalo entre o início do processo de pagamento no aplicativo e a apresentação da confirmação da transação, considerando apenas as etapas sob responsabilidade do sistema desenvolvido. A especificação-meta é que o processo seja concluído em até \textbf{60 segundos}, desconsiderando eventuais atrasos externos relacionados a instituições financeiras ou serviços de terceiros.
+
+\paragraph{Taxa de conclusão autônoma da jornada de compra}
+
+Esse requisito mede a capacidade do produto de permitir que o consumidor realize o processo de pagamento sem depender da intervenção de um funcionário. Será calculado pela proporção de participantes que conseguem realizar corretamente o fluxo completo de identificação da peça, interação com o aplicativo e conclusão do pagamento sem auxílio externo. A especificação-meta é que pelo menos \textbf{80\% dos usuários concluam a jornada de forma autônoma}.
+
+\paragraph{Taxa de conclusão correta do fluxo no aplicativo}
+
+Esse requisito mede a facilidade e a intuitividade da utilização da tecnologia. Será avaliado pela proporção de usuários que conseguem executar corretamente as etapas previstas no aplicativo, sem cometer erros que impeçam a continuidade da jornada e sem receber instruções adicionais da equipe responsável pelo teste. A especificação-meta é que pelo menos \textbf{85\% dos participantes concluam corretamente o fluxo principal} na primeira tentativa.
+
+\paragraph{Taxa de confirmação correta do pagamento e liberação da peça}
+
+Esse requisito mede a capacidade do sistema de fornecer ao consumidor uma confirmação confiável de que o pagamento foi processado e, em seguida, liberar corretamente a bolacha RFID. Será calculado pela proporção de transações em que a confirmação apresentada pelo aplicativo corresponde ao estado real do pagamento e em que a liberação da peça ocorre somente após a confirmação válida. A especificação-meta é atingir \textbf{100\% de correspondência entre pagamento confirmado, confirmação apresentada ao usuário e autorização para liberação} nos testes controlados.
+
+\paragraph{Taxa de acionamento de suporte humano}
+
+Esse requisito mede a capacidade da solução de preservar a possibilidade de atendimento humano quando o consumidor encontrar dificuldades ou quando o fluxo automatizado não puder ser concluído. Será avaliado pela existência e funcionamento de um mecanismo que permita solicitar ou acionar o auxílio de um funcionário durante o processo de compra. A especificação-meta é que \textbf{100\% dos cenários de falha previstos no protótipo possuam uma alternativa de atendimento humano}, permitindo a continuidade ou conclusão da compra.
+
+\vspace{10mm}
+Os sete requisitos definidos contemplam as principais dimensões presentes nas vozes do cliente selecionadas. Os requisitos de precisão da localização e da disponibilidade estão diretamente relacionados às dificuldades encontradas na busca pelos produtos e à necessidade de confiança nas informações fornecidas pelo aplicativo. Os requisitos relacionados ao tempo de pagamento e à autonomia buscam atender à demanda por uma jornada mais rápida e menos dependente do caixa. Já a taxa de conclusão correta do fluxo está associada à facilidade de utilização da tecnologia.
+
+Por sua vez, a confirmação correta do pagamento e a liberação da peça tratam simultaneamente da confiança do consumidor e da redução de verificações na saída, uma vez que o sistema deve fornecer evidências claras de que a transação foi concluída e permitir a saída sem gerar insegurança. Por fim, a manutenção de uma alternativa de atendimento humano garante que a automação não elimine completamente o suporte ao consumidor, aspecto identificado como relevante especialmente para clientes que valorizam assistência durante a jornada.
+
+Esses requisitos técnicos poderão ser utilizados na construção da matriz do QFD, permitindo relacionar quantitativamente cada voz do cliente às características técnicas da solução e identificar quais atributos devem receber maior prioridade durante o desenvolvimento do protótipo.
+
+
+
+
+
+
+
+\subsection{QFD: Quality Function Deployment}
+\label{subsec:QFD}
+
+
+Após a identificação das principais necessidades dos usuários, é necessário traduzi-las em características técnicas que possam orientar o desenvolvimento e permitir a avaliação objetiva do produto. Para isso, será utilizado o método \textit{Quality Function Deployment} (QFD), que permite relacionar sistematicamente a voz do cliente aos requisitos técnicos do produto.
+
+No contexto deste projeto, o QFD será utilizado para estabelecer a relação entre os \textbf{requisitos dos clientes}, identificados a partir da pesquisa realizada com os consumidores, e os \textbf{requisitos técnicos} associados à tag RFID e ao aplicativo. Dessa forma, será possível identificar quais características técnicas possuem maior influência sobre a satisfação das necessidades dos usuários e, consequentemente, devem receber maior atenção durante o desenvolvimento do protótipo.
+
+A utilização do QFD também permite considerar simultaneamente a importância atribuída pelos clientes a cada necessidade e a intensidade da relação entre essa necessidade e cada requisito técnico. Assim, o método contribui para priorizar os aspectos técnicos do produto de maneira alinhada à percepção de valor dos usuários, reduzindo o risco de direcionar os esforços de desenvolvimento para características que possuem menor impacto sobre as necessidades identificadas.
+
+\begin{figure}[H]
+    \centering
+    \caption{Casa da Qualidade}
+    \includegraphics[width=0.99\textwidth]{imagens/definicao dos requisitos/fig01-casa-qualidade-qfd.png}
+    \label{fig:casa-qualidade}
+    \source{Autoria Própria}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Teto de correlações}
+    \includegraphics[width=0.99\textwidth]{imagens/definicao dos requisitos/fig02-matriz-correlacao-rt.png}
+    \label{fig:teto-correlacoes}
+    \source{Autoria Própria}
+\end{figure}
+
+
+A Matriz de Relacionamentos do QFD permite avaliar a intensidade da relação entre as vozes do cliente e os requisitos técnicos definidos para o produto. Na matriz desenvolvida para este projeto, foram consideradas quatro intensidades de relacionamento: ausência de relação, representada pelo valor 0; relação fraca, representada por 1; relação moderada, representada por 3; e relação forte, representada por 9. A importância técnica de cada requisito foi obtida a partir da multiplicação entre a importância atribuída à voz do cliente e a intensidade de sua relação com cada requisito técnico, permitindo identificar quais características do produto possuem maior impacto potencial sobre a satisfação dos clientes.
+
+Os resultados mostram uma concentração significativa da importância técnica em alguns requisitos. O requisito de maior importância foi a \textbf{taxa de confirmação correta do pagamento e liberação da peça}, com importância técnica ponderada de \textbf{139}, correspondente a aproximadamente \textbf{31,3\% da importância técnica total}. Esse resultado decorre principalmente das relações fortes estabelecidas com as vozes relacionadas à conclusão segura da compra e à necessidade de reduzir o tempo de espera no caixa, além de apresentar relação relevante com a confirmação do pagamento e com a realização de compras rápidas. O resultado indica que garantir que o sistema reconheça corretamente o pagamento e permita a liberação da peça constitui o principal foco técnico identificado pela matriz.
+
+O segundo requisito de maior importância foi o \textbf{tempo total para conclusão do pagamento}, com importância técnica de \textbf{87}, equivalente a aproximadamente \textbf{19,6\% da importância técnica total}. Sua importância está associada principalmente à demanda de reduzir o tempo de espera no caixa e à necessidade de disponibilizar uma opção de pagamento rápida para compras simples. Dessa forma, a capacidade da solução de reduzir o tempo necessário para concluir a transação representa uma das características técnicas mais relevantes para o atendimento das expectativas identificadas.
+
+Na sequência, a \textbf{taxa de conclusão correta do fluxo no aplicativo} apresentou importância técnica de \textbf{63}, correspondendo a aproximadamente \textbf{14,2\% do total}. Esse requisito possui relações fortes ou moderadas com vozes relacionadas à autonomia, à confiança durante a saída da loja e à possibilidade de realizar uma compra de forma rápida. O resultado evidencia que não basta disponibilizar o pagamento por meio do aplicativo: o fluxo precisa ser executado corretamente pelo usuário para que a proposta de autonomia seja efetivamente alcançada.
+
+O \textbf{taxa de conclusão autônoma da jornada de compra} apresentou importância técnica de \textbf{59}, equivalente a aproximadamente \textbf{13,3\% da importância técnica total}. Sua principal contribuição está relacionada à possibilidade de realizar uma compra rápida sem depender integralmente do atendimento convencional. A relação estabelecida com as demandas de rapidez e autonomia demonstra que a capacidade de concluir a jornada sem intervenção é uma característica importante para o posicionamento da solução.
+
+O \textbf{taxa de acionamento de suporte humano} apresentou importância técnica de \textbf{48}, correspondente a aproximadamente \textbf{10,8\% do total}. Esse requisito possui sua principal relação com a necessidade de preservar a possibilidade de atendimento humano mesmo diante da existência de alternativas de autoatendimento. A posição intermediária desse requisito indica que o atendimento humano permanece relevante para a solução, embora tenha menor peso técnico agregado do que os atributos diretamente relacionados ao pagamento e à conclusão da jornada.
+
+Por sua vez, a \textbf{precisão da localização do produto} apresentou importância técnica de \textbf{27}, representando aproximadamente \textbf{6,1\% da importância técnica total}. Sua importância está concentrada principalmente na voz relacionada à possibilidade de encontrar o tamanho, a cor ou o modelo procurado dentro de um esforço razoável. Embora esse requisito esteja diretamente ligado a uma das principais dores identificadas na pesquisa, sua importância técnica final é inferior àquela dos requisitos relacionados ao pagamento. Isso ocorre porque, na matriz, essa voz está associada essencialmente a esse requisito específico, enquanto os requisitos de pagamento possuem relacionamento com um número maior de vozes e, em alguns casos, com vozes de elevada importância.
+
+O requisito de menor importância técnica foi a \textbf{precisão da informação de disponibilidade}, com valor ponderado de \textbf{21}, correspondente a aproximadamente \textbf{4,7\% da importância técnica total}. Sua relação na matriz está concentrada na confiança de que a informação de estoque apresentada digitalmente corresponde à realidade da loja física. Apesar da importância dessa característica para a credibilidade da solução, a matriz indica que ela possui impacto técnico mais restrito quando comparada aos requisitos relacionados diretamente ao processo de pagamento e à autonomia.
+
+A análise conjunta mostra que os três requisitos de maior importância técnica, correspondentes à \textbf{taxa de confirmação correta do pagamento e liberação da peça}, ao \textbf{tempo total para conclusão do pagamento} e à \textbf{taxa de conclusão correta do fluxo no aplicativo}, representam aproximadamente \textbf{65,0\% da importância técnica total}. Esse resultado indica uma forte concentração das prioridades de desenvolvimento em três dimensões: \textbf{confiabilidade da transação, rapidez do pagamento e execução correta do fluxo pelo usuário}.
+
+Também é possível observar que os requisitos relacionados à busca e disponibilidade dos produtos apresentam importância técnica menor na matriz, embora estejam associados a necessidades relevantes dos clientes. Essa diferença ocorre porque a importância técnica não depende apenas da relevância individual da voz do cliente, mas também da intensidade e da quantidade de relações estabelecidas com os requisitos técnicos. Assim, uma necessidade pode possuir elevada importância para o cliente e, ainda assim, resultar em menor prioridade técnica quando possui relação concentrada em poucos requisitos.
+
+
+Portanto, os resultados da matriz fornecem uma orientação objetiva para a priorização do desenvolvimento do produto. Como a solução é formada pela integração entre a bolacha RFID e o aplicativo, os requisitos de maior importância mostram que o foco não deve estar apenas no funcionamento isolado de cada componente, mas principalmente na capacidade do sistema integrado de proporcionar uma jornada de compra rápida, confiável e executável pelo próprio consumidor.
