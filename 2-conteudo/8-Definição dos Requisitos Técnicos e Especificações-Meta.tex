@@ -11,8 +11,8 @@
 
 Para transformar as necessidades identificadas na Seção~\ref{sec:ndd} em características que orientem o desenvolvimento e a avaliação do produto, a equipe utilizou o método \textit{Quality Function Deployment} (QFD), que relaciona a voz do cliente a requisitos técnicos e evita que as necessidades sejam traduzidas diretamente em soluções sem análise técnica. Como o projeto será desenvolvido em escala de protótipo, as especificações precisaram ser compatíveis com os recursos financeiros, tecnológicos e materiais da equipe. O objetivo foi, portanto, definir critérios que permitam verificar se o conceito resolve as principais dores identificadas na pesquisa, sem fixar requisitos de uma solução industrial definitiva.
 
-\subsection{Voz do cliente}
-\label{subsec:voz_do_cliente}
+\subsection{Requisitos dos clientes}
+\label{subsec:requisitos_dos_clientes}
 
 A pesquisa com consumidores mostrou perfis com comportamentos distintos em relação à autonomia, ao atendimento humano, ao uso de tecnologia e à busca por produtos, sem que essas características se excluíssem. Um mesmo consumidor pode valorizar autonomia e rapidez em uma compra simples e preferir atendimento em uma compra com maior incerteza, como a de uma peça de maior valor ou a que exige uma segunda opinião. Por isso, a equipe não partiu da premissa de que substituir o atendimento humano por tecnologia seria desejável em todas as situações.
 
@@ -20,18 +20,18 @@ As entrevistas também registraram dificuldades de disponibilidade e localizaç�
 
 A partir desse conjunto, a equipe selecionou sete das vinte vozes da Seção~\ref{sec:ndd} para o QFD, de modo a representar as três categorias da análise (necessidades, desejos e demandas) e a priorizar as vozes relacionadas às funções que a integração entre a etiqueta antifurto e o aplicativo pode contemplar. Os códigos utilizados a seguir são os mesmos da Tabela~\ref{tab:matriz_ndd}.
 
-Entre as necessidades, foram selecionadas quatro. A primeira, encontrar o tamanho, a cor ou o modelo procurado dentro de um esforço razoável (N03), refere-se à etapa de busca, em que a dificuldade pode impedir a compra mesmo quando há interesse pelo produto. A evidência concentrou-se no Cluster 3, no qual a dificuldade foi relatada de forma intensa, e o aplicativo poderá apoiar a identificação do produto e o acesso a informações sobre a peça. A segunda, confiar que a informação de estoque exibida em canais digitais corresponde à realidade da loja física (N05), é condição para que uma solução digital agregue valor: como as entrevistas registraram perda de confiança após divergências entre o site e a loja, disponibilizar informações sobre produtos não bastará se o usuário não confiar em sua precisão.
+Entre as necessidades, foram selecionadas quatro. A primeira, \textbf{Encontrar o produto procurado com facilidade (N03)}, refere-se à etapa de busca, em que a dificuldade pode impedir a compra mesmo quando há interesse pelo produto. A evidência concentrou-se no Cluster 3, no qual a dificuldade foi relatada de forma intensa, e o aplicativo poderá apoiar a identificação do produto e o acesso a informações sobre a peça. A segunda, \textbf{Confiar na precisão do estoque informado (N05)}, é condição para que uma solução digital agregue valor: como as entrevistas registraram perda de confiança após divergências entre o site e a loja, disponibilizar informações sobre produtos não bastará se o usuário não confiar em sua precisão.
 
-A terceira necessidade, preservar a opção de contar com atendimento humano mesmo quando existem alternativas de autoatendimento (N08), reflete o achado de que autonomia tecnológica não implica rejeição ao atendimento. A solução deverá, assim, complementar o atendimento existente, para que o uso da etiqueta e do aplicativo não gere insegurança ou abandono da compra entre consumidores menos confortáveis com o autoatendimento. A quarta, concluir a compra sem risco de ser mal interpretado ou constrangido por uma falha ou checagem no momento da saída (N06), liga-se diretamente à mudança que o produto introduz no procedimento de saída da loja. Embora o survey tenha mostrado pouca variação nesse aspecto, as entrevistas registraram o receio de ser visto como alguém que não pagou e o desconforto com verificações adicionais. Além de garantir que a transação ocorra corretamente, a solução deverá, portanto, transmitir segurança e legitimidade ao consumidor durante a saída.
+A terceira necessidade, \textbf{Contar com atendimento humano quando necessário (N08)}, reflete o achado de que autonomia tecnológica não implica rejeição ao atendimento. A solução deverá, assim, complementar o atendimento existente, para que o uso da etiqueta e do aplicativo não gere insegurança ou abandono da compra entre consumidores menos confortáveis com o autoatendimento. A quarta, \textbf{Concluir a compra sem constrangimentos (N06)}, liga-se diretamente à mudança que o produto introduz no procedimento de saída da loja. Embora o survey tenha mostrado pouca variação nesse aspecto, as entrevistas registraram o receio de ser visto como alguém que não pagou e o desconforto com verificações adicionais. Além de garantir que a transação ocorra corretamente, a solução deverá, portanto, transmitir segurança e legitimidade ao consumidor durante a saída.
 
-Entre os desejos, a equipe selecionou ter confirmação clara e imediata de que o pagamento foi processado corretamente (D03), pela relação direta com a experiência de pagamento e com a confiança do consumidor ao deixar a loja. As entrevistas indicaram a expectativa de um aviso inequívoco de que a operação foi concluída e de que o cliente está autorizado a sair com o produto. O item foi classificado como desejo porque aumenta o conforto e a segurança percebida sem ter aparecido como barreira universal à compra.
+Entre os desejos, a equipe selecionou \textbf{Receber confirmação imediata do pagamento (D03)}, pela relação direta com a experiência de pagamento e com a confiança do consumidor ao deixar a loja. As entrevistas indicaram a expectativa de um aviso inequívoco de que a operação foi concluída e de que o cliente está autorizado a sair com o produto. O item foi classificado como desejo porque aumenta o conforto e a segurança percebida sem ter aparecido como barreira universal à compra.
 
-Por fim, duas demandas foram selecionadas. Reduzir o tempo de espera no caixa em períodos de alta demanda (DE01) está associada a um comportamento observável de abandono: o survey mostrou maior incidência de desistência por fila no Cluster 2, e as entrevistas trouxeram episódios concretos em promoções e no horário de almoço. Ter uma opção de pagamento rápida para compras simples, sem abrir mão de atendimento em compras mais elaboradas (DE05), sintetiza a variação do nível de autonomia desejado conforme o contexto: alguns entrevistados separaram a reposição rápida, em que valorizam agilidade, das compras mais complexas, em que preferem o apoio de um vendedor. A proposta deverá, então, permitir uma jornada rápida e autônoma quando o consumidor quiser, mantendo o atendimento disponível nos casos em que a assistência for valorizada.
+Por fim, duas demandas foram selecionadas. \textbf{Reduzir o tempo de espera no caixa (DE01)} está associada a um comportamento observável de abandono: o survey mostrou maior incidência de desistência por fila no Cluster 2, e as entrevistas trouxeram episódios concretos em promoções e no horário de almoço. \textbf{Ter pagamento rápido e atendimento adequado (DE05)}, sintetiza a variação do nível de autonomia desejado conforme o contexto: alguns entrevistados separaram a reposição rápida, em que valorizam agilidade, das compras mais complexas, em que preferem o apoio de um vendedor. A proposta deverá, então, permitir uma jornada rápida e autônoma quando o consumidor quiser, mantendo o atendimento disponível nos casos em que a assistência for valorizada.
 
 As necessidades selecionadas concentram-se na obtenção de informações confiáveis, na busca pelo produto, na disponibilidade de suporte humano e na saída sem constrangimento. O desejo refere-se à qualidade da experiência de pagamento, e as demandas, a comportamentos concretos de compra, como o abandono diante de filas e a busca por agilidade em compras simples.
 
-\subsection{Requisitos técnicos}
-\label{subsec:requisitos_tecnicos}
+\subsection{Requisitos do produto}
+\label{subsec:requisitos_do_produto}
 
 Com base nas sete vozes selecionadas, a equipe definiu sete requisitos técnicos para o sistema formado pela etiqueta antifurto e pelo aplicativo. Cada requisito foi formulado primeiro em termos funcionais, isto é, pelo que o sistema deverá fazer, e só depois associado a um critério de desempenho. Um valor numérico foi fixado apenas quando havia justificativa para ele; nos demais casos, o critério será definido nos testes do protótipo, a partir de medições de referência. Os requisitos e seus critérios estão reunidos na Tabela~\ref{tab:requisitos}.
 
@@ -51,31 +51,31 @@ Com base nas sete vozes selecionadas, a equipe definiu sete requisitos técnicos
         \midrule
         R01 & Apoio à localização da peça na loja
             & O sistema deverá ajudar o cliente a identificar em que área da loja se encontra a peça procurada.
-            & A definir; a forma de localização (setor, mapa ou indicação de um vendedor) será escolhida em etapa posterior. \\
+            & A especificação-meta é que pelo menos \textbf{90\% das solicitações apresentem a localização correta do produto} nos testes realizados. \\
         \addlinespace
         R02 & Consulta de disponibilidade na unidade
             & O sistema deverá permitir consultar a disponibilidade de um produto na unidade selecionada.
-            & A informação exibida deverá corresponder ao estoque físico no momento da consulta; a tolerância dependerá do controle de estoque da loja. \\
+            & A especificação-meta é que pelo menos \textbf{95\% das consultas apresentem informações corretas de disponibilidade}. \\
         \addlinespace
         R03 & Tempo para concluir o pagamento
             & O fluxo de pagamento no aplicativo deverá ser concluído em menos tempo que a espera no caixa.
-            & Tempo entre o início do pagamento e a confirmação inferior ao tempo de fila e atendimento no caixa, medido na mesma loja e horário; entrevistados relataram filas de cinco a dez minutos. \\
+            & A especificação-meta é que o processo seja concluído em até \textbf{60 segundos}, desconsiderando eventuais atrasos externos relacionados a instituições financeiras ou serviços de terceiros.\\
         \addlinespace
         R04 & Conclusão da compra sem intervenção de funcionário
             & O cliente deverá conseguir identificar a peça, pagar e liberar a etiqueta sem ajuda de um funcionário.
-            & A medir nos testes com usuários; meta a definir após a primeira rodada. \\
+            & A especificação-meta é que pelo menos \textbf{80\% dos usuários concluam a jornada de forma autônoma}. \\
         \addlinespace
         R05 & Clareza do fluxo no aplicativo
             & O fluxo principal do aplicativo deverá poder ser concluído sem instruções adicionais.
-            & A medir nos testes com usuários, pelos erros que interrompem o fluxo e pelos pedidos de ajuda. \\
+            & A especificação-meta é que pelo menos \textbf{85\% dos participantes concluam corretamente o fluxo principal} na primeira tentativa. \\
         \addlinespace
         R06 & Liberação condicionada ao pagamento
             & A etiqueta deverá liberar a peça somente após a confirmação válida do pagamento, e a confirmação exibida ao cliente deverá corresponder ao estado real da transação.
-            & Nenhuma divergência nos testes controlados: uma liberação sem pagamento é perda para a loja, e uma confirmação sem liberação retém o cliente na saída (N06). \\
+            & A especificação-meta é atingir \textbf{90\% de correspondência entre pagamento confirmado, confirmação apresentada ao usuário e autorização para liberação} nos testes controlados. \\
         \addlinespace
         R07 & Acesso a atendimento humano
             & Todo cenário de falha previsto no protótipo deverá oferecer uma alternativa de atendimento humano que permita concluir a compra.
-            & Cobertura de todos os cenários de falha mapeados no protótipo. \\
+            & A especificação-meta é que \textbf{90\% dos cenários de falha previstos no protótipo possuam uma alternativa de atendimento humano}, permitindo a continuidade ou conclusão da compra. \\
         \bottomrule
     \end{tabularx}
     \source{Elaborado pelos autores (2026).}
@@ -116,6 +116,9 @@ Na matriz de relacionamentos do QFD, cada voz do cliente foi relacionada a cada 
     \source{Elaborado pelos autores (2026).}
 \end{table}
 
+\textcolor{red}{REMOVER ESSA TABELA ACIMA E COLOCAR O QFD DO ZANCUL}
+
+
 A importância técnica concentrou-se em poucos requisitos. A liberação condicionada ao pagamento (R06) obteve o maior valor, 139 pontos, cerca de 31,3\% do total, principalmente pelas relações fortes com a conclusão da compra sem constrangimento na saída (N06) e com a redução da espera no caixa (DE01), além das relações com a confirmação do pagamento (D03) e com a opção de pagamento rápido (DE05). Garantir que o sistema reconheça corretamente o pagamento e libere a peça constituiu, assim, o principal foco técnico indicado pela matriz.
 
 Em seguida, o tempo para concluir o pagamento (R03) somou 87 pontos, cerca de 19,6\% do total, associado sobretudo à redução da espera no caixa e à opção de pagamento rápido para compras simples. A clareza do fluxo no aplicativo (R05) somou 63 pontos (14,2\%), com relações fortes ou moderadas com a autonomia, a confiança na saída da loja e a compra rápida, o que mostra que disponibilizar o pagamento pelo aplicativo não basta se o usuário não conseguir executar o fluxo corretamente. A conclusão da compra sem intervenção de funcionário (R04) somou 59 pontos (13,3\%), com contribuição concentrada na possibilidade de comprar rapidamente sem depender do atendimento convencional.
@@ -146,6 +149,8 @@ A correlação entre os próprios requisitos está na Tabela~\ref{tab:teto_qfd}.
     \end{tabular}
     \source{Elaborado pelos autores (2026).}
 \end{table}
+
+\textcolor{red}{REMOVER ESSA TABELA ACIMA E COLOCAR O QFD DO ZANCUL}
 
 O tempo de pagamento (R03), a conclusão sem intervenção (R04) e a clareza do fluxo (R05) reforçam-se mutuamente, assim como a localização (R01) e a disponibilidade (R02). O acesso a atendimento humano (R07), por sua vez, apresentou correlação negativa com R03, R04 e R05, o que expressa um conflito de projeto: oferecer atendimento humano durante a compra tende a alongar o fluxo e a reduzir a autonomia. A solução precisará acomodar esse conflito, por exemplo mantendo o atendimento como opção acionada pelo cliente, fora do fluxo principal.
 
