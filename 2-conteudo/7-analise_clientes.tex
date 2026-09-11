@@ -9,28 +9,29 @@
 
 Esta análise teve como objetivo responder a três perguntas: quem são os clientes observados na experiência de compra em loja física da Riachuelo, como esses clientes podem ser agrupados a partir de comportamentos e contextos relevantes para a jornada de compra, e o que esses clientes procuram, valorizam ou enfrentam ao longo dessa jornada. A tradução desses achados em necessidades, desejos e demandas preliminares, apresentada na Seção~\ref{sec:ndd}, foi tratada como etapa posterior, e não como ponto de partida da leitura dos dados.
 
-Foram utilizadas duas fontes primárias, complementadas por dois documentos de apoio. A primeira fonte foi um survey estruturado, intitulado \emph{Pesquisa de Experiência de Compra em Loja}, aplicado junto a consumidores e exportado em 142 respostas válidas. O instrumento teve seis páginas e 25 campos, combinando itens de escala Likert de 1 a 5 com itens de frequência (de \emph{Nunca} a \emph{Sempre}), organizados em cinco blocos temáticos: disponibilidade e facilidade de encontrar produtos; atendimento e autonomia; filas, pagamento e tempo na loja; confiança em tecnologia e canais digitais; segurança e confiança na compra. O item central para a hipótese de solução em estudo foi \emph{Confiaria em um processo de compra que não exigisse checagem manual na saída, desde que o pagamento já estivesse confirmado}. Um problema no registro do formulário fez com que os 142 carimbos de data e hora do arquivo exportado aparecessem concentrados num intervalo de poucos minutos, embora a coleta tenha ocorrido ao longo de uma semana. Essa falha não compromete o conteúdo das respostas e não motivou a exclusão de nenhum registro: todas as 142 respostas foram usadas na análise.
+Foram utilizadas duas fontes primárias, complementadas por dois documentos de apoio. A primeira fonte foi um survey estruturado, intitulado \emph{Pesquisa de Experiência de Compra em Loja}, aplicado junto a consumidores e exportado em 142 respostas válidas. O instrumento teve seis páginas e 25 campos, combinando itens de escala Likert de 1 a 5 com itens de frequência (de \emph{Nunca} a \emph{Sempre}), organizados em cinco blocos temáticos: disponibilidade e facilidade de encontrar produtos; atendimento e autonomia; filas, pagamento e tempo na loja; confiança em tecnologia e canais digitais; segurança e confiança na compra. O item central para a hipótese de solução em estudo foi \emph{Confiaria em um processo de compra que não exigisse checagem manual na saída, desde que o pagamento já estivesse confirmado}.
 
 A segunda fonte foi um conjunto de onze entrevistas individuais semiestruturadas, conduzidas com um roteiro dividido em blocos temáticos: abertura e contexto, reconstrução de uma jornada de compra recente, busca e disponibilidade de produto, autonomia e atendimento do vendedor, fila e pagamento, confiança e segurança, necessidades não previstas, e, apenas ao final, exploração da hipótese de solução em estudo. O roteiro foi desenhado para que o entrevistado descrevesse experiências concretas em vez de opiniões abstratas, e para que a etiqueta de segurança inteligente só fosse mencionada depois de o entrevistado relatar livremente sua jornada de compra, suas fontes de fricção e suas preferências de atendimento. Essa ordem foi respeitada na leitura dos resultados: os achados sobre caracterização e agrupamento de clientes, apresentados nas Seções~\ref{sec:caracterizacao} e \ref{sec:clusters}, não partem da solução em estudo.
 
 Como documentos de apoio, foi consultado o roteiro de entrevista na íntegra, para confirmar a intenção de cada bloco de perguntas, e uma nota anterior sobre o desenho do survey, que descreve os cinco perfis comportamentais usados para orientar a construção do instrumento e a composição da amostra de entrevistados: autônomo digital, pragmático equilibrado, dependente de atendimento, cético tradicional e frustrado com disponibilidade. Esses cinco perfis foram tratados nesta análise como hipóteses de partida, não como resultado. Ao longo do texto, a análise mostra em que medida esses perfis se confirmam nos dados, onde se fundem, e onde um comportamento relatado não se encaixa bem em nenhum deles.
 
-A abordagem analítica partiu dos dados brutos do survey, sem carregar os rótulos de perfil originais em nenhuma etapa de agrupamento. As perguntas foram recodificadas para escalas numéricas de 0 a 100 e combinadas em dimensões comportamentais (detalhadas na Seção~\ref{sec:quantitativa}). Sobre essas dimensões foram testados agrupamentos por \emph{k-means} e por clusterização hierárquica (Ward), comparando diferentes números de grupos pelo coeficiente de silhueta. As onze entrevistas foram lidas na íntegra, tema a tema, e as falas mais reveladoras foram organizadas por padrão de comportamento. Os rótulos de perfil originais só voltam a aparecer na Seção~\ref{sec:integracao}, para comparar o resultado emergente com o ponto de partida do projeto.
+As perguntas foram recodificadas para escalas numéricas de 0 a 100 e combinadas em dimensões comportamentais (detalhadas na Seção~\ref{sec:quantitativa}). Sobre essas dimensões foram testados agrupamentos por \emph{k-means} e por clusterização hierárquica (Ward), comparando diferentes números de grupos pelo coeficiente de silhueta. As onze entrevistas foram lidas na íntegra, tema a tema, e as falas mais reveladoras foram organizadas por padrão de comportamento. Os rótulos de perfil originais só voltam a aparecer na Seção~\ref{sec:integracao}, para comparar o resultado emergente com o ponto de partida do projeto.
 
 Uma limitação transversal a toda a análise deve ser registrada desde já. A amostra de 142 respostas de survey e 11 entrevistas é pequena, e os materiais disponíveis não documentam como os respondentes e entrevistados foram recrutados ou selecionados. Isso impede avaliar se a amostra é razoavelmente aleatória, concentrada por conveniência, ou enviesada por algum canal específico de recrutamento. As proporções, correlações e agrupamentos discutidos neste documento devem ser lidos como padrões observados nesta amostra específica, e não como estimativas validadas para o conjunto de clientes da Riachuelo. Onde a evidência permitir apenas uma leitura qualitativa, isso é indicado explicitamente no texto.
 
 \subsection{Caracterização dos clientes}
 \label{sec:caracterizacao}
 
-\subsubsection{Perfil sociodemográfico e de frequência de compra}
+\subsubsection{Perfil sociodemográfico}
 
 A amostra do survey concentrou-se na faixa de 25 a 34 anos (32\% dos respondentes), seguida por 35 a 44 e 45 a 54 anos (17\% cada). O gênero predominante foi feminino (53\%), seguido de masculino (42\%), com uma pequena parcela não binária ou que preferiu não informar. A frequência de compra em loja física dividiu-se entre \emph{mensalmente} (44\%) e \emph{algumas vezes ao ano} (43\%), com uma minoria comprando mais de uma vez por mês (13\%). A amostra distribuiu-se por vinte shoppings e regiões diferentes de São Paulo e Campinas, sem concentração forte em nenhum, o que limita qualquer leitura por loja específica (Figura~\ref{fig:perfil_demografico}).
 
 \begin{figure}[htbp]
     \centering
-    \textbf{Perfil demográfico}
     \caption{Perfil demográfico (faixa etária) e frequência de compra em loja física da amostra do survey (n = 142).}
+    \includegraphics[width=0.8\textwidth]{imagens/análise_clientes/08_perfil_demografico.png}
     \label{fig:perfil_demografico}
+    \source{Autoria própria}
 \end{figure}
 
 As onze entrevistas cobriram uma faixa etária mais ampla no relato, de jovens como Thiago e Luana a aposentados como Nivaldo e Robério, e uma variedade de papéis de compra (para si, para o cônjuge, para os filhos, para o próprio negócio) que o survey não capturou diretamente, mas que ajudou a interpretar o que estava por trás das respostas de escala.
@@ -47,7 +48,7 @@ As entrevistas revelaram uma variação relevante no papel da companhia durante 
 
 \subsubsection{Autonomia como preferência variável por etapa da jornada, não como traço fixo}
 
-Um padrão recorrente nas entrevistas foi a coexistência, na mesma pessoa, de preferência por resolver uma etapa da jornada sozinha e de dependência de ajuda em outra etapa, sem que isso fosse relatado como contradição pelo próprio entrevistado. Camila descreveu essa divisão de forma direta: \emph{"A parte de escolher e experimentar, com certeza. Gosto de fazer isso no meu ritmo, sem ninguém em cima"}, e, na mesma entrevista, sobre o que uma vendedora resolve que ela não resolveria sozinha: \emph{"Achar tamanho que sumiu da araque, isso sim eu peço ajuda"} (Entrevista 8). O mesmo padrão apareceu, com variações, em quase todas as entrevistas: a autonomia desejada concentrou-se na escolha e na experimentação, e cedeu lugar à dependência de ajuda especificamente quando o produto procurado não estava visível ou disponível na araque. Esse achado qualitativo sugere que autonomia, tal como o survey a mede (um único conjunto de itens agregados em uma dimensão, ver Seção~\ref{sec:quantitativa}), pode não corresponder a um traço estável do cliente, e sim a uma preferência que varia por etapa da jornada. Essa é uma interpretação construída a partir das entrevistas, não uma medição direta, já que o survey não testou autonomia separadamente por etapa.
+Um padrão recorrente nas entrevistas foi a coexistência, na mesma pessoa, de preferência por resolver uma etapa da jornada sozinha e de dependência de ajuda em outra etapa, sem que isso fosse relatado como contradição pelo próprio entrevistado. Camila descreveu essa divisão de forma direta: \emph{"A parte de escolher e experimentar, com certeza. Gosto de fazer isso no meu ritmo, sem ninguém em cima"}, e, na mesma entrevista, sobre o que uma vendedora resolve que ela não resolveria sozinha: \emph{"Achar tamanho que sumiu da araque, isso sim eu peço ajuda"} (Entrevista 8). O mesmo padrão apareceu, com variações, em quase todas as entrevistas: a autonomia desejada concentrou-se na escolha e na experimentação, e cedeu lugar à dependência de ajuda especificamente quando o produto procurado não estava visível ou disponível na arara. Esse achado qualitativo sugere que autonomia, tal como o survey a mede (um único conjunto de itens agregados em uma dimensão, ver Seção~\ref{sec:quantitativa}), pode não corresponder a um traço estável do cliente, e sim a uma preferência que varia por etapa da jornada. Essa é uma interpretação construída a partir das entrevistas, não uma medição direta, já que o survey não testou autonomia separadamente por etapa.
 
 \subsubsection{Busca de produto e confiança em canais digitais}
 
@@ -67,9 +68,10 @@ A verificação partiu da estrutura de correlação entre cinco dimensões compo
 
 \begin{figure}[htbp]
     \centering
-    \textbf{Correlação}
     \caption{Correlação entre as cinco dimensões comportamentais construídas a partir do survey (n = 142).}
+    \includegraphics[width=0.8\textwidth]{imagens/análise_clientes/02_correlacao_dimensoes.png}
     \label{fig:correlacao}
+    \source{Autoria própria}
 \end{figure}
 
 Esse é um dado observado, não uma interpretação: as correlações medidas nesta amostra reduzem o espaço de diferenciação real a duas dimensões, e não cinco. A explicação para a alta correlação entre as quatro primeiras dimensões permanece como hipótese em aberto: pode refletir um traço de disposição coerente, no qual pessoas com rotina mais apertada tendem a ser, ao mesmo tempo, mais adeptas de tecnologia, mais autônomas e mais impacientes com fila, ou pode refletir, ao menos em parte, um viés de resposta comum em survey de autorrelato, no qual respondentes tendem a concordar ou discordar de forma consistente ao longo de itens redigidos de forma parecida, independentemente do conteúdo específico de cada um. Os dados atuais não permitem separar as duas explicações. As entrevistas trazem ao menos um contraexemplo direto a uma fusão automática entre autonomia e confiança em tecnologia: Nivaldo descreveu-se como autônomo na escolha do produto, mas desconfiado do pagamento por celular (Entrevista 5), o que reforça que a fusão observada no survey deve ser lida como um padrão desta amostra, não como lei geral de comportamento do consumidor.
@@ -80,16 +82,18 @@ Essa clusterização formal deve ser lida pelo que é: uma técnica exploratóri
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{imagens/Poli.png}
     \caption{Distribuição dos respondentes nos dois eixos usados para a clusterização exploratória: orientação autonomia-tecnologia-eficiência e dor de disponibilidade (n = 142).}
+    \includegraphics[width=0.6\textwidth]{imagens/análise_clientes/03_clusters_scatter.png}
     \label{fig:clusters_scatter}
+    \source{Autoria própria}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{imagens/Poli.png}
     \caption{Tamanho dos quatro agrupamentos exploratórios identificados (n = 142).}
+    \includegraphics[width=0.8\textwidth]{imagens/análise_clientes/04_tamanho_clusters.png}
     \label{fig:tamanho_clusters}
+    \source{Autoria própria}
 \end{figure}
 
 Os quatro grupos que emergiram não reproduziram exatamente os cinco perfis originais do survey. Três deles tiveram tamanho relativamente próximo a três dos perfis originais, o que sugere que o instrumento os capturou razoavelmente bem. O quarto perfil original, cético tradicional, não apareceu como grupo separado: seus 13 respondentes esperados parecem ter se fundido ao grupo de menor autonomia, junto com o antigo perfil dependente de atendimento (39 mais 13 igual a 52, próximo aos 55 respondentes observados nesse grupo). Esse resultado foi tratado como achado, não como erro de método, e é discutido na Seção~\ref{sec:cluster_aberto} e retomado na síntese (Seção~\ref{sec:sintese}).
@@ -98,16 +102,18 @@ As Figuras~\ref{fig:confianca_cluster} e \ref{fig:desistencia_cluster} comparam 
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{imagens/Poli.png}
     \caption{Distribuição de respostas ao item de confiança em processo de compra sem checagem manual na saída, por agrupamento (n = 142).}
+    \includegraphics[width=0.8\textwidth]{imagens/análise_clientes/01_confianca_sem_checagem.png}
     \label{fig:confianca_cluster}
+    \source{Autoria própria}
 \end{figure}
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{imagens/Poli.png}
     \caption{Frequência com que os respondentes já desistiram de uma compra por causa da fila, por agrupamento (n = 142).}
+    \includegraphics[width=0.8\textwidth]{imagens/análise_clientes/06_desistencia_fila_por_cluster.png}
     \label{fig:desistencia_cluster}
+    \source{Autoria própria}
 \end{figure}
 
 \subsubsection{Cluster 1: dependentes de atendimento}
@@ -148,8 +154,8 @@ A distribuição de respostas ao item central para a hipótese de solução conc
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{imagens/Poli.png}
     \caption{Distribuição de respostas ao item de confiança em processo de compra sem checagem manual na saída, desde que o pagamento já esteja confirmado (n = 142).}
+    \includegraphics[width=0.8\textwidth]{imagens/análise_clientes/05_confianca_por_cluster.png}
     \label{fig:confianca_geral}
 \end{figure}
 
@@ -173,9 +179,10 @@ Houve uma tendência de queda na orientação autonomia-tecnologia-eficiência c
 
 \begin{figure}[htbp]
     \centering
-    \includegraphics[width=0.8\textwidth]{imagens/Poli.png}
     \caption{Orientação autonomia-tecnologia-eficiência por faixa etária (n = 142).}
+    \includegraphics[width=0.8\textwidth]{imagens/análise_clientes/07_autonomia_por_idade.png}
     \label{fig:idade}
+    \source{Autoria própria}
 \end{figure}
 
 \subsubsection{Qualidade e limitações da base quantitativa}
@@ -278,7 +285,7 @@ Cada item a seguir foi formulado na perspectiva do resultado desejado pelo clien
 \label{sec:matriz}
 
 A Tabela~\ref{tab:matriz_ndd} consolida os itens apresentados, preservando a rastreabilidade entre cada formulação e a evidência que a originou. A tabela requer o pacote \texttt{pdflscape} (ambiente \texttt{landscape}) e os pacotes \texttt{longtable} e \texttt{array} no preâmbulo do documento principal, dada a largura de conteúdo.
-
+\landscape
 \footnotesize
 \begin{longtable}{p{0.9cm} p{1.9cm} p{4.2cm} p{2.4cm} p{3.5cm} p{3.5cm} p{2.4cm} p{3.3cm}}
 \caption{Matriz consolidada de necessidades, desejos e demandas dos clientes, com rastreabilidade às evidências.} \label{tab:matriz_ndd} \\
@@ -318,6 +325,7 @@ DE04 & Demanda & Saber, antes de ir à loja, se o produto está disponível naqu
 DE05 & Demanda & Ter opção de pagamento rápido para compras simples sem perder atendimento nas elaboradas & Clusters 1 e 4 & Não medida diretamente & Renata (Entr. 7); Camila (Entr. 8) & Coexistência de dois tipos de compra no mesmo cliente & Condicional ao tipo de compra, não ao perfil fixo do cliente \\
 \end{longtable}
 \normalsize
+\endlandscape
 
 \subsection{Síntese dos achados}
 \label{sec:sintese}

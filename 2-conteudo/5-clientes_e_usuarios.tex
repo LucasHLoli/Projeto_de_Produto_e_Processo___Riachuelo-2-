@@ -71,17 +71,39 @@ A Tabela~\ref{tab:segmentacao_grupos} resume o que já foi observado em campo e 
 \begin{table}[h!]
     \centering
     \caption{Cliente Premium e Cliente Popular: observações e hipóteses}
-    \begin{tabular}{p{2.6cm}p{4.6cm}p{4.6cm}}
-        \toprule
-        \textbf{Dimensão} & \textbf{Cliente Premium} & \textbf{Cliente Popular}\\
-        \midrule
-        Papel do vendedor (observação de campo) & Menor influência sobre a decisão de cartão de crédito & Maior influência sobre a decisão de cartão de crédito\\
-        Autoatendimento (observação de campo) & Maior preferência declarada & Menor preferência declarada\\
-        Dependência do vendedor (hipótese a testar) & Pode estar diminuindo, com valorização crescente de autonomia & Padrão de dependência ainda não medido, pode seguir tendência semelhante em outro ritmo\\
-        Lógica de exposição de produto (observação de campo) & Não caracterizada nesta etapa & Prefere ver muitas peças expostas (lógica de abundância)\\
-        \bottomrule
-    \end{tabular}
     \label{tab:segmentacao_grupos}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.4}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{3.1cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X
+        >{\centering\arraybackslash}p{1.9cm}@{}}
+        \toprule
+        \textbf{Dimensão} & \textbf{Cliente Premium} & \textbf{Cliente Popular} & \textbf{Base} \\
+        \midrule
+        Papel do vendedor
+            & Menor influência sobre a decisão de cartão de crédito
+            & Maior influência sobre a decisão de cartão de crédito
+            & Campo \\
+        \addlinespace
+        Autoatendimento
+            & Maior preferência declarada
+            & Menor preferência declarada
+            & Campo \\
+        \addlinespace
+        Dependência do vendedor
+            & Pode estar diminuindo, com valorização crescente de autonomia
+            & Padrão ainda não medido, pode seguir tendência semelhante em outro ritmo
+            & Hipótese \\
+        \addlinespace
+        Lógica de exposição de produto
+            & Não caracterizada nesta etapa
+            & Prefere ver muitas peças expostas (lógica de abundância)
+            & Campo \\
+        \bottomrule
+    \end{tabularx}
+    \source{Autoria Própria}
 \end{table}
 
 A preferência entre autonomia e atendimento assistido varia por momento da jornada e por cluster. Tratar autonomia como vantagem automática arrisca construir uma solução que remove suporte no momento em que o cliente ainda precisa dele.
