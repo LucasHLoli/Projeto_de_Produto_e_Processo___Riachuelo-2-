@@ -1,9 +1,9 @@
 % =============================================================================
 % Definicao de requisitos tecnicos e especificacoes-meta (projeto Riachuelo).
 % Os codigos das vozes do cliente (N, D, DE) sao os mesmos da Secao 7
-% (Tabela tab:matriz_ndd). As matrizes do QFD foram transcritas das imagens
-% originais (imagens/definicao dos requisitos/fig01 e fig02) sem alterar
-% nenhum valor; so os codigos das vozes e os nomes dos requisitos mudaram.
+% (Tabela tab:matriz_ndd). A casa da qualidade segue o modelo de QFD da
+% disciplina (SITE_Template_QFD): qualidade exigida, planejada, projetada,
+% telhado e benchmarking tecnico. Pesos calculados por script (qfd_calc.py).
 % =============================================================================
 
 \section{DEFINIÇÃO DE REQUISITOS TÉCNICOS E ESPECIFICAÇÕES-META}
@@ -20,20 +20,20 @@ As entrevistas também registraram dificuldades de disponibilidade e localizaç�
 
 A partir desse conjunto, a equipe selecionou sete das vinte vozes da Seção~\ref{sec:ndd} para o QFD, de modo a representar as três categorias da análise (necessidades, desejos e demandas) e a priorizar as vozes relacionadas às funções que a integração entre a etiqueta antifurto e o aplicativo pode contemplar. Os códigos utilizados a seguir são os mesmos da Tabela~\ref{tab:matriz_ndd}.
 
-Entre as necessidades, foram selecionadas quatro. A primeira, \textbf{Encontrar o produto procurado com facilidade (N03)}, refere-se à etapa de busca, em que a dificuldade pode impedir a compra mesmo quando há interesse pelo produto. A evidência concentrou-se no Cluster 3, no qual a dificuldade foi relatada de forma intensa, e o aplicativo poderá apoiar a identificação do produto e o acesso a informações sobre a peça. A segunda, \textbf{Confiar na precisão do estoque informado (N05)}, é condição para que uma solução digital agregue valor: como as entrevistas registraram perda de confiança após divergências entre o site e a loja, disponibilizar informações sobre produtos não bastará se o usuário não confiar em sua precisão.
+Entre as necessidades, foram selecionadas quatro. A primeira, Encontrar o produto procurado com facilidade (N03), refere-se à etapa de busca, em que a dificuldade pode impedir a compra mesmo quando há interesse pelo produto. A evidência concentrou-se no Cluster 3, no qual a dificuldade foi relatada de forma intensa, e o aplicativo poderá apoiar a identificação do produto e o acesso a informações sobre a peça. A segunda, Confiar na precisão do estoque informado (N05), é condição para que uma solução digital agregue valor: como as entrevistas registraram perda de confiança após divergências entre o site e a loja, disponibilizar informações sobre produtos não bastará se o usuário não confiar em sua precisão.
 
-A terceira necessidade, \textbf{Contar com atendimento humano quando necessário (N08)}, reflete o achado de que autonomia tecnológica não implica rejeição ao atendimento. A solução deverá, assim, complementar o atendimento existente, para que o uso da etiqueta e do aplicativo não gere insegurança ou abandono da compra entre consumidores menos confortáveis com o autoatendimento. A quarta, \textbf{Concluir a compra sem constrangimentos (N06)}, liga-se diretamente à mudança que o produto introduz no procedimento de saída da loja. Embora o survey tenha mostrado pouca variação nesse aspecto, as entrevistas registraram o receio de ser visto como alguém que não pagou e o desconforto com verificações adicionais. Além de garantir que a transação ocorra corretamente, a solução deverá, portanto, transmitir segurança e legitimidade ao consumidor durante a saída.
+A terceira necessidade, Contar com atendimento humano quando necessário (N08), reflete o achado de que autonomia tecnológica não implica rejeição ao atendimento. A solução deverá, assim, complementar o atendimento existente, para que o uso da etiqueta e do aplicativo não gere insegurança ou abandono da compra entre consumidores menos confortáveis com o autoatendimento. A quarta, Concluir a compra sem constrangimentos (N06), liga-se diretamente à mudança que o produto introduz no procedimento de saída da loja. Embora o survey tenha mostrado pouca variação nesse aspecto, as entrevistas registraram o receio de ser visto como alguém que não pagou e o desconforto com verificações adicionais. Além de garantir que a transação ocorra corretamente, a solução deverá, portanto, transmitir segurança e legitimidade ao consumidor durante a saída.
 
-Entre os desejos, a equipe selecionou \textbf{Receber confirmação imediata do pagamento (D03)}, pela relação direta com a experiência de pagamento e com a confiança do consumidor ao deixar a loja. As entrevistas indicaram a expectativa de um aviso inequívoco de que a operação foi concluída e de que o cliente está autorizado a sair com o produto. O item foi classificado como desejo porque aumenta o conforto e a segurança percebida sem ter aparecido como barreira universal à compra.
+Entre os desejos, a equipe selecionou Receber confirmação imediata do pagamento (D03), pela relação direta com a experiência de pagamento e com a confiança do consumidor ao deixar a loja. As entrevistas indicaram a expectativa de um aviso inequívoco de que a operação foi concluída e de que o cliente está autorizado a sair com o produto. O item foi classificado como desejo porque aumenta o conforto e a segurança percebida sem ter aparecido como barreira universal à compra.
 
-Por fim, duas demandas foram selecionadas. \textbf{Reduzir o tempo de espera no caixa (DE01)} está associada a um comportamento observável de abandono: o survey mostrou maior incidência de desistência por fila no Cluster 2, e as entrevistas trouxeram episódios concretos em promoções e no horário de almoço. \textbf{Ter pagamento rápido e atendimento adequado (DE05)}, sintetiza a variação do nível de autonomia desejado conforme o contexto: alguns entrevistados separaram a reposição rápida, em que valorizam agilidade, das compras mais complexas, em que preferem o apoio de um vendedor. A proposta deverá, então, permitir uma jornada rápida e autônoma quando o consumidor quiser, mantendo o atendimento disponível nos casos em que a assistência for valorizada.
+Por fim, duas demandas foram selecionadas. Reduzir o tempo de espera no caixa (DE01) está associada a um comportamento observável de abandono: o survey mostrou maior incidência de desistência por fila no Cluster 2, e as entrevistas trouxeram episódios concretos em promoções e no horário de almoço. Ter pagamento rápido e atendimento adequado (DE05), sintetiza a variação do nível de autonomia desejado conforme o contexto: alguns entrevistados separaram a reposição rápida, em que valorizam agilidade, das compras mais complexas, em que preferem o apoio de um vendedor. A proposta deverá, então, permitir uma jornada rápida e autônoma quando o consumidor quiser, mantendo o atendimento disponível nos casos em que a assistência for valorizada.
 
 As necessidades selecionadas concentram-se na obtenção de informações confiáveis, na busca pelo produto, na disponibilidade de suporte humano e na saída sem constrangimento. O desejo refere-se à qualidade da experiência de pagamento, e as demandas, a comportamentos concretos de compra, como o abandono diante de filas e a busca por agilidade em compras simples.
 
 \subsection{Requisitos do produto}
 \label{subsec:requisitos_do_produto}
 
-Com base nas sete vozes selecionadas, a equipe definiu sete requisitos técnicos para o sistema formado pela etiqueta antifurto e pelo aplicativo. Cada requisito foi formulado primeiro em termos funcionais, isto é, pelo que o sistema deverá fazer, e só depois associado a um critério de desempenho. Um valor numérico foi fixado apenas quando havia justificativa para ele; nos demais casos, o critério será definido nos testes do protótipo, a partir de medições de referência. Os requisitos e seus critérios estão reunidos na Tabela~\ref{tab:requisitos}.
+Com base nas sete vozes selecionadas, a equipe definiu sete requisitos técnicos para o sistema formado pela etiqueta antifurto e pelo aplicativo. Cada requisito foi formulado primeiro em termos funcionais, isto é, pelo que o sistema deverá fazer, e só depois associado a um critério de desempenho. As especificações-meta foram depois comparadas com o desempenho estimado dos concorrentes no benchmarking técnico (Seção~\ref{subsubsec:benchmarking_tecnico}). Os requisitos e seus critérios estão reunidos na Tabela~\ref{tab:requisitos}.
 
 \begin{table}[htbp]
     \centering
@@ -51,31 +51,31 @@ Com base nas sete vozes selecionadas, a equipe definiu sete requisitos técnicos
         \midrule
         R01 & Apoio à localização da peça na loja
             & O sistema deverá ajudar o cliente a identificar em que área da loja se encontra a peça procurada.
-            & A especificação-meta é que pelo menos \textbf{90\% das solicitações apresentem a localização correta do produto} nos testes realizados. \\
+            & A especificação-meta é que pelo menos 90\% das solicitações apresentem a localização correta do produto nos testes realizados. \\
         \addlinespace
         R02 & Consulta de disponibilidade na unidade
             & O sistema deverá permitir consultar a disponibilidade de um produto na unidade selecionada.
-            & A especificação-meta é que pelo menos \textbf{95\% das consultas apresentem informações corretas de disponibilidade}. \\
+            & A especificação-meta é que pelo menos 95\% das consultas apresentem informações corretas de disponibilidade. \\
         \addlinespace
         R03 & Tempo para concluir o pagamento
             & O fluxo de pagamento no aplicativo deverá ser concluído em menos tempo que a espera no caixa.
-            & A especificação-meta é que o processo seja concluído em até \textbf{60 segundos}, desconsiderando eventuais atrasos externos relacionados a instituições financeiras ou serviços de terceiros.\\
+            & A especificação-meta é que o processo seja concluído em até 45 segundos, desconsiderando eventuais atrasos externos relacionados a instituições financeiras ou serviços de terceiros.\\
         \addlinespace
         R04 & Conclusão da compra sem intervenção de funcionário
             & O cliente deverá conseguir identificar a peça, pagar e liberar a etiqueta sem ajuda de um funcionário.
-            & A especificação-meta é que pelo menos \textbf{80\% dos usuários concluam a jornada de forma autônoma}. \\
+            & A especificação-meta é que pelo menos 80\% dos usuários concluam a jornada de forma autônoma. \\
         \addlinespace
         R05 & Clareza do fluxo no aplicativo
             & O fluxo principal do aplicativo deverá poder ser concluído sem instruções adicionais.
-            & A especificação-meta é que pelo menos \textbf{85\% dos participantes concluam corretamente o fluxo principal} na primeira tentativa. \\
+            & A especificação-meta é que pelo menos 85\% dos participantes concluam corretamente o fluxo principal na primeira tentativa. \\
         \addlinespace
         R06 & Liberação condicionada ao pagamento
             & A etiqueta deverá liberar a peça somente após a confirmação válida do pagamento, e a confirmação exibida ao cliente deverá corresponder ao estado real da transação.
-            & A especificação-meta é atingir \textbf{90\% de correspondência entre pagamento confirmado, confirmação apresentada ao usuário e autorização para liberação} nos testes controlados. \\
+            & A especificação-meta é atingir 100\% de correspondência entre pagamento confirmado, confirmação apresentada ao usuário e autorização para liberação nos testes controlados. \\
         \addlinespace
         R07 & Acesso a atendimento humano
             & Todo cenário de falha previsto no protótipo deverá oferecer uma alternativa de atendimento humano que permita concluir a compra.
-            & A especificação-meta é que \textbf{90\% dos cenários de falha previstos no protótipo possuam uma alternativa de atendimento humano}, permitindo a continuidade ou conclusão da compra. \\
+            & A especificação-meta é que 100\% dos cenários de falha previstos no protótipo possuam uma alternativa de atendimento humano, permitindo a continuidade ou conclusão da compra. \\
         \bottomrule
     \end{tabularx}
     \source{Elaborado pelos autores (2026).}
@@ -85,148 +85,144 @@ Os requisitos cobrem as dimensões presentes nas vozes selecionadas. O apoio à 
 
 A liberação condicionada ao pagamento (R06) trata ao mesmo tempo da confiança do consumidor e da redução de verificações na saída, uma vez que o sistema deverá fornecer evidência clara de que a transação foi concluída e permitir a saída sem insegurança. Por fim, o acesso a atendimento humano (R07) garante que a automação não elimine o suporte ao consumidor, aspecto relevante sobretudo para os clientes que valorizam assistência durante a jornada. Esse é também o único requisito cuja meta foi fixada em cobertura total sem depender de medição, já que decorre de uma decisão de projeto.
 
-\subsection{Matriz QFD}
+\subsection{Casa da qualidade}
 \label{subsec:QFD}
 
-Na matriz de relacionamentos do QFD, cada voz do cliente foi relacionada a cada requisito técnico em quatro intensidades: ausência de relação (0), relação fraca (1), moderada (3) e forte (9). A importância técnica de cada requisito resultou da soma dos produtos entre a importância da voz, em escala de 1 a 5, e a intensidade de sua relação com o requisito, o que permite identificar quais características do produto têm maior impacto potencial sobre a satisfação dos clientes. A matriz completa está na Tabela~\ref{tab:qfd}.
+A casa da qualidade foi montada conforme o modelo de QFD adotado na disciplina, baseado em \citeonline{rozenfeld2006gestao}, em quatro passos: a matriz da qualidade exigida, que registra as vozes do cliente e seu grau de importância; a matriz da qualidade planejada, que compara o desempenho atual com o dos concorrentes e define o nível pretendido para cada voz; a matriz da qualidade projetada, que relaciona as vozes aos requisitos do produto; e o benchmarking técnico, que compara os requisitos em unidades mensuráveis. O telhado da casa completa a análise com a correlação entre os requisitos.
+
+\subsubsection{Qualidade exigida e qualidade planejada}
+
+O grau de importância de cada voz, de 1 (irrelevante) a 5 (extremamente importante), foi mantido da seleção feita na Seção~\ref{subsec:requisitos_dos_clientes}. Na avaliação de desempenho, a equipe atribuiu notas de 1 (péssimo) a 5 (ótimo) ao processo atual de pagamento e saída da Riachuelo, tomado como produto de referência, e a três concorrentes do segmento-alvo: a Renner, com terminais de autoatendimento por radiofrequência em 213 lojas \cite{consumidormoderno2025renner}; a C\&A, que passou a oferecer autoatendimento com etiquetas de radiofrequência no conceito de loja Energia, lançado em 2025 \cite{brazileconomy2025cea}; e a Zara, cujas lojas brasileiras reabertas a partir de 2023 incluem leitura digital das peças, provadores automáticos e consulta de estoque \cite{infomoney2023zara}. O modelo prevê dois concorrentes, e a equipe incluiu um terceiro para cobrir as três redes citadas com mais frequência na pesquisa e na definição do mercado. As notas refletem a avaliação da equipe com base nos recursos documentados nessas fontes e nos relatos das entrevistas, e deverão ser revisadas após as visitas descritas na Seção~\ref{subsubsec:benchmarking_tecnico}.
+
+Em seguida, a equipe definiu o plano de qualidade, isto é, a nota pretendida para a solução em cada voz, e o argumento de venda, que vale 1,5 para as vozes com alto apelo comercial, 1,2 para as de apelo intermediário e 1,0 para as demais. O índice de melhoria resulta da divisão entre o plano de qualidade e a nota atual da Riachuelo, e o peso absoluto de cada voz, do produto entre grau de importância, índice de melhoria e argumento de venda. Os valores estão reunidos na Tabela~\ref{tab:qualidade_planejada}.
 
 \begin{table}[htbp]
     \centering
-    \caption{Matriz de relacionamentos do QFD}
+    \caption{Matriz da qualidade exigida e da qualidade planejada}
+    \label{tab:qualidade_planejada}
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}l >{\RaggedRight\arraybackslash}X *{10}{c}@{}}
+        \toprule
+        & & & \multicolumn{4}{c}{Avaliação de desempenho} & \multicolumn{2}{c}{Planejamento} & \multicolumn{3}{c}{Peso} \\
+        \cmidrule(lr){4-7}\cmidrule(lr){8-9}\cmidrule(l){10-12}
+        Código & Voz do cliente & Imp. & Riachuelo & Renner & C\&A & Zara & Plano & Arg. & Índice & Abs. & Rel. \\
+        \midrule
+        N03 & Encontrar o produto procurado com facilidade & 3 & 2 & 2 & 4 & 4 & 3 & 1,0 & 1,50 & 4,50 & 8,0\% \\
+        N05 & Confiar na informação de estoque digital & 2 & 2 & 2 & 3 & 4 & 4 & 1,0 & 2,00 & 4,00 & 7,1\% \\
+        N06 & Sair da loja sem constrangimento por falha ou checagem & 5 & 3 & 4 & 3 & 3 & 5 & 1,5 & 1,67 & 12,50 & 22,3\% \\
+        N08 & Contar com atendimento humano quando necessário & 1 & 5 & 4 & 4 & 3 & 4 & 1,0 & 0,80 & 0,80 & 1,4\% \\
+        D03 & Receber confirmação imediata do pagamento & 4 & 4 & 4 & 4 & 4 & 5 & 1,2 & 1,25 & 6,00 & 10,7\% \\
+        DE01 & Reduzir o tempo de espera no caixa & 5 & 2 & 4 & 3 & 4 & 5 & 1,5 & 2,50 & 18,75 & 33,4\% \\
+        DE05 & Ter pagamento rápido sem perder o atendimento & 4 & 2 & 5 & 4 & 3 & 4 & 1,2 & 2,00 & 9,60 & 17,1\% \\
+        \midrule
+        \multicolumn{10}{@{}l}{Total} & 56,15 & 100\% \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026) com base em \citeonline{consumidormoderno2025renner}, \citeonline{brazileconomy2025cea}, \citeonline{infomoney2023zara} e \citeonline{ecommercenews2020zara}.}
+\end{table}
+
+A Riachuelo recebeu nota inferior à dos três concorrentes nas duas vozes ligadas ao pagamento. Na redução da espera no caixa (DE01) e na oferta de uma via rápida sem perder o atendimento (DE05), sua nota foi 2, porque o autoatendimento existe apenas nas lojas conceito, enquanto a Renner já o oferece em mais da metade da rede e mantém, em paralelo, o caixa, o pagamento pelo aplicativo e a venda móvel com funcionário \cite{consumidormoderno2025renner}. Nas vozes de busca e estoque (N03 e N05), a C\&A e a Zara ficaram à frente por oferecerem consulta de tamanhos ou de estoque pelo aplicativo e, no caso da Zara, localização da peça no plano da loja, recurso documentado nas lojas espanholas \cite{ecommercenews2020zara}. A Riachuelo obteve a nota mais alta apenas no atendimento humano (N08), já que o caixa tradicional mantém um funcionário em todas as compras.
+
+Como resultado, a redução da espera no caixa (DE01) concentrou 33,4\% do peso total, seguida da saída sem constrangimento (N06), com 22,3\%, e do pagamento rápido sem perda de atendimento (DE05), com 17,1\%. O atendimento humano (N08) ficou com apenas 1,4\%, porque o plano prevê manter o nível atual e seu índice de melhoria ficou abaixo de 1.
+
+\subsubsection{Qualidade projetada}
+
+Na matriz da qualidade projetada, cada voz foi relacionada a cada requisito do produto com intensidade 1 (baixa influência), 3 (média) ou 9 (alta), e as células vazias indicam ausência de influência. A importância de cada requisito resultou da soma dos produtos entre a intensidade da relação e o peso relativo da voz. A linha de direção da melhoria indica se o valor do requisito deve ser aumentado ($\uparrow$), diminuído ($\downarrow$) ou mantido ($\circ$). A matriz completa está na Tabela~\ref{tab:qfd}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Matriz da qualidade projetada}
     \label{tab:qfd}
     \footnotesize
-    \setlength{\tabcolsep}{3.5pt}
+    \setlength{\tabcolsep}{4pt}
     \renewcommand{\arraystretch}{1.25}
-    \begin{tabularx}{\textwidth}{@{}l >{\RaggedRight\arraybackslash}X c *{7}{c} c@{}}
+    \begin{tabularx}{\textwidth}{@{}l >{\RaggedRight\arraybackslash}X c *{7}{c}@{}}
         \toprule
-        \textbf{Código} & \textbf{Voz do cliente} & \textbf{Imp.} & \textbf{R01} & \textbf{R02} & \textbf{R03} & \textbf{R04} & \textbf{R05} & \textbf{R06} & \textbf{R07} & \textbf{Total} \\
+        Código & Voz do cliente & Peso rel. & R01 & R02 & R03 & R04 & R05 & R06 & R07 \\
         \midrule
-        N03  & Encontrar o tamanho, a cor ou o modelo procurado dentro de um esforço razoável & 3 & 9 & 1 & 0 & 0 & 0 & 0 & 0 & 30 \\
-        N05  & Confiar que a informação de estoque digital corresponde à loja física & 2 & 0 & 9 & 0 & 0 & 0 & 0 & 0 & 18 \\
-        N06  & Concluir a compra sem risco de ser mal interpretado ou constrangido na saída & 5 & 0 & 0 & 1 & 3 & 3 & 9 & 3 & 95 \\
-        N08  & Preservar a opção de atendimento humano mesmo havendo autoatendimento & 1 & 0 & 0 & 1 & 3 & 3 & 1 & 9 & 17 \\
-        D03  & Ter confirmação clara e imediata de que o pagamento foi processado & 4 & 0 & 0 & 0 & 0 & 1 & 9 & 3 & 52 \\
-        DE01 & Reduzir o tempo de espera no caixa em períodos de alta demanda & 5 & 0 & 0 & 9 & 1 & 1 & 9 & 0 & 100 \\
-        DE05 & Ter opção de pagamento rápida para compras simples, sem abrir mão de atendimento nas elaboradas & 4 & 0 & 0 & 9 & 9 & 9 & 3 & 3 & 132 \\
+        \multicolumn{3}{@{}l}{Direção da melhoria} & $\uparrow$ & $\uparrow$ & $\downarrow$ & $\uparrow$ & $\uparrow$ & $\uparrow$ & $\circ$ \\
         \midrule
-        \multicolumn{3}{@{}l}{Importância técnica} & 27 & 21 & 87 & 59 & 63 & 139 & 48 & 444 \\
-        \multicolumn{3}{@{}l}{Importância relativa (\%)} & 6,1 & 4,7 & 19,6 & 13,3 & 14,2 & 31,3 & 10,8 & 100 \\
+        N03 & Encontrar o produto procurado com facilidade & 8,0\% & 9 & 1 &  &  &  &  &  \\
+        N05 & Confiar na informação de estoque digital & 7,1\% &  & 9 &  &  &  &  &  \\
+        N06 & Sair da loja sem constrangimento por falha ou checagem & 22,3\% &  &  & 1 & 3 & 3 & 9 & 3 \\
+        N08 & Contar com atendimento humano quando necessário & 1,4\% &  &  & 1 & 3 & 3 & 1 & 9 \\
+        D03 & Receber confirmação imediata do pagamento & 10,7\% &  &  &  &  & 1 & 9 & 3 \\
+        DE01 & Reduzir o tempo de espera no caixa & 33,4\% &  &  & 9 & 1 & 1 & 9 &  \\
+        DE05 & Ter pagamento rápido sem perder o atendimento & 17,1\% &  &  & 9 & 9 & 9 & 3 & 3 \\
+        \midrule
+        \multicolumn{3}{@{}l}{Importância técnica} & 72,1 & 72,1 & 478,1 & 258,3 & 269,0 & 649,8 & 163,0 \\
+        \multicolumn{3}{@{}l}{Percentual} & 3,7\% & 3,7\% & 24,4\% & 13,2\% & 13,7\% & 33,1\% & 8,3\% \\
         \bottomrule
     \end{tabularx}
     \source{Elaborado pelos autores (2026).}
 \end{table}
 
-\textcolor{red}{REMOVER ESSA TABELA ACIMA E COLOCAR O QFD DO ZANCUL}
+A liberação condicionada ao pagamento (R06) obteve a maior importância técnica, 33,1\% do total, principalmente pelas relações fortes com a saída sem constrangimento (N06), com a redução da espera no caixa (DE01) e com a confirmação do pagamento (D03). Em seguida vieram o tempo para concluir o pagamento (R03), com 24,4\%, ligado sobretudo às duas demandas de rapidez, a clareza do fluxo no aplicativo (R05), com 13,7\%, e a conclusão da compra sem intervenção de funcionário (R04), com 13,2\%. O acesso a atendimento humano (R07) ficou com 8,3\%, e o apoio à localização da peça (R01) e a consulta de disponibilidade (R02), com 3,7\% cada.
 
+Os três requisitos de maior importância, R06, R03 e R05, somaram 71,2\% do total, o que concentrou as prioridades de desenvolvimento na confiabilidade da transação, na rapidez do pagamento e na execução correta do fluxo pelo usuário. Os requisitos de busca e disponibilidade ficaram no fim da lista porque as vozes N03 e N05 se relacionam essencialmente a um requisito cada e receberam peso relativo menor, o que reforçou a decisão de tratar a localização da peça como requisito secundário.
 
-A importância técnica concentrou-se em poucos requisitos. A liberação condicionada ao pagamento (R06) obteve o maior valor, 139 pontos, cerca de 31,3\% do total, principalmente pelas relações fortes com a conclusão da compra sem constrangimento na saída (N06) e com a redução da espera no caixa (DE01), além das relações com a confirmação do pagamento (D03) e com a opção de pagamento rápido (DE05). Garantir que o sistema reconheça corretamente o pagamento e libere a peça constituiu, assim, o principal foco técnico indicado pela matriz.
+\subsubsection{Telhado da casa da qualidade}
 
-Em seguida, o tempo para concluir o pagamento (R03) somou 87 pontos, cerca de 19,6\% do total, associado sobretudo à redução da espera no caixa e à opção de pagamento rápido para compras simples. A clareza do fluxo no aplicativo (R05) somou 63 pontos (14,2\%), com relações fortes ou moderadas com a autonomia, a confiança na saída da loja e a compra rápida, o que mostra que disponibilizar o pagamento pelo aplicativo não basta se o usuário não conseguir executar o fluxo corretamente. A conclusão da compra sem intervenção de funcionário (R04) somou 59 pontos (13,3\%), com contribuição concentrada na possibilidade de comprar rapidamente sem depender do atendimento convencional.
-
-O acesso a atendimento humano (R07) somou 48 pontos (10,8\%), vindos principalmente da necessidade de preservar essa opção mesmo havendo autoatendimento (N08). A posição intermediária indica que o atendimento humano continua relevante para a solução, com peso técnico agregado menor que o dos atributos ligados ao pagamento e à conclusão da jornada. O apoio à localização da peça (R01) somou 27 pontos (6,1\%), concentrados na voz sobre encontrar o tamanho, a cor ou o modelo procurado (N03), e a consulta de disponibilidade (R02), 21 pontos (4,7\%), concentrados na confiança na informação de estoque digital (N05).
-
-Os três requisitos de maior importância, R06, R03 e R05, somaram cerca de 65,0\% do total, o que concentrou as prioridades de desenvolvimento na confiabilidade da transação, na rapidez do pagamento e na execução correta do fluxo pelo usuário. Os requisitos ligados à busca e à disponibilidade ficaram com importância menor, embora estejam associados a necessidades relevantes dos clientes, porque a importância técnica depende também do número e da intensidade das relações de cada requisito: as vozes N03 e N05 relacionam-se essencialmente a um requisito cada, enquanto os requisitos de pagamento se relacionam com mais vozes, algumas de importância elevada. Esse resultado reforçou a decisão de manter a localização da peça como requisito secundário, a detalhar depois que o fluxo de pagamento e liberação estiver definido.
-
-A correlação entre os próprios requisitos está na Tabela~\ref{tab:teto_qfd}. Valores positivos indicam que melhorar um requisito tende a favorecer o outro, e valores negativos, que tende a prejudicá-lo.
+A correlação entre os requisitos está na Tabela~\ref{tab:teto_qfd}, em que ``$++$'' indica relação positiva forte, ``$+$'' relação positiva fraca, ``$-$'' relação negativa fraca e ``$--$'' relação negativa forte.
 
 \begin{table}[htbp]
     \centering
-    \caption{Correlação entre os requisitos técnicos (teto da casa da qualidade)}
+    \caption{Telhado da casa da qualidade}
     \label{tab:teto_qfd}
     \footnotesize
-    \renewcommand{\arraystretch}{1.2}
+    \renewcommand{\arraystretch}{1.25}
     \begin{tabular}{@{}l*{6}{c}@{}}
         \toprule
-            & \textbf{R02} & \textbf{R03} & \textbf{R04} & \textbf{R05} & \textbf{R06} & \textbf{R07} \\
+            & R02 & R03 & R04 & R05 & R06 & R07 \\
         \midrule
-        \textbf{R01} & 3 & 0 & 0 & 0 & 0 & 0 \\
-        \textbf{R02} &   & 0 & 0 & 1 & 0 & 0 \\
-        \textbf{R03} &   &   & 3 & 3 & 1 & $-1$ \\
-        \textbf{R04} &   &   &   & 3 & 1 & $-1$ \\
-        \textbf{R05} &   &   &   &   & 3 & $-1$ \\
-        \textbf{R06} &   &   &   &   &   & 0 \\
+        R01 & $++$ &  &  &  &  &  \\
+        R02 &   &  &  & $+$ &  &  \\
+        R03 &   &   & $++$ & $++$ & $+$ & $-$ \\
+        R04 &   &   &   & $++$ & $+$ & $-$ \\
+        R05 &   &   &   &   & $++$ & $-$ \\
+        R06 &   &   &   &   &   &  \\
         \bottomrule
     \end{tabular}
     \source{Elaborado pelos autores (2026).}
 \end{table}
 
-\textcolor{red}{REMOVER ESSA TABELA ACIMA E COLOCAR O QFD DO ZANCUL}
-
 O tempo de pagamento (R03), a conclusão sem intervenção (R04) e a clareza do fluxo (R05) reforçam-se mutuamente, assim como a localização (R01) e a disponibilidade (R02). O acesso a atendimento humano (R07), por sua vez, apresentou correlação negativa com R03, R04 e R05, o que expressa um conflito de projeto: oferecer atendimento humano durante a compra tende a alongar o fluxo e a reduzir a autonomia. A solução precisará acomodar esse conflito, por exemplo mantendo o atendimento como opção acionada pelo cliente, fora do fluxo principal.
 
-\subsection{Benchmarking competitivo}
-\label{subsec:benchmarking}
+\subsubsection{Benchmarking técnico}
+\label{subsubsec:benchmarking_tecnico}
 
-Para completar a casa da qualidade, a equipe comparou a solução proposta com as alternativas de pagamento e saída já em uso no varejo de moda brasileiro, seguindo a análise do perfil técnico e de mercado recomendada por \citeonline{rozenfeld2006gestao} para a definição das especificações-meta. Foram consideradas quatro alternativas: a rede atual da Riachuelo, em que a maior parte das cerca de 440 lojas ainda opera com caixa tradicional e apenas as lojas conceito contam com autoatendimento; a Renner, com terminais de autoatendimento por radiofrequência em 213 lojas; a C\&A, que passou a oferecer autoatendimento com etiquetas de radiofrequência no conceito de loja Energia, lançado em 2025 \cite{brazileconomy2025cea}; e a Zara, cujas lojas brasileiras reabertas a partir de 2023 incluem leitura digital das peças, provadores automáticos e consulta de estoque \cite{infomoney2023zara}.
-
-A comparação foi feita em duas partes. Na avaliação competitiva, a equipe atribuiu a cada alternativa uma nota de 1 a 5 para o grau em que atende cada voz do cliente selecionada, com base nos recursos documentados em fontes públicas e nas Seções~\ref{sec:mercado} e \ref{sec:analise_clientes}. A escala adotada foi a seguinte: 5 indica recurso documentado que atende plenamente a voz; 4, recurso documentado com alguma limitação ou restrito a parte das lojas; 3, atendimento parcial ou mecanismo não descrito nas fontes; 2, ausência de recurso documentado, com o processo dependente do vendedor ou do caixa; e 1, recurso inexistente. A coluna da solução proposta registra a nota pretendida pela equipe e deverá ser confirmada nos testes do protótipo. As notas estão reunidas na Tabela~\ref{tab:benchmark_competitivo}, em que a média ponderada usa a importância de cada voz na matriz do QFD.
-
-\begin{table}[htbp]
-    \centering
-    \caption{Avaliação competitiva das alternativas de pagamento e saída da loja}
-    \label{tab:benchmark_competitivo}
-    \footnotesize
-    \setlength{\tabcolsep}{4pt}
-    \renewcommand{\arraystretch}{1.25}
-    \begin{tabularx}{\textwidth}{@{}l >{\RaggedRight\arraybackslash}X c c c c c c@{}}
-        \toprule
-        \textbf{Código} & \textbf{Voz do cliente} & \textbf{Imp.} & \textbf{Riachuelo} & \textbf{Renner} & \textbf{C\&A} & \textbf{Zara} & \textbf{Proposta} \\
-        \midrule
-        N03 & Encontrar o produto procurado com facilidade & 3 & 2 & 2 & 4 & 4 & 3 \\
-        N05 & Confiar na informação de estoque digital & 2 & 2 & 2 & 3 & 4 & 4 \\
-        N06 & Sair da loja sem constrangimento por falha ou checagem & 5 & 3 & 4 & 3 & 3 & 5 \\
-        N08 & Contar com atendimento humano quando necessário & 1 & 5 & 4 & 4 & 3 & 4 \\
-        D03 & Receber confirmação imediata do pagamento & 4 & 4 & 4 & 4 & 4 & 5 \\
-        DE01 & Reduzir o tempo de espera no caixa & 5 & 2 & 4 & 3 & 4 & 5 \\
-        DE05 & Ter pagamento rápido sem perder o atendimento & 4 & 2 & 5 & 4 & 3 & 4 \\
-        \midrule
-        \multicolumn{3}{@{}l}{Média ponderada} & 2,67 & 3,75 & 3,50 & 3,58 & 4,46 \\
-        \bottomrule
-    \end{tabularx}
-    \source{Elaborado pelos autores (2026) com base em \citeonline{consumidormoderno2025renner}, \citeonline{brazileconomy2025cea}, \citeonline{infomoney2023zara}, \citeonline{ecommercenews2020zara} e \citeonline{tribunapr2026riachuelo}.}
-\end{table}
-
-A rede atual da Riachuelo obteve a menor média ponderada (2,67), abaixo da C\&A (3,50), da Zara (3,58) e da Renner (3,75). A diferença concentrou-se nas duas vozes de maior peso ligadas ao pagamento: na redução da espera no caixa (DE01) e na oferta de uma via rápida sem perder o atendimento (DE05), a Riachuelo recebeu nota 2, porque o autoatendimento existe apenas nas lojas conceito, enquanto a Renner já o oferece em mais da metade da rede e mantém, em paralelo, o caixa, o pagamento pelo aplicativo e a venda móvel com funcionário \cite{consumidormoderno2025renner}. Nas vozes de busca e estoque (N03 e N05), a C\&A e a Zara ficaram à frente por oferecerem consulta de tamanhos ou de estoque pelo aplicativo e, no caso da Zara, localização da peça no plano da loja, recurso documentado nas lojas espanholas \cite{ecommercenews2020zara}. No atendimento humano (N08), a Riachuelo recebeu a nota mais alta, já que o caixa tradicional mantém um funcionário em todas as compras.
-
-A solução proposta pretende alcançar média 4,46, com as maiores notas justamente nas vozes em que a Riachuelo ficou mais atrás, a espera no caixa e a saída sem constrangimento, esta última apoiada no indicador luminoso que confirma a liberação da peça. Nas vozes de busca e estoque, a nota pretendida é menor, porque a localização da peça foi tratada como requisito secundário (Seção~\ref{subsec:requisitos_do_produto}).
-
-Na segunda parte, o benchmarking técnico, a equipe registrou como cada alternativa atende cada requisito do produto. Como as fontes públicas descrevem os recursos, mas não publicam tempos de pagamento nem taxas de erro, a característica documentada de cada alternativa está na Tabela~\ref{tab:benchmark_tecnico}, e os valores numéricos serão obtidos nas visitas descritas a seguir.
+No benchmarking técnico, cada requisito recebeu uma unidade de medida, e a equipe estimou o valor atingido pela Riachuelo e pelos concorrentes, a partir dos recursos documentados nas fontes citadas e dos relatos das entrevistas. Apenas a parcela dos pagamentos feita nos terminais da Renner é um valor publicado \cite{consumidormoderno2025renner}; os demais valores são estimativas da equipe e estão identificados como tal. A última linha registra o plano, isto é, a especificação-meta de cada requisito. Os valores estão na Tabela~\ref{tab:benchmark_tecnico}.
 
 \begin{table}[htbp]
     \centering
     \caption{Benchmarking técnico por requisito do produto}
     \label{tab:benchmark_tecnico}
-    \scriptsize
-    \setlength{\tabcolsep}{3pt}
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
     \renewcommand{\arraystretch}{1.3}
-    \begin{tabularx}{\textwidth}{@{}
-        >{\RaggedRight\arraybackslash}p{1.9cm}
-        >{\RaggedRight\arraybackslash}X
-        >{\RaggedRight\arraybackslash}X
-        >{\RaggedRight\arraybackslash}X
-        >{\RaggedRight\arraybackslash}X
-        >{\RaggedRight\arraybackslash}p{1.5cm}@{}}
+    \begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}X c c c c c c c@{}}
         \toprule
-        \textbf{Requisito} & \textbf{Riachuelo} & \textbf{Renner} & \textbf{C\&A} & \textbf{Zara} & \textbf{Meta} \\
+        & R01 & R02 & R03 & R04 & R05 & R06 & R07 \\
         \midrule
-        R01 Localização da peça & N.D. & N.D. & Aplicativo localiza peças (Energia) & Aplicativo mostra a peça no plano da loja (Espanha) & 90\% \\
-        \addlinespace
-        R02 Disponibilidade & N.D. & N.D. & Tamanhos em tempo real no aplicativo & Consulta de estoque na loja e nos provadores & 95\% \\
-        \addlinespace
-        R03 Tempo de pagamento & A medir & A medir & A medir; biometria facial para o cartão C\&A Pay & A medir & 60 s \\
-        \addlinespace
-        R04 Compra sem funcionário & Não, exceto nas lojas conceito & Sim, 742 terminais em 213 lojas & Sim, nas lojas Energia & Leitura digital das peças & 80\% \\
-        \addlinespace
-        R05 Clareza do fluxo & A medir & A medir & A medir & A medir & 85\% \\
-        \addlinespace
-        R06 Liberação da peça & Operador remove a etiqueta & Leitura por radiofrequência no pagamento & Radiofrequência nas lojas Energia; retirada pelo cliente nas demais & N.D. & 90\% \\
-        \addlinespace
-        R07 Atendimento humano & Caixa em todas as compras & Venda móvel com funcionário & Vendedores como curadores; totens nos provadores & N.D. & 90\% \\
+        Unidade de medida & \% & \% & s & \% & \% & \% & \% \\
+        \midrule
+        Riachuelo & N.D. & N.D. & 120 & 0 & N.A. & 98 & 100 \\
+        Renner & N.D. & N.D. & 60 & 38* & 80 & 98 & 90 \\
+        C\&A & 70 & 80 & 90 & 20 & 70 & 95 & 90 \\
+        Zara & 85 & 90 & 60 & 50 & 80 & 98 & 80 \\
+        \midrule
+        Plano (meta) & 90 & 95 & 45 & 80 & 85 & 100 & 100 \\
         \bottomrule
     \end{tabularx}
-    \source{Elaborado pelos autores (2026). N.D.: não documentado em fonte pública.}
+    \source{Elaborado pelos autores (2026). Valores estimados pela equipe, exceto o marcado com asterisco, que corresponde à parcela dos pagamentos feita nos terminais de autoatendimento da Renner \cite{consumidormoderno2025renner}. N.D.: recurso não documentado. N.A.: não se aplica, pois o fluxo é operado pelo funcionário.}
 \end{table}
 
-As medições serão feitas em visitas às lojas de Riachuelo, Renner, C\&A e Zara, no mesmo dia e horário e, sempre que possível, no mesmo shopping. Em cada loja, duas pessoas da equipe realizarão a mesma compra padrão, de uma peça básica, e registrarão em ficha o tempo de fila, o tempo de pagamento, o número de passos e de erros no processo, o tempo para conseguir ajuda de um funcionário e a forma de liberação da peça. Com esses valores, a equipe deverá revisar as especificações-meta da Tabela~\ref{tab:requisitos}, já que uma meta só representará vantagem competitiva se superar o desempenho medido nas alternativas existentes.
+As unidades seguem as especificações da Tabela~\ref{tab:requisitos}: R01, percentual de solicitações com localização correta da peça; R02, percentual de consultas com disponibilidade correta; R03, tempo entre o início do pagamento e a confirmação, sem contar a fila; R04, percentual de compras concluídas sem funcionário; R05, percentual de clientes que concluem o fluxo corretamente na primeira tentativa; R06, percentual de liberações que correspondem a um pagamento confirmado; e R07, percentual dos cenários de falha com alternativa de atendimento humano.
+
+A comparação levou a dois ajustes nas especificações-meta. A meta de tempo de pagamento passou de 60 para 45 segundos, porque 60 segundos apenas igualaria a estimativa para a Renner e a Zara e não representaria vantagem competitiva. As metas de liberação condicionada ao pagamento (R06) e de acesso a atendimento humano (R07) passaram a 100\%, já que a Riachuelo, com o caixa tradicional, alcança valores próximos disso, e uma meta de 90\% significaria aceitar liberar uma peça sem pagamento confirmado em uma de cada dez compras.
+
+As estimativas deverão ser substituídas por medições em visitas às lojas de Riachuelo, Renner, C\&A e Zara, no mesmo dia e horário e, sempre que possível, no mesmo shopping. Em cada loja, duas pessoas da equipe realizarão a mesma compra padrão, de uma peça básica, e registrarão em ficha o tempo de fila, o tempo de pagamento, o número de passos e de erros no processo, o tempo para conseguir ajuda de um funcionário e a forma de liberação da peça.
 
 Como a solução é formada pela integração entre a etiqueta e o aplicativo, a equipe concluiu, a partir da matriz, que o desenvolvimento deverá priorizar o funcionamento do sistema integrado, capaz de proporcionar uma jornada de compra rápida, confiável e executável pelo próprio consumidor, mais do que o desempenho isolado de cada componente.
