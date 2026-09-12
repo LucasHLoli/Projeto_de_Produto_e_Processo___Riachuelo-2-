@@ -8,6 +8,23 @@ Este arquivo não entra no PDF final — é só documentação para o time. Leia
 >
 > Sem isso o Overleaf dá erro fatal `fontspec package requires either XeTeX or LuaTeX` e nenhum PDF é gerado — o preâmbulo usa a fonte Times New Roman (`fontspec`), que só funciona com XeLaTeX/LuaLaTeX. É configuração do projeto, não do código, e uma vez trocada vale para o time inteiro (não precisa repetir por pessoa).
 
+## Sobre o relatório
+
+**Estudo analítico do varejo de moda: mercado, clientes e requisitos para um sistema de autoatendimento.** Relatório 1 da disciplina PRO3474 (Projeto do Produto e Processo, Poli-USP), em parceria com a Riachuelo. O projeto estuda um sistema antifurto em que o próprio cliente paga pelo aplicativo e libera a peça, sem passar pelo caixa.
+
+O relatório segue os quatro itens pedidos na Aula 10:
+
+| Item do roteiro | Seção no PDF | Arquivo |
+|---|---|---|
+| A. Definição do mercado | 1 | `2-conteudo/definicao_mercado.tex` |
+| B. Identificação das necessidades | 2, 3 e 4 | `5-clientes_e_usuarios.tex`, `6-pesquisa_clientes_usuarios.tex`, `7-analise_clientes.tex` |
+| C. Requisitos técnicos e QFD | 5 | `8-Definição dos Requisitos Técnicos e Especificações-Meta.tex` |
+| D. Desenhos | 6 | `9-elaboracao_dos_desenhos.tex` |
+
+Números centrais: survey com 142 respostas, 11 entrevistas, 4 grupos de clientes, 20 vozes do cliente (8 necessidades, 7 desejos, 5 demandas), casa da qualidade com 7 vozes, 7 requisitos e benchmarking contra Renner, C&A e Zara.
+
+**Pendências abertas:** visitas às lojas para trocar as estimativas do benchmarking técnico por medições; revisão das notas da avaliação competitiva em grupo; atualizar a C&A na seção de mercado (RFID desde 2025); nome e NUSP do sexto integrante na capa.
+
 ## Índice
 1. [O que é o Overleaf](#1-o-que-é-o-overleaf)
 2. [Primeiros passos](#2-primeiros-passos)
@@ -50,35 +67,39 @@ Duas coisas importantes de entender antes de tudo:
 
 ```
 /
-├── documento.tex          ⚠️ arquivo mestre — só quem organiza o sumário mexe aqui
-├── bibliografia.bib       📚 todas as referências bibliográficas do trabalho
+├── documento.tex          ⚠️ arquivo mestre: define a ordem das seções
+├── bibliografia.bib       📚 todas as referências bibliográficas
 ├── 1-pre/                 elementos pré-textuais
-│   ├── 1-preambulo.tex    ⚠️ configuração geral (fonte, margens, ABNT) — só 1 pessoa "dona" mexe
+│   ├── 1-preambulo.tex    ⚠️ configuração geral (fonte, margens, ABNT)
 │   ├── 2-capa.tex
 │   ├── 3-resumo.tex
-│   ├── 4-abstract.tex
-│   └── 5-introducao.tex
-├── 2-conteudo/            desenvolvimento do trabalho — 1 arquivo por dupla
-│   ├── 1-diagnostico.tex
-│   ├── 2-metodologia.tex
-│   ├── 3-proposta.tex
-│   └── 4-resultados.tex
+│   └── 4-abstract.tex
+├── 2-conteudo/            corpo do relatório, na ordem do PDF
+│   ├── definicao_mercado.tex                 1  Definição do mercado
+│   ├── 5-clientes_e_usuarios.tex             2  Clientes e usuários
+│   ├── 6-pesquisa_clientes_usuarios.tex      3  Planejamento de pesquisa
+│   ├── 7-analise_clientes.tex                4  Análise dos clientes
+│   ├── 8-Definição dos Requisitos ... .tex   5  Requisitos e casa da qualidade
+│   └── 9-elaboracao_dos_desenhos.tex         6  Elaboração dos desenhos
 ├── 3-pos/                 elementos pós-textuais
-│   ├── 1-conclusao.tex
-│   └── 2-referencias.tex
-└── imagens/                todas as figuras usadas no documento
-    ├── Poli.png            (logo, usado só na capa)
-    ├── diagnostico/
-    ├── metodologia/
-    ├── proposta/
-    └── resultados/
+│   ├── 1-conclusao.tex                       7  Considerações finais
+│   ├── 2-referencias.tex
+│   ├── 3-anexo-roteiro-entrevistas.tex       Anexo A
+│   └── 4-anexo_entrevistas.tex               Anexo B (Entrevistas 1 a 11)
+├── imagens/               figuras usadas no PDF, uma subpasta por seção
+├── desenhos/              gerador do esboço à mão livre (Python → SVG/PDF)
+├── fusion/                scripts do Autodesk Fusion 360 para o modelo 3D
+├── pesquisa/              síntese técnica e base do survey
+└── prompts/               prompts de apoio usados no desenvolvimento
 ```
+
+Os arquivos `1-pre/5-introducao.tex` e `2-conteudo/1-diagnostico.tex` a `4-resultados.tex` são do modelo original e não entram mais no `documento.tex`.
 
 **Por que dividir assim?** No Overleaf não existe "puxar/enviar" como no Git — é tudo em tempo real. Se 3 pessoas abrem o *mesmo* arquivo ao mesmo tempo para editar parágrafos diferentes, funciona, mas fica confuso e aumenta o risco de alguém apagar sem querer o que o outro está escrevendo. Por isso: **1 arquivo = 1 dupla responsável**, ninguém abre o arquivo de conteúdo de outra dupla para editar.
 
 ## 5. Fluxo de trabalho do time (8 pessoas)
 
-- **4 duplas, 1 arquivo de conteúdo cada** (`1-diagnostico.tex`, `2-metodologia.tex`, `3-proposta.tex`, `4-resultados.tex`).
+- **1 arquivo de conteúdo por seção do relatório** (ver tabela da seção 4); quem estiver escrevendo uma seção avisa o grupo antes de editar o arquivo.
 - **`documento.tex` e `1-preambulo.tex`** só devem ser editados por quem estiver organizando a estrutura geral (o ideal é 1, no máximo 2 pessoas fixas) — são arquivos de configuração; um erro de sintaxe ali quebra a compilação **para o time inteiro**.
 - **Nomeação de labels com prefixo da seção**, para não haver duplicidade quando várias pessoas criam referências ao mesmo tempo:
   - Figuras: `fig:diagnostico-01`, `fig:metodologia-02`...
@@ -336,10 +357,12 @@ IA (ChatGPT, Claude etc.) pode acelerar bastante o trabalho em LaTeX — usem co
 
 - [ ] Todos os `TITULO DA SECAO` e `Titulo da Subsecao` genéricos foram substituídos por títulos reais
 - [ ] Todos os placeholders `\textit{[Texto de exemplo --- substituir pelo conteúdo real...]}` foram substituídos pelo texto real (dê `Ctrl+F` por `Texto de exemplo` em cada arquivo de `2-conteudo/` para achar todos)
-- [ ] Capa preenchida (departamento, disciplina, professor, título, nomes e NUSP de todos, mês/ano)
+- [ ] Capa preenchida (departamento, disciplina, professor, título, nomes e NUSP de todos, ano)
 - [ ] Resumo (até 250 palavras) e Abstract preenchidos, com 3 palavras-chave cada
 - [ ] Todas as referências fictícias (`exemploLivro`, `exemploArtigo`, `exemploWeb`) substituídas por referências reais no `bibliografia.bib`
-- [ ] Todas as figuras/tabelas têm `\caption`, `\label` e `\source` (fonte)
+- [ ] Todas as figuras/tabelas têm `\caption`, `\label` e `\source`, com fonte e ano, por exemplo `Elaborado pelos autores (2026).`
+- [ ] Estimativas do benchmarking técnico substituídas pelas medições das visitas
+- [ ] Nenhum `\textbf` no corpo do texto (só em cabeçalho de tabela)
 - [ ] Compilador configurado como **XeLaTeX** (Settings → Compiler)
 - [ ] PDF final compila sem erros nem referências `??`
 - [ ] Sumário, lista de figuras e lista de tabelas conferidas no PDF final (gerados automaticamente, mas vale checar se bateram com o conteúdo)
