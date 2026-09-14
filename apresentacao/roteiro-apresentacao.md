@@ -90,7 +90,7 @@ A história que amarra tudo: **a fila existe, mas nem todo cliente quer se livra
 ---
 
 ## Bloco 6 · O produto e o fechamento · ~2 min
-**Quem:** sexto integrante (ou Lucas) · **Slides:** esboço à mão livre; detalhe do mecanismo; fluxo de uso em 4 passos
+**Quem:** Pedro · **Slides:** esboço à mão livre; detalhe do mecanismo; fluxo de uso em 4 passos
 
 - **Dispositivo rígido de 98 × 82 × 26 mm**, preso à roupa como as etiquetas de hoje.
 - **Na face:** código impresso, luz e botão.

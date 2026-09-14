@@ -23,7 +23,7 @@ O relatório segue os quatro itens pedidos na Aula 10:
 
 Números centrais: survey com 142 respostas, 11 entrevistas, 4 grupos de clientes, 20 vozes do cliente (8 necessidades, 7 desejos, 5 demandas), casa da qualidade com 7 vozes, 7 requisitos e benchmarking contra Renner, C&A e Zara.
 
-**Pendências abertas:** visitas às lojas para trocar as estimativas do benchmarking técnico por medições; revisão das notas da avaliação competitiva em grupo; atualizar a C&A na seção de mercado (RFID desde 2025); nome e NUSP do sexto integrante na capa.
+**Pendências abertas:** visitas às lojas para trocar as estimativas do benchmarking técnico por medições; revisão das notas da avaliação competitiva em grupo; atualizar a C&A na seção de mercado (RFID desde 2025).
 
 ## Índice
 1. [O que é o Overleaf](#1-o-que-é-o-overleaf)
