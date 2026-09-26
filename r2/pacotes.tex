@@ -1,0 +1,49 @@
+% =============================================================================
+% Pacotes e estilos extras do Relatorio 2 (graficos e diagramas).
+% Carregado so por relatorio2.tex, depois do preambulo comum (1-pre/1-preambulo).
+% =============================================================================
+\usepackage{tikz}
+\usetikzlibrary{positioning,arrows.meta,shapes.geometric,shapes.multipart,fit,calc,backgrounds,matrix,decorations.pathreplacing,babel}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\usepackage{colortbl}
+
+% ---- paleta do relatorio (tons de azul + um destaque) ----
+\definecolor{r2azul}{HTML}{1F4E79}
+\definecolor{r2azulmedio}{HTML}{2E75B6}
+\definecolor{r2azulclaro}{HTML}{DEEAF6}
+\definecolor{r2laranja}{HTML}{C55A11}
+\definecolor{r2laranjaclaro}{HTML}{FBE5D6}
+\definecolor{r2verde}{HTML}{548235}
+\definecolor{r2verdeclaro}{HTML}{E2EFDA}
+\definecolor{r2cinza}{HTML}{7F7F7F}
+\definecolor{r2cinzaclaro}{HTML}{F2F2F2}
+
+% ---- estilos TikZ compartilhados ----
+\tikzset{
+  r2bloco/.style={draw=r2azul, fill=r2azulclaro, rounded corners=2pt, align=center,
+                  font=\footnotesize, inner sep=4pt, minimum height=8mm},
+  r2blocoescuro/.style={draw=r2azul, fill=r2azul, text=white, rounded corners=2pt,
+                  align=center, font=\footnotesize\bfseries, inner sep=4pt, minimum height=8mm},
+  r2destaque/.style={draw=r2laranja, fill=r2laranjaclaro, rounded corners=2pt, align=center,
+                  font=\footnotesize, inner sep=4pt, minimum height=8mm},
+  r2neutro/.style={draw=r2cinza, fill=r2cinzaclaro, rounded corners=2pt, align=center,
+                  font=\footnotesize, inner sep=4pt, minimum height=8mm},
+  r2seta/.style={-{Stealth[length=2.2mm]}, thick, draw=r2azul},
+  r2setafina/.style={-{Stealth[length=1.8mm]}, draw=r2cinza},
+  r2setatracejada/.style={-{Stealth[length=1.8mm]}, dashed, draw=r2laranja},
+  r2rotulo/.style={font=\scriptsize, text=r2cinza, align=center},
+}
+
+% ---- estilo padrao dos graficos pgfplots ----
+\pgfplotsset{
+  r2eixo/.style={
+    axis lines*=left,
+    ymajorgrids, grid style={dashed, gray!30},
+    tick label style={font=\footnotesize},
+    label style={font=\footnotesize},
+    legend style={font=\footnotesize, draw=none, fill=none},
+    /pgf/number format/use comma,
+    /pgf/number format/1000 sep={.},
+  },
+}

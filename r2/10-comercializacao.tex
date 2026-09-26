@@ -1,0 +1,254 @@
+% =============================================================================
+% Relatorio 2, item F: delineamento da comercializacao e da distribuicao.
+% Conteudo: cliente e unidade de decisao, canais (B2B), pontos de uso (B2C),
+% distribuicao fisica da etiqueta, modalidades comerciais, cronograma (Gantt),
+% riscos com LGPD e indicadores do piloto.
+% Figura: fig:r2-cronograma. Tabelas: tab:r2-canais, tab:r2-riscos, tab:r2-lgpd.
+% Precos e contas vem da Secao sec:r2-valor (conta_final.py); nada e recalculado.
+% =============================================================================
+
+\section{COMERCIALIZAÇÃO E DISTRIBUIÇÃO}
+\label{sec:r2-comercializacao}
+
+Com a arquitetura, os desenhos e o plano macro de processo definidos, faltava delinear como o produto chegará a quem o compra e a quem o usa, último item do projeto conceitual \cite{zancul2026conceitual}. No Tag\&Go, essas duas figuras não coincidem: quem contrata e paga pelo sistema é o varejista, e quem o usa é o consumidor da loja, que não paga nada a mais pela compra sem caixa. A equipe tratou a comercialização, por isso, como uma venda entre empresas (B2B) apoiada numa experiência de consumo (B2C), e organizou o delineamento em seis frentes: o cliente e a unidade de decisão, os canais de venda, os pontos de uso, a distribuição física da etiqueta, as modalidades comerciais com o cronograma de implantação e os riscos, entre eles o tratamento de dados pessoais. Todos os preços e resultados econômicos citados vêm da Seção~\ref{sec:r2-valor}.
+
+\subsection{Cliente e unidade de decisão}
+\label{sub:r2-cliente}
+
+O cliente-alvo é o varejista de moda \textit{mass market} que já opera ou planeja operar o self-checkout, segmento definido no Relatório 1 e formado por Renner, Riachuelo e C\&A. A Riachuelo é o primeiro cliente pelas condições que reúne: 342 lojas da bandeira \cite{abvtex2026riachuelo}; RFID aplicado desde a expedição da fábrica de Natal, em parceria com a Mozaiko, com escopo de fábrica, CDs e lojas \cite{tiinside2022riachuelo}; lojas conceito com self-checkout, como a de Curitiba, inaugurada em abril de 2026 \cite{amanha2026riachuelo}; e o plano declarado de levar o conceito a mais de 300 unidades \cite{mercadoconsumo2026riachuelo}. Em Curitiba, a primeira loja inteiramente no novo formato registrou fluxo 15,7\% maior e faturamento 9,7\% maior, sem divulgação da base de comparação \cite{curitibainforma2026riachuelo}. O ciclo de cerca de 350 reformas e 150 lojas novas, com investimento de R\$~3 a 4~bilhões, terá avaliação financeira em abril de 2027 \cite{economicnews2026riachuelo}. A equipe concluiu, a partir dessa agenda, que a janela comercial do Tag\&Go é o próprio ciclo de reformas: o sistema precisa chegar à decisão da empresa com resultados de piloto a tempo de ser incluído nas lojas reformadas, e não depois delas.
+
+A contratação de um sistema desse tipo envolve várias áreas da empresa. Na Riachuelo, a equipe identificou seis: Tecnologia, que recebeu a equipe em 23/09/2026 e responde pelas integrações com o estoque RFID, o PDV e o app; Operações de Loja, que responde pela rotina dos caixas e do Ponto de Apoio; Prevenção de Perdas, atenta ao efeito do autoatendimento sobre o furto; Logística e CDs, que passam a operar o ciclo da etiqueta; Marketing e CRM, responsáveis pelo app e pelo Ria Club; e o Jurídico, com o encarregado de dados, responsável pela conformidade com a LGPD. Cada área avalia o sistema por um critério próprio, e essa pluralidade levou a equipe a incluir um bloco do varejista na matriz de decisão da Seção~\ref{sec:r2-concepcao}, com peso de 25\% fixado como premissa. Como a escolha da concepção se inverte quando esse bloco pesa 36,6\% ou mais, a validação dos pesos com a empresa passa a ser o primeiro passo comercial, junto com as três premissas que dominam a conta econômica: a fração de peças com etiqueta rígida ($f$), o ciclo médio da etiqueta ($T$) e as desistências de compra evitadas por dia ($d$).
+
+\subsection{Canais de venda}
+\label{sub:r2-canais}
+
+A equipe definiu quatro canais de venda, que entram em sequência. O primeiro é a venda direta e consultiva à Riachuelo. O caráter consultivo decorre da natureza do produto: o Tag\&Go exige integração com sistemas da empresa, muda a rotina da loja e do CD e só se justifica se o número de desistências evitadas for medido. A venda começa por um piloto numa loja conceito (Curitiba ou Oscar Freire), limitado a uma categoria de produto para conter a frota em cerca de 500 a 1.000 etiquetas (estimativa da equipe), contra as 6.854 etiquetas por loja estimadas para a operação plena na Seção~\ref{sec:r2-valor}. Confirmada a economia, o piloto dá lugar a um contrato-quadro para as 20 lojas conceito do mercado obtenível (SOM), limite superior do plano de 15 a 20 lojas no novo formato em 2026 (Subseção~\ref{sub:r2-sintese}); a Riachuelo anunciou R\$~180~milhões para 20 lojas novas em 2026 \cite{exame2026riachuelo}. Nessa escala, segundo a Seção~\ref{sec:r2-valor}, a frota soma 137.080 etiquetas e a receita do fornecedor chega a R\$~3,48~milhões por ano.
+
+O segundo canal reúne os parceiros de integração que já atendem a Riachuelo: Mozaiko e Stefanini, no RFID e no estoque \cite{tiinside2022riachuelo}; Manhattan, no sistema de gestão de pedidos, que trata as lojas como pequenos CDs e já faz retirada e envio a partir da loja \cite{manhattan2026riachuelo}; o provedor de pagamentos (PSP) da empresa; e o fornecedor do PDV. São canais de implantação, sem papel de revenda. O Tag\&Go depende de ler o preço pelo EPC, gravar a venda no estoque RFID e emitir a NFC-e (interfaces I10 e I11 da Seção~\ref{sec:r2-arquitetura}), e as empresas que operam esses sistemas encurtam o prazo e o risco de cada integração.
+
+O terceiro canal trata os fornecedores de etiquetas EAS como parceiros de componentes. A garra, o pino e o elemento EAS da etiqueta Tag\&Go vêm de etiquetas rígidas comerciais, e esses fornecedores já dominam a recirculação de etiquetas passivas: segundo o fornecedor, a Sensormatic recolhe as etiquetas no retorno dos caminhões, testa, limpa e reenvia às fábricas de roupa \cite{sensormatic2024recirculacao}, e a Pact opera a reutilização de etiquetas EAS \cite{pact2026etiquetas}. No futuro, parte do ciclo logístico poderá ser terceirizada a um desses parceiros.
+
+O quarto canal é a expansão, depois da validação, para as demais redes do segmento-alvo. A Renner já tinha, no fim de 2023, autoatendimento por RFID em 213 lojas \cite{consumidormoderno2025renner} e a C\&A, self-checkout por RFID no conceito Energia \cite{brazileconomy2025cea}. A arquitetura modular permite atender essas redes mantendo a etiqueta e a Plataforma Tag\&Go e trocando só os módulos do serviço Integrações, que ligam a Plataforma ao estoque, ao PDV e ao programa de fidelidade de cada varejista.
+
+\subsection{Pontos de venda e de uso}
+\label{sub:r2-pontos}
+
+Para o consumidor, o ponto de venda é a própria loja física, e o ponto de contato com o sistema é a etiqueta presa à peça. O Coletor de Etiquetas e o Ponto de Apoio ficam perto da saída, no caminho natural até o pórtico. Os pontos digitais variam conforme o caminho de uso. A Compra Rápida abre pelo QR ou pelo NFC da etiqueta, sem instalar app nem passar por loja de aplicativos, no App Clip Tag\&Go do iPhone ou na Página de Compra Rápida do Android (Subseção~\ref{sub:r2-caminhos}). Há, porém, uma dependência de distribuição: a Apple só publica um App Clip ligado a um app completo com pelo menos a mesma funcionalidade, no mesmo projeto \cite{apple2026appclipcriar}. A Compra Rápida no iPhone passa, portanto, pela conta de desenvolvedor da Riachuelo e pelo calendário de publicação do app da marca.
+
+A Jornada Completa roda no módulo Tag\&Go do app Riachuelo, que já tem mais de 10~milhões de downloads e nota 4,8 no Google Play e 4,9 na App Store \cite{googleplay2026riachuelo,appstore2026riachuelo}, de modo que o módulo chega ao cliente pela base já instalada, sem canal de distribuição novo. É nesse módulo que o cliente encontra o perfil, o Ria Club, a recomendação restrita ao que existe no estoque da loja no tamanho do perfil, as métricas de sustentabilidade estimadas por categoria e a localização da peça no nível de setor (N1), função secundária que vem do estoque RFID e de um planograma digital, sem depender da etiqueta (Subseção~\ref{sub:r2-localizar}). Esse planograma é o mapa de setores que a própria loja mantém atualizado, o que acrescenta uma rotina de Operações de Loja ao contrato, e o nível de arara (N2) só entra na oferta se a Riachuelo instalar leitores RFID de teto. Para dimensionar esse caminho, a equipe adotou como referência os 4,5~milhões de clientes ativos do cartão \cite{btg2025guararapes}. Entre os dois caminhos fica o passe do Ria Club no Apple Wallet e no Google Wallet, distribuído sem app \cite{apple2026walletpass,google2026walletfidelidade}, que mantém o vínculo com o cliente da Compra Rápida. O último ponto é o e-commerce da Riachuelo, que recebe a compra on-line do tamanho ausente na loja, nas condições de retirada e de frete da Subseção~\ref{sub:r2-caminhos}, como receita incremental que não entra no equilíbrio econômico.
+
+\subsection{Distribuição física da etiqueta}
+\label{sub:r2-distribuicao}
+
+A etiqueta Tag\&Go é um ativo retornável, e sua distribuição forma um circuito fechado entre a origem das peças e as lojas. A rota completa, com estados, tempos e pontos de perda, está na Subseção~\ref{sub:r2-ciclo} e na Figura~\ref{fig:r2-ciclo}; o delineamento comercial trata de quem transporta, onde a etiqueta é recondicionada e com que capacidade.
+
+Na ida, a etiqueta viaja presa à peça, no caminhão da frota própria da Riachuelo, que liga a fábrica e os três CDs às lojas \cite{bloomberglinea2026riachuelo,exame2025bolsa,folhape2023guararapes}. O cadastro na origem tem dois ramos. No ramo fábrica, que cobre as peças próprias, cerca de 40\% do que a rede vende \cite{bloomberglinea2026riachuelo}, a aplicação e o cadastro acontecem no fim da linha da fábrica de Natal, junto ao leitor RFID de expedição que já existe. No ramo CD, que cobre as peças de fornecedores nacionais e importadas, a aplicação acontece no CD de Guarulhos, Natal ou Manaus, na separação para a loja. A escolha segue a prática de aplicar etiquetas na fonte, que admite quatro pontos possíveis (fabricante, armazém, CD e loja), entre os quais, segundo o fornecedor, o fabricante oferece aplicação mais consistente e menos mão de obra nas etapas seguintes \cite{sensormatic2025sourcetagging}. A aplicação continua a cargo de pessoal da Riachuelo, como hoje acontece na loja. O ganho da loja é de tempo, e o custo total da operação permanece: aplicar a etiqueta custa R\$~0,14 por peça na origem, o mesmo valor calculado para a loja na Seção~\ref{sec:r2-valor}.
+
+Na volta, as etiquetas recolhidas seguem no Malote de Retorno, no retorno do mesmo caminhão, em modo transporte, com lacre numerado e conferência por \texttt{tag\_id} no despacho e no recebimento. No caso base, com adesão de 24\% das compras pelo celular (premissa herdada do survey do Relatório 1), cada Coletor recebe cerca de 16 etiquetas por dia e, com capacidade de cerca de 150, é esvaziado a cada 2 dias; com adesão total, recebe 68 etiquetas por dia e passa a ser esvaziado diariamente. Para Manaus, a equipe preferiu o modal rodofluvial, com as regras de transporte de baterias de lítio instaladas em equipamento descritas na Subseção~\ref{sub:r2-ciclo}.
+
+O recondicionamento fica em dois locais: um centro no CD de Natal, junto da fábrica, onde já ocorre o cadastro do ramo fábrica, e um posto no CD de Guarulhos, perto das lojas do Sudeste, região que concentra 47\% da rede \cite{btg2025guararapes}, e das lojas do Sul. Para as 20 lojas do SOM, a equipe estimou um fluxo de 1.360 etiquetas por dia, atendido por 3 postos de inspeção (60 etiquetas por hora por posto, em 8 horas), 17 Bandejas de Recarga (20 posições e 4 ciclos por turno) e 2 Estações de Cadastro, uma na fábrica de Natal e outra no CD de Guarulhos, com cerca de 11 horas de aplicação por dia a 125 peças por hora. As etiquetas reprovadas na Bancada de Inspeção são desmontadas; carcaça e mecanismo voltam ao ciclo quando possível, e célula e placa seguem para reciclador licenciado, como exige a Política Nacional de Resíduos Sólidos para pilhas, baterias e eletroeletrônicos \cite{brasil2010pnrs}.
+
+\subsection{Modalidades comerciais e preço}
+\label{sub:r2-modalidades}
+
+A equipe definiu duas modalidades comerciais. A principal é a locação: R\$~2,00 por etiqueta por mês, plataforma de R\$~800 por loja por mês e implantação de R\$~15.000 por loja, com franquia de perda de 1\% das liberações; acima da franquia, cada etiqueta não devolvida é cobrada a R\$~60. O preço inclui recondicionamento, recarga, reposição até a franquia, suporte, Coletores de Etiquetas, Liberadores de Balcão e os equipamentos da Estação de Cadastro. A aplicação das etiquetas na origem fica com a Riachuelo.
+
+A locação foi escolhida como modalidade principal por três razões. A primeira é o próprio produto: a etiqueta tem custo-meta de R\$~60, contra R\$~0,87 da etiqueta rígida comum que substitui (Seção~\ref{sec:r2-valor}), e só se viabiliza como ativo reutilizável, cobrado por uso. A segunda é a divisão de riscos: na locação, o fornecedor carrega o risco de perda e de obsolescência da frota, e é ele quem pode reduzi-lo pelo projeto da etiqueta e do ciclo. A terceira é o custo para a Riachuelo. Na locação, o sistema custa R\$~7,01 por liberação, contra R\$~0,29 da etiqueta rígida atual, e a empresa empata ao evitar 3,68 desistências de compra por dia por loja, 1,6\% das 227 compras diárias estimadas. Na compra, o custo seria de R\$~6,78 por liberação sem o custo de capital da empresa e de R\$~9,28 com um custo de capital de 15\% ao ano (premissa); considerado o custo de capital, a locação é a opção mais barata para a Riachuelo e ainda a poupa de imobilizar a frota. Do lado do fornecedor, a R\$~2,00 a taxa interna de retorno em 5 anos é de 22,0\%, acima da taxa mínima de atratividade de 20\% ao ano adotada como premissa; a R\$~1,80, cairia para 16,6\% e não remuneraria o capital investido na frota.
+
+A franquia de perda alinha os incentivos com a meta de retorno de 99\% (S01, na Tabela~\ref{tab:r2-especificacoes}). Até 1\% das liberações, a perda já está coberta pelo preço e fica com o fornecedor, que tem interesse direto em manter os mecanismos de retorno M1 a M4. Acima desse limite, a cobrança passa à Riachuelo, que tem interesse em operar o Coletor e o Ponto de Apoio com disciplina. O custo desse risco para a empresa é conhecido: com retorno de 95\%, o equilíbrio sobe para 5,05 desistências evitadas por dia por loja, e com 83\%, limite superior da faixa observada no mercado de etiquetas rígidas recirculadas, para 9,16 (Seção~\ref{sec:r2-valor}).
+
+A compra fica como modalidade alternativa para o varejista que prefira imobilizar capital: R\$~90 por etiqueta, R\$~0,40 por ciclo de recondicionamento, mais plataforma e implantação. As duas modalidades têm precedentes no mercado. A rapitag cogitou alugar suas etiquetas aos varejistas \cite{munichstartup2017rapitag,storesshops2019rapitag}; no Brasil, o self-checkout é oferecido por compra, locação, leasing, Finame e cartão BNDES \cite{perto2021selfcheckout}; e a MishiPay, segundo o fornecedor, adota preço flexível por loja e por integração, sem valores públicos (estudos anteriores da equipe). A Tabela~\ref{tab:r2-canais} reúne cliente, canais, pontos de uso, distribuição e modalidades.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Canais, pontos de uso, distribuição e modalidades comerciais do Tag\&Go}
+    \label{tab:r2-canais}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{3.2cm}
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Dimensão} & \textbf{Conteúdo} \\
+        \midrule
+        Cliente & Varejistas de moda \textit{mass market} com self-checkout; primeiro, a Riachuelo \\
+        Canal de venda & Direto e consultivo, do piloto ao contrato-quadro; parceiros de integração (Mozaiko e Stefanini, Manhattan, PSP e fornecedor do PDV); fornecedores de etiquetas EAS como parceiros de componentes \\
+        Pontos de uso & Loja física (etiqueta, Coletor de Etiquetas e Ponto de Apoio); App Clip Tag\&Go e Página de Compra Rápida; módulo Tag\&Go do app Riachuelo; passe do Ria Club; e-commerce \\
+        Distribuição da etiqueta & Presa à peça, da fábrica de Natal ou do CD até a loja, na frota própria; Malote de Retorno no retorno do caminhão; recondicionamento em Natal e Guarulhos \\
+        Modalidade principal & Locação: R\$~2,00 por etiqueta por mês, R\$~800 por loja por mês de plataforma e R\$~15.000 de implantação por loja; franquia de perda de 1\% (acima dela, R\$~60 por etiqueta não devolvida) \\
+        Modalidade alternativa & Compra: R\$~90 por etiqueta, R\$~0,40 por ciclo de recondicionamento, mais plataforma e implantação \\
+        Expansão & 20 lojas conceito (SOM), a partir do 2º semestre de 2027; rede de 342 lojas Riachuelo; outras redes do segmento \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+\subsection{Implantação e cronograma}
+\label{sub:r2-cronograma}
+
+O cronograma tem dois horizontes, mostrados na Figura~\ref{fig:r2-cronograma}: o da disciplina, até dezembro de 2026, e o da implantação com a Riachuelo, a partir de 2027 \cite{zancul2026conceitual}. Em outubro de 2026, depois da aula com convidados externos de 30/09, a equipe entrega o Relatório 2 (05/10) e propõe à Riachuelo uma reunião de validação dos pesos da matriz de decisão e das premissas $f$, $T$ e $d$. Em novembro, o Relatório 3 (04/11) detalha formas, materiais e lista de materiais e acompanha o protótipo funcional. Nesse marco acontece o primeiro teste de go/no-go: verificar se o Core Bluetooth funciona num App Clip real. A documentação da Apple não inclui o Core Bluetooth entre os frameworks sem função no App Clip, mas também não afirma que ele funcione \cite{apple2026appclipfuncoes}, e o fluxo de liberação no iPhone depende dele. Seguem os ensaios de liberação condicionada ao pagamento (R06) com ataque e o Relatório 4 (23/11). Em dezembro, a equipe apresenta o relatório final com o protótipo (07 e 09/12).
+
+A implantação começa no primeiro semestre de 2027 com o piloto numa loja conceito, limitado a uma categoria, para medir $d$, o retorno $r$, o ciclo $T$, os tempos de pagamento (R03), a conclusão sem funcionário (R04) e a adesão. O piloto coincide com a avaliação financeira do ciclo de reformas da Riachuelo, prevista para abril de 2027 \cite{economicnews2026riachuelo}, e pode alimentá-la. No segundo semestre de 2027, o sistema chega às 20 lojas do SOM, com os centros de recondicionamento de Natal e Guarulhos em operação. De 2028 em diante, a conversão acompanha o ciclo de reformas. Se o piloto medir um número de desistências evitadas abaixo do equilíbrio, uma loja poderá começar pela alternativa A2 Estação Inteligente, cujo custo de implantação é de R\$~28.877 por loja (Seção~\ref{sec:r2-concepcao}), e migrar para a etiqueta ativa quando a economia se confirmar.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Cronograma de implantação}
+    \label{fig:r2-cronograma}
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[x=1cm, y=1cm, font=\scriptsize]
+        % cabecalho da escala de tempo (meses em 2026; semestres a partir de 2027)
+        \node at (0.9,0.55) {out/2026};
+        \node at (2.7,0.55) {nov/2026};
+        \node at (4.5,0.55) {dez/2026};
+        \node at (6.6,0.55) {1º sem. 2027};
+        \node at (9.0,0.55) {2º sem. 2027};
+        \node at (11.4,0.55) {2028 em diante};
+        \draw[r2cinza] (-4.8,0.3) -- (12.8,0.3);
+        % divisas das colunas
+        \foreach \xc in {0,1.8,3.6,7.8,10.2,12.6} {
+            \draw[dashed, r2cinza!50] (\xc,0.8) -- (\xc,-5.75);
+        }
+        \draw[r2cinza, thick] (5.4,0.8) -- (5.4,-5.75);
+        % rotulos das linhas
+        \node[anchor=east, text width=4.6cm, align=right] at (-0.15,-0.6) {Relatório 2 e validação de premissas com a Riachuelo};
+        \node[anchor=east, text width=4.6cm, align=right] at (-0.15,-1.2) {Protótipo funcional e Relatório 3};
+        \node[anchor=east, text width=4.6cm, align=right] at (-0.15,-1.8) {Teste de Core Bluetooth no App Clip};
+        \node[anchor=east, text width=4.6cm, align=right] at (-0.15,-2.4) {Ensaios de R06 com ataque e Relatório 4};
+        \node[anchor=east, text width=4.6cm, align=right] at (-0.15,-3.0) {Relatório final e apresentação com protótipo};
+        \node[anchor=east, text width=4.6cm, align=right] at (-0.15,-3.6) {Piloto numa loja conceito, uma categoria};
+        \node[anchor=east, text width=4.6cm, align=right] at (-0.15,-4.2) {Implantação nas 20 lojas do SOM};
+        \node[anchor=east, text width=4.6cm, align=right] at (-0.15,-4.8) {Centros de recondicionamento em Natal e Guarulhos};
+        \node[anchor=east, text width=4.6cm, align=right] at (-0.15,-5.4) {Conversão de lojas no ciclo de reformas};
+        % barras da disciplina (2026)
+        \draw[draw=r2azul, fill=r2azulclaro] (0.00,-0.75) rectangle (1.80,-0.45);
+        \draw[draw=r2azul, fill=r2azulclaro] (0.23,-1.35) rectangle (1.98,-1.05);
+        \draw[draw=r2azul, fill=r2azulclaro] (0.23,-1.95) rectangle (1.98,-1.65);
+        \draw[draw=r2azul, fill=r2azulclaro] (1.98,-2.55) rectangle (3.12,-2.25);
+        \draw[draw=r2azul, fill=r2azulclaro] (3.12,-3.15) rectangle (4.06,-2.85);
+        % barras da implantacao com a Riachuelo
+        \draw[draw=r2laranja, fill=r2laranjaclaro] (5.40,-3.75) rectangle (7.80,-3.45);
+        \draw[draw=r2laranja, fill=r2laranjaclaro] (7.80,-4.35) rectangle (10.20,-4.05);
+        \draw[draw=r2laranja, fill=r2laranjaclaro] (7.80,-4.95) rectangle (10.20,-4.65);
+        \draw[draw=r2laranja, fill=r2laranjaclaro] (10.20,-5.55) rectangle (12.40,-5.25);
+        \draw[-{Stealth[length=1.8mm]}, thick, draw=r2laranja] (12.40,-5.40) -- (12.85,-5.40);
+        % marcos
+        \node[diamond, draw=r2azul, fill=r2azul, inner sep=0pt, minimum size=2.6mm] at (0.23,-0.6) {};
+        \node[anchor=west] at (0.33,-0.6) {05/10};
+        \node[diamond, draw=r2azul, fill=r2azul, inner sep=0pt, minimum size=2.6mm] at (1.98,-1.2) {};
+        \node[anchor=west] at (2.08,-1.2) {R3 (04/11)};
+        \node[diamond, draw=r2laranja, fill=r2laranja, inner sep=0pt, minimum size=2.6mm] at (1.98,-1.8) {};
+        \node[anchor=west] at (2.08,-1.8) {go/no-go};
+        \node[diamond, draw=r2azul, fill=r2azul, inner sep=0pt, minimum size=2.6mm] at (3.12,-2.4) {};
+        \node[anchor=west] at (3.22,-2.4) {R4 (23/11)};
+        \node[diamond, draw=r2azul, fill=r2azul, inner sep=0pt, minimum size=2.6mm] at (3.95,-3.0) {};
+        \node[anchor=west] at (4.10,-3.0) {07 e 09/12};
+        \node[diamond, draw=r2cinza, fill=r2cinza, inner sep=0pt, minimum size=2.6mm] at (6.60,-5.4) {};
+        \node[anchor=east, fill=white, inner sep=1pt] at (6.45,-5.4) {avaliação financeira da Riachuelo (abr/2027)};
+        % legenda
+        \draw[draw=r2azul, fill=r2azulclaro] (-4.60,-6.45) rectangle (-4.10,-6.15);
+        \node[anchor=west] at (-4.00,-6.3) {etapas da disciplina};
+        \draw[draw=r2laranja, fill=r2laranjaclaro] (-1.00,-6.45) rectangle (-0.50,-6.15);
+        \node[anchor=west] at (-0.40,-6.3) {implantação com a Riachuelo};
+        \node[diamond, draw=r2azul, fill=r2azul, inner sep=0pt, minimum size=2.6mm] at (3.80,-6.3) {};
+        \node[anchor=west] at (3.95,-6.3) {marco};
+        \node[diamond, draw=r2laranja, fill=r2laranja, inner sep=0pt, minimum size=2.6mm] at (5.20,-6.3) {};
+        \node[anchor=west] at (5.35,-6.3) {go/no-go};
+        \node[diamond, draw=r2cinza, fill=r2cinza, inner sep=0pt, minimum size=2.6mm] at (6.90,-6.3) {};
+        \node[anchor=west] at (7.05,-6.3) {marco da Riachuelo};
+        \node[r2rotulo, anchor=west] at (-4.60,-6.85) {Escala de tempo: meses em 2026 e semestres a partir de 2027.};
+    \end{tikzpicture}%
+    }
+    \source{Elaborado pelos autores (2026) com base em \citeonline{zancul2026conceitual} e \citeonline{economicnews2026riachuelo}.}
+\end{figure}
+
+\subsection{Riscos e mitigação}
+\label{sub:r2-riscos}
+
+A equipe reuniu os riscos da comercialização em três grupos, na Tabela~\ref{tab:r2-riscos}: econômicos, tecnológicos e de plataforma, e regulatórios. O grupo econômico é o mais sensível, porque, na análise de sensibilidade da Seção~\ref{sec:r2-valor}, a equipe concluiu que o equilíbrio da Riachuelo depende sobretudo de três variáveis: a fração de peças com etiqueta, a taxa de retorno e as perdas. As mitigações desse grupo têm, por isso, dois alvos. O primeiro é medir cedo, no piloto, o número de desistências evitadas, que hoje é a maior incerteza do modelo. O segundo é reduzir a exposição: usar o Tag\&Go só nas peças que hoje já recebem etiqueta rígida, de preferência as de maior valor e giro rápido, o que reduz $f$ e $T$ e, com eles, a frota. O mesmo grupo inclui o risco de perdas maiores com o autoatendimento: o relatório do ECR de 2026 registrou perdas 33\% maiores nas lojas com self-checkout \cite{ecr2026selfcheckout}, e por isso o caso base não conta redução de perdas; no cenário pessimista, o equilíbrio sobe para 6,6 a 8,3 desistências evitadas por dia por loja. A barreira física autenticada na peça e o pórtico RFID, que alarma quando o EPC da peça que sai não está marcado como vendido, são a resposta de projeto a esse risco.
+
+Os riscos tecnológicos concentram-se nas plataformas móveis, fora do controle da equipe. O mais grave é a indisponibilidade do Core Bluetooth no App Clip, que deixaria a Compra Rápida no iPhone sem liberação na própria peça; a alternativa já prevista é pagar no App Clip e liberar no Liberador de Balcão. No Android, o Web Bluetooth só existe no Chrome e no Samsung Internet \cite{chrome2026webbluetooth}, e as permissões do primeiro uso podem piorar o tempo e a clareza do fluxo. Os riscos regulatórios são mais previsíveis, porque têm norma e procedimento conhecidos: a homologação na Anatel, facilitada pelo módulo com certificado \cite{espressif2026certificados} e que ainda exige avaliação do produto final por organismo certificador designado \cite{anatel2019res715}; o transporte de baterias de lítio; e a propriedade intelectual. Nesse último ponto, a família da patente US~10.121.339~B2 não tem publicação brasileira no Google Patents \cite{googlepatents2018us10121339}; a ausência ainda precisa ser confirmada no INPI, tarefa prevista para o Relatório 3 (Seção~\ref{sec:r2-aproveitamento}).
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}
+    >{\RaggedRight\arraybackslash}p{3.6cm}
+    >{\RaggedRight\arraybackslash}p{4.8cm}
+    >{\RaggedRight\arraybackslash}p{6.9cm}@{}}
+\caption{Riscos da comercialização e mitigação} \label{tab:r2-riscos} \\
+\toprule
+\textbf{Risco} & \textbf{Efeito} & \textbf{Mitigação} \\
+\midrule
+\endfirsthead
+\multicolumn{3}{c}{Tabela~\ref{tab:r2-riscos} (continuação)} \\
+\toprule
+\textbf{Risco} & \textbf{Efeito} & \textbf{Mitigação} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{3}{r}{\textit{continua na próxima página}} \\
+\endfoot
+\bottomrule
+\multicolumn{3}{c}{Fonte: Elaborado pelos autores (2026).} \\
+\endlastfoot
+\multicolumn{3}{@{}l}{\cellcolor{r2cinzaclaro}Econômicos} \\
+Retorno abaixo da meta de 99\% & Equilíbrio sobe para 5,05 (retorno de 95\%) ou 9,16 (83\%) desistências evitadas por dia por loja & Mecanismos M1 a M4; franquia de perda e cobrança por etiqueta não devolvida; painel de frota no Ponto de Apoio \\
+Desistências evitadas abaixo do equilíbrio (3,7 por dia por loja) & A Riachuelo não recupera o custo da locação & Piloto com medição; uso seletivo por categoria ($f$ e $T$ menores); A2 Estação Inteligente como etapa intermediária \\
+Perdas maiores com autoatendimento (ECR 2026) & Equilíbrio de 6,6 a 8,3 no cenário pessimista & Barreira física autenticada; pórtico RFID com EPC vendido; monitoramento das perdas por loja \\
+Custo-meta não atingido & Taxa interna de retorno do fornecedor cai para 17,3\% com custo de R\$~66 por etiqueta & \textit{Design to cost}; cotações de volume da célula, do micromotor e do molde no Relatório 3 \\
+Adesão abaixo de 24\% & Benefícios menores de tempo de caixa e de retirada da etiqueta & Jornada Completa com Ria Club; Compra Rápida como via rápida opcional \\
+\multicolumn{3}{@{}l}{\cellcolor{r2cinzaclaro}Tecnológicos e de plataforma} \\
+Core Bluetooth indisponível no App Clip & Compra Rápida no iPhone sem liberação na peça & Marco de go/no-go no Relatório 3; alternativa: pagar no App Clip e liberar no Liberador de Balcão \\
+Atrito do Web Bluetooth e das permissões no Android & Tempo (R03) e clareza (R05) piores & Seletor filtrado pelo \texttt{tag\_id}; medição do tempo por etapa; opção de abrir no Chrome \\
+Pix assíncrono & Espera pela luz verde até a confirmação do banco & Tempo de liquidação fora de R03; aviso claro na tela \\
+Dependência do app Riachuelo & O App Clip exige o app publicado com a mesma função & Cronograma conjunto com o time de iOS da marca \\
+\multicolumn{3}{@{}l}{\cellcolor{r2cinzaclaro}Regulatórios e jurídicos} \\
+Propriedade intelectual (US~10.121.339~B2 e outras) & Restrição à exportação para os países da família de patentes & Busca no INPI no Relatório 3; diferenciação técnica (Seção~\ref{sec:r2-aproveitamento}) \\
+Homologação na Anatel & Atraso do lançamento & Módulo com certificado; avaliação do produto final por organismo certificador designado \\
+LGPD & Multa de até 2\% do faturamento, limitada a R\$~50~milhões por infração; perda de confiança do cliente & Base legal por finalidade (Tabela~\ref{tab:r2-lgpd}); opt-in separado; relatório de impacto à proteção de dados \\
+Baterias de lítio no transporte & Risco de segurança e de conformidade & Modo transporte; embalagem rígida com divisórias; identificação UN~3481; modal rodofluvial para Manaus \\
+\end{longtable}
+\endgroup
+
+\subsubsection{Dados pessoais e LGPD}
+\label{sub:r2-lgpd}
+
+O tratamento de dados pessoais é o risco regulatório que mais depende do desenho do produto, e a equipe o tratou por finalidade, como pede a LGPD. Para cada finalidade, a Tabela~\ref{tab:r2-lgpd} indica os dados necessários, a base legal e o caminho de uso em que o tratamento ocorre. O princípio que orientou a tabela é o da necessidade (art.~6º, III): cada caminho coleta só o que precisa \cite{brasil2018lgpd}. A Compra Rápida trata o mínimo para processar a compra, liberar a peça e emitir a NFC-e, com CPF opcional e e-mail apenas quando o cliente pede o recibo. A biometria usada na confirmação da carteira digital fica no aparelho e não chega à Riachuelo. A Jornada Completa, que trata perfil, histórico e dependentes, pede consentimento separado para cada finalidade, porque autorizações genéricas são nulas (art.~8º, §4º), e oferece a revogação em um toque, gratuita e facilitada (art.~8º, §5º).
+
+\begin{table}[htbp]
+    \centering
+    \caption{Tratamento de dados pessoais por finalidade e base legal}
+    \label{tab:r2-lgpd}
+    \scriptsize
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.3cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{1.8cm}
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Finalidade} & \textbf{Dados} & \textbf{Base legal (LGPD)} & \textbf{Caminho} & \textbf{Observação} \\
+        \midrule
+        Processar a compra e liberar a peça & Itens (EPC), \texttt{tag\_id}, identificador tokenizado do pagamento, transação & Execução de contrato (art.~7º, V) & Ambos & Dado mínimo (art.~6º, III); a biometria da carteira fica no aparelho e não chega à Riachuelo \\
+        Emitir a NFC-e & Itens, valor e CPF, se o cliente pedir & Obrigação legal (art.~7º, II) & Ambos & CPF opcional \\
+        Recibo por e-mail & E-mail informado na carteira (\texttt{emailRequired}) ou digitado & Execução de contrato (art.~7º, V) & Compra Rápida & Só se o cliente pedir \\
+        Prevenção a fraude e auditoria & Registros de token e de liberação, horário e loja & Legítimo interesse (art.~7º, IX), com teste de balanceamento & Ambos & Retenção limitada; guia da ANPD na versão consultada em 25/09/2026 \\
+        Perfil, recomendação e métricas & Tamanhos, preferências, histórico e dependentes & Consentimento (art.~7º, I) com opt-in separado por finalidade (art.~8º, §4º) e revogação em um toque (art.~8º, §5º); ou legítimo interesse com teste de balanceamento e direito de oposição & Jornada Completa & Revisão de decisões automatizadas (art.~20) se afetarem o cliente; sem preço diferenciado por perfil \\
+        Fidelidade (Ria Club) & CPF, compras e cashback & Execução do contrato do programa (art.~7º, V) & Jornada Completa e passe & Regras do regulamento do programa \\
+        Marketing & Contato e preferências & Consentimento (art.~7º, I) & Jornada Completa & Opt-in próprio \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026) com base em \citeonline{brasil2018lgpd}, \citeonline{anpd2024legitimo} e \citeonline{midway2026riaclub}.}
+\end{table}
+
+Duas finalidades pedem cuidado adicional. A prevenção a fraude e a auditoria das liberações usam o legítimo interesse como base, o que exige finalidade legítima e específica, teste de balanceamento documentado e respeito ao direito de oposição, conforme o guia orientativo da ANPD \cite{anpd2024legitimo}; a retenção desses registros será limitada ao necessário para a auditoria. A recomendação de peças, por sua vez, é uma decisão automatizada baseada em perfil de consumo, e o titular pode pedir sua revisão (art.~20); a equipe definiu que o perfil não será usado para diferenciar preços.
+
+Na divisão de papéis, a Riachuelo é a controladora dos dados, e o fornecedor do Tag\&Go atua como operador (art.~39), sob as instruções dela; a empresa mantém o encarregado (art.~41) e o dever de comunicar incidentes de segurança (art.~48). Se a Plataforma for hospedada em nuvem fora do país, a transferência internacional deverá seguir os arts.~33 a 36. Os direitos do titular, como acesso, correção, portabilidade e exclusão (art.~18), ficarão reunidos numa área de privacidade do app. A equipe descartou o pagamento facial próprio, adotado pela C\&A no C\&A Pay \cite{mobiletime2023cea}, porque a biometria é dado sensível (art.~11) e aumentaria o risco sem ganho para o fluxo, já que as carteiras digitais resolvem a confirmação no próprio aparelho. A preocupação com a privacidade apareceu nas entrevistas do Relatório 1, no desejo de privacidade quanto a dados de comportamento em produtos conectados (D07). Como a multa pode chegar a 2\% do faturamento, limitada a R\$~50~milhões por infração (art.~52, II), o próximo passo é elaborar, com o Jurídico da Riachuelo, o relatório de impacto à proteção de dados (RIPD) antes do piloto.
+
+\subsection{Indicadores do piloto}
+\label{sub:r2-indicadores}
+
+O piloto só cumpre sua função comercial se medir as variáveis que decidem a economia e as especificações-meta que decidem a experiência. A equipe definiu nove indicadores. Os três primeiros são econômicos: a taxa de retorno por loja, comparada à meta S01 de 99\%; o ciclo médio da etiqueta, comparado à meta S02 de até 84 dias; e as desistências de compra evitadas, estimadas por um protocolo a combinar com a Riachuelo e comparadas ao equilíbrio de 3,7 por dia por loja. Os quatro seguintes medem a experiência: o tempo por etapa do pagamento (R03), a conclusão sem funcionário (R04), a conclusão na primeira tentativa (R05) e a adesão à compra pelo celular, comparada aos 24\% adotados como premissa. Os dois últimos são operacionais: as falhas registradas em cada cenário de exceção, de X1 a X8, e a satisfação do cliente. Com esses indicadores, a Riachuelo poderá decidir a expansão para as 20 lojas do SOM com base em resultados medidos na própria operação, e a equipe poderá substituir por medições as premissas que hoje sustentam a Seção~\ref{sec:r2-valor}.

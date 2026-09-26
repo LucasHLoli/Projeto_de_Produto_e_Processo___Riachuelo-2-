@@ -1,0 +1,427 @@
+% =============================================================================
+% Relatorio 2, Secao 4: escala vertical e valor mercadologico (item C).
+% Conteudo: metodo; escala vertical (TAB08, FIG06); custo da etiqueta e
+% custo-meta (TAB09); frota em uma linha, custo por uso e taxa de retorno
+% (FIG07); valor economico para a Riachuelo (TAB10, FIG08); preco e
+% remuneracao do fornecedor; sensibilidade do equilibrio (FIG09).
+% Todos os numeros saem do script canonico conta_final.py (biblia, parte 2.11).
+% A composicao da frota fica na Secao 7 (sub:r2-ciclo e fig:r2-frota).
+% =============================================================================
+
+\section{ESCALA VERTICAL E VALOR MERCADOLÓGICO}
+\label{sec:r2-valor}
+
+Os diferenciais identificados na Seção~\ref{sec:r2-diferenciacao} só têm valor comercial se o varejista puder pagar por eles. O item C do projeto conceitual trata dessa questão ao pedir a escala vertical de preços e a definição do valor mercadológico do produto \cite{zancul2026conceitual}. No Tag\&Go, essa definição tem uma particularidade: quem compra o sistema é o varejista, e o consumidor usa a etiqueta sem pagar nada a mais. Por isso, a equipe tratou o valor como uma questão de viabilidade econômica para dois agentes, a Riachuelo, que precisa recuperar o que paga pelo sistema, e o fornecedor, que precisa remunerar o capital imobilizado na frota de etiquetas. Acompanhar a viabilidade econômica também é uma das atividades que \citeonline{rozenfeld2006gestao} atribuem à fase conceitual.
+
+\subsection{Método}
+\label{sub:r2-valor-metodo}
+
+O Tag\&Go é vendido a um varejista (B2B) e não tem concorrente direto à venda no Brasil, o que impede comparar o seu preço com o de um produto equivalente. A equipe seguiu, então, o precedente do projeto USPontos de Recarga, relatório de anos anteriores da disciplina consultado pela equipe, que também tratava de um produto vendido a uma instituição: a escala vertical foi montada com produtos que cumprem parte das funções do Tag\&Go ou que o varejista já compra, e o valor foi definido pelo valor econômico para o comprador, com análise de equilíbrio e de retorno do investimento. A escala serve para posicionar o produto entre referências que o comprador conhece e não justifica o preço, que decorre da conta econômica das Subseções~\ref{sub:r2-valor-riachuelo} e \ref{sub:r2-preco}.
+
+Os precedentes PenDrive e HotPot, também de anos anteriores, posicionaram o produto na escala com pesquisa de clientes. Neste projeto não houve pesquisa com o comprador B2B, e os preços de equipamentos, os parâmetros da loja e as premissas de operação usados adiante foram estimados pela equipe a partir de fontes públicas. Essa é uma limitação do estudo, que a validação com a Riachuelo e o piloto deverão reduzir. Os valores em dólar foram convertidos pela PTAX de venda do Banco Central de 25/09/2026, R\$~5,1991 por US\$ \cite{bcb2026ptax}, e todas as contas econômicas saíram de um único script de cálculo da equipe, de modo que texto, tabelas e figuras usam os mesmos números.
+
+\subsection{Escala vertical de preços}
+\label{sub:r2-escala}
+
+A escala reúne 25 itens, 23 produtos de referência em cinco categorias e dois valores do Tag\&Go, ordenados do mais barato ao mais caro na Tabela~\ref{tab:r2-escala}. Os consumíveis EAS são o que a Riachuelo já compra para proteger as peças e o que a etiqueta Tag\&Go substitui. Os componentes de identificação (inlay RFID e adesivo NFC) mostram o custo de identificar uma peça sem nenhuma função ativa. As etiquetas eletrônicas de prateleira (ESL) são a referência mais próxima em arquitetura, porque também têm rádio e bateria. Os rastreadores BLE de consumo são o produto de massa mais próximo em eletrônica, e os itens de infraestrutura, dos desacopladores magnéticos aos terminais de self-checkout, representam o que o varejista compra para operar a prevenção de perdas e o autoatendimento. O Tag\&Go entra com dois valores, o custo-meta de fabricação (Subseção~\ref{sub:r2-custo-meta}) e o preço de venda na modalidade compra (Subseção~\ref{sub:r2-preco}).
+
+\begin{table}[htbp]
+    \centering
+    \caption{Escala vertical de preços}
+    \label{tab:r2-escala}
+    \scriptsize
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\raggedleft\arraybackslash}p{0.5cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\raggedleft\arraybackslash}p{1.5cm}
+        >{\RaggedRight\arraybackslash}p{2.5cm}
+        >{\RaggedRight\arraybackslash}p{3.9cm}@{}}
+        \toprule
+        \textbf{Nº} & \textbf{Item} & \textbf{R\$} & \textbf{Categoria} & \textbf{Fonte} \\
+        \midrule
+        1 & Pino para etiqueta rígida (lote de 1.000) & 0,12 & Consumível EAS & \citeonline{canalautomacao2026pino} \\
+        2 & Etiqueta adesiva RF 8,2\,MHz (rolo de 1.000) & 0,18 & Consumível EAS & \citeonline{sensormagic2026adesiva} \\
+        3 & Etiqueta rígida RF 8,2\,MHz, importação (US\$~0,05) & 0,26 & Consumível EAS & \citeonline{alibaba2026rf} \\
+        4 & Etiqueta rígida AM pencil (caixa de 1.000) & 0,30 & Consumível EAS & \citeonline{hexport2026pencil} \\
+        5 & Inlay RFID UHF de vestuário (US\$~0,12) & 0,62 & Identificação & \citeonline{atlasrfid2026tags} \\
+        6 & Etiqueta rígida mini tag RF com pino (lote de 2.000) & 0,87 & Consumível EAS & \citeonline{allcard2026minitag} \\
+        7 & Etiqueta rígida AM pencil, varejo (milheiro) & 1,32 & Consumível EAS & \citeonline{canalautomacao2026pencil} \\
+        8 & Adesivo NFC NTAG213 & 2,03 & Identificação & \citeonline{smartkits2026ntag} \\
+        9 & ESL, faixa baixa (US\$~5) & 26,00 & Eletrônico de prateleira & \citeonline{solum2026esl} \\
+        10 & ESL, faixa alta (US\$~10) & 51,99 & Eletrônico de prateleira & \citeonline{solum2026esl} \\
+        \rowcolor{r2laranjaclaro}
+        11 & Tag\&Go, custo-meta & 60,00 & Tag\&Go & Tabela~\ref{tab:r2-bom} \\
+        \rowcolor{r2laranjaclaro}
+        12 & Tag\&Go, preço de venda na modalidade compra & 90,00 & Tag\&Go & Subseção~\ref{sub:r2-preco} \\
+        13 & Tile, preço de lista (US\$~24,99) & 129,93 & Rastreador & \citeonline{nbc2026tile} \\
+        14 & Desacoplador 5.200\,GS & 168,90 & Infraestrutura & \citeonline{drich2026desacoplador} \\
+        15 & Desacoplador 10.000\,GS & 300,00 & Infraestrutura & \citeonline{canalautomacao2026desacoplador} \\
+        16 & Galaxy SmartTag2 (lançamento) & 349,00 & Rastreador & \citeonline{olhardigital2023smarttag} \\
+        17 & Desacoplador 11.500\,GS & 359,00 & Infraestrutura & \citeonline{allcard2026desacoplador} \\
+        18 & AirTag de 2ª geração & 369,00 & Rastreador & \citeonline{apple2026airtag} \\
+        19 & Quiosque Elgin MK 11 & 4.162,00 & Infraestrutura & \citeonline{elgin2026selfcheckout} \\
+        20 & Antena EAS AM TX/RX & 5.099,00 & Infraestrutura & \citeonline{i9automacao2026antena} \\
+        21 & Leitor RFID Zebra FXP20 (US\$~984,50) & 5.118,51 & Infraestrutura & \citeonline{atlasrfid2026leitor} \\
+        22 & Self-checkout de varejo, piso (US\$~2.000) & 10.398,20 & Infraestrutura & \citeonline{korona2026selfcheckout} \\
+        23 & Quiosque Elgin MK 21 & 13.008,00 & Infraestrutura & \citeonline{elgin2026selfcheckout} \\
+        24 & Self-checkout de varejo, teto (US\$~15.000) & 77.986,50 & Infraestrutura & \citeonline{korona2026selfcheckout} \\
+        25 & Self-checkout com RFID ou visão (acima de US\$~20.000) & 103.982,00 & Infraestrutura & \citeonline{korona2026selfcheckout} \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026) com base nas fontes indicadas na tabela; valores em dólar convertidos pela PTAX de venda de 25/09/2026 \cite{bcb2026ptax}.}
+\end{table}
+
+Como os preços cobrem seis ordens de grandeza, de R\$~0,12 a R\$~103.982,00, a Figura~\ref{fig:r2-escala-vertical} representa a escala com eixo logarítmico e cores por categoria.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Escala vertical de preços}
+    \label{fig:r2-escala-vertical}
+    \begin{tikzpicture}
+        \begin{axis}[
+            r2eixo,
+            xbar, bar shift=0pt, bar width=3.2mm,
+            xmode=log, log basis x=10, log origin x=infty,
+            xmin=0.1, xmax=2000000,
+            ymin=0.3, ymax=25.7,
+            width=8.6cm, height=14cm,
+            ymajorgrids=false, xmajorgrids,
+            ytick={1,2,...,25},
+            yticklabels={
+                {Pino (lote de 1.000)},
+                {Adesiva RF 8,2 MHz},
+                {Rígida RF (importação)},
+                {Rígida AM pencil (caixa)},
+                {Inlay RFID UHF},
+                {Mini tag RF com pino},
+                {Rígida AM pencil (varejo)},
+                {Adesivo NFC NTAG213},
+                {ESL, faixa baixa},
+                {ESL, faixa alta},
+                {Tag\&Go, custo-meta},
+                {Tag\&Go, compra},
+                {Tile},
+                {Desacoplador 5.200 GS},
+                {Desacoplador 10.000 GS},
+                {Galaxy SmartTag2},
+                {Desacoplador 11.500 GS},
+                {AirTag 2ª geração},
+                {Quiosque Elgin MK 11},
+                {Antena EAS AM},
+                {Leitor RFID Zebra FXP20},
+                {Self-checkout, piso},
+                {Quiosque Elgin MK 21},
+                {Self-checkout, teto},
+                {Self-checkout RFID ou visão}},
+            y tick label style={font=\scriptsize},
+            xtick={0.1,1,10,100,1000,10000,100000},
+            xticklabels={{0,1},1,10,100,{1.000},{10.000},{100.000}},
+            xlabel={Preço unitário (R\$, escala logarítmica)},
+            point meta=rawx,
+            nodes near coords={\pgfmathprintnumber[fixed,fixed zerofill,precision=2,use comma,1000 sep={.}]{\pgfplotspointmeta}},
+            nodes near coords align={horizontal},
+            every node near coord/.append style={font=\tiny, text=black},
+            legend style={at={(0.98,0.02)}, anchor=south east, font=\scriptsize, draw=none, fill=white},
+            legend cell align=left,
+            clip=false,
+        ]
+            \addplot[fill=r2cinza, draw=r2cinza] coordinates {(0.12,1) (0.18,2) (0.26,3) (0.30,4) (0.87,6) (1.32,7)};
+            \addlegendentry{Consumível EAS}
+            \addplot[fill=r2azulclaro, draw=r2azul] coordinates {(0.62,5) (2.03,8)};
+            \addlegendentry{Identificação}
+            \addplot[fill=r2azulmedio, draw=r2azulmedio] coordinates {(26.00,9) (51.99,10)};
+            \addlegendentry{Eletrônico de prateleira}
+            \addplot[fill=r2laranja, draw=r2laranja] coordinates {(60.00,11) (90.00,12)};
+            \addlegendentry{Tag\&Go}
+            \addplot[fill=r2verde, draw=r2verde] coordinates {(129.93,13) (349.00,16) (369.00,18)};
+            \addlegendentry{Rastreador}
+            \addplot[fill=r2azul, draw=r2azul] coordinates {(168.90,14) (300.00,15) (359.00,17) (4162.00,19) (5099.00,20) (5118.51,21) (10398.20,22) (13008.00,23) (77986.50,24) (103982.00,25)};
+            \addlegendentry{Infraestrutura}
+        \end{axis}
+    \end{tikzpicture}
+    \source{Elaborado pelos autores (2026) com base nas fontes da Tabela~\ref{tab:r2-escala}.}
+\end{figure}
+
+A equipe fez três leituras da escala. A primeira é de coerência técnica: o custo-meta do Tag\&Go, R\$~60, fica entre a ESL (R\$~26,00 a R\$~51,99), que também tem rádio e bateria, e os rastreadores BLE de consumo (R\$~129,93 a R\$~369,00), posição compatível com um dispositivo BLE que ainda tem atuador e trava mecânica. A segunda é de ordem de grandeza frente ao que o produto substitui: a mini tag RF com pino custa R\$~0,87, e a etiqueta Tag\&Go custa cerca de 70 vezes mais. Uma diferença desse tamanho só se viabiliza se a etiqueta for tratada como ativo reutilizável, cobrado por uso, o que orientou o modelo de locação da Subseção~\ref{sub:r2-preco}. A terceira situa o investimento do varejista: o sistema de uma loja é comparado com itens de infraestrutura que o varejista já compra, como antenas EAS, leitores RFID e terminais de self-checkout, cujos preços unitários vão de R\$~4.162,00 a R\$~103.982,00. No Brasil, o self-checkout é vendido por compra, locação, leasing, Finame e cartão BNDES, sem preço publicado \cite{perto2021selfcheckout}, o que mostra que o comprador já conhece a contratação de equipamentos de loja por locação.
+
+A escala tem ressalvas. Os preços do varejo brasileiro de automação vieram de páginas e títulos de anúncio, com confiança média, e podem ter mudado; os preços em dólar são de distribuidor, sem impostos de importação; o Galaxy SmartTag2 aparece com o preço de lançamento de 2023; e o Tile aparece com o preço de lista, embora a página consultada traga uma oferta. Nenhuma dessas ressalvas altera a posição relativa do Tag\&Go, que depende de diferenças de uma ordem de grandeza ou mais.
+
+\subsection{Custo da etiqueta e custo-meta}
+\label{sub:r2-custo-meta}
+
+A equipe estimou o custo da etiqueta em três colunas, reunidas na Tabela~\ref{tab:r2-bom}: o protótipo, com os componentes de varejo que serão comprados para o Relatório 3; a produção em escala sem redesenho, isto é, a etiqueta do Relatório 1 fabricada com preços de volume; e a meta de \textit{design to cost}, que incorpora as mudanças de projeto adotadas no Relatório 2. Os grupos da tabela seguem os componentes da etiqueta descritos na Seção~\ref{sec:r2-arquitetura}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Custo da etiqueta Tag\&Go e custo-meta}
+    \label{tab:r2-bom}
+    \scriptsize
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.3cm}
+        >{\raggedleft\arraybackslash}p{1.35cm}
+        >{\raggedleft\arraybackslash}p{1.6cm}
+        >{\raggedleft\arraybackslash}p{1.6cm}
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Grupo} & \textbf{Protótipo (R\$)} & \textbf{Escala sem redesenho (R\$)} & \textbf{Meta de \textit{design to cost} (R\$)} & \textbf{Origem da redução} \\
+        \midrule
+        Controle e rádio & 25,00 & 10,45 & 10,45 & ESP32-C3 Super Mini no protótipo; em escala, módulo ESP32-C3-MINI-1 com certificado Anatel (US\$~2,01); mantido na meta \\
+        Energia & 31,00 & 33,75 & 9,50 & LiPo de 300\,mAh e módulo TP4056 $\rightarrow$ célula de 150\,mAh com proteção, suficiente para autonomia $\geq 2T$ no modo botão (E05), e CI de carga na placa única; preço de volume da célula a cotar \\
+        Atuação & 36,40 & 32,30 & 9,20 & protótipo com micromotor N20 (R\$~28,00); escala sem redesenho com o servo MG90S do Relatório 1; meta com micromotor com redução e came e driver na placa (clone de cerca de US\$~1,66, preço de anúncio, baixa confiança) \\
+        Interface & 7,00 & 6,44 & 2,60 & LED RGB, chave e buzzer em módulos $\rightarrow$ componentes SMD e piezo na placa \\
+        Identificação & 4,03 & 3,03 & 1,80 & NTAG213 e manta de ferrite sob o QR (ferrite estimado) \\
+        Retenção e EAS & 1,70 & 0,87 & 0,87 & garra, pino e elemento EAS de mini tag comercial \\
+        Carcaça e fixação & 13,70 & 18,48 & 18,48 & PETG impresso $\rightarrow$ duas peças injetadas (US\$~1,70 cada, exemplo hipotético) e parafusos de segurança \\
+        Contatos de serviço & 2,00 & 0,60 & 0,60 & três pads rebaixados na face superior \\
+        Placa e montagem & 3,00 & 5,00 & 4,00 & fiação no protótipo $\rightarrow$ placa única montada em SMT \\
+        \midrule
+        Subtotal & 123,83 & 110,91 & 57,50 & \\
+        Reserva de montagem (10\%) & 12,38 & 11,09 & 5,75 & 10\% do subtotal, sem ajuste \\
+        \midrule
+        Total & 136,21 & 122,00 & 63,25 & meta de R\$~60 $\pm$ 10\% (R\$~54 a R\$~66) \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026) com base em \citeonline{digikey2026esp32}, \citeonline{adafruit2026lipo}, \citeonline{curtocircuito2026n20}, \citeonline{pololu2026n20}, \citeonline{formlabs2026injecao}, \citeonline{lcsc2026chave}, \citeonline{digikey2026led}, \citeonline{smartkits2026ntag}, \citeonline{allcard2026minitag} e estudos anteriores da equipe.}
+\end{table}
+
+O custo-meta foi fixado em R\$~60 $\pm$ 10\%, isto é, entre R\$~54 e R\$~66, faixa que a composição da meta, R\$~63,25, atende. A redução de 48,2\% em relação à escala sem redesenho (R\$~122,00) vem de três decisões de projeto, cada uma com justificativa técnica própria, e não de um ajuste feito para fechar a conta. A primeira é trocar a LiPo de 300\,mAh por uma célula de 150\,mAh com proteção: com a etiqueta no modo botão, que só acorda quando o cliente aperta o botão, a autonomia estimada pela equipe é de 448 dias, contra a meta de 168 dias da especificação E05 (Tabela~\ref{tab:r2-especificacoes}), e a célula maior deixou de ser necessária. A segunda é substituir o servo MG90S do Relatório 1 por um micromotor com redução, que aciona o mesmo cursor com rampa por meio de um came e ocupa menos altura. A terceira é reunir módulo de rádio, CI de carga, driver do motor, LED e buzzer em uma placa única montada em SMT, o que elimina os módulos avulsos do protótipo e reduz a montagem manual.
+
+Dois grupos não mudam entre a escala sem redesenho e a meta. O módulo ESP32-C3-MINI-1, a US\$~2,01 em rolo \cite{digikey2026esp32}, foi mantido porque tem certificado Anatel \cite{espressif2026certificados}, o que simplifica a homologação do produto final. A carcaça injetada, a US\$~1,70 por peça, foi estimada a partir de um exemplo hipotético de gabinete eletrônico com molde de aço de US\$~20 mil e 100 mil unidades, que não é um orçamento \cite{formlabs2026injecao}. Três preços da meta ainda precisam de cotação, que é um dos próximos passos do Relatório 3: o da célula, porque o único preço de volume encontrado para uma célula pequena, US\$~4,76 (R\$~24,75) por uma LiPo de 100\,mAh com proteção, vale para lotes de 100 unidades \cite{adafruit2026lipo}, volume muito inferior ao de uma frota; o do micromotor, cuja referência de meta é um preço de anúncio de baixa confiança, enquanto um micromotor de marca com redução de 298:1 custa US\$~18,65 em lotes de 100 \cite{pololu2026n20}; e o do molde. Para o protótipo, a lista de compras do Relatório 3 soma R\$~606,65 para duas etiquetas com came por micromotor, buzzer, NFC e ferrite, ou R\$~101,11 por aluno.
+
+\subsection{Frota, custo por uso e taxa de retorno}
+\label{sub:r2-custo-uso}
+
+As contas econômicas partem de uma loja padrão, estimada pela equipe a partir de fontes públicas. A fábrica de Natal produziu cerca de 37 milhões de peças em 2025, o que corresponde a cerca de 40\% do que a rede vende \cite{bloomberglinea2026riachuelo}; a rede vendeu, portanto, cerca de 92,5 milhões de peças, e a receita de vestuário de R\$~6,5 bilhões \cite{abvtex2026riachuelo} dá um preço médio de R\$~70,27 por peça. Dividindo as vendas físicas (descontada a penetração digital de 8\% registrada em 2024 \cite{btg2025guararapes}) pelas 342 lojas Riachuelo \cite{abvtex2026riachuelo}, a loja padrão vende $V = 682$ peças por dia. A equipe adotou como premissa que $f = 10\%$ dessas peças recebem etiqueta rígida, o que dá $S = 68$ liberações por dia e $L = 24.820$ liberações por ano por loja, e que cada compra tem 3 peças, o que dá 227 compras por dia.
+
+A frota por loja, também uma premissa de trabalho, foi dimensionada pela lei de Little:
+\begin{equation}
+N = S \times T \times k = 68 \times 84 \times 1{,}2 \approx 6.854 \text{ etiquetas por loja},
+\end{equation}
+em que $T = 84$ dias é o ciclo médio da etiqueta, que inclui a permanência em loja de 60 dias, premissa ancorada no prazo médio de estoques de 95 dias da Renner \cite{renner2026resultados}, e $k = 1{,}2$ é a reserva para variabilidade e perdas no processo. A composição da frota por etapa do ciclo está na Subseção~\ref{sub:r2-ciclo} e na Figura~\ref{fig:r2-frota}.
+
+Como o ciclo é longo, a etiqueta circula pouco. Com $365/(T \times k) = 3{,}62$ ciclos por ano e vida de 5 anos (premissa), cada etiqueta faz no máximo $U = 18{,}1$ ciclos. Se a etiqueta volta ao CD com probabilidade $r$ a cada ciclo, o número esperado de usos $E(r)$ e o custo por uso de uma etiqueta de custo $C$ são:
+\begin{equation}
+E(r) = \frac{1 - r^{U}}{1 - r}, \qquad \text{custo por uso} = \frac{C}{E(r)}.
+\end{equation}
+
+A Figura~\ref{fig:r2-custo-uso} mostra o custo por uso para o custo-meta (R\$~60) e para a escala sem redesenho (R\$~122), em função da taxa de retorno.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Custo por uso da etiqueta em função da taxa de retorno}
+    \label{fig:r2-custo-uso}
+    \begin{tikzpicture}
+        \begin{axis}[
+            r2eixo,
+            width=0.85\textwidth, height=7.5cm,
+            xmin=0.80, xmax=1.00, ymin=0, ymax=26,
+            xtick={0.80,0.85,0.90,0.95,1.00},
+            xticklabels={80\%,85\%,90\%,95\%,100\%},
+            ytick={0,5,10,15,20,25},
+            xlabel={Taxa de retorno por ciclo ($r$)},
+            ylabel={Custo por uso (R\$ por liberação)},
+            legend style={at={(0.55,0.97)}, anchor=north, font=\footnotesize, draw=none, fill=white},
+            legend cell align=left,
+            clip=false,
+        ]
+            \fill[r2cinzaclaro] (axis cs:0.80,0) rectangle (axis cs:0.83,26);
+            \node[r2rotulo, anchor=north] at (axis cs:0.815,25.5) {mercado:\\80\% a 83\%};
+            \addplot[r2laranja, thick, mark=none] coordinates {
+                (0.80,12.21) (0.81,11.66) (0.82,11.11) (0.83,10.56) (0.84,10.03)
+                (0.85,9.50) (0.86,8.99) (0.87,8.48) (0.88,7.99) (0.89,7.51)
+                (0.90,7.05) (0.91,6.60) (0.92,6.16) (0.93,5.74) (0.94,5.34)
+                (0.95,4.96) (0.96,4.59) (0.97,4.25) (0.98,3.92) (0.99,3.61) (1.00,3.31)};
+            \addlegendentry{$C$ = R\$~60 (custo-meta)}
+            \addplot[r2azulmedio, thick, dashed, mark=none] coordinates {
+                (0.80,24.84) (0.81,23.70) (0.82,22.58) (0.83,21.48) (0.84,20.39)
+                (0.85,19.32) (0.86,18.27) (0.87,17.25) (0.88,16.25) (0.89,15.27)
+                (0.90,14.33) (0.91,13.41) (0.92,12.53) (0.93,11.68) (0.94,10.86)
+                (0.95,10.08) (0.96,9.34) (0.97,8.63) (0.98,7.97) (0.99,7.33) (1.00,6.74)};
+            \addlegendentry{$C$ = R\$~122 (escala sem redesenho)}
+            \draw[r2azul, dashed] (axis cs:0.99,0) -- (axis cs:0.99,26);
+            \node[r2rotulo, anchor=north east] at (axis cs:0.988,25.5) {meta S01:\\99\%};
+            \addplot[only marks, mark=*, mark size=1.5pt, r2laranja, forget plot] coordinates {(0.99,3.61)};
+            \addplot[only marks, mark=*, mark size=1.5pt, r2azulmedio, forget plot] coordinates {(0.99,7.33)};
+            \node[r2rotulo, anchor=north east] at (axis cs:0.988,3.5) {R\$~3,61};
+            \node[r2rotulo, anchor=north east] at (axis cs:0.988,7.2) {R\$~7,33};
+            \draw[r2cinza, dashed] (axis cs:0.80,0.29) -- (axis cs:1.00,0.29);
+            \node[r2rotulo, anchor=south west] at (axis cs:0.84,0.29) {hoje: R\$~0,29 por liberação};
+        \end{axis}
+    \end{tikzpicture}
+    \source{Elaborado pelos autores (2026) com base em \citeonline{pact2026etiquetas} e \citeonline{sensormatic2024recirculacao}.}
+\end{figure}
+
+A curva deixa clara a dependência da economia em relação ao retorno. Com o custo-meta, o custo por uso cai de R\$~12,21 a 80\% de retorno para R\$~10,56 a 83\%, R\$~7,05 a 90\%, R\$~4,96 a 95\% e R\$~3,61 a 99\%, quando a etiqueta faz em média 16,64 usos; mesmo com retorno total, o custo não desce de R\$~3,31. Com o custo da escala sem redesenho, os valores dobram: R\$~21,48 a 83\% e R\$~7,33 a 99\%. Em todos os casos, o custo por uso fica acima dos R\$~0,29 que a Riachuelo gasta hoje por liberação com a etiqueta rígida comum (Subseção~\ref{sub:r2-valor-riachuelo}). Como a proteção fica mais cara, a vantagem do Tag\&Go precisa vir do que a liberação pelo celular devolve em vendas e em tempo de caixa. A experiência dos \textit{pools} de ativos retornáveis confirma o peso do retorno nessa conta: na Brambles, que opera paletes em \textit{pool}, a queda das perdas não compensadas foi o que melhorou o retorno do investimento \cite{brambles2025resultados}.
+
+A faixa de mercado para etiquetas rígidas recirculadas vai de 80\% a 83\%. A Pact informa reuso de até 80\%, segundo o fornecedor \cite{pact2026etiquetas}. A Sensormatic, também segundo o fornecedor, recirculou 13,7 bilhões de etiquetas das 16,5 bilhões que enviou desde 2010 \cite{sensormatic2024recirculacao}; a razão de cerca de 83\% foi calculada pela equipe e não é uma taxa declarada pela empresa. O Tag\&Go adota 99\% como meta (S01), e não como premissa, porque a liberação pelo próprio cliente tende a perder mais etiquetas que a retirada pelo caixa: o cliente fica com a etiqueta solta na mão e pode levá-la para casa. Quatro mecanismos sustentam a meta:
+\begin{itemize}
+    \item M1, elemento EAS ativo na etiqueta solta: o pórtico EAS alarma se a etiqueta liberada sair da loja, como última barreira, e a tela de compra no celular avisa antes para evitar constrangimento;
+    \item M2, Coletor de Etiquetas no caminho natural, antes do pórtico, com boca antirretorno, registro do \texttt{tag\_id} e posição mostrada na tela de compra;
+    \item M3, ``etiqueta devolvida'' como fim da jornada: a tela de compra só mostra ``compra concluída'' e só libera o cashback do Ria Club depois do registro no Coletor, envia um lembrete se não houver registro em 2 minutos, e o Ponto de Apoio vê em tempo real as etiquetas liberadas e não recolhidas;
+    \item M4, liberação junto ao Coletor, a testar no protótipo: a etiqueta aceita o botão de liberação só quando detecta o sinal do Coletor a curta distância, e o cliente libera a peça sobre a boca do Coletor.
+\end{itemize}
+
+Os mecanismos atuam sobre três pontos de perda. No P1, o cliente sai com a etiqueta, e M1 a M4 respondem a esse caso. No P2, a etiqueta se perde entre o Coletor ou o caixa e o malote, e a resposta é manter o Coletor trancado e conferir por \texttt{tag\_id} as etiquetas liberadas no Liberador de Balcão. No P3, a perda ocorre no Malote de Retorno ou no transporte, e a resposta é o lacre numerado com conferência por \texttt{tag\_id} no despacho e no recebimento.
+
+\subsection{Valor econômico para a Riachuelo}
+\label{sub:r2-valor-riachuelo}
+
+O ponto de partida foi o custo atual de uma liberação. O custo-hora do operador de caixa foi estimado em R\$~17,11, a partir do salário médio nacional de R\$~1.892,01 \cite{salario2026operador}, de encargos de 68,5\%, ponto médio da faixa de 67\% a 70\% no Lucro Real \cite{contaja2026encargos}, e de 186,33 horas por mês. Com as produtividades de 125 aplicações e 300 retiradas por hora, segundo o fornecedor \cite{alltag2024sourcetagging}, aplicar uma etiqueta custa R\$~0,14 e retirar custa R\$~0,06. A mini tag de R\$~0,87, dividida por 9 viagens, no meio da faixa de 8 a 10 viagens informada pela Pact \cite{pact2026etiquetas}, custa R\$~0,10 por uso. O custo atual por liberação é, portanto, de R\$~0,29.
+
+A equipe separou os benefícios em fixos e variáveis. Nas contas, compra pelo celular é a que o cliente faz sem passar pelo caixa, seja na Compra Rápida, seja na Jornada Completa (Subseção~\ref{sub:r2-caminhos}). O primeiro benefício fixo, $b_1$, é a etiqueta rígida evitada em todas as liberações e a retirada evitada nas compras pelo celular, que somam R\$~2.738,99 por ano por loja; a aplicação não entra na conta, porque apenas muda de lugar: com o cadastro na origem, a etiqueta passa a ser aplicada na Estação de Cadastro da fábrica de Natal (ramo fábrica) ou do CD (ramo CD), aos mesmos R\$~0,14 por peça. O segundo, $b_2$, é o tempo de caixa liberado pelas compras pelo celular, estimado em R\$~11.340,74 por ano com 120 segundos por compra, estimativa do Relatório 1 para a Riachuelo, e adesão de 24\% das compras, premissa tomada da concordância com a compra sem checagem no survey do Relatório 1. O terceiro, $b_3$, é o efeito sobre as perdas, que a equipe fixou em zero no caso base. O ECR 2026 mediu, em 39 varejistas, 35 deles supermercados, aumento de 22\% nas perdas no primeiro ano de self-checkout e acréscimo de 0,030 a 0,048 ponto percentual de perda a cada 1\% das transações feitas no autoatendimento \cite{ecr2026selfcheckout}; aplicado à adesão de 24\%, esse efeito daria uma perda adicional de R\$~126.000 a R\$~201.600 por ano por loja. O cenário otimista, que supõe uma redução de perdas pela barreira autenticada, daria um ganho de R\$~11.594,76 por ano, calculado sobre perdas de 1,65\% do faturamento \cite{cartacapital2026perdas}, das quais 26,77\% por furto externo \cite{foodforum2026perdas}, com dois fatores de redução (0,30 e 0,50) que são premissas da equipe. Como as evidências apontam em sentidos opostos, o caso base não conta com redução de perdas, e os dois cenários entram só na sensibilidade. A soma fixa do caso base é de R\$~14.079,73 por ano.
+
+O benefício variável é a venda que deixa de ser perdida. A equipe definiu $d$ como o número de desistências de compra evitadas por dia por loja. Com ticket de R\$~210, premissa de 3 peças de R\$~70, e margem bruta de vestuário de 56,7\% \cite{abvtex2026riachuelo}, cada desistência evitada por dia vale $b_d$ = R\$~43.460,55 por ano. A desistência por fila é um comportamento documentado: no survey do Relatório 1, todos os autônomos digitais já haviam desistido de uma compra por fila, e no recorte brasileiro da pesquisa Adyen de 2026, com amostra não informada, 49\% dos consumidores declararam desistir por fila ou lentidão \cite{tiinside2026adyen}. Os benefícios próprios da Jornada Completa não entram na conta, que considera apenas o núcleo comum: a localização por setor (N1), a compra on-line do tamanho ausente e o efeito do perfil, do Ria Club, da recomendação e das métricas de sustentabilidade sobre a fidelidade. Deixá-los fora torna o equilíbrio conservador, porque esses efeitos ainda são hipóteses que o survey do Relatório 1 não mediu.
+
+Na locação, modalidade principal, a Riachuelo paga R\$~2,00 por etiqueta por mês e R\$~800 por mês pela plataforma, o que dá R\$~174.096 por ano por loja com a frota de 6.854 etiquetas, ou R\$~7,01 por liberação. O custo do sistema, sem margem nem custo de capital e com retorno de 99\%, é de R\$~4,39 por liberação. O equilíbrio é o número de desistências evitadas que iguala benefícios e custo:
+\begin{equation}
+d^{*} = \frac{\text{custo anual} - (b_1 + b_2 + b_3)}{b_d} = \frac{174.096 - 14.079{,}73}{43.460{,}55} \approx 3{,}68,
+\end{equation}
+isto é, 3,68 desistências evitadas por dia por loja, 1,6\% das 227 compras diárias. A implantação de R\$~15.000 por loja fica fora de $d^{*}$; com $d = 5$, ela se paga em 3,1 meses.
+
+Na compra, modalidade alternativa, a Riachuelo paga R\$~90 por etiqueta, R\$~0,40 por ciclo de recondicionamento, a plataforma e a implantação. O investimento é de R\$~631.860 por loja e o custo anual, com o investimento distribuído em 5 anos, reposição de 1\% das liberações a R\$~90 e recondicionamento, é de R\$~168.238, ou R\$~6,78 por liberação, o que leva o equilíbrio a 3,55. Essa conta não inclui o custo de capital da Riachuelo. Com 15\% ao ano, premissa igual à Selic \cite{btg2025guararapes}, o custo anual sobe para R\$~230.360, ou R\$~9,28 por liberação, e o equilíbrio vai a 4,98. Com o capital considerado, a locação sai mais barata para a Riachuelo e ainda transfere ao fornecedor o risco de perda e de obsolescência das etiquetas.
+
+A Tabela~\ref{tab:r2-valor} reúne os valores por liberação e os cenários de equilíbrio.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Valor por liberação e cenários de equilíbrio}
+    \label{tab:r2-valor}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{4.6cm}@{}}
+        \toprule
+        \textbf{Linha} & \textbf{Valor} \\
+        \midrule
+        Hoje: etiqueta rígida comum (etiqueta R\$~0,10 + aplicação R\$~0,14 + retirada R\$~0,06) & R\$~0,29 por liberação \\
+        Tag\&Go: custo do sistema com $r$ = 99\% (capital R\$~3,31 + reposição R\$~0,60 + recondicionamento R\$~0,29 + malote R\$~0,05 + aplicação na origem R\$~0,14) & R\$~4,39 por liberação \\
+        Tag\&Go: preço à Riachuelo na locação (R\$~2,00 por etiqueta por mês e plataforma) & R\$~7,01 por liberação \\
+        Tag\&Go: preço à Riachuelo na compra (R\$~90 por etiqueta, em 5 anos) & R\$~6,78 por liberação (R\$~9,28 com custo de capital de 15\% ao ano) \\
+        \midrule
+        $d^{*}$ no caso base (locação, $r$ = 99\%, $b_3$ = 0) & 3,68 por dia por loja \\
+        $d^{*}$ na compra, sem e com custo de capital & 3,55 / 4,98 \\
+        $d^{*}$ com $r$ = 95\% / 90\% / 83\% & 5,05 / 6,77 / 9,16 \\
+        $d^{*}$ com perdas otimistas / pessimistas (ECR 2026) & 3,42 / 6,58 a 8,32 \\
+        $d^{*}$ com preço de R\$~1,80 / R\$~2,10 / R\$~2,40 & 3,30 / 3,87 / 4,44 \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026) com base em \citeonline{abvtex2026riachuelo}, \citeonline{alltag2024sourcetagging}, \citeonline{salario2026operador}, \citeonline{contaja2026encargos} e \citeonline{ecr2026selfcheckout}.}
+\end{table}
+
+A Figura~\ref{fig:r2-equilibrio} mostra o resultado anual da Riachuelo por loja nas duas modalidades, em função das desistências evitadas.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Resultado anual por loja em função das desistências evitadas}
+    \label{fig:r2-equilibrio}
+    \begin{tikzpicture}
+        \begin{axis}[
+            r2eixo,
+            width=0.85\textwidth, height=7.5cm,
+            xmin=0, xmax=6, ymin=-180, ymax=120,
+            xtick={0,1,2,3,4,5,6},
+            ytick={-180,-120,-60,0,60,120},
+            xlabel={Desistências de compra evitadas por dia por loja ($d$)},
+            ylabel={Resultado anual por loja (R\$ mil)},
+            legend style={at={(0.02,0.98)}, anchor=north west, font=\footnotesize, draw=none, fill=white},
+            legend cell align=left,
+            clip=false,
+        ]
+            \draw[r2cinza] (axis cs:0,0) -- (axis cs:6,0);
+            \addplot[r2laranja, thick, mark=*, mark size=1.2pt] coordinates {
+                (0,-160.0) (1,-116.6) (2,-73.1) (3,-29.6) (4,13.8) (5,57.3) (6,100.7)};
+            \addlegendentry{Locação (R\$~2,00 por etiqueta por mês)}
+            \addplot[r2azulmedio, thick, dashed, mark=square*, mark size=1.2pt] coordinates {
+                (0,-154.2) (1,-110.7) (2,-67.2) (3,-23.8) (4,19.7) (5,63.1) (6,106.6)};
+            \addlegendentry{Compra (R\$~90 por etiqueta)}
+            \draw[r2laranja, dashed] (axis cs:3.68,-180) -- (axis cs:3.68,0);
+            \addplot[only marks, mark=*, mark size=2pt, r2laranja, forget plot] coordinates {(3.68,0)};
+            \addplot[only marks, mark=square*, mark size=2pt, r2azulmedio, forget plot] coordinates {(3.55,0)};
+            \node[r2rotulo, anchor=north west] at (axis cs:3.72,-6) {locação:\\$d^{*} = 3{,}68$};
+            \node[r2rotulo, anchor=south east] at (axis cs:3.50,6) {compra:\\$d^{*} = 3{,}55$};
+        \end{axis}
+    \end{tikzpicture}
+    \source{Elaborado pelos autores (2026). A implantação de R\$~15.000 por loja fica fora de $d^{*}$; a reta da compra não inclui o custo de capital da Riachuelo, com o qual o equilíbrio iria a 4,98.}
+\end{figure}
+
+As duas retas têm a mesma inclinação, R\$~43,5 mil por ano por desistência evitada por dia, e diferem só no custo fixo. O equilíbrio também depende do retorno. O contrato de locação prevê uma franquia de perda de 1\% das liberações e, acima dela, cobra R\$~60 por etiqueta não devolvida. Com retorno de 95\%, a cobrança chega a R\$~59.568 por ano e o equilíbrio sobe para 5,05; com 90\%, a R\$~134.028 e 6,77; e com 83\%, o nível do mercado, a R\$~238.272 e 9,16. Nas perdas, o cenário otimista reduz o equilíbrio para 3,42, e o pessimista do ECR 2026 o eleva para 6,58 a 8,32.
+
+Por fim, a equipe calculou o valor econômico de uma liberação para a Riachuelo, a soma dos benefícios dividida pelas 24.820 liberações do ano. Com $d = 2$, esse valor é de R\$~4,07; com $d = 4$, de R\$~7,57; e com $d = 6$, de R\$~11,07. O preço de R\$~7,01 por liberação fica abaixo do valor a partir de $d \approx 3{,}7$, o mesmo ponto de equilíbrio visto pelo lado do preço.
+
+\subsection{Preço e remuneração do fornecedor}
+\label{sub:r2-preco}
+
+Do lado do fornecedor, a equipe adotou como premissas o Coletor de Etiquetas a R\$~400, o Liberador de Balcão a R\$~250, a Bandeja de Recarga e a Bancada de Inspeção a R\$~400 cada, o malote a R\$~0,05 por etiqueta por ciclo, a operação e a nuvem a R\$~6.000 por loja por ano e vida de 5 anos sem valor residual. O investimento por loja é de R\$~414.458: a frota de 6.854 etiquetas a R\$~60 (R\$~411.240), 2 Coletores, 5 Liberadores e o rateio do CD, que divide por 20 lojas 17 Bandejas de Recarga e 3 postos de inspeção, cada um com leitor Zebra FXP20 e Bancada de Inspeção (R\$~1.167,78 por loja). Com a receita de R\$~174.096 por ano e custos anuais de reposição de 1\% das liberações (R\$~14.892), recondicionamento (R\$~7.077,56), malote (R\$~1.241) e operação (R\$~6.000), a contribuição anual é de R\$~144.885, o que dá payback de 2,86 anos e TIR de 22,0\% em 5 anos. O custo contábil de uma etiqueta, sem custo de capital, é de R\$~1,28 por mês.
+
+A equipe fixou a taxa mínima de atratividade em 20\% ao ano, premissa formada pela Selic de 15\% \cite{btg2025guararapes} mais 5 pontos percentuais de risco. A R\$~1,80 por etiqueta por mês, a TIR cai para 16,6\%, abaixo da TMA, e esse preço não remunera o capital do fornecedor; a R\$~2,10, a TIR sobe para 24,7\%, e a R\$~2,40, para 32,3\%. O preço mínimo para uma TIR de 20\% é de R\$~1,92. O custo-meta pesa na mesma medida: no limite superior da faixa, R\$~66, a TIR a R\$~2,00 cai para 17,3\%, e no limite inferior, R\$~54, sobe para 27,6\%. Cumprir o custo-meta é, portanto, condição para sustentar o preço de R\$~2,00.
+
+Com essas contas, a equipe definiu o valor mercadológico do Tag\&Go: locação de R\$~2,00 por etiqueta por mês, plataforma de R\$~800 por loja por mês e implantação de R\$~15.000 por loja, com franquia de perda de 1\%; como alternativa, compra a R\$~90 por etiqueta, com recondicionamento a R\$~0,40 por ciclo. A justificativa tem três partes. O preço cobre o custo de capital do fornecedor, com TIR de 22,0\% contra a TMA de 20\%. O preço leva o equilíbrio da Riachuelo a 3,7 desistências evitadas por dia por loja, número plausível diante da desistência por fila registrada no Relatório 1, mas que precisa ser validado no piloto. E o preço fica coerente com a posição do produto na escala vertical, em que o custo-meta se situa entre a ESL e os rastreadores BLE. O preço de compra de R\$~90 equivale ao custo-meta multiplicado por 1,5 e não foi derivado dos vizinhos na escala. A forma de contratação, os canais e a distribuição estão na Seção~\ref{sec:r2-comercializacao}.
+
+No SOM, as 20 lojas conceito do limite superior do plano da Riachuelo para 2026, de 15 a 20 lojas, exigiriam 137.080 etiquetas, uma frota de R\$~8,22 milhões e R\$~300 mil de implantação, com receita de R\$~3,48 milhões por ano para o fornecedor. Estendido às 342 lojas da rede, o mesmo modelo geraria R\$~59,5 milhões por ano.
+
+\subsection{Sensibilidade do equilíbrio e alavancas}
+\label{sub:r2-sensibilidade-valor}
+
+Como o equilíbrio depende de premissas ainda não validadas com a Riachuelo, a equipe variou cada uma delas entre um limite favorável e um desfavorável, mantendo as demais no caso base. A Figura~\ref{fig:r2-tornado} ordena as variáveis da faixa mais larga para a mais estreita; a parte da barra abaixo do caso base aparece em azul e a parte acima, em laranja.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Sensibilidade do equilíbrio $d^{*}$}
+    \label{fig:r2-tornado}
+    \begin{tikzpicture}
+        \begin{axis}[
+            r2eixo,
+            width=0.6\textwidth, height=7.5cm,
+            xmin=0, xmax=10, ymin=0.4, ymax=6.6,
+            y dir=reverse,
+            ymajorgrids=false, xmajorgrids,
+            xtick={0,2,4,6,8,10},
+            ytick={1,2,3,4,5,6},
+            yticklabels={
+                {Fração de peças com etiqueta, $f$ (5\% a 20\%)},
+                {Taxa de retorno, $r$ (99\% a 83\%)},
+                {Perdas, $b_3$ (otimista a pessimista ECR)},
+                {Ticket médio (R\$~300 a R\$~150)},
+                {Permanência em loja (40 a 95 dias)},
+                {Preço de locação (R\$~1,80 a R\$~2,40)}},
+            y tick label style={font=\scriptsize, align=right, text width=4.3cm},
+            xlabel={$d^{*}$ (desistências evitadas por dia por loja)},
+            clip=false,
+        ]
+            \fill[r2azulmedio] (axis cs:1.82,0.7) rectangle (axis cs:3.68,1.3);
+            \fill[r2laranja] (axis cs:3.68,0.7) rectangle (axis cs:7.40,1.3);
+            \node[font=\scriptsize, anchor=east] at (axis cs:1.82,1) {1,82};
+            \node[font=\scriptsize, anchor=west] at (axis cs:7.40,1) {7,40};
+            \fill[r2laranja] (axis cs:3.68,1.7) rectangle (axis cs:9.16,2.3);
+            \node[font=\scriptsize, anchor=west] at (axis cs:9.16,2) {9,16};
+            \fill[r2azulmedio] (axis cs:3.42,2.7) rectangle (axis cs:3.68,3.3);
+            \fill[r2laranja] (axis cs:3.68,2.7) rectangle (axis cs:8.32,3.3);
+            \node[font=\scriptsize, anchor=east] at (axis cs:3.42,3) {3,42};
+            \node[font=\scriptsize, anchor=west] at (axis cs:8.32,3) {8,32};
+            \fill[r2azulmedio] (axis cs:2.58,3.7) rectangle (axis cs:3.68,4.3);
+            \fill[r2laranja] (axis cs:3.68,3.7) rectangle (axis cs:5.15,4.3);
+            \node[font=\scriptsize, anchor=east] at (axis cs:2.58,4) {2,58};
+            \node[font=\scriptsize, anchor=west] at (axis cs:5.15,4) {5,15};
+            \fill[r2azulmedio] (axis cs:2.78,4.7) rectangle (axis cs:3.68,5.3);
+            \fill[r2laranja] (axis cs:3.68,4.7) rectangle (axis cs:5.26,5.3);
+            \node[font=\scriptsize, anchor=east] at (axis cs:2.78,5) {2,78};
+            \node[font=\scriptsize, anchor=west] at (axis cs:5.26,5) {5,26};
+            \fill[r2azulmedio] (axis cs:3.30,5.7) rectangle (axis cs:3.68,6.3);
+            \fill[r2laranja] (axis cs:3.68,5.7) rectangle (axis cs:4.44,6.3);
+            \node[font=\scriptsize, anchor=east] at (axis cs:3.30,6) {3,30};
+            \node[font=\scriptsize, anchor=west] at (axis cs:4.44,6) {4,44};
+            \draw[r2azul, thick] (axis cs:3.68,0.4) -- (axis cs:3.68,6.6);
+            \node[r2rotulo, anchor=south] at (axis cs:3.68,0.4) {caso base: 3,68};
+        \end{axis}
+    \end{tikzpicture}
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+
+As três variáveis mais sensíveis são a fração de peças com etiqueta $f$, a taxa de retorno $r$ e as perdas. A fração $f$ lidera porque o custo da locação cresce com a frota, que é proporcional ao número de liberações, enquanto o benefício por desistência evitada não depende dela: com $f = 5\%$ o equilíbrio cai para 1,82, e com $f = 20\%$ sobe para 7,40. A permanência em loja age pelo mesmo mecanismo, porque aumenta o ciclo $T$ e, com ele, a frota, e leva o equilíbrio de 2,78 (40 dias) a 5,26 (95 dias). O retorno só pode piorar a partir da meta de 99\%, e a queda até o nível do mercado leva o equilíbrio a 9,16. As perdas também têm faixa assimétrica, de 3,42 no cenário otimista a 8,32 no pessimista do ECR 2026. O ticket médio muda o valor de cada desistência evitada e leva o equilíbrio de 2,58 (R\$~300) a 5,15 (R\$~150), e o preço de locação, a variável que o fornecedor controla, tem a faixa mais estreita, de 3,30 a 4,44.
+
+A equipe concluiu, a partir da sensibilidade, que a viabilidade depende mais da forma de uso do sistema que do preço, e identificou quatro alavancas. A primeira é usar o Tag\&Go só nas peças que hoje já recebem etiqueta rígida, de preferência as de maior valor e de giro rápido, o que reduz $f$ e $T$ ao mesmo tempo. A segunda é perseguir o retorno de 99\% com os mecanismos M1 a M4 e acompanhar a taxa por loja desde o primeiro dia do piloto. A terceira é reduzir o custo da etiqueta por \textit{design to cost}, com as cotações de volume previstas para o Relatório 3. A quarta é medir $d$ com a Riachuelo no piloto, porque nenhuma fonte pública consultada pela equipe permite estimar as desistências evitadas para a rede.

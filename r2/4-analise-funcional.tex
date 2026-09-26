@@ -1,0 +1,437 @@
+% =============================================================================
+% Relatorio 2, Secao 2: analise funcional (item A do roteiro).
+% Metodo: funcao global, caixa-preta com fluxos de energia, material e sinal,
+% duas estruturas funcionais alternativas (EF-1 e EF-2), escolha da estrutura
+% mista (EF-M) e lista de 31 funcoes classificadas (F1 a F31, alem de F0).
+% Figuras: fig:r2-caixapreta, fig:r2-ef-alternativas, fig:r2-ef-escolhida.
+% Tabelas: tab:r2-estruturas, tab:r2-funcoes, tab:r2-granularidade.
+% Principios de solucao ficam na Secao 6 (r2/8-concepcao.tex); precos, na
+% Secao 4 (r2/6-escala-valor.tex).
+% =============================================================================
+
+\section{ANÁLISE FUNCIONAL}
+\label{sec:r2-funcional}
+
+Com as especificações-meta fixadas e os dois caminhos definidos, a equipe passou a decompor o que o sistema precisa fazer. A análise funcional seguiu o método de \citeonline{rozenfeld2006gestao}, na forma apresentada nas aulas de projeto conceitual da disciplina \cite{zancul2026conceitual}. A equipe partiu da função global do sistema Tag\&Go, representou-a como caixa-preta com os fluxos de energia (E), material (M) e sinal (S) que atravessam a fronteira do sistema, montou duas estruturas funcionais alternativas, comparou-as por uma matriz simples de avaliação e desdobrou a estrutura escolhida em uma lista de funções classificadas. Cada função foi escrita como verbo mais substantivo e descreve o que o sistema deve fazer, sem antecipar como. Por essa regra, a luz da etiqueta cumpre a função de indicar o estado da liberação, e a leitura RFID na loja serve à função de registrar a venda no estoque; luz e RFID são portadores de solução, escolhidos com a matriz morfológica na Seção~\ref{sec:r2-concepcao}.
+
+A orientação da disciplina para esta fase foi considerar todas as funções necessárias, inclusive as que a equipe não pretende realizar no protótipo, porque uma função omitida agora exclui do produto a possibilidade de executá-la depois \cite{zancul2026conceitual}. Por isso, a lista inclui as funções do ciclo logístico da etiqueta e as da Jornada Completa, que o Relatório 1 havia deixado implícitas, e a simplificação ficará restrita ao protótipo, a ser delimitado no Relatório 3. As funções valem para os dois caminhos de uso apresentados na Seção~\ref{sec:r2-contexto} (Figura~\ref{fig:r2-caminhos}): o núcleo comum reúne as funções sem as quais a compra não se completa, e a Jornada Completa acrescenta, no módulo Tag\&Go do app Riachuelo, funções de apoio à escolha e à fidelização; na Compra Rápida, o cliente cumpre as funções do núcleo sem instalar aplicativo.
+
+\subsection{Função global e caixa-preta}
+\label{sub:r2-caixapreta}
+
+A equipe definiu a função global do sistema como liberar peça mediante pagamento (F0). A formulação reúne as duas condições que cliente e varejista esperam do produto: para o cliente, sair com a peça sem passar pelo caixa; para o varejista, garantir que nenhuma peça deixe a loja sem pagamento confirmado, condição expressa no requisito R06, que concentrou 33,1\% da importância técnica no Relatório 1. A função global não menciona etiqueta, celular nem aplicativo, porque esses elementos já são escolhas de solução.
+
+A fronteira delimita o que a equipe projeta. Dentro dela estão os cinco subsistemas do Tag\&Go: a etiqueta (SS1), a Plataforma Tag\&Go e seus serviços (SS2), os canais do cliente (SS3), a infraestrutura de loja (SS4) e o ciclo logístico (SS5), detalhados na Seção~\ref{sec:r2-arquitetura} (Tabela~\ref{tab:r2-ssc}). Fora dela ficam os elementos com que o sistema troca fluxos e que a Riachuelo ou terceiros já operam: o cliente e o celular dele, o funcionário da loja, o provedor de pagamento (PSP) e as carteiras digitais, o estoque RFID e o sistema de gestão de pedidos (OMS), o PDV e o emissor de NFC-e, os pórticos EAS e RFID, o app Riachuelo e o Ria Club. A Figura~\ref{fig:r2-caixapreta} mostra a caixa-preta resultante.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Caixa-preta da função global}
+    \label{fig:r2-caixapreta}
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[
+        ent/.style={font=\scriptsize, align=left, text width=4.4cm, inner sep=1pt},
+        mat/.style={r2setafina, line width=1.4pt},
+        ext/.style={r2neutro, font=\scriptsize, text width=2.6cm, minimum height=7mm}
+    ]
+        % fronteira do sistema
+        \draw[r2azul, dashed, rounded corners=4pt] (-2.4,-2.5) rectangle (2.4,2.5);
+        \node[r2rotulo, anchor=south] at (0,2.55) {Fronteira do sistema Tag\&Go (SS1 a SS5)};
+        \node[r2blocoescuro, text width=3.0cm, minimum width=3.4cm, minimum height=4cm] (f0) at (0,0) {F0\\Liberar peça\\mediante pagamento};
+        % entradas
+        \node[ent, anchor=east] at (-3.2,1.5) {M: peça protegida (com a etiqueta TRAVADA) e etiqueta LIVRE vinda do ciclo};
+        \node[ent, anchor=east] at (-3.2,0) {E: energia elétrica da rede (pela Bandeja de Recarga ou pelo Liberador de Balcão, guardada na célula) e energia humana (apertar o botão, retirar o pino)};
+        \node[ent, anchor=east] at (-3.2,-1.5) {S: intenção de compra (leitura do código), dados de pagamento (token do PSP) e dados de preço e estoque (EPC)};
+        \draw[mat] (-3.2,1.5) -- (-1.7,1.5);
+        \draw[r2setatracejada] (-3.2,0) -- (-1.7,0);
+        \draw[r2seta] (-3.2,-1.5) -- (-1.7,-1.5);
+        % saidas
+        \draw[mat] (1.7,1.5) -- (3.2,1.5);
+        \draw[r2setatracejada] (1.7,0) -- (3.2,0);
+        \draw[r2seta] (1.7,-1.5) -- (3.2,-1.5);
+        \node[ent, anchor=west] at (3.2,1.5) {M: peça liberada e etiqueta DESTRAVADA devolvida ao ciclo};
+        \node[ent, anchor=west] at (3.2,0) {E: calor dissipado};
+        \node[ent, anchor=west] at (3.2,-1.5) {S: comprovante (NFC-e), estado da liberação (luz, som e tela), registro de venda no estoque (EPC vendido) e dados da jornada (só com consentimento)};
+        % elementos externos
+        \node[r2rotulo] at (0,4.3) {Elementos externos à fronteira};
+        \node[ext] at (-5.1,3.6) {Cliente e celular};
+        \node[ext] at (-1.7,3.6) {Funcionário};
+        \node[ext] at (1.7,3.6) {PSP e carteiras};
+        \node[ext] at (5.1,3.6) {Estoque RFID e OMS};
+        \node[ext] at (-3.4,-3.3) {PDV e emissor de NFC-e};
+        \node[ext] at (0,-3.3) {Pórticos EAS e RFID};
+        \node[ext] at (3.4,-3.3) {App Riachuelo e Ria Club};
+        % legenda
+        \draw[mat] (-4.8,-4.4) -- (-4.0,-4.4) node[right, font=\scriptsize] {material (M)};
+        \draw[r2setatracejada] (-1.3,-4.4) -- (-0.5,-4.4) node[right, font=\scriptsize] {energia (E)};
+        \draw[r2seta] (2.0,-4.4) -- (2.8,-4.4) node[right, font=\scriptsize] {sinal (S)};
+    \end{tikzpicture}%
+    }
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+
+As entradas de material são a peça protegida, isto é, a peça com a etiqueta no estado TRAVADA, e a etiqueta no estado LIVRE que volta do ciclo logístico para ser fixada em nova peça. A energia entra por dois caminhos: a energia elétrica da rede, que chega à etiqueta pela Bandeja de Recarga no CD ou pelo Liberador de Balcão na loja e fica guardada na célula, e a energia humana do cliente, que aperta o botão e retira o pino. Os sinais de entrada são a intenção de compra, expressa na leitura do código da etiqueta, os dados de pagamento, que chegam como token do PSP, e os dados de preço e estoque, associados ao EPC da peça. Na saída, o material é a peça liberada e a etiqueta no estado DESTRAVADA, devolvida ao ciclo; a energia deixa o sistema como calor; e os sinais são o comprovante fiscal (NFC-e), o estado da liberação, comunicado por luz, som e tela, o registro de venda no estoque (EPC marcado como vendido) e, só com o consentimento do cliente, os dados da jornada.
+
+Dois pontos da caixa-preta orientaram o restante da análise. O primeiro é que a etiqueta aparece ao mesmo tempo como entrada e como saída de material, o que faz do produto um ativo retornável e exige funções de recolhimento, transporte, inspeção e recarga, reunidas no ciclo da etiqueta (Subseção~\ref{sub:r2-funcoes-ciclo}). O segundo é o registro de venda no estoque, saída de sinal que fecha a malha antifraude: como o pórtico RFID da loja alarma quando passa um EPC não vendido, a baixa da peça precisa ocorrer antes de o cliente chegar à saída, o que a especificação S07 fixa em até 5\,s após a confirmação do pagamento (Tabela~\ref{tab:r2-especificacoes}).
+
+\subsection{Estruturas funcionais alternativas}
+\label{sub:r2-ef-alternativas}
+
+A partir da caixa-preta, a equipe montou duas estruturas funcionais que diferem no lugar onde a autorização encontra a peça, representadas na Figura~\ref{fig:r2-ef-alternativas}. Na EF-1, liberação na peça, o sinal de autorização viaja até a peça, que permanece com o cliente em qualquer ponto da loja; as funções de validar a autorização (F5), confirmar a intenção de liberar (F10), desfazer a retenção (F6) e indicar o estado ficam junto da peça, e a energia necessária para executá-las viaja com ela (F7). Na EF-2, liberação em ponto fixo, o cliente leva a peça até um ponto da loja onde já existem energia e sinal; a validação e a liberação acontecem nesse ponto, e a etiqueta se limita a reter a peça e a identificá-la.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Estruturas funcionais alternativas}
+    \label{fig:r2-ef-alternativas}
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \caption{EF-1, liberação na peça}
+        \resizebox{\linewidth}{!}{%
+        \begin{tikzpicture}[
+            bl/.style={r2bloco, font=\scriptsize, text width=2.3cm, minimum width=2.6cm, minimum height=6mm, inner sep=2pt},
+            nt/.style={r2neutro, font=\scriptsize, text width=2.3cm, minimum width=2.6cm, minimum height=6mm, inner sep=2pt},
+            mat/.style={r2setafina, line width=1.3pt}
+        ]
+            \node[bl] (f2) at (0,0) {F2 Identificar peça};
+            \node[bl] (f3) at (0,-0.95) {F3 Processar pagamento};
+            \node[bl] (f4) at (0,-1.9) {F4 Emitir autorização};
+            \node[bl] (f9) at (0,-2.85) {F9 Transmitir autorização};
+            \node[bl] (f5) at (3.6,-2.85) {F5 Validar autorização};
+            \node[bl] (f10) at (3.6,-3.8) {F10 Confirmar intenção};
+            \node[bl] (f6) at (3.6,-4.75) {F6 Desfazer retenção};
+            \node[bl, text width=1.6cm, minimum width=1.9cm] (f7) at (6.3,-3.8) {F7 Armazenar energia};
+            \node[nt] (pm1) at (0,-4.75) {peça protegida, com o cliente};
+            \node[nt] (pm2) at (0,-5.85) {peça liberada};
+            \node[bl] (f17) at (4.1,-6.95) {F17 Recolher etiqueta};
+            \draw[r2seta] (f2) -- (f3);
+            \draw[r2seta] (f3) -- (f4);
+            \draw[r2seta] (f4) -- (f9);
+            \draw[r2seta] (f9) -- (f5);
+            \draw[r2seta] (f5) -- (f10);
+            \draw[r2seta] (f10) -- (f6);
+            \draw[r2setatracejada] (f7.north) |- (f5.east);
+            \draw[r2setatracejada] (f7.south) |- (f6.east);
+            \draw[mat] (pm1) -- (f6);
+            \draw[mat] ([xshift=-5mm]f6.south) |- (pm2.east);
+            \draw[mat] ([xshift=5mm]f6.south) -- (f17.north);
+            \node[r2rotulo, anchor=west] at (4.2,-6.1) {etiqueta DESTRAVADA};
+            \node[r2rotulo] at (6.3,-5.75) {a energia viaja\\com a peça};
+            \node[r2rotulo] at (4.1,-7.55) {no Coletor, na saída};
+            \node[draw=r2azulmedio, dashed, rounded corners=3pt, inner sep=1.6mm, fit=(f2)(f9), label={[r2rotulo]above:{Celular e Plataforma}}] {};
+            \node[draw=r2laranja, dashed, rounded corners=3pt, inner sep=1.6mm, fit=(f5)(f6)(f7), label={[r2rotulo]above:{Etiqueta, na peça}}] {};
+        \end{tikzpicture}%
+        }
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \caption{EF-2, liberação em ponto fixo}
+        \resizebox{\linewidth}{!}{%
+        \begin{tikzpicture}[
+            bl/.style={r2bloco, font=\scriptsize, text width=2.3cm, minimum width=2.6cm, minimum height=6mm, inner sep=2pt},
+            nt/.style={r2neutro, font=\scriptsize, text width=2.3cm, minimum width=2.6cm, minimum height=6mm, inner sep=2pt},
+            mat/.style={r2setafina, line width=1.3pt}
+        ]
+            \node[bl] (f2) at (0,0) {F2 Identificar peça};
+            \node[bl] (f3) at (0,-0.95) {F3 Processar pagamento};
+            \node[bl] (f4) at (0,-1.9) {F4 Emitir autorização};
+            \node[bl] (f5) at (3.6,-2.85) {F5 Validar autorização};
+            \node[bl] (f6) at (3.6,-3.8) {F6 Desfazer retenção};
+            \node[nt, text width=1.6cm, minimum width=1.9cm] (en) at (6.7,-3.325) {energia e rede no ponto};
+            \node[nt] (pm1) at (0,-3.8) {peça protegida, levada ao ponto};
+            \node[nt] (pm2) at (0,-4.9) {peça liberada};
+            \node[bl] (f17) at (4.1,-5.95) {F17 Recolher etiqueta};
+            \draw[r2seta] (f2) -- (f3);
+            \draw[r2seta] (f3) -- (f4);
+            \draw[r2seta] (f4.east) -| (f5.north);
+            \draw[r2seta] (f5) -- (f6);
+            \draw[r2setatracejada] (en.west) -- ++(-0.3,0) |- (f5.east);
+            \draw[r2setatracejada] (en.west) -- ++(-0.3,0) |- (f6.east);
+            \draw[mat] (pm1) -- (f6);
+            \draw[mat] ([xshift=-5mm]f6.south) |- (pm2.east);
+            \draw[mat] ([xshift=5mm]f6.south) -- (f17.north);
+            \node[r2rotulo, anchor=west] at (4.2,-5.05) {etiqueta};
+            \node[r2rotulo, align=left, anchor=north west] at (-1.3,-5.55) {a etiqueta só retém (F1)\\e identifica (F2)};
+            \node[draw=r2azulmedio, dashed, rounded corners=3pt, inner sep=1.6mm, fit=(f2)(f4), label={[r2rotulo]above:{Celular e Plataforma}}] {};
+            \node[draw=r2laranja, dashed, rounded corners=3pt, inner sep=1.6mm, fit=(f5)(f6)(en)(f17), label={[r2rotulo]above:{Ponto fixo}}] {};
+        \end{tikzpicture}%
+        }
+    \end{subfigure}
+
+    \medskip
+    \begin{tikzpicture}[mat/.style={r2setafina, line width=1.3pt}]
+        \draw[r2seta] (0,0) -- (0.8,0) node[right, font=\scriptsize] {sinal};
+        \draw[r2setatracejada] (2.4,0) -- (3.2,0) node[right, font=\scriptsize] {energia};
+        \draw[mat] (5.0,0) -- (5.8,0) node[right, font=\scriptsize] {material};
+    \end{tikzpicture}
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+
+A comparação usou quatro requisitos do Relatório 1 e dois critérios de viabilidade, o custo e a complexidade da estrutura e a dependência de infraestrutura fixa na loja, com uma escala qualitativa de três níveis: $++$ para muito favorável, $+$ para favorável e $-$ para desfavorável. Por se tratar de uma escolha entre estruturas, e não entre concepções, a equipe não atribuiu pesos numéricos aos critérios; a matriz de decisão ponderada ficou reservada às alternativas de concepção, na Seção~\ref{sec:r2-concepcao}. O resultado está na Tabela~\ref{tab:r2-estruturas}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Comparação das estruturas funcionais alternativas}
+    \label{tab:r2-estruturas}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{3.8cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Critério} & \textbf{EF-1, liberação na peça} & \textbf{EF-2, liberação em ponto fixo} & \cellcolor{r2laranjaclaro}\textbf{EF-M, estrutura mista} \\
+        \midrule
+        R03 tempo de pagamento, sem deslocamento nem fila & $++$ & $-$ & \cellcolor{r2laranjaclaro}$++$ \\
+        R04 compra sem funcionário & $++$ & $+$ & \cellcolor{r2laranjaclaro}$++$ \\
+        R06 liberação condicionada ao pagamento & $+$ (depende só da etiqueta) & $+$ (depende só do ponto) & \cellcolor{r2laranjaclaro}$++$ (dois caminhos com a mesma autorização) \\
+        R07 alternativa humana para 100\% das falhas & $-$ (sem caminho quando a etiqueta ou o celular falham) & $++$ & \cellcolor{r2laranjaclaro}$++$ \\
+        Custo e complexidade & $-$ (energia em cada etiqueta) & $++$ & \cellcolor{r2laranjaclaro}$-$ \\
+        Dependência de infraestrutura fixa & $++$ & $-$ & \cellcolor{r2laranjaclaro}$+$ \\
+        \midrule
+        Resultado & reprovada em R07 (meta de 100\%) & fraca em R03 e R04, que somaram 37,6\% da importância técnica no Relatório 1 & \cellcolor{r2laranjaclaro}escolhida \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026). Escala: $++$ muito favorável; $+$ favorável; $-$ desfavorável.}
+\end{table}
+
+A EF-1 atende melhor ao tempo de pagamento (R03) e à compra sem funcionário (R04), porque elimina o deslocamento até um ponto e a fila que pode se formar nele. Ela não oferece, porém, caminho algum quando a etiqueta ou o celular falham: sem energia na etiqueta ou sem bateria no celular, a peça não sai. Essa lacuna reprova a EF-1 em R07, cuja meta é oferecer alternativa humana em 100\% dos cenários de falha catalogados. A EF-2 trata as falhas com facilidade, já que o ponto fixo tem energia e pode ter um funcionário ao lado, e custa menos, porque a etiqueta dispensa eletrônica própria. Em contrapartida, reintroduz o deslocamento e a possibilidade de fila e fica fraca nos requisitos que motivaram o projeto, R03 e R04, que somaram 37,6\% da importância técnica no Relatório 1.
+
+Diante desse conflito, a equipe escolheu uma estrutura mista, a EF-M, que usa a EF-1 no fluxo principal e a EF-2 como caminho assistido para todas as falhas. O ponto fixo da EF-M é o Ponto de Apoio, balcão com funcionário onde fica um Liberador de Balcão, e as duas vias usam a mesma autorização, o que leva R06 ao nível máximo: a etiqueta só abre com uma autorização válida, venha ela pelo celular do cliente ou pelo Liberador. A escolha tem um preço, porque a EF-M herda da EF-1 o custo e a complexidade de ter energia e verificação em cada etiqueta e mantém alguma infraestrutura fixa, ainda que restrita às exceções. A viabilidade econômica dessa decisão é examinada na Seção~\ref{sec:r2-valor}, e os oito cenários de exceção que o caminho assistido cobre (X1 a X8) estão detalhados na Seção~\ref{sec:r2-arquitetura}.
+
+\subsection{Estrutura funcional escolhida}
+\label{sub:r2-ef-escolhida}
+
+A Figura~\ref{fig:r2-ef-escolhida} apresenta a EF-M desdobrada em sete grupos de funções: Compra, Autorização, Liberação, Saída, Exceções, Ciclo da etiqueta e Jornada Completa. As funções básicas aparecem em azul-escuro, as secundárias em azul-claro, e a localização do produto na loja (F25), única função marcada como removível, em cinza.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Estrutura funcional escolhida (EF-M)}
+    \label{fig:r2-ef-escolhida}
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[
+        fb/.style={r2bloco, font=\scriptsize, text width=2.3cm, minimum width=2.6cm, minimum height=6mm, inner sep=2pt},
+        fbb/.style={r2blocoescuro, font=\scriptsize\bfseries, text width=2.3cm, minimum width=2.6cm, minimum height=6mm, inner sep=2pt},
+        fbn/.style={r2neutro, font=\scriptsize, text width=2.3cm, minimum width=2.6cm, minimum height=6mm, inner sep=2pt},
+        grp/.style={draw=r2azulmedio, dashed, rounded corners=3pt, inner sep=1.6mm},
+        mat/.style={r2setafina, line width=1.3pt}
+    ]
+        % Compra (coluna A)
+        \node[fbb] (f2) at (0,0) {F2 Identificar peça};
+        \node[fbb] (f3) at (0,-1.0) {F3 Processar pagamento};
+        \node[fb] (f13) at (0,-2.0) {F13 Registrar venda no estoque};
+        \node[fb] (f14) at (0,-3.0) {F14 Emitir comprovante};
+        % Excecoes (coluna A)
+        \node[fb] (f15) at (0,-5.5) {F15 Acionar atendimento humano};
+        \node[fb] (f16) at (0,-6.5) {F16 Oferecer liberação assistida};
+        % Autorizacao (coluna B)
+        \node[fbb] (f4) at (3.9,0) {F4 Emitir autorização};
+        \node[fb] (f9) at (3.9,-1.0) {F9 Transmitir autorização};
+        \node[fbb] (f5) at (3.9,-2.0) {F5 Validar autorização};
+        % Liberacao (colunas B e C)
+        \node[fb] (f10) at (3.9,-3.5) {F10 Confirmar intenção de liberar};
+        \node[fbb] (f6) at (3.9,-4.5) {F6 Desfazer retenção};
+        \node[fbb] (f1) at (7.8,-3.5) {F1 Reter peça};
+        \node[fb] (f7) at (7.8,-4.5) {F7 Armazenar energia};
+        \node[fb] (f11) at (7.8,-5.5) {F11 Indicar estado da liberação};
+        % Saida (colunas B e C)
+        \node[fb] (f17) at (3.9,-7.0) {F17 Recolher etiqueta};
+        \node[fb] (f18) at (3.9,-8.0) {F18 Registrar devolução};
+        \node[fb] (f12) at (7.8,-7.0) {F12 Sinalizar saída indevida};
+        % Ciclo da etiqueta (coluna D)
+        \node[fb] (f24) at (11.7,0) {F24 Destinar etiquetas reprovadas};
+        \node[fb] (f23) at (11.7,-1.0) {F23 Rastrear frota};
+        \node[fb] (f22) at (11.7,-3.5) {F22 Fixar etiqueta na peça};
+        \node[fb] (f21) at (11.7,-4.6) {F21 Associar etiqueta à peça};
+        \node[fb] (f8) at (11.7,-5.7) {F8 Repor energia};
+        \node[fb] (f20) at (11.7,-6.85) {F20 Inspecionar etiqueta};
+        \node[fb] (f19) at (11.7,-8.0) {F19 Transportar etiquetas};
+        % Jornada Completa
+        \node[fbn] (f25) at (0,-9.6) {F25 Localizar produto na loja (removível)};
+        \node[fb] (f26) at (3.9,-9.6) {F26 Informar disponibilidade};
+        \node[fb] (f27) at (7.8,-9.6) {F27 Recomendar peças};
+        \node[fb] (f28) at (11.7,-9.6) {F28 Oferecer compra on-line};
+        \node[fb] (f29) at (0,-10.6) {F29 Acumular benefícios};
+        \node[fb] (f30) at (3.9,-10.6) {F30 Estimar impacto ambiental};
+        \node[fb] (f31) at (7.8,-10.6) {F31 Gerenciar consentimento};
+        % grupos
+        \node[grp, fit=(f2)(f14), label={[r2rotulo]above:{Compra}}] {};
+        \node[grp, fit=(f4)(f5), label={[r2rotulo]above:{Autorização}}] {};
+        \node[grp, fit=(f10)(f6)(f1)(f7)(f11), label={[r2rotulo]above:{Liberação}}] {};
+        \node[grp, fit=(f17)(f18)(f12), label={[r2rotulo]above:{Saída}}] {};
+        \node[grp, fit=(f15)(f16), label={[r2rotulo]above:{Exceções (Ponto de Apoio)}}] {};
+        \node[grp, fit=(f24)(f19), label={[r2rotulo]above:{Ciclo da etiqueta}}] {};
+        \node[grp, draw=r2cinza, fit=(f25)(f28)(f31), label={[r2rotulo]above:{Jornada Completa (com opt-in)}}] {};
+        % fluxos de sinal
+        \draw[r2seta] (f2) -- (f3);
+        \draw[r2seta] (f3) -- (f13);
+        \draw[r2seta] (f13) -- (f14);
+        \draw[r2seta] (f3.east) -- ++(0.35,0) |- (f4.west);
+        \draw[r2seta] (f4) -- (f9);
+        \draw[r2seta] (f9) -- (f5);
+        \draw[r2seta] (f5) -- (f10);
+        \draw[r2seta] (f10) -- (f6);
+        \draw[r2seta] (f15) -- (f16);
+        \draw[r2seta] (f16.east) -- ++(0.55,0) |- (f6.west);
+        % fluxos de energia
+        \draw[r2setatracejada] (f7.west) -- (f6.east);
+        \draw[r2setatracejada] (f8.west) -- ++(-0.45,0) |- (f7.east);
+        % fluxos de material
+        \draw[mat] (f6) -- (f17);
+        \draw[mat] (f17) -- (f18);
+        \draw[mat] (f18) -- (f19);
+        \draw[mat] (f19) -- (f20);
+        \draw[mat] (f20) -- (f8);
+        \draw[mat] (f8) -- (f21);
+        \draw[mat] (f21) -- (f22);
+        \draw[mat] (f22.west) -- (f1.east);
+        \draw[r2setafina] (f20.east) -- ++(0.4,0) |- (f24.east);
+        % legenda
+        \node[fbb, text width=1.6cm, minimum width=1.9cm] at (0,-11.9) {básica};
+        \node[fb, text width=1.6cm, minimum width=1.9cm] at (2.4,-11.9) {secundária};
+        \node[fbn, text width=1.6cm, minimum width=1.9cm] at (4.8,-11.9) {removível};
+        \draw[r2seta] (6.3,-11.9) -- (7.1,-11.9) node[right, font=\scriptsize] {sinal};
+        \draw[r2setatracejada] (8.3,-11.9) -- (9.1,-11.9) node[right, font=\scriptsize] {energia};
+        \draw[mat] (10.6,-11.9) -- (11.4,-11.9) node[right, font=\scriptsize] {material};
+    \end{tikzpicture}%
+    }
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+
+No grupo Compra, o sistema identifica a peça (F2), o que inclui descobrir qual peça está presa à etiqueta e qual é o seu preço, processa o pagamento (F3), registra a venda no estoque (F13) e emite o comprovante fiscal (F14). O pagamento confirmado dispara o grupo Autorização, em que a Plataforma emite a autorização (F4), o canal do cliente a transmite (F9) e a etiqueta a valida (F5). A separação entre emitir, transmitir e validar é deliberada: quem transmite não precisa ser confiável, porque não emite nem valida, e por isso o celular do cliente pode cumprir F9 sem que a segurança dependa dele. O protocolo que realiza essas três funções está descrito na Seção~\ref{sec:r2-arquitetura}.
+
+O grupo Liberação reúne as funções da etiqueta. Reter a peça (F1) é o estado permanente antes da compra; validada a autorização, o cliente confirma a intenção de liberar (F10) e só então a etiqueta desfaz a retenção (F6), enquanto indica o estado da liberação (F11) do início ao fim. A energia guardada (F7) alimenta a validação e a atuação, e a reposição de energia (F8) acontece fora da loja, no ciclo da etiqueta. No grupo Saída, a etiqueta solta volta a ser material: o sistema a recolhe (F17) e registra a devolução (F18), e a função de sinalizar saída indevida (F12) protege a loja contra a peça que sai sem pagamento e contra a etiqueta que sai no bolso do cliente.
+
+As exceções formam o caminho assistido da EF-M. Acionar o atendimento humano (F15) permite ao cliente chamar um funcionário em qualquer ponto da jornada, e oferecer a liberação assistida (F16) leva a compra ao Ponto de Apoio, onde o Liberador de Balcão cumpre, com energia e autorização próprias, as funções que a etiqueta ou o celular não conseguiram cumprir. Na figura, essa via termina em F6, a mesma função em que termina o fluxo principal, o que representa a autorização comum às duas vias.
+
+O ciclo da etiqueta fecha o fluxo de material. As etiquetas recolhidas são transportadas (F19), inspecionadas (F20), recarregadas (F8), associadas a novas peças (F21) e fixadas nelas (F22), voltando a reter a peça (F1). O rastreamento da frota (F23) é transversal ao ciclo, e a destinação das etiquetas reprovadas (F24) é a saída do ciclo para as unidades que não passam na inspeção. A Jornada Completa, por fim, agrupa sete funções que atuam no módulo Tag\&Go do app Riachuelo, com o consentimento do cliente, e que não participam da cadeia que libera a peça; duas delas, F26 e F29, aparecem de forma reduzida na Compra Rápida, com os tamanhos da peça lida e o passe do Ria Club.
+
+\subsection{Lista e classificação das funções}
+\label{sub:r2-lista-funcoes}
+
+A equipe classificou as funções em quatro classes \cite{rozenfeld2006gestao, zancul2026conceitual}. As básicas (B) são aquelas sem as quais a função global não se realiza. As secundárias necessárias (S-N) viabilizam as básicas na estrutura escolhida ou atendem a uma obrigação do sistema. As secundárias acessórias (S-A) acrescentam utilidade e podem ser removidas sem afetar a função global. As secundárias de estima (S-E) agregam valor percebido, fidelização ou imagem. A Tabela~\ref{tab:r2-funcoes} lista as 31 funções além da global, com a classe, o caminho de uso em que cada uma atua, o requisito ou a voz do cliente que a justifica e o subsistema principal que a realiza. Os requisitos R01 a R07 e as especificações E01 a E12 e S01 a S10 são os da Tabela~\ref{tab:r2-especificacoes}; as vozes N, D e DE são as do Relatório 1.
+
+\begingroup
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}
+    >{\RaggedRight\arraybackslash}p{1.0cm}
+    >{\RaggedRight\arraybackslash}p{4.0cm}
+    >{\RaggedRight\arraybackslash}p{1.9cm}
+    >{\RaggedRight\arraybackslash}p{2.7cm}
+    >{\RaggedRight\arraybackslash}p{3.0cm}
+    >{\RaggedRight\arraybackslash}p{1.6cm}@{}}
+\caption{Lista e classificação das funções do sistema Tag\&Go} \label{tab:r2-funcoes} \\
+\toprule
+\textbf{Código} & \textbf{Função (verbo + substantivo)} & \textbf{Classe} & \textbf{Caminho} & \textbf{Requisito ou voz} & \textbf{SSC principal} \\
+\midrule
+\endfirsthead
+\multicolumn{6}{c}{Tabela~\ref{tab:r2-funcoes} (continuação)} \\
+\toprule
+\textbf{Código} & \textbf{Função (verbo + substantivo)} & \textbf{Classe} & \textbf{Caminho} & \textbf{Requisito ou voz} & \textbf{SSC principal} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{\textit{continua na próxima página}} \\
+\endfoot
+\bottomrule
+\multicolumn{6}{@{}p{14.8cm}@{}}{\scriptsize Classes: B, básica; S-N, secundária necessária; S-A, secundária acessória; S-E, secundária de estima. Caminhos: N, núcleo comum (Compra Rápida e Jornada Completa); JC, Jornada Completa; CR, Compra Rápida. SSC: SS1 etiqueta; SS2 Plataforma; SS3 canais do cliente; SS4 infraestrutura de loja; SS5 ciclo logístico.} \\
+\multicolumn{6}{c}{Fonte: Elaborado pelos autores (2026).} \\
+\endlastfoot
+F0 & Liberar peça mediante pagamento & global & N & todos & sistema \\
+F1 & Reter peça & B & N & R06, E02 & SS1 \\
+F2 & Identificar peça & B & N & R05, E09 & SS1, SS2 \\
+F3 & Processar pagamento & B & N & R03 & SS2, SS3 \\
+F4 & Emitir autorização & B & N & R06, S06 & SS2 \\
+F5 & Validar autorização & B & N & R06, E07 & SS1 \\
+F6 & Desfazer retenção & B & N & R04, E03 & SS1 \\
+F7 & Armazenar energia & S-N & N & E05, E06 & SS1 \\
+F8 & Repor energia & S-N & N & E05, S03 & SS5, SS4 \\
+F9 & Transmitir autorização & S-N & N & R03, R06 & SS3, SS1 \\
+F10 & Confirmar intenção de liberar & S-N & N & R05, segurança de uso & SS1 \\
+F11 & Indicar estado da liberação & S-N & N & D03, R05, E08 & SS1, SS3 \\
+F12 & Sinalizar saída indevida & S-N & N & R06 & SS1 \\
+F13 & Registrar venda no estoque & S-N & N & R06, S07 & SS2 \\
+F14 & Emitir comprovante & S-N & N & D03 & SS2 \\
+F15 & Acionar atendimento humano & S-N & N & R07, N08 & SS3, SS4 \\
+F16 & Oferecer liberação assistida & S-N & N & R07, S09 & SS4 \\
+F17 & Recolher etiqueta & S-N & N & S01 & SS4 \\
+F18 & Registrar devolução & S-N & N & S01 & SS4, SS2 \\
+F19 & Transportar etiquetas & S-N & N & S01, S02 & SS5 \\
+F20 & Inspecionar etiqueta & S-N & N & E10, S03 & SS5 \\
+F21 & Associar etiqueta à peça & S-N & N & R06, S02 & SS5, SS2 \\
+F22 & Fixar etiqueta na peça & S-N & N & E02 & SS5 \\
+F23 & Rastrear frota & S-N & N & S01 & SS2 \\
+F24 & Destinar etiquetas reprovadas & S-N & N & PNRS \cite{brasil2010pnrs} & SS5 \\
+F25 & Localizar produto na loja & S-A (removível) & JC & R01, N03, N04 & SS2, SS3 \\
+F26 & Informar disponibilidade & S-A & JC (e tamanhos da peça lida na CR) & R02, N05, DE04 & SS2, SS3 \\
+F27 & Recomendar peças & S-E & JC & N03, D06 & SS2 \\
+F28 & Oferecer compra on-line & S-A & JC & R02, DE04 & SS2 \\
+F29 & Acumular benefícios & S-E & JC (e passe do Ria Club) & fidelidade (hipótese) & SS2, SS3 \\
+F30 & Estimar impacto ambiental & S-E & JC & D07, entrevista de Luana (hipótese) & SS2 \\
+F31 & Gerenciar consentimento & S-N & JC & LGPD, D07 & SS2, SS3 \\
+\end{longtable}
+\endgroup
+
+Das 31 funções, seis são básicas (F1 a F6), 19 são secundárias necessárias (F7 a F24 e F31), três são acessórias (F25, F26 e F28) e três são de estima (F27, F29 e F30). As seis básicas formam a menor cadeia capaz de cumprir a função global: reter a peça, identificá-la, receber o pagamento, emitir uma autorização, validá-la e desfazer a retenção. Todas pertencem ao núcleo comum, o que confirma que os dois caminhos de uso diferem só em funções secundárias.
+
+Quatro classificações exigiram justificativa. Transmitir a autorização (F9) é secundária porque existe apenas na estrutura em que emissão e validação ficam em lugares diferentes; na EF-2, a autorização seria consultada pelo próprio ponto de liberação. Confirmar a intenção de liberar (F10) evita que a peça se solte sem um gesto do cliente e dá a ele o controle do momento em que o pino sai, o que atende à clareza do fluxo (R05) e à segurança de uso. Indicar o estado da liberação (F11) responde ao desejo de confirmação clara e imediata do pagamento (D03) e, pela especificação E08, precisa usar pelo menos dois canais, porque a luz sozinha não atende a quem não distingue cores. Registrar a venda no estoque (F13) é secundária necessária, e não acessória, porque sem ela o pórtico RFID alarmaria para uma peça paga, e o cliente passaria pelo constrangimento que a voz N06 pede para evitar.
+
+Na Jornada Completa, gerenciar o consentimento (F31) é a única função classificada como necessária: como as funções de perfil, recomendação e métricas tratam dados pessoais, o consentimento por finalidade deixa de ser opcional no momento em que elas existem \cite{brasil2018lgpd}. As bases legais de cada tratamento estão na Seção~\ref{sec:r2-comercializacao} (Tabela~\ref{tab:r2-lgpd}). As funções de fidelidade (F29) e de impacto ambiental (F30) levam a marca de hipótese porque o survey do Relatório 1 não mediu interesse por fidelidade, recomendação ou sustentabilidade; o apoio a elas é qualitativo, vindo das entrevistas.
+
+\subsection{Localizar produto na loja e granularidade}
+\label{sub:r2-localizar}
+
+A função de localizar o produto na loja (F25) recebeu tratamento específico porque o Relatório 1 a formulou em nível amplo, perguntando em que área da loja está a peça, e deixou sua implementação para depois; o requisito correspondente, R01, ficou com 3,7\% da importância técnica. A equipe manteve a função, conforme a orientação de não simplificar funções nesta fase \cite{zancul2026conceitual}, e a classificou como secundária acessória, removível sem afetar a função global. A decisão que restava era de granularidade: com que precisão o sistema deve localizar a peça. A Tabela~\ref{tab:r2-granularidade} compara quatro níveis, da unidade (N0) à peça (N3).
+
+\begin{table}[htbp]
+    \centering
+    \caption{Níveis de granularidade da localização do produto na loja}
+    \label{tab:r2-granularidade}
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{1.2cm}
+        >{\RaggedRight\arraybackslash}p{2.2cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{2.2cm}
+        >{\RaggedRight\arraybackslash}p{1.9cm}@{}}
+        \toprule
+        \textbf{Nível} & \textbf{O que responde} & \textbf{Tecnologia (princípio)} & \textbf{Precisão e dado de referência} & \textbf{Custo para a loja} & \textbf{Decisão} \\
+        \midrule
+        N0 unidade & ``A peça existe nesta loja?'' & estoque do ERP ou estoque RFID & loja; sem RFID, acurácia por SKU de 55\% a 65\% \cite{auburn2026acuracia}; com RFID, acurácia de inventário 64\% maior na Renner, segundo o fornecedor \cite{sensormatic2022renner}, e 99,9\% nos locais-chave da Decathlon \cite{rfidnews2026decathlon} & já existe (RFID da Mozaiko) \cite{tiinside2022riachuelo} & base de R02 \\
+        \addlinespace
+        N1 setor & ``Em que setor e piso?'' & estoque RFID mais planograma digital (mapa de setores mantido pela loja) & setor; referências: planta da loja no Store Mode da Zara \cite{inditex2021storemode} e corredor no app do Walmart \cite{walmart2019mapas} & software e manutenção do planograma & \cellcolor{r2laranjaclaro}adotado (R01) \\
+        \addlinespace
+        N2 arara ou expositor & ``Em qual arara, com erro de 1 a 1,5\,m?'' & leitores RFID de teto ou âncoras BLE com ângulo de chegada & leitor de teto: 85\% das etiquetas localizadas a até 1,5\,m, em condição ideal, segundo o fornecedor \cite{atlasrfid2026xarray}; ângulo de chegada: erro médio de 1 a 2\,m numa solução comercial \cite{bluetooth2022direction} & infraestrutura de teto em cada loja, sem preço público & desejável, se a Riachuelo instalar leitores \\
+        \addlinespace
+        N3 peça & ``Exatamente onde, com menos de 30\,cm?'' & UWB ou Channel Sounding & de poucos centímetros a cerca de 30\,cm, segundo o fornecedor (consórcio FiRa) \cite{fira2026uwb}; Channel Sounding mede distância entre dois dispositivos e exige chip compatível dos dois lados \cite{bluetooth2024channel}, ausente no ESP32-C3 \cite{espressif2026esp32c3} & âncoras na loja e chip dedicado na etiqueta & fora do escopo \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026) com base em \citeonline{auburn2026acuracia}, \citeonline{inditex2021storemode}, \citeonline{atlasrfid2026xarray}, \citeonline{bluetooth2022direction} e \citeonline{fira2026uwb}.}
+\end{table}
+
+A equipe adotou o nível N1. O nível N0 já existe na Riachuelo, que usa RFID da fábrica às lojas, e sustenta a disponibilidade por tamanho (R02), mas não ajuda o cliente que está dentro da loja e não acha a peça. O nível N1 responde a essa dificuldade, relatada nas entrevistas do Relatório 1 (N03 e N04), com recursos que a loja pode manter: o estoque RFID indica que a peça está na unidade, e o planograma digital, um mapa de setores atualizado pela própria loja, indica o setor e o piso. Com essa formulação, a meta de R01 passou a ser de pelo menos 90\% das consultas com o setor correto (Tabela~\ref{tab:r2-especificacoes}). O nível N2 fica como evolução desejável, condicionada à instalação de leitores de teto pela Riachuelo, e o N3 fica fora do escopo, porque exigiria âncoras na loja e um chip de rádio que o módulo previsto para a etiqueta não tem.
+
+Uma mitigação considerada e rejeitada para a falta de precisão do N1 foi usar a própria etiqueta como farol de rádio para guiar o cliente até a peça. Com anúncio a cada 1\,s, a célula de 150\,mAh duraria cerca de 16 dias (estimativa da equipe), menos que o ciclo médio da etiqueta, de 84 dias (premissa da especificação S02), e a localização pela intensidade do sinal tem erro da ordem de metros em ambiente tridimensional e com obstáculos \cite{ramirez2021ble, fira2026uwb}. A rapitag, em piloto em Munique, usou um algoritmo que buscava pelo sinal de rádio o produto mais próximo do celular \cite{storesshops2019rapitag}; a equipe tomou o precedente como indício de viabilidade de um recurso de proximidade, que não resolve a autonomia de uma etiqueta ativa. Por isso, o nível N1 vem do estoque RFID e do planograma, sem depender da etiqueta.
+
+A equipe concluiu que, na localização, a acurácia importa mais que a precisão. Um setor errado ou um estoque divergente reforça a desconfiança nos canais digitais registrada no Relatório 1 (N05), em que entrevistados contaram ter perdido a confiança no estoque do site depois de não encontrar a peça na loja. Uma indicação de setor correta em pelo menos 90\% das consultas vale mais para esse cliente do que uma posição centimétrica sustentada por um estoque que ele não considera confiável. Por isso, a localização usa a mesma leitura RFID que sustenta R02, e a peça com leitura de mais de 24\,h ou com divergência aparece no app como provável, com a compra on-line como alternativa.
+
+\subsection{Funções do ciclo da etiqueta}
+\label{sub:r2-funcoes-ciclo}
+
+Com a EF-M, a etiqueta deixa de ser um consumível e passa a ser um ativo retornável, o que cria funções que a etiqueta rígida retirada no caixa não precisa cumprir de forma rastreada. Recolher a etiqueta (F17) e registrar a devolução (F18) sustentam a especificação S01, que fixa como meta o retorno de pelo menos 99\% das etiquetas liberadas por ciclo; a consequência econômica de não atingir essa meta está na Seção~\ref{sec:r2-valor}. Transportar as etiquetas (F19), inspecioná-las (F20) e repor a energia (F8) mantêm a frota em condição de uso, e a especificação S03 limita o recondicionamento no CD a dois dias úteis.
+
+Associar a etiqueta à peça (F21) e fixá-la (F22) acontecem na origem, na fábrica ou no CD, e liberam a loja desse trabalho. O custo de aplicar a etiqueta não desaparece: ele muda de lugar e fica em cerca de R\$~0,14 por peça (estimativa da equipe, detalhada na Seção~\ref{sec:r2-valor}). A associação entre a etiqueta e o EPC da peça é também uma função de segurança, porque impede que uma etiqueta retirada de uma peça barata seja usada para liberar uma peça cara. Os dois ramos de cadastro na origem, o ramo fábrica e o ramo CD, estão descritos na Subseção~\ref{sub:r2-ciclo}.
+
+Rastrear a frota (F23) mostra, por loja, as etiquetas liberadas e ainda não recolhidas, o que permite ao Ponto de Apoio agir antes de a etiqueta sair da loja. Destinar as etiquetas reprovadas (F24) atende à Política Nacional de Resíduos Sólidos, que exige sistemas de logística reversa para pilhas, baterias e produtos eletroeletrônicos \cite{brasil2010pnrs}; como cada etiqueta tem célula de lítio e placa eletrônica, a função precisou constar da lista desde a fase conceitual.
+
+\subsection{Funções da Jornada Completa}
+\label{sub:r2-funcoes-jornada}
+
+As funções F25 a F31 são acessórias ou de estima, com exceção do consentimento (F31): ajudam a vender e a fidelizar, e a compra se completa sem elas. Ficam na Jornada Completa, no módulo Tag\&Go do app Riachuelo, com opt-in do cliente, e formam a resposta do sistema às vozes de disponibilidade e escolha do Relatório 1 (N03, N05, DE04), que a liberação da peça sozinha não atende. Como o survey não mediu interesse por fidelidade, recomendação ou sustentabilidade, a equipe as trata como hipóteses a validar com a Riachuelo e no piloto.
+
+Informar a disponibilidade (F26) depende da leitura RFID da loja e, pela meta de R02, só apresenta como disponível um tamanho cuja leitura tenha no máximo 24\,h; acima disso, o app mostra a informação como provável. Na Compra Rápida, a mesma função aparece de forma reduzida, com os tamanhos da peça lida. Recomendar peças (F27) só mostra o que existe na loja no tamanho do perfil do cliente, para não repetir a frustração de indicar algo que não está disponível; quando o tamanho falta, oferecer a compra on-line (F28) completa a venda pelo e-commerce, com retirada na loja sem custo ou entrega sem frete acima de um valor mínimo a definir com a Riachuelo. Acumular benefícios (F29) liga a compra ao Ria Club, com o cashback liberado só depois de a etiqueta ser devolvida, e estimar o impacto ambiental (F30) apresenta estimativas por categoria de produto, com faixa e fonte, e nunca como pegada individual da peça, para não configurar publicidade enganosa \cite{brasil1990cdc}. Os princípios que realizam cada uma das 31 funções, e a combinação deles em alternativas de concepção, são o objeto da Seção~\ref{sec:r2-concepcao}.

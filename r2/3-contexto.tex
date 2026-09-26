@@ -1,0 +1,246 @@
+% =============================================================================
+% Relatorio 2 (projeto conceitual), Secao 1: contexto e especificacoes-meta.
+% Conteudo: sintese do Relatorio 1, o que o R2 acrescenta, especificacoes-meta
+% (Tabela tab:r2-especificacoes), dois caminhos sobre um nucleo comum
+% (Figura fig:r2-caminhos e Tabela tab:r2-caminhos) e organizacao do relatorio
+% (Tabela tab:r2-roteiro). Numeros conforme a biblia do R2 (versao de 25/09/2026).
+% Nao repete: passo a passo das jornadas, protocolo de seguranca, lista de
+% funcoes e custos (Secoes 2, 4 e 7).
+% =============================================================================
+
+\section{CONTEXTO E ESPECIFICAÇÕES-META}
+\label{sec:r2-contexto}
+
+O Relatório 2 trata do projeto conceitual do sistema Tag\&Go, desenvolvido em parceria com a Riachuelo para que o cliente de moda pague pelo celular e libere sozinho a etiqueta antifurto da peça, sem passar pelo caixa. O roteiro da disciplina pede seis itens para essa fase: análise funcional, estudo de diferenciação, escala vertical e valor mercadológico, estudo de aproveitamento técnico, reformulação dos desenhos a partir das funções e dos princípios de solução e delineamento da comercialização e da distribuição \cite{zancul2026conceitual}. Antes desses itens, a equipe retomou os resultados do Relatório 1, corrigiu o único ponto em que ele perdeu nota e definiu a forma geral do sistema, que passou a ter dois caminhos de uso sobre um núcleo comum.
+
+\subsection{Síntese do Relatório 1}
+\label{sub:r2-sintese}
+
+O Relatório 1 recebeu nota 3,5 de 4,0. Os itens de mercado (0,8 de 0,8), necessidades (1,0 de 1,0), proposta (0,8 de 0,8) e formatação (0,4 de 0,4) receberam a nota máxima, e a única perda ocorreu em requisitos e especificações-meta (0,5 de 1,0): faltaram especificações com unidade e valor, faixa ou valor com tolerância, como nos exemplos dados pelo professor na devolutiva (15\,kg/s; 10 a 15\,mm; $15 \pm 2$). A correção desse ponto orientou a Subseção~\ref{sub:r2-especificacoes}.
+
+A base de clientes do Relatório 1 veio de um survey com 142 respostas e de 11 entrevistas. A clusterização exploratória separou quatro grupos: dependentes de atendimento (39\% da amostra), dos quais 96\% rejeitaram a compra sem checagem na saída; autônomos digitais (21\%), grupo em que todos aceitaram o conceito e já tinham desistido de comprar por causa de fila, 17\% deles com frequência, e em que 76\% tinham menos de 35 anos; frustrados com disponibilidade (9\%), que, sem exceção, já tinham saído da loja sem comprar por não encontrar o que procuravam e mudariam a decisão de ir à loja se soubessem a disponibilidade pelo app; e pragmáticos equilibrados (31\%), com 91\% de respostas neutras. No conjunto, 24\% concordaram com a compra sem checagem, 39\% ficaram neutros, 31\% discordaram e 6\% discordaram totalmente. A equipe leu esse resultado como sinal de que a solução precisa ser uma via rápida opcional, sem retirar o atendimento humano de quem o valoriza.
+
+Das vinte vozes identificadas (necessidades N01 a N08, desejos D01 a D07 e demandas DE01 a DE05), sete entraram no QFD, com os seguintes pesos relativos: redução da espera no caixa (DE01), 33,4\%; saída sem constrangimento (N06), 22,3\%; pagamento rápido sem perder o atendimento (DE05), 17,1\%; confirmação imediata do pagamento (D03), 10,7\%; encontrar o produto (N03), 8,0\%; confiar no estoque digital (N05), 7,1\%; e atendimento humano quando necessário (N08), 1,4\%. Na importância técnica, R06 (liberação condicionada ao pagamento) ficou com 33,1\%, R03 (tempo) com 24,4\%, R05 (clareza) com 13,7\%, R04 (compra sem funcionário) com 13,2\%, R07 (alternativa humana) com 8,3\% e R01 (localização) e R02 (disponibilidade) com 3,7\% cada; R06, R03 e R05 somaram 71,2\%. O telhado da casa da qualidade mostrou R07 em conflito com R03, R04 e R05, e a equipe resolveu o conflito mantendo o atendimento como opção fora do fluxo principal, decisão que o Relatório 2 preserva.
+
+No benchmarking competitivo, a equipe calculou para cada rede a média das notas atribuídas às sete vozes, ponderada pelo grau de importância de cada voz (soma dos graus igual a 24). A Riachuelo ficou com 2,67, abaixo da C\&A (3,50), da Zara (3,58) e da Renner (3,75). Essa nota descreve a rede tradicional, avaliada pelo caixa com funcionário, e não as lojas conceito abertas em 2026. No benchmarking técnico, os valores foram estimativas da equipe, exceto a parcela de cerca de 38\% dos pagamentos feita nos terminais de autoatendimento da Renner onde eles existem \cite{consumidormoderno2025renner}. Para a Riachuelo, a equipe estimou R03 em 120\,s, R04 em 0\%, R06 em 98\% e R07 em 100\%; o plano fixou R01 em 90\%, R02 em 95\%, R03 em 45\,s, R04 em 80\%, R05 em 85\% e R06 e R07 em 100\%. A localização (R01) foi formulada em nível amplo, como a área da loja em que está a peça, e sua implementação ficou para uma etapa posterior; com 3,7\% da importância técnica, foi tratada como requisito secundário.
+
+O mercado foi definido em três camadas. No TAM tecnológico, o mercado global de RFID no varejo foi estimado em US\$~15,97 bilhões em 2026, com projeção de US\$~34,46 bilhões em 2035 \cite{businessresearch2026rfid}; o segmento-alvo reúne as redes de \textit{mass market} com self-checkout implantado ou em piloto (Renner, Riachuelo e C\&A); e o SOM corresponde às 15 a 20 lojas conceito que a Riachuelo planeja abrir em 2026 \cite{mercadoconsumo2026riachuelo}. Duas informações de mercado do Relatório 1 foram corrigidas. A base de lojas passou de ``cerca de 440 lojas'' para 342 lojas Riachuelo: as 445 unidades do grupo em dezembro de 2025 incluíam 81 lojas Carter's, 13 Casa Riachuelo e 9 Fanlab, e a Fanlab encerrou suas operações em julho de 2026 \cite{abvtex2026riachuelo,businessmoment2026riachuelo}. O Passaporte Digital de Produto da União Europeia, citado no Relatório 1 como exigência a partir de 2027, tem o ato delegado de têxteis previsto para o quarto trimestre de 2027, e sua aplicação só pode começar 18 meses ou mais depois da entrada em vigor do ato, isto é, por volta de 2029 \cite{comissaoeuropeia2026dpp,uniaoeuropeia2024espr}; para a Riachuelo, o passaporte é diferencial, sem caráter de obrigação. Em agosto de 2026, a Riachuelo concluiu a loja de Curitiba no novo conceito e informou fluxo 15,7\% maior e faturamento 9,7\% maior, sem divulgar a base de comparação \cite{curitibainforma2026riachuelo}, e a rede anunciou o plano de levar o conceito a mais de 300 unidades \cite{mercadoconsumo2026riachuelo}; a tecnologia da etiqueta inteligente dessas lojas não foi divulgada.
+
+A jornada descrita no Relatório 1 tinha quatro passos: o cliente lê o código da etiqueta, paga no app, o app entrega a autorização à etiqueta por BLE e, com a luz verde, o botão libera o pino. O Relatório 1 afirmou que a queda de conexão depois do pagamento não impediria a liberação; a frase foi precisada na Subseção~\ref{sub:r2-caminhos}, porque a etiqueta dispensa rede, e o celular, não.
+
+\subsection{O que o Relatório 2 acrescenta}
+\label{sub:r2-acrescimos}
+
+A orientação da disciplina para esta fase foi considerar todas as funções que o produto precisa ter, inclusive as que a equipe talvez não consiga realizar no protótipo, porque uma função omitida agora exclui do produto a possibilidade de executá-la depois \cite{zancul2026conceitual}. Com esse critério, o Relatório 2 acrescenta sete frentes ao conceito do Relatório 1.
+
+A primeira é o conjunto de especificações-meta com valor, unidade, tolerância e método de verificação, em três famílias (R, E e S), descrito na Subseção~\ref{sub:r2-especificacoes}. A segunda é a função de localizar o produto na loja, que a equipe manteve e classificou como secundária acessória, com a decisão explícita de granularidade entre os níveis N0 (unidade), N1 (setor), N2 (arara) e N3 (peça); o nível adotado, N1, usa o estoque RFID da loja e um planograma digital, sem depender da etiqueta, porque a equipe descartou usar a própria etiqueta como farol BLE: o anúncio contínuo esgotaria a célula antes do fim de um ciclo e daria erro de metros (Seção~\ref{sec:r2-funcional}). A terceira é a logística reversa: a etiqueta deixa de ser consumível e passa a ser um ativo retornável, com cadastro na origem em dois ramos, o ramo fábrica, no fim da linha da fábrica de Natal, que responde por cerca de 40\% do que a rede vende, e o ramo CD, nos centros de distribuição, além de inspeção e recarga no CD (Subseção~\ref{sub:r2-ciclo}).
+
+A quarta frente é a divisão da experiência em dois caminhos, a Compra Rápida e a Jornada Completa, sobre um núcleo comum, descrita na Subseção~\ref{sub:r2-caminhos}. A quinta é a segurança da autorização: o token de liberação é de uso único, vale por no máximo 120\,s, responde a um desafio gerado pela própria etiqueta e é verificado dentro dela, de modo que o celular funciona apenas como retransmissor; o protocolo e as ameaças consideradas estão na Seção~\ref{sec:r2-arquitetura}. A sexta reúne as mudanças físicas da etiqueta (contatos de serviço na face superior, micromotor com came, célula menor, sinalização por luz e som e carretel não ferromagnético), também registradas na Seção~\ref{sec:r2-arquitetura}. A sétima é a viabilidade econômica para o varejista e para o fornecedor (Seção~\ref{sec:r2-valor}), que depende de três variáveis ainda não medidas: o número de desistências de compra que o sistema evita, a fração de peças que recebem etiqueta rígida e a taxa de retorno das etiquetas, fixada como meta de 99\% (S01), discutida na Subseção~\ref{sub:r2-especificacoes}.
+
+\subsection{Especificações-meta}
+\label{sub:r2-especificacoes}
+
+A devolutiva do Relatório 1 pediu parâmetros quantitativos e mensuráveis, cada um com unidade e com valor, faixa ou tolerância. Para atender a esse pedido, a equipe reescreveu as especificações em três famílias. A primeira reúne os requisitos do cliente revistos (R01 a R07), herdados do QFD do Relatório 1 e agora acompanhados de grandeza, tolerância e método de verificação. A segunda contém as especificações da etiqueta (E01 a E12), que descrevem o dispositivo físico: dimensões, retenção, tempo de liberação, energia, segurança criptográfica, sinalização, leitura, vida útil e conformidade de rádio. A terceira contém as especificações do sistema e do serviço (S01 a S10), que tratam do que acontece fora da etiqueta: retorno e ciclo da frota, recondicionamento, canais do celular, latência da autorização, registro da venda no estoque, disponibilidade, contingência e auditoria. As três famílias estão na Tabela~\ref{tab:r2-especificacoes}, em que a coluna Origem indica a voz do cliente, o requisito ou a fonte que justifica cada meta.
+
+\begingroup
+\captionsetup{font=normalsize}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}
+    >{\RaggedRight\arraybackslash}p{0.8cm}
+    >{\RaggedRight\arraybackslash}p{2.6cm}
+    >{\RaggedRight\arraybackslash}p{1.9cm}
+    >{\RaggedRight\arraybackslash}p{4.8cm}
+    >{\RaggedRight\arraybackslash}p{2.5cm}
+    >{\RaggedRight\arraybackslash}p{2.0cm}@{}}
+\caption{Especificações-meta: requisitos do cliente revistos, etiqueta e sistema}\label{tab:r2-especificacoes} \\
+\toprule
+\textbf{Código} & \textbf{Especificação} & \textbf{Unidade} & \textbf{Valor-meta e tolerância} & \textbf{Verificação} & \textbf{Origem} \\
+\midrule
+\endfirsthead
+\multicolumn{6}{c}{Tabela~\ref{tab:r2-especificacoes} (continuação)} \\
+\toprule
+\textbf{Código} & \textbf{Especificação} & \textbf{Unidade} & \textbf{Valor-meta e tolerância} & \textbf{Verificação} & \textbf{Origem} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{\textit{continua na próxima página}} \\
+\endfoot
+\bottomrule
+\multicolumn{6}{c}{Fonte: Elaborado pelos autores (2026), com base nas fontes indicadas na coluna Origem.} \\
+\endlastfoot
+\multicolumn{6}{@{}l}{\textbf{Requisitos do cliente revistos (R01 a R07)}} \\
+\midrule
+R01 & Localização da peça no nível N1 (setor) & \% das consultas de itens disponíveis com setor correto & $\geq$~90\% ($\pm$~5~p.p.) & 30 SKUs disponíveis sorteados na loja piloto; observador confere o setor indicado & N03, N04; \citeonline{inditex2021storemode} \\
+R02 & Disponibilidade por SKU e tamanho na unidade, com leitura RFID de até 24\,h & \% das consultas corretas & $\geq$~95\% ($\pm$~3~p.p.); com leitura de mais de 24\,h ou divergência, o app mostra ``provável'' e oferece a compra on-line & contagem física de 50 SKUs comparada ao app & N05, DE04; \citeonline{auburn2026acuracia}; \citeonline{sensormatic2022renner} \\
+R03 & Tempo de pagamento, do toque em ``Pagar'' à confirmação na tela & s & mediana $\leq$~45\,s; percentil 80 $\leq$~60\,s; exclui a liquidação assíncrona do Pix e atrasos de terceiros & cronometragem por etapa, $n \geq 20$ & DE01, DE05; Relatório 1 \\
+R04 & Compra sem funcionário (ler, pagar, liberar e devolver a etiqueta) & \% dos usuários & $\geq$~80\% ($\pm$~5~p.p.) & teste de usabilidade, $n \geq 20$ & DE05 \\
+R05 & Clareza do fluxo & \% que concluem na primeira tentativa & $\geq$~85\% ($\pm$~5~p.p.) & teste de usabilidade, $n \geq 20$ & D03 \\
+R06 & Liberação condicionada ao pagamento & liberações sem pagamento confirmado & 0 em $\geq$~200 tentativas (100\% de correspondência), incluindo repetição de token, token forjado, troca de etiqueta entre peças e destacador magnético & ensaio de ataque em bancada & N06, D03 \\
+R07 & Alternativa humana & \% dos cenários de falha catalogados & 100\% dos 8 cenários de exceção (X1 a X8) & revisão do fluxo e teste de mesa & N01, N02, N08 \\
+\midrule
+\multicolumn{6}{@{}l}{\textbf{Especificações da etiqueta (E01 a E12)}} \\
+\midrule
+E01 & Envelope externo & mm & $98 \times 82 \times 26$ ($\pm$~0,5) & paquímetro & Relatório 1 \\
+E02 & Resistência à extração do pino no estado TRAVADA & N & $\geq$~120\,N sem liberar (meta da equipe, a comparar com etiqueta comercial) & tração com dinamômetro & R06 \\
+E03 & Tempo de liberação, do botão (em AUTORIZADA) ao pino livre & s & $\leq$~3\,s (estimativa da equipe de 0,6\,s com micromotor) & registro no firmware e cronômetro & R03 \\
+E04 & Margem de força do atuador (força no carretel dividida pela força da mola) & adimensional & $\geq$~3 (mola estimada em 2,5\,N; o came com servo do Relatório 1 deu 30,6) & dinamômetro & R06 \\
+E05 & Autonomia em espera no estado TRAVADA, modo botão & dias & $\geq$~168 dias, o dobro do ciclo médio S02 (estimativa da equipe de 448 dias com 150\,mAh, sono de 5\,$\mu$A, autodescarga de 3\% ao mês e 80\% de capacidade útil) & corrente de sono medida e ensaio acelerado & S02; estimativa da equipe \\
+E06 & Liberações por carga & liberações & $\geq$~200 (estimativa da equipe de cerca de 1.490) & ensaio de ciclos & uma liberação por ciclo, com margem \\
+E07 & Segurança criptográfica & aceitações indevidas & token HMAC-SHA256 com chave de 256 bits por etiqueta em eFuse protegido contra leitura; nonce de 128 bits gerado pela etiqueta; validade $\leq$~120\,s; uso único; 0 aceitações em ensaio de repetição e de forja & ensaio de ataque & R06; \citeonline{espressif2026hmac} \\
+E08 & Sinalização acessível & canais por estado & $\geq$~2 canais (luz com padrão de piscada e som) e espelho na tela do celular; 4 padrões distintos (TRAVADA, AUTORIZADA, DESTRAVADA, erro) & teste com 5 pessoas, inclusive com simulação de daltonismo & D03; \citeonline{abnt2020nbr9050} \\
+E09 & Leitura do código & \% das leituras & QR de $28 \times 28$\,mm lido em $\leq$~2\,s a 10 a 25\,cm por celular de entrada em $\geq$~95\% das tentativas; NFC lido por aproximação ($\leq$~2\,cm) com a etiqueta montada, graças à manta de ferrite & teste com 3 aparelhos & R05; Relatório 1 \\
+E10 & Vida útil & anos e ciclos & $\geq$~5 anos de calendário (cerca de 18 ciclos de 84 dias); reprovação na Bancada de Inspeção $\leq$~2\% por ciclo & registro da frota & S01; \citeonline{pact2026etiquetas} \\
+E11 & Imunidade ao destacador comercial & aberturas & 0 em 20 tentativas com desacoplador de até 12.000\,GS & ensaio & R06; Relatório 1 \\
+E12 & Conformidade de rádio & certificado & módulo com certificado Anatel (ESP32-C3-MINI-1) e produto final avaliado por organismo certificador designado & documentação & \citeonline{espressif2026certificados}; \citeonline{anatel2019res715} \\
+\midrule
+\multicolumn{6}{@{}l}{\textbf{Especificações do sistema e do serviço (S01 a S10)}} \\
+\midrule
+S01 & Taxa de retorno por ciclo (meta) & \% das etiquetas liberadas que chegam ao CD no estado RECOLHIDA & $\geq$~99\%; alerta se $<$~98\% em 30 dias; referência de mercado de 80\% a 83\% & serviço Ciclo da Etiqueta & \citeonline{sensormatic2024recirculacao}; \citeonline{pact2026etiquetas} \\
+S02 & Ciclo médio da etiqueta, de um cadastro ao seguinte & dias & $\leq$~84 (média; premissa de 60 dias em loja) & serviço Ciclo da Etiqueta & premissa; \citeonline{renner2026resultados} \\
+S03 & Recondicionamento no CD & dias úteis e etiquetas por hora & $\leq$~2 dias úteis; $\geq$~60 etiquetas por hora por posto & registro do CD & estimativa da equipe \\
+S04 & App Clip Tag\&Go & MB e s & $\leq$~15\,MB descompactado (limite da Apple para invocação física); meta interna $\leq$~10\,MB; primeira abertura $\leq$~10\,s com 10\,Mbit/s & medição no protótipo & \citeonline{apple2026tamanhos} \\
+S05 & Página de Compra Rápida & s e opções no seletor & carrega em $\leq$~3\,s em 4G; Web Bluetooth com filtro \texttt{namePrefix} igual ao \texttt{tag\_id} (1 opção no seletor); Google Pay pela biblioteca JavaScript & medição no protótipo & \citeonline{chrome2026webbluetooth}; \citeonline{google2026paywebvisao} \\
+S06 & Latência da autorização & s & token emitido $\leq$~2\,s após a confirmação do PSP & registro da Plataforma & R03 \\
+S07 & Registro de venda no estoque & s & EPC marcado como vendido $\leq$~5\,s após a confirmação do pagamento, antes de o cliente chegar ao pórtico & registro da Plataforma e do estoque RFID & R06 \\
+S08 & Disponibilidade e conectividade & \% do horário e acesso & Plataforma $\geq$~99,5\% no horário da loja; Wi-Fi de convidados com acesso livre, sem cadastro, aos domínios da Plataforma e do PSP & monitoramento & R03, R07 \\
+S09 & Contingência no Liberador de Balcão & s & liberação $\leq$~60\,s depois de localizar a compra (CPF, e-mail da carteira ou número do pedido); cobre etiqueta sem energia e celular sem bateria ou sem dados & teste de mesa & R07 \\
+S10 & Auditoria & \% dos eventos & 100\% das emissões de token e das liberações registradas (\texttt{tag\_id}, EPC, transação, horário), com retenção conforme a política de dados & revisão de registros & R06; \citeonline{invue2026locks} \\
+\end{longtable}
+\endgroup
+
+Duas mudanças em relação ao Relatório 1 merecem registro. R01 e R02 mudaram de formulação: a localização passou a ser medida no nível N1, o setor da loja, e a disponibilidade passou a depender de uma leitura RFID com no máximo 24\,h. Essas duas condições tornam defensáveis as metas de 90\% e 95\%, já que, sem RFID, a acurácia de estoque por SKU no critério de correspondência exata fica tipicamente entre 55\% e 65\% \cite{auburn2026acuracia}, e, segundo o fornecedor, a Renner registrou aumento de 64\% na acurácia de inventário depois de adotar RFID \cite{sensormatic2022renner}. Com leitura antiga ou divergente, o app mostrará a disponibilidade como ``provável'', para não repetir a desconfiança relatada nas entrevistas (N05). Em R03, a meta de 45\,s foi mantida, agora com mediana e percentil e sem a liquidação assíncrona do Pix.
+
+A taxa de retorno S01 é uma meta, e não uma premissa. A equipe a fixou em 99\% sabendo que a recirculação de etiquetas rígidas no mercado fica entre 80\% e 83\% \cite{sensormatic2024recirculacao,pact2026etiquetas}, limite superior que a equipe calculou como a razão entre as etiquetas recirculadas e as enviadas desde 2010, segundo o fornecedor Sensormatic, e que a liberação pelo próprio cliente tende a aumentar a perda, porque a etiqueta solta fica na mão dele. Os mecanismos que sustentam a meta e o efeito de não atingi-la sobre a economia do sistema estão na Seção~\ref{sec:r2-valor}. O ciclo médio S02, de 84 dias, é a soma das etapas do ciclo da etiqueta, detalhada na Subseção~\ref{sub:r2-ciclo}; a permanência de 60 dias na loja é premissa, ancorada no prazo médio de estoques de 95 dias da Renner no quarto trimestre de 2025 \cite{renner2026resultados}, porque o indicador equivalente da Riachuelo não foi verificado.
+
+A autonomia E05 foi definida em relação a esse ciclo: a etiqueta precisa atravessar pelo menos dois ciclos médios, isto é, 168 dias, sem recarga. Com o anúncio BLE a cada 1\,s previsto no Relatório 1 e a célula de 300\,mAh, a estimativa da equipe, já com autodescarga, é de cerca de 32 dias, menos que um ciclo. Por isso a etiqueta passou ao modo botão, em que só acorda quando o cliente aperta o botão, e a estimativa sobe para 448 dias com uma célula menor, de 150\,mAh. As metas E e S serão verificadas no protótipo, nos Relatórios 3 e 4; várias delas, como E03, E05, E06 e S03, ainda são estimativas da equipe, calculadas a partir de dados de componentes e sem medição em bancada.
+
+\subsection{Dois caminhos sobre um núcleo comum}
+\label{sub:r2-caminhos}
+
+Os quatro grupos de clientes do Relatório 1 esperam coisas diferentes do mesmo sistema. Os autônomos digitais querem pagar e sair; os frustrados com disponibilidade querem saber se a peça existe na loja e onde está; os dependentes de atendimento querem a garantia de um vendedor. Um único app com todas as funções obrigaria quem quer rapidez a instalar e configurar um programa grande, e um fluxo mínimo deixaria sem resposta as vozes de disponibilidade e de atendimento. A equipe resolveu esse conflito separando a experiência em dois caminhos, a Compra Rápida e a Jornada Completa, que compartilham o mesmo núcleo, conforme a Figura~\ref{fig:r2-caminhos}. A solução segue o princípio de modularidade por compartilhamento de componentes \cite{rozenfeld2006gestao}: a etiqueta, a Plataforma, a infraestrutura de loja e o ciclo logístico são os mesmos nos dois caminhos, e só muda o canal pelo qual o cliente conversa com o sistema.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Dois caminhos sobre um núcleo comum}
+    \label{fig:r2-caminhos}
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}
+        \node[r2rotulo] (ss3) at (0,6.6) {SS3 Canais do cliente (módulos de interface intercambiáveis)};
+        \node[r2destaque, anchor=north, text width=6.8cm] (cr) at (-4.1,6.25) {\textbf{Caminho 1: Compra Rápida}\\ sem instalar app\\ iPhone: App Clip Tag\&Go\\ Android: Página de Compra Rápida\\ (Chrome ou Samsung Internet)\\ Apple Pay, Google Pay, cartão ou Pix copia e cola\\ recibo por e-mail, se o cliente pedir};
+        \node[r2bloco, anchor=north, text width=6.8cm] (jc) at (4.1,6.25) {\textbf{Caminho 2: Jornada Completa}\\ módulo Tag\&Go do app Riachuelo\\ perfil com opt-in, Ria Club e chamar vendedor\\ setor da peça (N1) e disponibilidade por tamanho\\ recomendação restrita ao estoque da loja\\ compra on-line do tamanho ausente\\ métricas de sustentabilidade por categoria};
+        \node[r2neutro, text width=6.0cm] (url) at (0,0.55) {URL única gravada no QR e no NFC\\ (\texttt{.../t/TG-A17F03C2}, estável entre ciclos)\\ com o app Riachuelo $\rightarrow$ Jornada Completa\\ sem o app $\rightarrow$ App Clip ou Página};
+        \node[font=\footnotesize\bfseries, text=white] (tit) at (0,-1.6) {Núcleo comum, compartilhado pelos dois caminhos};
+        \node[r2bloco, anchor=north, text width=3.3cm, minimum height=2.3cm] (s1) at (-5.85,-2.0) {\textbf{SS1 Etiqueta Tag\&Go}\\ retém a peça, guarda energia, valida o token e libera};
+        \node[r2bloco, anchor=north, text width=3.3cm, minimum height=2.3cm] (s2) at (-1.95,-2.0) {\textbf{SS2 Plataforma Tag\&Go}\\ Itens e Carrinho, Pagamento, Autorização, Ciclo da Etiqueta, Jornada e Integrações};
+        \node[r2bloco, anchor=north, text width=3.3cm, minimum height=2.3cm] (s4) at (1.95,-2.0) {\textbf{SS4 Infraestrutura de loja}\\ Coletor de Etiquetas, Liberador de Balcão e Ponto de Apoio};
+        \node[r2bloco, anchor=north, text width=3.3cm, minimum height=2.3cm] (s5) at (5.85,-2.0) {\textbf{SS5 Ciclo logístico}\\ Malote de Retorno, Bancada de Inspeção, Bandeja de Recarga e Estação de Cadastro};
+        \begin{scope}[on background layer]
+            \node[r2blocoescuro, fit=(tit)(s1)(s2)(s4)(s5), inner sep=6pt] (nucleo) {};
+        \end{scope}
+        \draw[r2seta] (url.west) -| node[r2rotulo, pos=0.75, left] {sem o app} (cr.south);
+        \draw[r2seta] (url.east) -| node[r2rotulo, pos=0.75, right] {com o app} (jc.south);
+        \coordinate (a1) at ([xshift=-2.3cm]cr.south);
+        \coordinate (a2) at ([xshift=2.3cm]jc.south);
+        \draw[r2seta] (a1) -- node[r2rotulo, pos=0.45, left] {pagamento\\ e token} (a1 |- nucleo.north);
+        \draw[r2seta] (a2) -- node[r2rotulo, pos=0.45, right] {pagamento\\ e token} (a2 |- nucleo.north);
+        \draw[r2seta] (url.south |- nucleo.north) -- node[r2rotulo, right] {leitura do QR\\ ou do NFC} (url.south);
+    \end{tikzpicture}}
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+
+O núcleo comum tem quatro subsistemas. A etiqueta Tag\&Go (SS1) retém a peça, guarda energia, verifica o token e libera o pino, e traz impressos um QR e um NFC com a mesma URL. A Plataforma Tag\&Go (SS2) reúne os serviços Itens e Carrinho, que resolve o identificador da etiqueta em EPC da peça, SKU e preço; Pagamento; Autorização, com a chave mestra guardada num HSM; Ciclo da Etiqueta, que mantém os estados e a frota; Jornada, que concentra perfil, localização, disponibilidade, recomendação, sustentabilidade e consentimento; e Integrações, com o estoque RFID e o OMS, o PDV e a emissão de NFC-e, o Ria Club e o e-commerce. A infraestrutura de loja (SS4) tem o Coletor de Etiquetas, o Liberador de Balcão e o Ponto de Apoio, e o ciclo logístico (SS5) tem o Malote de Retorno, a Bancada de Inspeção, a Bandeja de Recarga e a Estação de Cadastro. Os canais do cliente (SS3) ficam acima do núcleo como módulos intercambiáveis: o App Clip Tag\&Go, a Página de Compra Rápida, o módulo Tag\&Go do app Riachuelo e o passe do Ria Club.
+
+A URL gravada no QR e no NFC contém apenas o identificador público e estável da etiqueta, como \texttt{https://.../t/TG-A17F03C2} (exemplo ilustrativo), e não muda entre ciclos, porque a peça associada em cada ciclo vem da Plataforma. O roteamento depende do aparelho. Um iPhone com o app Riachuelo abre o módulo Tag\&Go, e um iPhone sem o app abre o App Clip Tag\&Go; um Android com o app abre o app por deep link, e um Android sem o app abre a Página de Compra Rápida no navegador \cite{apple2026corenfc,chrome2026webbluetooth}. Um iPhone sem suporte a App Clip abre a página no Safari, que aceita Apple Pay, mas não se comunica com a etiqueta, e nesse caso a liberação acontece no Ponto de Apoio. As duas plataformas precisam ser atendidas desde o início: em agosto de 2026, o Android respondia por 75,45\% e o iOS por 24,54\% do tráfego web móvel no Brasil \cite{statcounter2026so}.
+
+Nos dois caminhos vale a mesma regra de conectividade. A etiqueta não precisa de rede; o celular precisa de dados móveis ou do Wi-Fi de convidados da loja, com acesso livre aos domínios da Plataforma e do PSP (S08), para pagar e obter o token. Sem dados ou sem bateria no celular, a compra segue pelo Liberador de Balcão, que energiza a etiqueta pelos contatos da face superior e recebe o token da Plataforma como dispositivo autenticado (S09). O passo a passo das duas jornadas e os oito cenários de exceção estão na Seção~\ref{sec:r2-arquitetura}.
+
+\subsubsection{Compra Rápida}
+
+A Compra Rápida atende aos autônomos digitais (21\%) e, como via rápida opcional, aos pragmáticos equilibrados (31\%), com foco nas vozes DE01, DE05, D01, D03 e N06. O caminho mostra a peça e o preço, aceita outras peças na mesma compra e aceita pagamento com Apple Pay ou Google Pay, com cartão digitado ou com Pix copia e cola. Na carteira digital, o cliente toca no botão de pagamento e confirma por Face ID, Touch ID ou senha na folha do sistema. Depois do pagamento, o caminho conduz a liberação da etiqueta, envia o recibo por e-mail se o cliente pedir e convida ao Ria Club e ao passe no Wallet. Os dados coletados se limitam ao necessário para pagar e emitir a NFC-e, com CPF na nota opcional, e o e-mail só é pedido quando o cliente quer o recibo.
+
+No iPhone, o canal é o App Clip Tag\&Go, aberto pelo QR ou pelo NFC, com Apple Pay e Core Bluetooth em primeiro plano. A Apple exige que o App Clip tenha um app completo com pelo menos a mesma funcionalidade, no mesmo projeto \cite{apple2026appclipcriar}, de modo que o caminho 1 depende do caminho 2 e do time de iOS da Riachuelo. Com invocação física, o App Clip pode ter até 15\,MB descompactado \cite{apple2026tamanhos} (meta interna de 10\,MB, S04) e não mantém conexão Bluetooth em segundo plano \cite{apple2020forumble}; o cliente precisa, por isso, manter a tela aberta até a luz verde. O ponto mais sensível é o próprio Core Bluetooth: ele não aparece na lista de frameworks indisponíveis em App Clips \cite{apple2026appclipfuncoes}, e no fórum oficial a Apple respondeu que App Clips podem usar Bluetooth \cite{apple2020forumble}. A disponibilidade é uma dedução da documentação, sem confirmação explícita, e tornou-se o primeiro marco de decisão do protótipo no Relatório 3; se o teste falhar, o App Clip continua útil para pagar, e a liberação passa ao Liberador de Balcão.
+
+No Android não há equivalente ao App Clip desde o encerramento do Google Play Instant, em dezembro de 2025 \cite{google2026instant}, e o caminho sem instalação passa pela web. A Página de Compra Rápida roda no Chrome ou no Samsung Internet, que oferecem Web Bluetooth \cite{caniuse2026webbluetooth}; a conexão exige um gesto do usuário e abre um seletor de dispositivos, que a página filtra pelo identificador da etiqueta para mostrar uma única opção \cite{chrome2026webbluetooth}. O Google Pay entra pela biblioteca JavaScript da Google Pay API, sem instalar app \cite{google2026paywebvisao}. O Firefox não tem Web Bluetooth, e a página oferece abrir o mesmo endereço no Chrome; o sistema pode pedir permissão de dispositivos por perto ou de localização no primeiro uso, conforme a versão do Android, atrito que será medido no protótipo.
+
+O Pix copia e cola fica sempre disponível nos dois sistemas, porque 60\% dos brasileiros pesquisados pela Adyen disseram desistir de compras em loja física quando não podem pagar como querem \cite{tiinside2026adyen}. Como o Pix é assíncrono, a luz verde só acende depois da confirmação do pagamento, e o tempo de liquidação fica fora da meta R03. O Pix pelo Google Pay com Open Finance fica pendente até a confirmação do banco e não tem documentação que confirme um fluxo de um clique na web \cite{yuno2026googlepaypix}; a equipe o tratou como hipótese a validar com o PSP.
+
+\subsubsection{Jornada Completa}
+
+A Jornada Completa atende aos frustrados com disponibilidade (9\%), a quem compra para terceiros (N07 e D05), aos dependentes de atendimento (39\%), pelo botão ``chamar vendedor'' (N01, N08 e D04), e aos membros do Ria Club. O público é uma hipótese da equipe: o survey do Relatório 1 não mediu interesse por fidelidade, recomendação ou sustentabilidade, e o apoio a essas funções é qualitativo. Nas entrevistas, Felipe pediu estoque em tempo real, Wagner pediu uma tabela de medidas melhor e Luana citou brechó e privacidade de dados.
+
+O caminho roda como módulo Tag\&Go dentro do app Riachuelo, que já tem mais de 10 milhões de downloads e nota 4,8 com 341 mil avaliações no Google Play \cite{googleplay2026riachuelo}, nota 4,9 com 323 mil avaliações na App Store \cite{appstore2026riachuelo} e integração com cartão, Pix e Ria Club. O app atual não localiza a peça na loja nem mostra estoque por loja, lacunas que o módulo preenche. Para dimensionar o alcance, a equipe usou os 4,5 milhões de clientes ativos do cartão \cite{btg2025guararapes}, e não a carteira histórica da Midway.
+
+O módulo guarda um perfil com tamanhos, preferências e dependentes, com opt-in; mostra o setor e o piso da peça (nível N1) e a disponibilidade por tamanho com leitura RFID de até 24\,h; recomenda peças restritas ao que existe na loja no tamanho do perfil; oferece a compra on-line do tamanho ausente; acumula benefícios do Ria Club; mostra métricas de sustentabilidade por categoria; aciona um vendedor; e permite gerenciar consentimentos. A recomendação seguirá um modelo híbrido, com regras de coleção, filtragem colaborativa, similaridade visual e looks montados por stylists, na linha da Stitch Fix e da Zalando \cite{stitchfix2026algoritmos,zalando2021looks}; a Renner já compara produtos por imagem \cite{infomoney2024renner}.
+
+A compra on-line do tamanho ausente terá retirada na loja sem custo ou entrega sem frete acima de um valor mínimo a definir com a Riachuelo, com R\$~199 como premissa de trabalho. Com frete médio de R\$~18 por pedido, também premissa, um pedido recuperado de R\$~210 (três peças de R\$~70, estimativa da equipe) contribui com cerca de R\$~101, isto é, R\$~119 de margem bruta menos o frete. Essa receita é incremental e não entra no equilíbrio econômico do núcleo calculado na Seção~\ref{sec:r2-valor}.
+
+No Ria Club, o cashback de uma compra pela Jornada Completa só será liberado depois do registro de ``etiqueta devolvida'' no Coletor, o que liga a fidelidade à meta de retorno S01. O regulamento não permite acumular nem resgatar cashback nas lojas do Amazonas, do Pará, do Piauí, de Rondônia e de Santa Catarina \cite{midway2026riaclub}; o módulo tratará essa exceção, e caberá à Riachuelo decidir se a compra feita pelo app dentro da loja conta como compra no app para fins do programa.
+
+As métricas de sustentabilidade serão apresentadas como estimativa por categoria, com faixa e fonte, e nunca como pegada individual da peça. Uma camiseta de algodão, por exemplo, tem mediana de 3,0\,kg CO$_2$e, com faixa de 2,1 a 4,1\,kg CO$_2$e \cite{devera2026camiseta}, e uma calça jeans soma 33,4\,kg CO$_2$e e 3.781\,L de água no ciclo completo \cite{levis2015lca}. O Joint Research Centre considera o cálculo por modelo, com as regras de pegada ambiental de vestuário, a única forma escalável \cite{jrc2026dpp}, e apresentar valores genéricos como pegada da peça pode configurar publicidade enganosa por omissão \cite{brasil1990cdc}.
+
+\subsubsection{Ponte entre os caminhos e comparação}
+
+A Compra Rápida funciona também como porta de entrada para a Jornada Completa. Depois da compra, o cliente pode adicionar o passe do Ria Club ao Apple Wallet ou ao Google Wallet sem instalar o app, e o passe leva ao app quando o cliente quiser \cite{apple2026walletpass,google2026walletfidelidade}. No iPhone, o App Clip recomenda o app completo no fim da tarefa \cite{apple2026appcliphig} e deixa o histórico da compra num espaço compartilhado para o app herdar \cite{apple2026appclipdados}. As notificações efêmeras do App Clip, permitidas por até 8\,h depois de cada abertura \cite{apple2026appclipnotif}, servem ao recibo e a uma pesquisa curta pós-compra, e o Sign in with Apple, oferecido só depois da compra, estende a guarda dos dados do App Clip de 10 para 30 dias \cite{apple2026appclipsuporte}. A comparação completa dos dois caminhos está na Tabela~\ref{tab:r2-caminhos}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Comparação entre a Compra Rápida e a Jornada Completa}
+    \label{tab:r2-caminhos}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.5cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Dimensão} & \textbf{Compra Rápida} & \textbf{Jornada Completa} \\
+        \midrule
+        Público principal & autônomos digitais; pragmáticos equilibrados como via rápida & frustrados com disponibilidade; quem compra para terceiros; membros do Ria Club; dependentes de atendimento, pelo botão ``chamar vendedor'' \\
+        Instalação & nenhuma (App Clip no iPhone; página no Android) & app Riachuelo com o módulo Tag\&Go \\
+        Como abre & QR ou NFC da etiqueta (mesma URL) & QR ou NFC da etiqueta, ou o próprio app \\
+        Pagamento & Apple Pay, Google Pay, cartão, Pix copia e cola & os mesmos meios, mais cartão Riachuelo e Pix no cartão \\
+        Funções & núcleo comum, com interface mínima no celular & núcleo comum mais as funções de localização, disponibilidade, recomendação, compra on-line, benefícios, sustentabilidade e consentimento \\
+        Dados e base legal & mínimos; execução de contrato; CPF opcional & perfil com opt-in por finalidade; consentimento ou legítimo interesse com teste de balanceamento \\
+        Dependências & app Riachuelo publicado com a mesma função (exigência do App Clip); Core Bluetooth no App Clip a validar; Web Bluetooth só no Chrome e no Samsung Internet & integrações com estoque RFID, OMS e Ria Club; planograma mantido pela loja \\
+        Limitações & App Clip de até 15\,MB e sem segundo plano; Pix assíncrono; permissões no primeiro uso & adesão depende do app; Ria Club não vale em 5 estados \\
+        Métrica de sucesso & R03, R04, R05 & R01, R02, conversão da recomendação, adesão ao Ria Club, pedidos on-line recuperados \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026) com base em \citeonline{apple2026appclipcriar}, \citeonline{apple2026tamanhos}, \citeonline{caniuse2026webbluetooth}, \citeonline{brasil2018lgpd} e \citeonline{midway2026riaclub}.}
+\end{table}
+
+A equipe concluiu, a partir da comparação, que os dois caminhos se completam: a Compra Rápida responde pelos requisitos de tempo, autonomia e clareza (R03, R04 e R05), que somam 51,3\% da importância técnica no QFD; a Jornada Completa, pelos de localização e disponibilidade (R01 e R02); e o núcleo comum garante nos dois caminhos a liberação condicionada ao pagamento (R06). As bases legais diferem porque as finalidades diferem, e perfil e preferências exigem opt-in separado por finalidade \cite{brasil2018lgpd}; o tratamento dos dados pessoais está na Seção~\ref{sec:r2-comercializacao}.
+
+\subsection{Organização do relatório}
+\label{sub:r2-organizacao}
+
+As seções seguintes seguem os seis itens do roteiro das Aulas 12 e 13 \cite{zancul2026conceitual}, com a reformulação dos desenhos dividida em duas seções: uma para os princípios de solução e a escolha da concepção e outra para a arquitetura e os desenhos. A ordem acompanha a dependência entre os itens: a análise funcional define o que o sistema precisa fazer; a diferenciação, a escala vertical e o aproveitamento técnico reúnem as referências que alimentam a matriz morfológica; a concepção escolhida é detalhada na arquitetura; e a comercialização fecha o conceito. A correspondência entre os itens do roteiro, as seções e as figuras e tabelas está na Tabela~\ref{tab:r2-roteiro}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Correspondência entre os itens do roteiro e as seções do relatório}
+    \label{tab:r2-roteiro}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{6.2cm}
+        c
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Item do roteiro (Aulas 12 e 13)} & \textbf{Seção} & \textbf{Figuras e tabelas} \\
+        \midrule
+        Contexto e especificações-meta (correção do Relatório 1) & \ref{sec:r2-contexto} & Figura~\ref{fig:r2-caminhos}; Tabelas~\ref{tab:r2-especificacoes}, \ref{tab:r2-caminhos} e \ref{tab:r2-roteiro} \\
+        A. Análise funcional: funções principais e secundárias & \ref{sec:r2-funcional} & Figuras~\ref{fig:r2-caixapreta}, \ref{fig:r2-ef-alternativas} e \ref{fig:r2-ef-escolhida}; Tabelas~\ref{tab:r2-funcoes}, \ref{tab:r2-granularidade} e \ref{tab:r2-estruturas} \\
+        B. Estudo de diferenciação & \ref{sec:r2-diferenciacao} & Figura~\ref{fig:r2-posicionamento}; Tabela~\ref{tab:r2-diferenciacao} \\
+        C. Escala vertical e valor mercadológico & \ref{sec:r2-valor} & Figuras~\ref{fig:r2-escala-vertical}, \ref{fig:r2-custo-uso}, \ref{fig:r2-equilibrio} e \ref{fig:r2-tornado}; Tabelas~\ref{tab:r2-escala}, \ref{tab:r2-bom} e \ref{tab:r2-valor} \\
+        D. Estudo de aproveitamento técnico & \ref{sec:r2-aproveitamento} & Tabela~\ref{tab:r2-aproveitamento} \\
+        E. Reformulação dos desenhos (parte 1: princípios de solução e concepção) & \ref{sec:r2-concepcao} & Figura~\ref{fig:r2-sensibilidade-matriz}; Tabelas~\ref{tab:r2-efeitos}, \ref{tab:r2-morfologica} e \ref{tab:r2-decisao} \\
+        E. Reformulação dos desenhos (parte 2: arquitetura e desenhos) & \ref{sec:r2-arquitetura} & Figuras~\ref{fig:r2-arquitetura}, \ref{fig:r2-desenho}, \ref{fig:r2-fluxo-rapida}, \ref{fig:r2-fluxo-completa}, \ref{fig:r2-ciclo} e \ref{fig:r2-frota}; Tabelas~\ref{tab:r2-ssc}, \ref{tab:r2-interfaces}, \ref{tab:r2-mudancas} e \ref{tab:r2-ameacas} \\
+        F. Delineamento da comercialização e da distribuição & \ref{sec:r2-comercializacao} & Figura~\ref{fig:r2-cronograma}; Tabelas~\ref{tab:r2-canais}, \ref{tab:r2-lgpd} e \ref{tab:r2-riscos} \\
+        Considerações finais & \ref{sec:r2-consideracoes} & nenhuma \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026) com base em \citeonline{zancul2026conceitual}.}
+\end{table}

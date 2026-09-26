@@ -25,6 +25,22 @@ Números centrais: survey com 142 respostas, 11 entrevistas, 4 grupos de cliente
 
 **Pendências abertas:** visitas às lojas para trocar as estimativas do benchmarking técnico por medições; revisão das notas da avaliação competitiva em grupo; atualizar a C&A na seção de mercado (RFID desde 2025).
 
+### Relatório 2 (projeto conceitual, entrega 05/10)
+
+Arquivo principal: `relatorio2.tex`; seções em `r2/`. Para compilar no Overleaf: **Menu → Main document → `relatorio2.tex`** (para voltar ao Relatório 1, escolha `documento.tex`). Usa o mesmo preâmbulo e a mesma `bibliografia.bib`; gráficos em pgfplots e diagramas em TikZ, com os estilos de `r2/pacotes.tex`.
+
+| Item do roteiro (Aulas 12 e 13) | Seção no PDF | Arquivo |
+|---|---|---|
+| Contexto e especificações-meta revistas | 1 | `r2/3-contexto.tex` |
+| A. Análise funcional | 2 | `r2/4-analise-funcional.tex` |
+| B. Estudo de diferenciação | 3 | `r2/5-diferenciacao.tex` |
+| C. Escala vertical e valor mercadológico | 4 | `r2/6-escala-valor.tex` |
+| D. Estudo de aproveitamento técnico | 5 | `r2/7-aproveitamento.tex` |
+| E. Princípios de solução e alternativas | 6 | `r2/8-concepcao.tex` |
+| E. Reformulação dos desenhos e arquitetura | 7 | `r2/9-desenhos.tex` |
+| F. Comercialização e distribuição | 8 | `r2/10-comercializacao.tex` |
+| Considerações finais | 9 | `r2/11-consideracoes.tex` |
+
 ## Índice
 1. [O que é o Overleaf](#1-o-que-é-o-overleaf)
 2. [Primeiros passos](#2-primeiros-passos)

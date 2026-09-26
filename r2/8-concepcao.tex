@@ -1,0 +1,257 @@
+% =============================================================================
+% Relatorio 2, Secao 6: principios de solucao e alternativas de concepcao
+% (item E do roteiro, parte 1). Conteudo: efeitos fisicos e portadores
+% (tab:r2-efeitos), matriz morfologica (tab:r2-morfologica), alternativas A1 a
+% A3, filtro eliminatorio EC1 a EC3, matriz de decisao (tab:r2-decisao) e
+% sensibilidade ao peso do varejista (fig:r2-sensibilidade-matriz).
+% Numeros da matriz e custos por loja: script canonico conta_final.py.
+% Nao repete SSCs, desenhos, fluxos nem contas de preco (Secoes 4 e 7).
+% =============================================================================
+
+\section{PRINCÍPIOS DE SOLUÇÃO E ALTERNATIVAS DE CONCEPÇÃO}
+\label{sec:r2-concepcao}
+
+As ideias reunidas no estudo de aproveitamento técnico, somadas às funções da Seção~\ref{sec:r2-funcional}, que descrevem o que o sistema Tag\&Go deve fazer sem dizer como, formaram a base para escolher os meios. A reformulação dos desenhos pedida no roteiro da disciplina começou pela escolha desses meios: para cada função que depende de uma decisão física ou lógica, a equipe levantou os princípios de solução possíveis, combinou-os numa matriz morfológica, montou três alternativas de concepção e escolheu uma delas por um filtro eliminatório seguido de uma matriz de decisão ponderada, com análise de sensibilidade dos pesos \cite{zancul2026conceitual}. A arquitetura, os componentes e o desenho da concepção escolhida ficaram para a Seção~\ref{sec:r2-arquitetura}, e a viabilidade econômica, para a Seção~\ref{sec:r2-valor}.
+
+\subsection{Efeitos físicos e portadores}
+
+Segundo \citeonline{rozenfeld2006gestao}, um princípio de solução reúne um efeito físico, que explica por que a função pode ser cumprida, e um portador desse efeito, que é a forma concreta pela qual ele se manifesta no produto. A equipe aplicou essa decomposição às funções da Tabela~\ref{tab:r2-funcoes} cujo cumprimento depende de uma escolha de princípio, isto é, às funções da etiqueta, da comunicação entre etiqueta e celular, da sinalização e da coleta. As funções que se resolvem por serviços de software e por processos logísticos, como registrar a venda no estoque, emitir o comprovante, rastrear a frota e as funções do ciclo da etiqueta, não mudam de uma alternativa para outra e foram deixadas para a arquitetura. O mesmo vale para as funções da Jornada Completa (F26 a F31), serviços de software do módulo Tag\&Go do app Riachuelo, iguais nas três alternativas. Processar pagamento (F3) também não tem efeito físico próprio: seus portadores são os meios de pagamento, listados na própria matriz morfológica. O resultado do levantamento está na Tabela~\ref{tab:r2-efeitos}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Efeitos físicos e portadores considerados por função}
+    \label{tab:r2-efeitos}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{3.3cm}
+        >{\RaggedRight\arraybackslash}p{4.6cm}
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Função} & \textbf{Efeito físico (o que faz)} & \textbf{Portadores considerados (como faz)} \\
+        \midrule
+        F1 Reter peça & autotravamento por cunha e atrito & esferas em copo cônico com mola (garra comercial); trava de pino com mola lateral; trava magnética bipolar proprietária \\
+        \addlinespace
+        F6 Desfazer retenção (deslocar o carretel 1,2\,mm) & conversão de movimento por plano inclinado; força eletromagnética; memória de forma; força magnética externa & came com cursor de rampa (servo ou micromotor); fuso; solenoide; fio SMA com rampa; eletroímã na gaiola; ímã do destacador \\
+        \addlinespace
+        F7 Armazenar energia & eletroquímica; eletrostática & célula LiPo recarregável; supercapacitor; pilha primária \\
+        \addlinespace
+        F8 Repor energia & condução; indução eletromagnética; radiação de RF & contatos (Bandeja de Recarga e Liberador de Balcão); indução (Qi); campo NFC; RF ambiente \\
+        \addlinespace
+        F9 Transmitir autorização & ondas de rádio de 2,4\,GHz; acoplamento indutivo de 13,56\,MHz; condução & BLE (GATT); NFC (Web NFC ou Core NFC); UART por contatos; rede da loja até uma estação \\
+        \addlinespace
+        F2 Identificar peça & reflexão óptica; acoplamento indutivo; retroespalhamento UHF & QR impresso; NFC NTAG213; EPC RFID da peça; código de barras EAN-13 (não serializa a unidade) \\
+        \addlinespace
+        F4 e F5 Emitir e validar autorização & função criptográfica (princípio lógico, não físico) & HMAC-SHA256 com chave por etiqueta; assinatura ECDSA; consulta on-line numa estação; código fixo \\
+        \addlinespace
+        F10 Confirmar intenção de liberar & contato mecânico; proximidade & botão na etiqueta; toque na tela; aproximação a uma estação \\
+        \addlinespace
+        F11 Indicar estado da liberação & emissão de luz; som; imagem em tela & LED RGB com padrões; buzzer piezo; tela do celular; display da estação \\
+        \addlinespace
+        F12 Sinalizar saída indevida & ressonância acustomagnética; ressonância LC; retroespalhamento UHF & elemento AM de 58\,kHz; elemento RF de 8,2\,MHz; EPC não vendido lido no pórtico RFID \\
+        \addlinespace
+        F17 Recolher etiqueta & gravidade e geometria & Coletor de Etiquetas com boca antirretorno; caixa coletora no caixa; queda dentro de uma estação \\
+        \addlinespace
+        F25 Localizar produto na loja & intensidade de sinal; ângulo de chegada; tempo de voo; proximidade RFID & níveis N0 a N3 da Tabela~\ref{tab:r2-granularidade}; a própria etiqueta como farol BLE \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026) com base em \citeonline{rozenfeld2006gestao}.}
+\end{table}
+
+Na retenção e na liberação (F1 e F6), a equipe partiu da garra comercial de três esferas, que trava por cunha e atrito e retém mais quanto maior a força de extração, e comparou os atuadores capazes de deslocar o carretel em 1,2\,mm contra a mola. A comparação, feita em estudos anteriores da equipe com o modelo paramétrico do dispositivo do Relatório 1 e atrito estimado de 0,30, deu ao came com servo e braço de 20\,mm uma força de 76,4\,N no carretel, margem de 30,6 vezes sobre a mola e 0,4\,s de acionamento; ao fuso com micromotor, 68,7\,N, margem de 27,5 vezes e 1,6\,s; ao solenoide, 7,6\,N e margem de 3,0 vezes, no limite da meta E04; ao fio SMA, 5,0\,N, margem de 2,0 vezes e cerca de 10\,s para esfriar entre acionamentos; e ao eletroímã, 3,0\,N e margem de 1,2 vez. Nos mesmos estudos, a equipe verificou que o fio SMA precisa de 42\,mm retos atrás do cursor, onde há 5\,mm, e que o eletroímã exigiria uma altura de 30,8\,mm, contra os 26\,mm do envelope. A força magnética externa, por fim, é o princípio do destacador comum e só faz sentido numa concepção em que a etiqueta não tenha eletrônica.
+
+Na energia (F7 e F8), a equipe concluiu, pelo balanço de energia dos estudos anteriores, que o gargalo é a potência instantânea, e não a energia total de uma liberação. A radiação de RF ambiente, de cerca de 5\,$\mu$W, levaria cerca de 35\,h para acumular a energia de uma liberação com SMA; um campo NFC dedicado, de cerca de 6\,mW, levaria cerca de 105\,s; contatos ou indução de 5\,W, cerca de 1,5\,s. Por isso, as alternativas que dispensam bateria dependem de um ponto de energização ou aceitam uma espera longa. Quando há célula, o modo de espera decide a viabilidade: com a célula de 150\,mAh, a etiqueta que só acorda pelo botão dura cerca de 448 dias em espera, e a que anuncia por BLE a cada segundo dura 16 dias (estimativas da equipe, com autodescarga de 3\% ao mês), contra a meta E05 de 168 dias.
+
+Na identificação e na transmissão da autorização (F2 e F9), os portadores foram filtrados pelo que o celular do cliente consegue ler e transmitir. O QR é lido pela câmera de qualquer celular recente, e o NFC, pelos iPhones a partir do XS e pelos aparelhos Android com NFC \cite{apple2026corenfc}, ao passo que o EPC da peça, gravado em RFID UHF, não é lido pelo celular, e o código EAN-13 identifica só o modelo, sem distinguir a unidade. Para a autorização, o BLE só está disponível na web pelo Web Bluetooth, que existe no Chrome para Android e no Samsung Internet e não existe em nenhum navegador do iPhone \cite{chrome2026webbluetooth,caniuse2026webbluetooth}; o Web NFC existe só no Chrome para Android \cite{chrome2026webnfc}. No iPhone, o caminho sem instalar app passa pelo App Clip, e o Core Bluetooth não aparece na lista de frameworks sem função no App Clip \cite{apple2026appclipfuncoes}; a Apple respondeu no fórum oficial que App Clips podem usar Bluetooth, sem trabalhar em segundo plano \cite{apple2020forumble}. O uso de Core Bluetooth no App Clip é, portanto, uma dedução da documentação, que o protótipo precisará confirmar.
+
+A autorização (F4 e F5) tem um princípio lógico. O código fixo foi descartado de saída, porque quem o copia uma vez libera a etiqueta sempre, o que viola R06. A consulta on-line exige que o ponto de liberação esteja ligado à rede da loja, o que só cabe numa estação. Entre as assinaturas verificadas na própria etiqueta, a equipe preferiu o HMAC-SHA256 com chave por etiqueta, porque o ESP32-C3 tem um periférico HMAC em hardware que calcula o código com a chave guardada em eFuse protegido contra leitura, sem expô-la ao software \cite{espressif2026esp32c3,espressif2026hmac}. O mesmo chip não lista acelerador de curvas elípticas, e os tempos de ECDSA nele não foram medidos, o que deixou essa opção sem base para comparação.
+
+Nas demais funções, os princípios escolhidos seguem requisitos já fixados. A indicação de estado (F11) combina luz com padrão de piscada, som e tela do celular porque a NBR 9050 pede instruções visuais e auditivas ou táteis, e a luz sozinha não basta \cite{abnt2020nbr9050}. A sinalização de saída indevida (F12) usa os princípios dos pórticos que a loja já tem, o acustomagnético de 58\,kHz ou o de radiofrequência de 8,2\,MHz, somados ao EPC não vendido no pórtico RFID. A localização (F25), função secundária, usa nas três alternativas o nível N1, pelo estoque RFID e pelo planograma, sem depender da etiqueta; os níveis N2 e N3 exigiriam leitores de teto ou âncoras UWB na loja. A mitigação de usar a própria etiqueta como farol BLE ficou fora, pelo consumo de energia e pelo erro de metros da medição por intensidade de sinal \cite{ramirez2021ble}.
+
+\subsection{Matriz morfológica}
+
+A matriz morfológica organiza as funções nas linhas e os princípios nas colunas, de modo que cada combinação de uma célula por linha forme uma concepção possível \cite{rozenfeld2006gestao}. A equipe usou as funções da Tabela~\ref{tab:r2-efeitos}, acrescidas de processar pagamento (F3), e marcou com $\times$ as células incompatíveis com os requisitos ou com a física do envelope, com o motivo entre parênteses. Seguindo o procedimento de relatórios de anos anteriores da disciplina consultados pela equipe, as combinações coerentes receberam nome, e as incompatíveis foram descartadas antes da avaliação. Os caminhos das três alternativas aparecem por cor na Tabela~\ref{tab:r2-morfologica}: laranja para A1, azul para A2 e verde para A3; quando uma célula serve a mais de uma alternativa, ela leva a cor de A1 e indica as demais alternativas entre parênteses.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Matriz morfológica com os caminhos das alternativas A1, A2 e A3}
+    \label{tab:r2-morfologica}
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.2cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Função} & \textbf{S1} & \textbf{S2} & \textbf{S3} & \textbf{S4} & \textbf{S5} \\
+        \midrule
+        F1 Reter peça & \cellcolor{r2laranjaclaro}garra de esferas com copo cônico (A1, A2, A3) & trava de pino com mola & trava magnética proprietária & trava descartável de uso único $\times$ (não reutiliza) & \\
+        \addlinespace
+        F2 Identificar peça & \cellcolor{r2laranjaclaro}QR e NFC com a mesma URL (A1) & \cellcolor{r2azulclaro}NFC NTAG213 com UID e QR (A2) & \cellcolor{r2verdeclaro}NFC dinâmico ST25DV e QR (A3) & EPC RFID lido por UHF $\times$ (o celular não lê UHF) & EAN-13 $\times$ (não serializa a unidade) \\
+        \addlinespace
+        F3 Processar pagamento & \cellcolor{r2laranjaclaro}carteira digital (A1, A2, A3) & cartão digitado & Pix copia e cola & cartão Riachuelo & PDV do caixa (exceção) \\
+        \addlinespace
+        F4 e F5 Emitir e validar autorização & \cellcolor{r2laranjaclaro}HMAC por etiqueta verificado na etiqueta (A1, A3) & ECDSA na etiqueta (tempo não medido no ESP32-C3) & \cellcolor{r2azulclaro}consulta on-line na estação (A2) & código fixo $\times$ (R06) & \\
+        \addlinespace
+        F9 Transmitir autorização & \cellcolor{r2laranjaclaro}BLE entre celular e etiqueta (A1) & \cellcolor{r2verdeclaro}NFC entre celular e etiqueta (A3, no Android) & \cellcolor{r2laranjaclaro}contatos no Liberador de Balcão (A1 e A3, nas exceções) & \cellcolor{r2azulclaro}rede da loja até a estação (A2) & \\
+        \addlinespace
+        F7 Armazenar energia & \cellcolor{r2laranjaclaro}LiPo de 150\,mAh (A1) & \cellcolor{r2verdeclaro}supercapacitor (A3) & pilha primária (troca na loja) & \cellcolor{r2azulclaro}nenhuma: energia no ato (A2) & \\
+        \addlinespace
+        F8 Repor energia & \cellcolor{r2laranjaclaro}contatos na Bandeja de Recarga e no Liberador de Balcão (A1) & \cellcolor{r2verdeclaro}campo NFC do celular (A3, marginal) & indução (Qi) & RF ambiente $\times$ (cerca de 35\,h por liberação) & USB $\times$ (não escala) \\
+        \addlinespace
+        F6 Desfazer retenção & \cellcolor{r2laranjaclaro}came com micromotor e cursor com rampa (A1) & fuso & solenoide & \cellcolor{r2verdeclaro}fio SMA com rampa (A3; $\times$ no envelope de $98 \times 82 \times 26$\,mm) & \cellcolor{r2azulclaro}ímã externo do destacador (A2); eletroímã $\times$ (altura) \\
+        \addlinespace
+        F10 Confirmar intenção de liberar & \cellcolor{r2laranjaclaro}botão na etiqueta (A1) & \cellcolor{r2verdeclaro}aproximação (A3) & \cellcolor{r2azulclaro}botão da estação (A2) & & \\
+        \addlinespace
+        F11 Indicar estado da liberação & \cellcolor{r2laranjaclaro}LED com padrões, bipe e tela do celular (A1, A3) & \cellcolor{r2azulclaro}display da estação (A2) & & & \\
+        \addlinespace
+        F12 Sinalizar saída indevida & \cellcolor{r2laranjaclaro}elemento AM ou RF na etiqueta (A1, A2, A3) & só EPC RFID & nenhum $\times$ (R06) & & \\
+        \addlinespace
+        F17 Recolher etiqueta & \cellcolor{r2laranjaclaro}Coletor de Etiquetas com boca antirretorno (A1) & \cellcolor{r2azulclaro}queda dentro da estação (A2) & \cellcolor{r2verdeclaro}recolhimento no Liberador de Balcão (A3) & & \\
+        \addlinespace
+        F25 Localizar produto na loja & \cellcolor{r2laranjaclaro}N1 por estoque RFID e planograma (A1, A2, A3) & N2 por leitores de teto & N3 por UWB & etiqueta como farol BLE $\times$ (16 dias de autonomia com anúncio a cada 1\,s) & \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026). Células em laranja: A1 Etiqueta Ativa; em azul: A2 Estação Inteligente; em verde: A3 Etiqueta Passiva Energizada. O símbolo $\times$ marca combinação incompatível, com o motivo entre parênteses.}
+\end{table}
+
+Além das incompatibilidades de célula, a equipe registrou três incompatibilidades entre linhas, que eliminam combinações formadas por células válidas quando isoladas. A primeira liga o BLE com anúncio contínuo à célula de 150\,mAh: juntos, eles dão uma autonomia menor que duas vezes o ciclo da etiqueta, meta que só o modo botão cumpre. A segunda liga qualquer princípio web de comunicação com a etiqueta ao iPhone, já que nenhum navegador do iPhone oferece Web Bluetooth ou Web NFC \cite{caniuse2026webbluetooth,webkit2026rastreamento}. A terceira liga a colheita de energia pelo NFC do celular ao iPhone, porque ela dependeria do Core NFC dentro do App Clip, recurso que a documentação não garante \cite{apple2026appclipfuncoes}. Essas restrições explicam por que a célula S2 da linha F9, NFC entre celular e etiqueta, só vale para a A3 no Android.
+
+\subsection{Alternativas de concepção}
+
+Das combinações coerentes, a equipe formou três alternativas, cada uma com uma lógica de energia e de autorização diferente. A frota de referência para os custos por loja é de 6.854 etiquetas, premissa da equipe cuja composição por etapa do ciclo está na Subseção~\ref{sub:r2-ciclo}.
+
+A A1 Etiqueta Ativa segue as células em laranja. A etiqueta tem célula de 150\,mAh, ESP32-C3 com BLE, verificação HMAC na própria etiqueta, micromotor com came e cursor de rampa, carretel não ferromagnético, botão, LED e buzzer. O celular do cliente paga com a carteira digital, com cartão ou com Pix, por qualquer dos dois caminhos (Subseção~\ref{sub:r2-caminhos}); em seguida, obtém o token da Plataforma Tag\&Go e o retransmite à etiqueta, que o confere e libera a peça em qualquer ponto da loja. O Coletor de Etiquetas fica perto da saída, e o Liberador de Balcão atende as exceções e as compras feitas no caixa. Depois do uso, a etiqueta volta ao CD para inspeção e recarga e recebe novo cadastro na origem, na fábrica ou no CD. O custo de implantação estimado pela equipe é de R\$~414.458 por loja, dominado pela frota de etiquetas ativas.
+
+A A2 Estação Inteligente retoma uma concepção dos estudos anteriores da equipe. A peça recebe uma etiqueta rígida comum, de R\$~0,87 \cite{allcard2026minitag}, com um adesivo NTAG213 serializado, de R\$~2,03 \cite{smartkits2026ntag}. O cliente paga no celular e libera a peça numa das seis Estações de Liberação instaladas perto da saída, de R\$~1.500 cada (estimativa de estudos anteriores da equipe); a estação lê o UID, consulta o pagamento na Plataforma pela rede da loja e abre a etiqueta com um destacador magnético movido por servo, e a etiqueta cai numa caixa trancada. O princípio tem precedentes comerciais no destacador motorizado integrado ao self-checkout da SuperTag 4 \cite{sensormatic2026supertag} e na estação de remoção da Paytag \cite{calcalist2026paytag}. O custo por loja é de 6.854 $\times$ (R\$~0,87 + R\$~2,03) + 6 $\times$ R\$~1.500 = R\$~28.877.
+
+A A3 Etiqueta Passiva Energizada retoma a etiqueta sem bateria de $48 \times 80 \times 18$\,mm dos estudos anteriores da equipe. Um supercapacitor guarda a energia recebida no ato, um NFC dinâmico recebe o token \cite{stm2017st25dv}, dois fios SMA com rampa, com margem de 1,98 vez sobre a mola, desfazem a retenção, e o HMAC é verificado na própria etiqueta. A energia vem por aproximação, pelo campo NFC do celular no Android ou pelos contatos de seis pontos de energização de R\$~400 na loja, solução próxima da estação que energiza uma etiqueta sem bateria descrita na patente US 10.497.238 B2 \cite{googlepatents2019us10497238}. Com R\$~25 por etiqueta em escala (estimativa de estudos anteriores da equipe), o custo por loja é de 6.854 $\times$ R\$~25 + 6 $\times$ R\$~400 = R\$~173.750.
+
+\subsection{Filtro eliminatório}
+
+Antes da pontuação, as três alternativas passaram por três critérios eliminatórios, porque uma nota alta em outros critérios não compensaria a falha em qualquer um deles. O primeiro (EC1) exige que a alternativa funcione na Compra Rápida nas duas plataformas, pelo App Clip no iPhone e pelo Chrome ou pelo Samsung Internet no Android. O segundo (EC2) exige que o mecanismo caiba no envelope da etiqueta e respeite a física verificada no modelo paramétrico. O terceiro (EC3) exige alternativa humana para 100\% das falhas, conforme R07.
+
+A A1 passou em EC1 de forma condicionada: no Android, a Página de Compra Rápida conversa com a etiqueta pelo Web Bluetooth; no iPhone, o App Clip precisa do Core Bluetooth, cujo funcionamento a equipe deduziu da documentação e da resposta da Apple no fórum oficial, e que se tornou o primeiro marco de go/no-go do protótipo, no Relatório 3. A A2 passou sem condição, porque nela o celular só paga e quem conversa com a Plataforma é a estação. A A3 também ficou condicionada, por outro motivo: no iPhone, que responde por cerca de 24,5\% do tráfego web móvel no Brasil \cite{statcounter2026so}, ela só libera num ponto de energização, já que não há Web NFC e o Core NFC no App Clip não é garantido; no Android, a energia do campo NFC do celular, de cerca de 6\,mW, levaria de 8\,s, com uma trava biestável ainda a validar, a 105\,s, com o SMA.
+
+Em EC2, a A1 passou com o came e o micromotor, depois que o modelo paramétrico reprovou o SMA e o eletroímã no seu envelope; a A2 passou por usar uma etiqueta comercial; e a A3 passou no seu próprio arranjo de $48 \times 80 \times 18$\,mm, desenhado para os fios SMA. Em EC3, as três passaram, porque todas preveem um ponto com funcionário capaz de liberar a peça quando a etiqueta ou o celular falham. A A3 seguiu para a pontuação como alternativa condicionada, avaliada no cenário em que o iPhone libera num ponto de energização.
+
+\subsection{Critérios, pesos e matriz de decisão}
+
+A matriz de decisão tem dez critérios em dois blocos. O bloco do cliente, com 75\% do peso, reúne seis critérios ligados aos requisitos do Relatório 1, e cada peso é proporcional à importância técnica do requisito na casa da qualidade: R06, com 33,1\%, virou 24,8 pontos; R03, com 24,4\%, 18,3; R05, 10,3; R04, 9,9; R07, 6,2; e R01 e R02, somados, 5,5. O bloco do varejista, com 25\%, reúne quatro critérios que a casa da qualidade não cobria: custo de implantação por loja (10), operação e logística (7), maturidade e dependência de plataforma (4) e independência de infraestrutura fixa na loja (4). A divisão de 75\% e 25\% é premissa da equipe, a validar com a Riachuelo. Ela dá precedência à voz do cliente, base do QFD da disciplina, e reconhece que o comprador do Tag\&Go é o varejista, cuja voz não entrou no QFD do Relatório 1; por isso, a escolha é condicional e exige análise de sensibilidade.
+
+Para reduzir a subjetividade das notas, cada critério recebeu âncoras de 1 a 5 que descrevem o que a alternativa precisa ter para merecer cada nota, e as notas foram atribuídas pela comparação de cada alternativa com essas âncoras. As âncoras, os pesos, as notas e a pontuação ponderada de cada alternativa estão na Tabela~\ref{tab:r2-decisao}.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Matriz de decisão entre as alternativas de concepção}
+    \label{tab:r2-decisao}
+    \scriptsize
+    \setlength{\tabcolsep}{3pt}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.4cm}
+        c
+        >{\RaggedRight\arraybackslash}X
+        c c c@{}}
+        \toprule
+        \textbf{Critério} & \textbf{Peso} & \textbf{Âncoras das notas} & \textbf{A1} & \textbf{A2} & \textbf{A3} \\
+        \midrule
+        \multicolumn{6}{@{}l}{\textit{Bloco do cliente (75\%, proporcional à importância técnica do QFD)}} \\
+        \midrule
+        K1 R06 liberação condicionada & 24,8 & 5 = verificação criptográfica na etiqueta e imune a destacador comercial; 3 = verificação numa estação, mas a etiqueta abre com destacador comum; 1 = sem verificação & 5 (1,240) & 3 (0,744) & 5 (1,240) \\
+        \addlinespace
+        K2 R03 tempo & 18,3 & 5 = paga e libera onde está, sem deslocamento nem fila; 3 = exige ir a um ponto fixo compartilhado; 1 = passa pelo caixa & 5 (0,915) & 3 (0,549) & 3 (0,549) \\
+        \addlinespace
+        K3 R05 clareza & 10,3 & 5 = um gesto conhecido; 4 = um gesto novo num ponto sinalizado; 3 = dois gestos na etiqueta, com espera de sinal e permissão do sistema no primeiro uso & 3 (0,309) & 4 (0,412) & 4 (0,412) \\
+        \addlinespace
+        K4 R04 sem funcionário & 9,9 & 5 = fluxo inteiro sem funcionário, inclusive a devolução da etiqueta; 4 = sem funcionário, mas com ponto fixo sujeito a fila ou a falha que chama funcionário & 5 (0,495) & 4 (0,396) & 4 (0,396) \\
+        \addlinespace
+        K5 R07 alternativa humana & 6,2 & 5 = funcionário ao lado do ponto de liberação no fluxo principal; 4 = alternativa no Ponto de Apoio para 100\% das falhas & 4 (0,248) & 5 (0,310) & 4 (0,248) \\
+        \addlinespace
+        K6 R01 e R02 localização e disponibilidade & 5,5 & núcleo comum (N1 e estoque RFID) igual para as três; 4 para todas (5 exigiria o nível N2) & 4 (0,220) & 4 (0,220) & 4 (0,220) \\
+        \midrule
+        \multicolumn{6}{@{}l}{\textit{Bloco do varejista (25\%, premissa da equipe)}} \\
+        \midrule
+        K7 custo de implantação por loja & 10 & 5 = até R\$~50 mil; 4 = até R\$~100 mil; 3 = até R\$~200 mil; 2 = até R\$~400 mil; 1 = acima de R\$~400 mil & 1 (0,100) & 5 (0,500) & 3 (0,300) \\
+        \addlinespace
+        K8 operação e logística & 7 & 5 = etiqueta sem eletrônica; 4 = eletrônica sem bateria; 3 = bateria de lítio recarregada no CD; 2 = recarga na loja; 1 = troca de bateria na loja & 3 (0,210) & 5 (0,350) & 4 (0,280) \\
+        \addlinespace
+        K9 maturidade e dependência de plataforma & 4 & 5 = só componentes comerciais, sem recurso de plataforma a validar; 3 = componentes comerciais com um recurso a validar; 1 = princípio sem precedente comercial e recurso não suportado & 3 (0,120) & 5 (0,200) & 2 (0,080) \\
+        \addlinespace
+        K10 independência de infraestrutura fixa & 4 & 5 = nenhuma estação no fluxo principal; 3 = estação com energia no fluxo de uma plataforma; 1 = estação com energia e rede em todos os fluxos & 5 (0,200) & 1 (0,040) & 3 (0,120) \\
+        \midrule
+        \multicolumn{3}{@{}l}{Média do bloco do cliente} & 4,569 & 3,508 & 4,087 \\
+        \multicolumn{3}{@{}l}{Média do bloco do varejista} & 2,520 & 4,360 & 3,120 \\
+        \midrule
+        \multicolumn{3}{@{}l}{Total ponderado (peso total de 100)} & 4,06 & 3,72 & 3,85 \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026). Notas de 1 a 5, com a pontuação ponderada entre parênteses. Antes da pontuação, as três alternativas passaram pelo filtro eliminatório: EC1, Compra Rápida no iPhone e no Android (A1 condicionada ao Core Bluetooth no App Clip; A2 aprovada; A3 condicionada a um ponto de energização no iPhone); EC2, envelope e física do mecanismo (as três aprovadas); EC3, alternativa humana para 100\% das falhas (as três aprovadas). A3 foi pontuada no cenário em que o iPhone libera num ponto de energização.}
+\end{table}
+
+No bloco do cliente, a diferença entre as alternativas veio de cinco dos seis critérios. Em K1, a A2 ficou com nota 3 porque sua etiqueta rígida comum abre com qualquer destacador magnético, vendido livremente por cerca de R\$~300 \cite{canalautomacao2026desacoplador}, ao passo que a A1 e a A3 verificam a autorização na própria etiqueta e não respondem a um ímã externo. Em K2, só a A1 permite pagar e liberar onde o cliente está; a A2 exige ir à estação, e a A3, avaliada no cenário do iPhone, exige ir a um ponto de energização. Em K3, a A1 perdeu pontos por pedir dois gestos na etiqueta, com espera pela luz e com o pedido de permissão de Bluetooth no primeiro uso, enquanto a A2 e a A3 pedem um gesto novo num ponto sinalizado. Em K4, a A1 recebeu 5 porque o cliente paga, libera e devolve a etiqueta no Coletor de Etiquetas sem funcionário, ao passo que a A2 e a A3 dependem de um ponto fixo sujeito a fila ou a falha que chama funcionário. A A2 recebeu a única nota 5 em K5, porque o funcionário pode ficar ao lado das estações no fluxo principal; nas outras duas, a alternativa humana existe para todas as falhas, no Ponto de Apoio. Em K6, as três receberam a mesma nota, já que a localização no nível N1 e a disponibilidade pelo estoque RFID pertencem ao núcleo comum e não dependem da etiqueta.
+
+No bloco do varejista, a ordem se inverteu. A A1 recebeu nota 1 em custo, com R\$~414.458 por loja, contra R\$~173.750 da A3 e R\$~28.877 da A2, valor 14,4 vezes maior que o da A2. Em operação e logística, a A1 ficou com 3 porque a bateria de lítio precisa ser recarregada no CD a cada ciclo, antes do novo cadastro na origem, a A3 com 4 por ter eletrônica sem bateria e a A2 com 5 por manter a logística atual. Em maturidade, a A1 recebeu 3 por depender de um único recurso de plataforma a validar, o Core Bluetooth no App Clip; a A3 recebeu 2, entre as âncoras 3 e 1, porque combina um recurso não garantido, o Core NFC no App Clip, com a energização pelo campo NFC do celular, ainda sem validação; a A2 recebeu 5, por usar só componentes comerciais. Em infraestrutura fixa, a A1 recebeu 5 por não ter estação no fluxo principal, a A3 recebeu 3 porque só o iPhone depende do ponto de energização, e a A2 recebeu 1 porque todos os fluxos passam por uma estação com energia e rede.
+
+Com esses pesos, a A1 obteve 4,06 pontos, a A3 3,85 e a A2 3,72. A A1 liderou o bloco do cliente, com média de 4,569, e ficou em último no bloco do varejista, com 2,520; a A2 fez o caminho oposto, com 3,508 e 4,360. A equipe concluiu que a vantagem da A1 vem inteira dos requisitos de maior peso no QFD, R06 e R03, e que o resultado depende de quanto o varejista pesa na decisão.
+
+\subsection{Sensibilidade ao peso do varejista}
+
+Como os pesos do bloco do varejista são premissa da equipe, a análise de sensibilidade variou o peso $w$ desse bloco de 0 a 100\% e manteve fixas as notas e a proporção entre os critérios de cada bloco. Para cada alternativa, a pontuação total passa a ser uma reta em $w$:
+\begin{equation}
+P(w) = (1 - w) \cdot C + w \cdot V,
+\end{equation}
+em que $C$ é a média ponderada do bloco do cliente e $V$ a do bloco do varejista, com os valores da Tabela~\ref{tab:r2-decisao}. As três retas e os pontos em que elas se cruzam estão na Figura~\ref{fig:r2-sensibilidade-matriz}.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Sensibilidade da decisão ao peso do varejista}
+    \label{fig:r2-sensibilidade-matriz}
+    \begin{tikzpicture}
+        \begin{axis}[
+            r2eixo,
+            width=0.9\textwidth,
+            height=7.5cm,
+            xmin=0, xmax=100,
+            ymin=2.4, ymax=4.8,
+            xtick={0,20,40,60,80,100},
+            ytick={2.5,3.0,3.5,4.0,4.5},
+            yticklabel style={/pgf/number format/fixed, /pgf/number format/fixed zerofill, /pgf/number format/precision=1},
+            xlabel={Peso do bloco do varejista, $w$ (\%)},
+            ylabel={Pontuação total},
+            legend style={at={(0.5,-0.25)}, anchor=north},
+            legend columns=3,
+            legend cell align=left,
+        ]
+            \addplot[r2laranja, very thick] coordinates {(0,4.569) (100,2.520)};
+            \addlegendentry{A1 Etiqueta Ativa}
+            \addplot[r2azulmedio, very thick] coordinates {(0,3.508) (100,4.360)};
+            \addlegendentry{A2 Estação Inteligente}
+            \addplot[r2verde, very thick] coordinates {(0,4.087) (100,3.120)};
+            \addlegendentry{A3 Etiqueta Passiva Energizada}
+            \draw[r2cinza, dashed, thick] (axis cs:25,2.4) -- (axis cs:25,4.8);
+            \node[r2rotulo, anchor=north west] at (axis cs:25.5,4.78) {caso base\\$w = 25\%$};
+            \addplot[only marks, mark=o, mark size=2pt, r2cinza, forget plot] coordinates {(25,4.057) (25,3.721) (25,3.845)};
+            \draw[r2cinza, densely dotted] (axis cs:31.8,2.4) -- (axis cs:31.8,3.779);
+            \draw[r2cinza, densely dotted] (axis cs:36.6,2.4) -- (axis cs:36.6,3.820);
+            \draw[r2cinza, densely dotted] (axis cs:44.6,2.4) -- (axis cs:44.6,3.656);
+            \addplot[only marks, mark=*, mark size=2pt, r2azul, forget plot] coordinates {(31.8,3.779) (36.6,3.820) (44.6,3.656)};
+            \node[r2rotulo, rotate=90, anchor=south west] at (axis cs:31.8,2.47) {A3 = A2: 31,8\%};
+            \node[r2rotulo, rotate=90, anchor=south west] at (axis cs:36.6,2.47) {A1 = A2: 36,6\%};
+            \node[r2rotulo, rotate=90, anchor=south west] at (axis cs:44.6,2.47) {A1 = A3: 44,6\%};
+        \end{axis}
+    \end{tikzpicture}
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+
+No caso base, com $w = 25\%$, a ordem é A1, A3 e A2. A A2 passa à frente da A3 quando o bloco do varejista pesa 31,8\% ou mais, e passa à frente da A1 a partir de 36,6\%, ponto em que as duas empatam com cerca de 3,82 pontos; a A3 só alcançaria a A1 com 44,6\%. Entre 31,8\% e 36,6\%, a A1 continua na frente, e a A2 sobe para o segundo lugar. A folga da escolha é, portanto, de 11,6 pontos percentuais sobre o peso adotado: se a Riachuelo atribuir ao custo de implantação, à operação e à maturidade um peso de cerca de um terço da decisão, a A1 ainda vence; se esse peso chegar a 36,6\%, a Estação Inteligente passa a ser a melhor alternativa. A equipe concluiu que a escolha é robusta a variações moderadas dos pesos e sensível a uma mudança de perspectiva, do cliente para o comprador, o que torna a validação desses pesos com a Riachuelo uma tarefa do Relatório 3.
+
+\subsection{Concepção escolhida}
+
+A equipe escolheu a A1 Etiqueta Ativa, a única alternativa que cumpre R06 e R03 no nível máximo sem exigir um ponto fixo no fluxo principal. A escolha depende de dois testes. O primeiro é validar com a Riachuelo os pesos do bloco do varejista, porque, se esse bloco pesar 36,6\% ou mais na decisão, a A2 vence. O segundo é o marco de go/no-go do Core Bluetooth num App Clip real, previsto para o protótipo do Relatório 3; se o recurso não funcionar, a Compra Rápida no iPhone perde a liberação na própria peça e passa a depender do Liberador de Balcão.
+
+A A2 Estação Inteligente ficou registrada como concepção de reserva e como etapa intermediária de implantação: uma loja pode começar pela estação, com R\$~28.877 por loja, e migrar para a etiqueta ativa quando a economia se confirmar, aproveitando a Plataforma Tag\&Go e os canais do cliente, que são comuns às duas. A A3 ficou como evolução futura sem bateria, caso o NFC do iPhone venha a permitir a colheita de energia pelo App Clip. A diferença de custo entre a A1 (R\$~414.458 por loja) e a A2 é o principal argumento contra a escolha, e, na Seção~\ref{sec:r2-valor}, a equipe avaliou em que condições o benefício para a Riachuelo cobre esse custo. A arquitetura da A1, com seus subsistemas, componentes e interfaces, e o desenho reformulado da etiqueta estão na Seção~\ref{sec:r2-arquitetura}.

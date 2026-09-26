@@ -1,0 +1,667 @@
+% =============================================================================
+% Relatorio 2, Secao 7: reformulacao dos desenhos e arquitetura do produto
+% (item E do roteiro, parte 2). Fonte unica: biblia do R2 (secoes 4.4, 4.5,
+% 4.7 e 10; figuras FIG11 a FIG16; tabelas TAB15, TAB16 e TAB17).
+% Nao repete matriz de decisao, precos nem receita (ver Secoes 4 e 6).
+% Figuras em TikZ e pgfplots com os estilos de r2/pacotes.tex.
+% =============================================================================
+
+\section{REFORMULAÇÃO DOS DESENHOS E ARQUITETURA DO PRODUTO}
+\label{sec:r2-arquitetura}
+
+A concepção A1 Etiqueta Ativa, escolhida na Seção~\ref{sec:r2-concepcao}, foi desdobrada em quatro resultados do projeto conceitual: a arquitetura do sistema, com seus subsistemas, componentes e interfaces; o desenho reformulado da etiqueta; os fluxos das duas jornadas de uso; e o ciclo logístico que devolve a etiqueta à origem. A equipe seguiu o roteiro da disciplina \cite{zancul2026conceitual}, baseado em \citeonline{rozenfeld2006gestao}, que pede, na fase conceitual, a identificação dos sistemas, subsistemas e componentes (SSCs) e a definição de como eles se fixam, se posicionam e trocam energia, material e sinal. Formas definitivas, materiais e a lista de materiais detalhada ficam para o Relatório 3. As funções citadas pelos códigos F1 a F31 são as da Tabela~\ref{tab:r2-funcoes}, e as especificações-meta R, E e S são as da Tabela~\ref{tab:r2-especificacoes}.
+
+\subsection{Arquitetura modular e subsistemas}
+
+A equipe adotou uma arquitetura modular que combina três tipos de modularidade descritos por \citeonline{rozenfeld2006gestao}. A etiqueta e a Plataforma Tag\&Go são compartilhadas pelos dois caminhos de uso, o que corresponde à modularidade de compartilhamento de componentes: a mesma etiqueta, com o mesmo firmware, atende à Compra Rápida e à Jornada Completa. Os canais do cliente, por sua vez, funcionam como módulos de interface intercambiáveis, que adaptam o sistema à variedade de aparelhos e de perfis de uso, do App Clip no iPhone ao passe do Ria Club na carteira do celular. Os serviços da Plataforma, por fim, ligam-se por um barramento de eventos, de modo que um serviço novo, ou a integração com o estoque de outro varejista, pode ser acoplado sem alterar os demais. Essa última escolha tem consequência comercial, já que a expansão para outras redes do segmento, discutida na Seção~\ref{sec:r2-comercializacao}, exigirá trocar apenas os módulos de integração.
+
+O sistema foi dividido em cinco subsistemas, reunidos na Tabela~\ref{tab:r2-ssc} com seus componentes e as funções que cada um realiza. A etiqueta Tag\&Go (SS1) concentra as funções físicas que acompanham a peça: reter, identificar, validar a autorização, desfazer a retenção, armazenar energia, confirmar a intenção do cliente, indicar o estado da liberação e sinalizar a saída indevida. A Plataforma Tag\&Go (SS2) reúne seis serviços em nuvem e realiza as funções de informação, do processamento do pagamento ao rastreamento da frota, além de todas as funções da Jornada Completa. Os canais do cliente (SS3) formam a camada que o consumidor vê e toca. A infraestrutura de loja (SS4) e o ciclo logístico (SS5) realizam as funções que surgiram quando a etiqueta deixou de ser consumível e passou a ser um ativo retornável: recolher, registrar a devolução, transportar, inspecionar, recarregar, associar e fixar a etiqueta em uma nova peça e destinar as reprovadas.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Subsistemas, componentes e funções realizadas}
+    \label{tab:r2-ssc}
+    \scriptsize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.3cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{2.6cm}@{}}
+        \toprule
+        \textbf{SSC} & \textbf{Componentes} & \textbf{Funções realizadas} \\
+        \midrule
+        SS1 Etiqueta Tag\&Go
+            & C1.1 carcaça superior (janela do QR, LED, botão, furo do buzzer e 3 contatos de serviço); C1.2 carcaça inferior (furo do pino, sede da garra, parafusos de segurança); C1.3 garra (3 esferas, copo cônico, carretel não ferromagnético, mola e sensor de presença do pino); C1.4 pino; C1.5 atuador (micromotor com redução, came, cursor com rampa e mola de retorno); C1.6 placa única (módulo ESP32-C3-MINI-1, CI de carga e driver do motor); C1.7 célula LiPo de 150\,mAh com proteção; C1.8 interface (LED RGB, botão e buzzer piezo); C1.9 identificação (QR de 28\,mm impresso e NFC NTAG213 sobre manta de ferrite); C1.10 elemento EAS (AM ou RF, conforme o pórtico da loja)
+            & F1, F2, F5, F6, F7, F10, F11, F12 \\
+        \addlinespace
+        SS2 Plataforma Tag\&Go
+            & C2.1 Itens e Carrinho; C2.2 Pagamento; C2.3 Autorização (com HSM); C2.4 Ciclo da Etiqueta (estados, frota e alertas); C2.5 Jornada (perfil, localização N1, disponibilidade, recomendação, sustentabilidade e consentimento); C2.6 Integrações (estoque RFID e OMS, PDV e NFC-e, Ria Club, e-commerce)
+            & F2, F3, F4, F13, F14, F18, F21, F23, F25 a F31 \\
+        \addlinespace
+        SS3 Canais do cliente
+            & C3.1 App Clip Tag\&Go; C3.2 Página de Compra Rápida; C3.3 módulo Tag\&Go do app Riachuelo; C3.4 passe do Ria Club
+            & F3, F9, F11, F15, F25 a F31 \\
+        \addlinespace
+        SS4 Infraestrutura de loja
+            & C4.1 Coletor de Etiquetas (caixa trancada, boca antirretorno em cor contrastante entre 0,40 e 1,20\,m do piso, leitor BLE, contador óptico, sinal de recebida, capacidade de cerca de 150 etiquetas); C4.2 Liberador de Balcão (encaixe com 3 pinos de mola sobre os contatos da face superior, 5\,V, dados por UART, ligação ao PDV e à Plataforma; um por caixa e um no Ponto de Apoio); C4.3 Ponto de Apoio (balcão com funcionário, painel de etiquetas liberadas e não recolhidas, QR do Wi-Fi de convidados)
+            & F8 (fonte externa), F15, F16, F17, F18 \\
+        \addlinespace
+        SS5 Ciclo logístico
+            & C5.1 Malote de Retorno (caixa plástica rígida e retornável, divisórias antiestáticas, lacre numerado e identificação de baterias de lítio instaladas em equipamento); C5.2 Bancada de Inspeção (teste de botão, LED, buzzer, BLE, motor, retenção por amostragem, célula e firmware; limpeza; triagem); C5.3 Bandeja de Recarga (20 posições com pinos sobre a face superior; cerca de 2\,h por carga); C5.4 Estação de Cadastro (leitor UHF do EPC, contatos para o \texttt{tag\_id}, aplicação do pino e registro da associação)
+            & F8, F19, F20, F21, F22, F24 \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+A fronteira entre a etiqueta e a Plataforma seguiu uma regra de projeto: a etiqueta guarda apenas o necessário para decidir se abre, isto é, a própria chave, o nonce vigente e a condição da trava, enquanto preço, estado oficial, histórico e regras comerciais ficam na Plataforma. Com isso, a etiqueta permanece simples, e uma mudança de regra de negócio não exige regravar o firmware da frota. Os elementos externos ao Tag\&Go foram mantidos fora da fronteira do produto porque a Riachuelo já os opera: o PSP e as carteiras digitais (Apple Pay, Google Pay e Pix), o estoque RFID implantado com a Mozaiko \cite{tiinside2022riachuelo}, o OMS da Manhattan \cite{manhattan2026riachuelo}, o PDV e o emissor de NFC-e, os pórticos EAS e RFID das lojas, o app Riachuelo, o Ria Club e o e-commerce. O sistema se apoia neles por meio de interfaces definidas, sem substituí-los.
+
+\subsection{Interfaces entre os subsistemas}
+
+A matriz de interfaces (Tabela~\ref{tab:r2-interfaces}) registra 18 interfaces, classificadas pelo tipo de fluxo, energia, material ou sinal, como na caixa-preta da Seção~\ref{sec:r2-funcional}. As cinco primeiras, I1 a I5, são internas à etiqueta e descrevem a cadeia mecânica e elétrica da liberação: o pino retido pela garra, o cursor com rampa que ergue o carretel, a célula que alimenta a placa, a placa que aciona o micromotor e a interface com o cliente. As interfaces I6 e I7 ligam a etiqueta ao celular, a primeira por leitura óptica ou por aproximação (QR e NFC) e a segunda por rádio (BLE). As interfaces I8 a I12 são digitais e ligam os canais à Plataforma e a Plataforma aos sistemas da Riachuelo e do PSP. As interfaces I13 a I16 acontecem na loja, e I17 e I18, no ciclo logístico. A Figura~\ref{fig:r2-arquitetura} representa a mesma estrutura em forma de diagrama, com cada interface desenhada segundo o seu tipo.
+
+Três interfaces concentram os riscos técnicos do conceito. A interface I7, BLE sem pareamento com filtro pelo \texttt{tag\_id}, depende de o App Clip poder usar Core Bluetooth no iPhone, o que a equipe deduziu da documentação da Apple sem confirmação explícita \cite{apple2026appclipfuncoes, apple2020forumble}, e do Web Bluetooth, que no Android existe no Chrome e no Samsung Internet \cite{chrome2026webbluetooth}; por isso, ela será o primeiro marco de go/no-go do protótipo. A interface I13, formada por três contatos na face superior que levam 5\,V e dados seriais, viabiliza a liberação assistida para qualquer falha da etiqueta ou do celular e, com ela, o carretel não ferromagnético. A interface I10, com a baixa do EPC como vendido no estoque RFID em até 5\,s após a confirmação do pagamento (S07), fecha a malha antifraude com o pórtico RFID, que alarma quando sai da loja uma peça cujo EPC não foi vendido. Há ainda um requisito elétrico em I3: a placa precisa de um caminho de energia que a deixe ligar pelos contatos mesmo com a célula descarregada, sem o qual o Liberador de Balcão não conseguiria abrir uma etiqueta sem carga.
+
+\begingroup
+\captionsetup{font=normalsize}
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}
+    >{\RaggedRight\arraybackslash}p{0.8cm}
+    >{\RaggedRight\arraybackslash}p{4.2cm}
+    >{\RaggedRight\arraybackslash}p{1.0cm}
+    >{\RaggedRight\arraybackslash}p{9.0cm}@{}}
+\caption{Matriz de interfaces} \label{tab:r2-interfaces} \\
+\toprule
+\textbf{Código} & \textbf{Entre} & \textbf{Tipo} & \textbf{Descrição e especificação} \\
+\midrule
+\endfirsthead
+\multicolumn{4}{c}{Tabela~\ref{tab:r2-interfaces} (continuação)} \\
+\toprule
+\textbf{Código} & \textbf{Entre} & \textbf{Tipo} & \textbf{Descrição e especificação} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{4}{r}{\textit{continua na próxima página}} \\
+\endfoot
+\bottomrule
+\multicolumn{4}{c}{Fonte: Elaborado pelos autores (2026). Tipo: E, energia; M, material; S, sinal.} \\
+\endlastfoot
+I1 & C1.4 pino $\leftrightarrow$ C1.3 garra & M & haste de $\varnothing$\,2\,mm retida por 3 esferas; tecido de 1\,mm prensado entre a face inferior e o disco do pino; E02 $\geq$ 120\,N \\
+I2 & C1.5 cursor $\rightarrow$ C1.3 carretel & E & força e curso: a rampa converte o avanço horizontal do cursor em 1,2\,mm verticais do carretel; E04 $\geq$ 3 \\
+I3 & C1.7 célula $\leftrightarrow$ C1.6 placa & E & 3,7\,V; proteção de subtensão e de sobretensão; caminho de energia que deixa a placa ligar pelos contatos mesmo com a célula descarregada \\
+I4 & C1.6 placa $\leftrightarrow$ C1.5 atuador & E + S & acionamento do micromotor (cerca de 150\,mA por 0,6\,s); sensor de fim de curso \\
+I5 & C1.6 placa $\leftrightarrow$ C1.8 interface & S & botão (acordar e confirmar), LED RGB e buzzer (E08) \\
+I6 & C1.9 identificação $\leftrightarrow$ SS3 canais & S & leitura óptica (QR) e NFC de 13,56\,MHz com a URL do \texttt{tag\_id}; E09 \\
+I7 & C1.6 placa $\leftrightarrow$ SS3 canais & S & BLE GATT sem pareamento: nonce, token e estado; filtro pelo \texttt{tag\_id} \\
+I8 & SS3 canais $\leftrightarrow$ SS2 Plataforma & S & HTTPS: carrinho, pagamento, pedido de token e status da devolução \\
+I9 & SS2 $\leftrightarrow$ PSP e carteiras & S & tokens de pagamento, confirmação e webhook do Pix \\
+I10 & SS2 $\leftrightarrow$ estoque RFID e OMS & S & preço pelo EPC; disponibilidade (leitura com idade $\leq$ 24\,h); baixa como vendido (S07); pedido on-line do tamanho ausente \\
+I11 & SS2 $\leftrightarrow$ PDV e NFC-e & S & compra no caixa, emissão fiscal e localização da compra pelo funcionário \\
+I12 & SS2 $\leftrightarrow$ app Riachuelo e Ria Club & S & perfil, cashback liberado após a devolução da etiqueta, recomendação \\
+I13 & C4.2 Liberador $\leftrightarrow$ etiqueta (contatos da face superior) & E + S & 5\,V e UART nos 3 contatos; energiza a etiqueta descarregada e entrega o token \\
+I14 & C4.2 Liberador $\leftrightarrow$ SS2 e PDV & S & pedido autenticado de token depois do pagamento no PDV ou da localização da compra (S09) \\
+I15 & C4.1 Coletor $\leftrightarrow$ etiqueta & M + S & recebe a etiqueta pela boca antirretorno; lê o \texttt{tag\_id} por BLE no estado DESTRAVADA; comunica RECOLHIDA à Plataforma \\
+I16 & C1.10 elemento EAS $\leftrightarrow$ pórtico EAS & S & campo AM de 58\,kHz ou RF de 8,2\,MHz; alarme se a etiqueta liberada sair da loja (M1) \\
+I17 & SS5 $\leftrightarrow$ etiqueta & M + E & transporte no Malote de Retorno; recarga pelos contatos na Bandeja de Recarga; testes na Bancada de Inspeção \\
+I18 & C5.4 Estação de Cadastro $\leftrightarrow$ etiqueta e peça & M + S & fixa o pino na peça; lê o EPC por UHF e o \texttt{tag\_id} pelos contatos; grava a associação e o estado TRAVADA \\
+\end{longtable}
+\endgroup
+
+\begin{landscape}
+\begin{figure}[htbp]
+    \centering
+    \caption{Arquitetura do produto: subsistemas, componentes e interfaces}
+    \label{fig:r2-arquitetura}
+    \resizebox{\linewidth}{!}{%
+    \begin{tikzpicture}[font=\scriptsize]
+        % ---------------- SS3 canais do cliente ----------------
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=3.4cm, minimum height=5mm, inner sep=2pt] (t3) at (2.3,10.1) {SS3 Canais do cliente};
+        \node[r2bloco, font=\scriptsize, text width=3.4cm, minimum height=7mm, inner sep=2pt] (c31) at (2.3,9.2) {C3.1 App Clip Tag\&Go};
+        \node[r2bloco, font=\scriptsize, text width=3.4cm, minimum height=7mm, inner sep=2pt] (c32) at (2.3,8.2) {C3.2 Página de Compra Rápida};
+        \node[r2bloco, font=\scriptsize, text width=3.4cm, minimum height=7mm, inner sep=2pt] (c33) at (2.3,7.2) {C3.3 Módulo Tag\&Go do app Riachuelo};
+        \node[r2bloco, font=\scriptsize, text width=3.4cm, minimum height=7mm, inner sep=2pt] (c34) at (2.3,6.2) {C3.4 Passe do Ria Club};
+        % ---------------- SS2 Plataforma ----------------
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=7.2cm, minimum height=5mm, inner sep=2pt] (t2) at (10.4,9.85) {SS2 Plataforma Tag\&Go (serviços ligados por barramento de eventos)};
+        \node[r2bloco, font=\scriptsize, text width=3.2cm, minimum height=7mm, inner sep=2pt] (c21) at (8.4,8.9) {C2.1 Itens e Carrinho};
+        \node[r2bloco, font=\scriptsize, text width=3.2cm, minimum height=7mm, inner sep=2pt] (c22) at (12.4,8.9) {C2.2 Pagamento};
+        \node[r2bloco, font=\scriptsize, text width=3.2cm, minimum height=7mm, inner sep=2pt] (c23) at (8.4,7.9) {C2.3 Autorização (HSM)};
+        \node[r2bloco, font=\scriptsize, text width=3.2cm, minimum height=7mm, inner sep=2pt] (c24) at (12.4,7.9) {C2.4 Ciclo da Etiqueta};
+        \node[r2bloco, font=\scriptsize, text width=3.2cm, minimum height=7mm, inner sep=2pt] (c25) at (8.4,6.9) {C2.5 Jornada};
+        \node[r2bloco, font=\scriptsize, text width=3.2cm, minimum height=7mm, inner sep=2pt] (c26) at (12.4,6.9) {C2.6 Integrações};
+        % ---------------- SS1 Etiqueta ----------------
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=5.6cm, minimum height=5mm, inner sep=2pt] (t1) at (6.5,4.55) {SS1 Etiqueta Tag\&Go (C1.1 e C1.2: carcaça)};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c19) at (1.4,3.5) {C1.9 Identificação\\ (QR e NFC)};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c18) at (4.8,3.5) {C1.8 Interface\\ (LED, botão, buzzer)};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c17) at (8.2,3.5) {C1.7 Célula LiPo\\ de 150\,mAh};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c110) at (1.4,2.15) {C1.10 Elemento EAS};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c16) at (8.2,2.15) {C1.6 Placa única\\ (ESP32-C3-MINI-1)};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c14) at (1.4,0.8) {C1.4 Pino};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c13) at (4.8,0.8) {C1.3 Garra\\ (carretel)};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c15) at (8.2,0.8) {C1.5 Atuador\\ (micromotor e came)};
+        % ---------------- SS4 Infraestrutura de loja ----------------
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=2.6cm, minimum height=5mm, inner sep=2pt] (t4) at (17.0,2.1) {SS4 Infraestrutura de loja};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c42) at (13.6,1.6) {C4.2 Liberador de Balcão};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c41) at (13.6,0.35) {C4.1 Coletor de Etiquetas};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, minimum height=7mm, inner sep=2pt] (c43) at (17.0,0.95) {C4.3 Ponto de Apoio};
+        % ---------------- SS5 Ciclo logistico ----------------
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=3.0cm, minimum height=5mm, inner sep=2pt] (t5) at (21.2,10.1) {SS5 Ciclo logístico};
+        \node[r2bloco, font=\scriptsize, text width=3.0cm, minimum height=7mm, inner sep=2pt] (c51) at (21.2,9.2) {C5.1 Malote de Retorno};
+        \node[r2bloco, font=\scriptsize, text width=3.0cm, minimum height=7mm, inner sep=2pt] (c52) at (21.2,8.1) {C5.2 Bancada de Inspeção};
+        \node[r2bloco, font=\scriptsize, text width=3.0cm, minimum height=7mm, inner sep=2pt] (c53) at (21.2,7.0) {C5.3 Bandeja de Recarga};
+        \node[r2bloco, font=\scriptsize, text width=3.0cm, minimum height=7mm, inner sep=2pt] (c54) at (21.2,5.9) {C5.4 Estação de Cadastro};
+        % ---------------- elementos externos ----------------
+        \node[r2neutro, font=\scriptsize, text width=2.3cm, inner sep=2pt] (psp) at (7.8,11.7) {PSP e carteiras\\ (Apple Pay, Google Pay, Pix)};
+        \node[r2neutro, font=\scriptsize, text width=2.3cm, inner sep=2pt] (est) at (10.4,11.7) {Estoque RFID (Mozaiko)\\ e OMS (Manhattan)};
+        \node[r2neutro, font=\scriptsize, text width=2.3cm, inner sep=2pt] (pdv) at (13.0,11.7) {PDV e emissor\\ de NFC-e};
+        \node[r2neutro, font=\scriptsize, text width=2.4cm, inner sep=2pt] (app) at (17.0,8.4) {App Riachuelo\\ e Ria Club};
+        \node[r2neutro, font=\scriptsize, text width=2.0cm, inner sep=2pt] (por) at (-2.3,2.15) {Pórticos EAS\\ e RFID};
+        % ---------------- contornos dos subsistemas ----------------
+        \begin{scope}[on background layer]
+            \node[draw=r2azul, fill=r2cinzaclaro, rounded corners=3pt, inner sep=6pt, fit=(t3)(c31)(c32)(c33)(c34)] (ss3) {};
+            \node[draw=r2azul, fill=r2cinzaclaro, rounded corners=3pt, inner sep=6pt, fit=(t2)(c21)(c22)(c23)(c24)(c25)(c26)] (ss2) {};
+            \node[draw=r2azul, fill=r2cinzaclaro, rounded corners=3pt, inner sep=6pt, fit=(t1)(c19)(c18)(c17)(c110)(c16)(c14)(c13)(c15)] (ss1) {};
+            \node[draw=r2azul, fill=r2cinzaclaro, rounded corners=3pt, inner sep=6pt, fit=(t4)(c41)(c42)(c43)] (ss4) {};
+            \node[draw=r2azul, fill=r2cinzaclaro, rounded corners=3pt, inner sep=6pt, fit=(t5)(c51)(c52)(c53)(c54)] (ss5) {};
+        \end{scope}
+        % ---------------- coordenadas auxiliares ----------------
+        \coordinate (y80) at (0,8.0);
+        \coordinate (y59) at (0,5.9);
+        \coordinate (x102) at (10.2,0);
+        \coordinate (x200) at (20.0,0);
+        \coordinate (x222) at (22.2,0);
+        \coordinate (x67) at (6.7,0);
+        \coordinate (x63) at (6.3,0);
+        % ---------------- interfaces internas da etiqueta ----------------
+        \draw[r2setafina, {Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}] (c14.east) -- node[r2rotulo, text=r2azul, above] {I1} (c13.west);
+        \draw[r2setatracejada] (c15.west) -- node[r2rotulo, text=r2azul, above] {I2} (c13.east);
+        \draw[r2setatracejada, {Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}] (c17.south) -- node[r2rotulo, text=r2azul, right] {I3} (c16.north);
+        \draw[r2setatracejada, {Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}] (c16.south) -- node[r2rotulo, text=r2azul, right] {I4 (E+S)} (c15.north);
+        \draw[r2seta, {Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (c16.west) -| node[r2rotulo, text=r2azul, pos=0.25, above] {I5} (c18.south);
+        % ---------------- etiqueta e canais ----------------
+        \draw[r2seta, {Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (c19.north) -- node[r2rotulo, text=r2azul, right] {I6} (c19.north |- ss3.south);
+        \draw[r2seta, {Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (c16.east) -- (x102 |- c16.east) -- (x102 |- y59) -- node[r2rotulo, text=r2azul, above] {I7 (BLE)} (ss3.east |- y59);
+        % ---------------- canais e Plataforma ----------------
+        \draw[r2seta, {Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (ss3.east |- y80) -- node[r2rotulo, text=r2azul, above] {I8} (ss2.west |- y80);
+        % ---------------- Plataforma e externos ----------------
+        \draw[r2seta, {Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (psp.south) -- node[r2rotulo, text=r2azul, right] {I9} (psp.south |- ss2.north);
+        \draw[r2seta, {Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (est.south) -- node[r2rotulo, text=r2azul, right] {I10} (est.south |- ss2.north);
+        \draw[r2seta, {Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (pdv.south) -- node[r2rotulo, text=r2azul, right] {I11} (pdv.south |- ss2.north);
+        \draw[r2seta, {Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (ss2.east |- app.west) -- node[r2rotulo, text=r2azul, above] {I12} (app.west);
+        % ---------------- loja ----------------
+        \draw[r2setatracejada, {Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}] (ss1.east |- c42.west) -- node[r2rotulo, text=r2azul, above] {I13 (E+S)} (c42.west);
+        \draw[r2seta, {Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (c42.north) -- node[r2rotulo, text=r2azul, right] {I14} (c42.north |- ss2.south);
+        \draw[r2setafina, {Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}] (ss1.east |- c41.west) -- node[r2rotulo, text=r2azul, above] {I15 (M+S)} (c41.west);
+        \draw[r2seta, {Stealth[length=2.2mm]}-{Stealth[length=2.2mm]}] (c110.west) -- node[r2rotulo, text=r2azul, above] {I16} (por.east);
+        % ---------------- ciclo logistico ----------------
+        \draw[r2setafina, {Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}] (x200 |- ss5.south) -- (20.0,-0.9) -- node[r2rotulo, text=r2azul, above, pos=0.3] {I17 (M+E)} (6.7,-0.9) -- (x67 |- ss1.south);
+        \draw[r2setafina, {Stealth[length=1.8mm]}-{Stealth[length=1.8mm]}] (x222 |- c54.south) -- (22.2,-1.5) -- node[r2rotulo, text=r2azul, below, pos=0.3] {I18 (M+S)} (6.3,-1.5) -- (x63 |- ss1.south);
+        % ---------------- legenda ----------------
+        \draw[r2seta] (-3.2,12.0) -- (-2.3,12.0);
+        \node[anchor=west, font=\scriptsize] at (-2.2,12.0) {Sinal (S)};
+        \draw[r2setatracejada] (-0.5,12.0) -- (0.4,12.0);
+        \node[anchor=west, font=\scriptsize] at (0.5,12.0) {Energia (E)};
+        \draw[r2setafina] (2.4,12.0) -- (3.3,12.0);
+        \node[anchor=west, font=\scriptsize] at (3.4,12.0) {Material (M)};
+        \node[r2rotulo, anchor=north west, text width=8.3cm, align=left] at (-3.3,11.7) {Interfaces mistas (I4, I13, I15, I17 e I18) usam o traço do tipo principal, e o rótulo indica os dois tipos. Elementos externos ao Tag\&Go em cinza.};
+    \end{tikzpicture}%
+    }
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+\end{landscape}
+
+\subsection{Desenho reformulado da etiqueta}
+
+A Figura~\ref{fig:r2-desenho} compara a planta apresentada no Relatório 1 com o esquema reformulado. O envelope externo foi mantido em $98 \times 82 \times 26$\,mm (E01), com o plano de partição a 13\,mm da face inferior, e o arranjo interno foi redefinido a partir das funções e dos princípios escolhidos: o mecanismo de liberação (garra, cursor com rampa, came e micromotor) ocupa o lado esquerdo, a placa única e a célula ocupam o lado direito, e o elemento EAS fica no canto superior esquerdo, afastado das partes metálicas. Na face superior, o QR ocupa a região central, agora com a antena NFC sob ele, e os três contatos de serviço ficam no canto superior direito. O corte A-A, pelo eixo da garra, mostra o tecido prensado entre a face inferior e o disco do pino e o deslocamento de 1,2\,mm do carretel que solta a haste.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Desenho reformulado da etiqueta}
+    \label{fig:r2-desenho}
+    \begin{subfigure}{0.42\textwidth}
+        \centering
+        \caption{Planta do Relatório 1}
+        \includegraphics[width=\linewidth]{esboco/fig-planta.pdf}
+    \end{subfigure}
+
+    \medskip
+    \begin{subfigure}{\textwidth}
+        \centering
+        \caption{Esquema reformulado: vista superior, com componentes internos tracejados, e corte A-A pela garra (cotas em mm)}
+        \resizebox{0.9\linewidth}{!}{%
+        \begin{tikzpicture}[x=0.75mm, y=0.75mm, font=\scriptsize]
+            % ---------------- vista superior ----------------
+            \draw[thick, draw=r2azul, fill=r2cinzaclaro, rounded corners=6mm] (-49,-41) rectangle (49,41);
+            \foreach \px/\py in {43/35,-43/35,43/-35,-43/-35} {\draw[draw=r2cinza, fill=white] (\px,\py) circle[radius=1.4];}
+            % QR e NFC com ferrite
+            \draw[draw=r2azul, fill=white] (-16,-8) rectangle (12,20);
+            \draw[draw=r2azulmedio, dashed] (-14.5,-6.5) rectangle (10.5,18.5);
+            \node[text=r2azul] at (-2,14) {QR};
+            % LED, botao e buzzer
+            \draw[draw=r2azul, fill=r2verdeclaro] (-14,-30) circle[radius=2.5];
+            \draw[draw=r2azul, fill=r2azulclaro] (-2,-30) circle[radius=6.25];
+            \draw[draw=r2azul, fill=white] (10,-30) circle[radius=1];
+            % contatos de servico
+            \foreach \cx in {24,32,40} {\draw[draw=r2laranja, fill=r2laranjaclaro] (\cx,33) circle[radius=2];}
+            % componentes internos (tracejados)
+            \draw[r2cinza, dashed] (-25,-17) circle[radius=6.2];
+            \draw[r2cinza, dashed] (-32,-30) rectangle (-18,-4);
+            \draw[r2cinza, dashed] (-25,0) circle[radius=4];
+            \draw[r2cinza, dashed] (-19,-6) rectangle (5,6);
+            \draw[r2cinza, dashed] (15,0) rectangle (45,24);
+            \draw[r2cinza, dashed] (23.4,3.7) rectangle (36.6,20.3);
+            \draw[r2cinza, dashed] (17,-32) rectangle (43,-12);
+            \draw[r2cinza, dashed] (-46,24) rectangle (-10,32);
+            \node[font=\tiny, text=r2cinza] at (-7,1) {micromotor};
+            \node[font=\tiny, text=r2cinza] at (30,12) {módulo};
+            \node[font=\tiny, text=r2cinza] at (30,-22) {célula};
+            \node[font=\tiny, text=r2cinza] at (-28,28) {elemento EAS};
+            \node[font=\tiny, text=r2cinza] at (-25,-17) {garra};
+            \node[font=\tiny, text=r2cinza] at (-25,-26) {cursor};
+            % linha de corte A-A
+            \draw[r2laranja, dash dot] (-25,-45) -- (-25,45);
+            \node[text=r2laranja, font=\footnotesize] at (-29,43) {A};
+            \node[text=r2laranja, font=\footnotesize] at (-29,-43) {A};
+            % cotas
+            \draw[r2cinza] (-49,-42) -- (-49,-51);
+            \draw[r2cinza] (49,-42) -- (49,-51);
+            \draw[r2cinza, {Stealth[length=1.5mm]}-{Stealth[length=1.5mm]}] (-49,-49) -- node[below, text=black] {98} (49,-49);
+            \draw[r2cinza] (-50,41) -- (-56,41);
+            \draw[r2cinza] (-50,-41) -- (-56,-41);
+            \draw[r2cinza, {Stealth[length=1.5mm]}-{Stealth[length=1.5mm]}] (-54,-41) -- node[pos=0.15, left, text=black] {82} (-54,41);
+            \draw[r2cinza] (24,35) -- (24,46);
+            \draw[r2cinza] (40,35) -- (40,46);
+            \draw[r2cinza, {Stealth[length=1.5mm]}-{Stealth[length=1.5mm]}] (24,44) -- node[above, text=black] {3 contatos $\varnothing$\,4, passo 8} (40,44);
+            % chamadas da vista superior
+            \draw[r2cinza] (-2,20) -- (-2,50) node[anchor=south, text=black] {C1.9 Identificação: QR e NFC sobre ferrite};
+            \draw[r2cinza] (47,30) -- (58,30) node[anchor=west, text=black, align=left] {C1.1 Carcaça superior\\ com 3 contatos};
+            \draw[r2cinza] (45,18) -- (58,16) node[anchor=west, text=black, align=left] {C1.6 Placa única\\ (ESP32-C3-MINI-1)};
+            \draw[r2cinza] (43,-22) -- (58,-20) node[anchor=west, text=black, align=left] {C1.7 Célula LiPo\\ de 150\,mAh};
+            \draw[r2cinza] (2,-35) -- (58,-38) node[anchor=west, text=black, align=left] {C1.8 LED, botão\\ e buzzer};
+            \draw[r2cinza] (-46,28) -- (-58,28) node[anchor=east, text=black, align=right] {C1.10 Elemento\\ EAS};
+            \draw[r2cinza] (-29,0) -- (-58,4) node[anchor=east, text=black, align=right] {C1.5 Came, micromotor\\ e cursor com rampa};
+            \draw[r2cinza] (-31.2,-17) -- (-58,-17) node[anchor=east, text=black, align=right] {C1.3 Garra\\ (3 esferas e carretel)};
+            % ---------------- corte A-A ----------------
+            \node[font=\footnotesize, text=r2azul] at (0,-66) {Corte A-A (plano $x = -25$\,mm)};
+            \draw[thick, draw=r2azul, fill=r2cinzaclaro, rounded corners=2mm] (-41,-100) rectangle (41,-74);
+            \draw[r2azul, dashed] (-41,-87) -- (41,-87);
+            \draw[draw=r2azul, fill=r2azulclaro] (-23.2,-97.6) rectangle (-10.8,-87.6);
+            \draw[draw=r2azul, fill=r2laranjaclaro] (-30,-80) -- (-4,-80) -- (-4,-86.4) -- (-11,-86.4) -- (-23,-83) -- (-30,-83) -- cycle;
+            \draw[draw=r2azul, fill=r2laranjaclaro] (0,-83) circle[radius=4];
+            \draw[draw=r2cinza, fill=white] (-36,-101) rectangle (2,-100);
+            \draw[draw=r2azul, fill=r2azul] (-18,-101) rectangle (-16,-89);
+            \draw[draw=r2azul, fill=r2azul] (-24,-102.2) rectangle (-10,-101);
+            \draw[draw=r2azul, fill=r2verdeclaro] (24,-97.6) rectangle (32,-94.5);
+            \draw[r2seta] (-7,-96) -- (-7,-91);
+            \node[anchor=west] at (-6.5,-93.5) {carretel sobe 1,2};
+            % chamadas do corte
+            \draw[r2cinza] (-30,-81.5) -- (-50,-78) node[anchor=east, text=black] {C1.5 Cursor com rampa e came};
+            \draw[r2cinza] (-23.2,-93) -- (-50,-91) node[anchor=east, text=black] {C1.3 Garra};
+            \draw[r2cinza] (-24,-101.6) -- (-50,-103) node[anchor=east, text=black] {C1.4 Pino e tecido};
+            \draw[r2cinza] (38,-76) -- (50,-75) node[anchor=west, text=black] {C1.1 Carcaça superior};
+            \draw[r2cinza] (41,-87) -- (50,-86) node[anchor=west, text=black] {Plano de partição ($Z = 13$)};
+            \draw[r2cinza] (32,-96) -- (50,-94) node[anchor=west, text=black] {C1.10 Elemento EAS};
+            \draw[r2cinza] (38,-99) -- (50,-103) node[anchor=west, text=black] {C1.2 Carcaça inferior};
+        \end{tikzpicture}%
+        }
+    \end{subfigure}
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+
+As mudanças em relação ao Relatório 1 estão na Tabela~\ref{tab:r2-mudancas}, cada uma com o seu motivo. A mais visível é a transferência dos contatos de recarga da face inferior para a face superior. Nos estudos anteriores da equipe, verificou-se que a face inferior fica encostada no tecido e que os pinos de um equipamento de recarga não a alcançam com a peça presa. Com três contatos na face superior, para energia, terra e dados, a mesma interface passa a servir à recarga na Bandeja de Recarga, ao cadastro na Estação de Cadastro e à liberação assistida no Liberador de Balcão.
+
+A troca do servo pelo micromotor com redução e came preservou o cursor com rampa, baixou o perfil do conjunto e reduziu o custo do grupo de atuação na meta de \textit{design to cost} de R\$~32,30 para R\$~9,20 (Tabela~\ref{tab:r2-bom}). Nos estudos anteriores da equipe, o came acionado por servo deu margem de força de 30,6 vezes sobre a mola, estimada em 2,5\,N; a margem do came com micromotor será medida no protótipo, contra a meta de pelo menos 3 (E04), e o tempo de liberação foi estimado em 0,6\,s, contra a meta de até 3\,s (E03). A célula de 300\,mAh deu lugar a uma de 150\,mAh, redução possível porque o modo de espera mudou. Com anúncio BLE a cada segundo, como no Relatório 1, a célula de 300\,mAh duraria 32 dias considerada a autodescarga, menos que um ciclo da etiqueta; no modo botão, em que a etiqueta só acorda quando o cliente aperta o botão, a célula de 150\,mAh dura cerca de 448 dias (estimativa da equipe, com sono de 5\,$\mu$A, autodescarga de 3\% ao mês e 80\% de capacidade útil), acima da meta de 168 dias, o dobro do ciclo médio (E05). Cada liberação consome cerca de 0,081\,mAh, o que dá aproximadamente 1.490 liberações por carga, contra a meta de 200 (E06).
+
+Na eletrônica, o módulo ESP32-C3-MINI-1, com certificado da Anatel \cite{espressif2026certificados}, substituiu a placa de desenvolvimento do protótipo; como o certificado do módulo não dispensa a avaliação do produto final por um organismo certificador designado \cite{anatel2019res715}, E12 exige as duas coisas. A interface ganhou um buzzer e padrões de piscada, porque a NBR 9050 pede instruções visuais combinadas a instruções auditivas ou táteis \cite{abnt2020nbr9050} e porque a leitura do estado apenas pela cor falha para pessoas com daltonismo. A identificação passou a ter NFC além do QR, com a mesma URL, que o iPhone lê em segundo plano e abre como App Clip quando o primeiro registro é um universal link \cite{apple2026corenfc}; a manta de ferrite evita que a célula e o mecanismo desafinem a antena (E09). A equipe descartou o App Clip Code com NFC, que exigiria uma etiqueta NFC Type 5 de pelo menos 35\,mm \cite{apple2026appcliphig}, maior que a área de 28\,mm do QR.
+
+Por fim, o carretel não ferromagnético, que o Relatório 1 deixou em avaliação, foi adotado. Com ele, um desacoplador magnético comercial deixa de abrir a etiqueta (E11), e a loja preserva a capacidade de abrir qualquer etiqueta em caso de falha, porque o Liberador de Balcão atua por energia e autorização nos contatos, sem depender de ímã. Os parafusos comuns deram lugar a parafusos de segurança de cabeça proprietária, com ferramenta disponível só no CD, de modo que a célula será acessada apenas no recondicionamento.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Mudanças no desenho da etiqueta em relação ao Relatório 1}
+    \label{tab:r2-mudancas}
+    \scriptsize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{1.9cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Elemento} & \textbf{Relatório 1} & \textbf{Relatório 2} & \textbf{Motivo} \\
+        \midrule
+        Contatos de recarga & 2 pads $\varnothing$\,6,5\,mm na face inferior & 3 pads $\varnothing$\,4\,mm rebaixados na face superior (energia, terra e dados) & a face inferior fica contra o tecido; o Liberador de Balcão precisa alcançar a etiqueta presa à peça \\
+        Atuador & servo MG90S com braço de 20\,mm & micromotor DC com redução e came & custo (R\$~32,30 $\rightarrow$ R\$~9,20) e perfil menor, com o mesmo cursor \\
+        Energia & LiPo de 300\,mAh e módulo TP4056 empilhado & célula de 150\,mAh e CI de carga na placa única & autonomia $\geq 2T$ no modo botão; custo (R\$~33,75 $\rightarrow$ R\$~9,50) \\
+        Eletrônica & placa de desenvolvimento ESP32-C3 Super Mini & módulo ESP32-C3-MINI-1 com certificado Anatel, em placa única & E12 e montagem SMT \\
+        Interface & LED RGB e botão & LED com padrões de piscada, botão e buzzer; estado também na tela do celular & NBR 9050 (9.4.3.8) e daltonismo \\
+        Identificação & QR impresso de 28\,mm & QR de 28\,mm e NFC NTAG213 sobre manta de ferrite (universal link) & leitura por aproximação sem desafinar sobre metal e bateria; App Clip Code com NFC exigiria etiqueta Type 5 de 35\,mm \\
+        Carretel & não ferromagnético, em avaliação & não ferromagnético, adotado & imunidade ao destacador (E11), viável com o Liberador de Balcão \\
+        Fechamento & 4 parafusos M2 comuns & parafusos de segurança com cabeça proprietária (ferramenta só no CD) & acesso à célula só no recondicionamento \\
+        Modo de espera & anúncio a cada 1\,s ou botão & acordar pelo botão; anúncio de 30\,s depois do botão e de 10\,min em DESTRAVADA & com anúncio a cada 1\,s, 32 dias (300\,mAh) ou 16 dias (150\,mAh), menos que um ciclo; no modo botão, 448 dias (150\,mAh) \\
+        Coleta & cestinho na saída & Coletor de Etiquetas trancado, com leitor BLE & meta S01 de 99\% \\
+        Envelope & $98 \times 82 \times 26$\,mm & mantido ($\pm 0{,}5$\,mm) & E01 \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+\subsection{Ergonomia e estética}
+
+A equipe tratou ergonomia e estética como saídas da fase conceitual \cite{zancul2026conceitual}. A etiqueta mantém cantos com raio de 8\,mm e topo com raio de 3\,mm, sem arestas vivas que prendam o tecido ou machuquem a mão, e o pino fica escondido dentro do corpo. O botão, de 12,5\,mm de diâmetro, terá relevo tátil, e a luz e o furo de som ficam na mesma linha do botão, longe do QR, para que a mão que segura o celular sobre o código não cubra o sinal. A face superior levará uma instrução pictográfica em três passos (ler o código, aguardar a luz verde e apertar o botão), e o acabamento será em cor neutra com a marca Tag\&Go; a cor definitiva depende das diretrizes de marca da Riachuelo, que ainda não foram consultadas.
+
+No Coletor de Etiquetas, a boca ficará em cor contrastante entre 0,40 e 1,20\,m do piso, os controles entre 0,80 e 1,20\,m e a área livre frontal terá $0{,}80 \times 1{,}20$\,m, conforme a NBR 9050 \cite{abnt2020nbr9050}, com sinal visual e sonoro de etiqueta recebida. O Liberador de Balcão terá um encaixe com guia de orientação única, para que a etiqueta entre em uma só posição sobre os contatos e o funcionário não precise acertar o alinhamento. No celular, o estado da etiqueta aparecerá com texto, ícone e vibração, em espelho da luz e do som da própria etiqueta, com quatro padrões distintos: TRAVADA, AUTORIZADA, DESTRAVADA e erro (E08).
+
+\subsection{Fluxo da Compra Rápida}
+
+A Figura~\ref{fig:r2-fluxo-rapida} detalha a Compra Rápida, que o cliente usa sem instalar aplicativo, em raias, uma por participante, para um iPhone que paga com cartão pela carteira digital; os tempos são estimativas da equipe, a medir no protótipo. A leitura da etiqueta e a conferência da peça (passos 1 e 2) ficam fora de R03, que mede, como no Relatório 1, o intervalo entre o toque em ``Pagar'' e a confirmação na tela; o App Clip abre com a peça em cerca de 2\,s em uso repetido e em até 10\,s no primeiro uso (S04). No passo 3, a confirmação por Face ID na folha do sistema leva de 3 a 5\,s e a autorização do PSP, de 2 a 5\,s, de modo que a confirmação chega à tela em cerca de 15\,s, contra a meta de até 45\,s (R03). Os passos 4 a 7 cobrem a autorização e a liberação, com metas de até 2\,s para a emissão do token (S06), de até 3\,s para a soltura do pino (E03) e de até 5\,s para o registro de ``etiqueta devolvida'' no Coletor.
+
+Os dois apertos de botão têm papéis diferentes. O primeiro acorda a etiqueta e gera o desafio, o que a mantém dormindo no resto do tempo e sustenta a autonomia; o segundo confirma a intenção de liberar e exige a presença física do cliente junto à peça. No Android, o fluxo é o mesmo na Página de Compra Rápida, com pagamento pelo Google Pay \cite{google2026paywebvisao} e com um toque a mais no passo 4, no seletor do Web Bluetooth, que o filtro pelo \texttt{tag\_id} reduz a uma única opção (S05). Como o Firefox não tem Web Bluetooth \cite{chrome2026webbluetooth, caniuse2026webbluetooth}, a página oferecerá abrir a compra no Chrome. Com Pix copia e cola, o passo 3 inclui a troca para o app do banco, e a luz verde só acende depois do webhook de confirmação, cujo tempo fica fora de R03; o Pix pelo Google Pay com Open Finance é hipótese a validar com o PSP \cite{yuno2026googlepaypix}.
+
+O App Clip impõe duas condições ao fluxo. Ele não trabalha em segundo plano \cite{apple2026appclipfuncoes}, e por isso o cliente manterá a tela aberta até a luz verde; e o seu tamanho não pode passar de 15\,MB com invocação por QR ou NFC \cite{apple2026tamanhos}, limite para o qual a equipe fixou uma meta interna de 10\,MB (S04). Se o teste de Core Bluetooth no App Clip falhar, o iPhone continuará pagando pelo App Clip, e a liberação passará ao Liberador de Balcão, alternativa registrada entre os riscos da Seção~\ref{sec:r2-comercializacao}.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Fluxo da Compra Rápida}
+    \label{fig:r2-fluxo-rapida}
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[font=\scriptsize]
+        % ---------------- raias ----------------
+        \fill[r2cinzaclaro] (2.6,1.6) rectangle (5.6,-16.2);
+        \fill[r2cinzaclaro] (8.7,1.6) rectangle (11.6,-16.2);
+        \foreach \x in {0,2.6,5.6,8.7,11.6,14.0,16.2} {\draw[r2cinza] (\x,1.6) -- (\x,-16.2);}
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=2.2cm] at (1.3,1.0) {Cliente};
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=2.6cm] at (4.1,1.0) {Celular\\ (App Clip ou Página)};
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=2.7cm] at (7.15,1.0) {Etiqueta};
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=2.5cm] at (10.15,1.0) {Plataforma};
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=2.0cm] at (12.8,1.0) {PSP e estoque RFID};
+        \node[r2blocoescuro, font=\scriptsize\bfseries, text width=1.8cm] at (15.1,1.0) {Tempo\\ (estimativa)};
+        % ---------------- faixa de R03 ----------------
+        \draw[r2laranja, dashed, thick, rounded corners] (0.1,-1.95) rectangle (13.9,-4.45);
+        % ---------------- passos ----------------
+        \node[r2bloco, font=\scriptsize, text width=2.2cm, inner sep=2pt] (a1) at (1.3,0) {1. Aproxima o celular ou lê o QR};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, inner sep=2pt] (b1) at (4.1,0) {App Clip ou Página abre com a peça};
+        \node[r2bloco, font=\scriptsize, text width=2.2cm, inner sep=2pt] (a2) at (1.3,-1.3) {2. Confere peça e tamanho; adiciona peças};
+        \node[r2bloco, font=\scriptsize, text width=2.2cm, inner sep=2pt] (a3) at (1.3,-2.6) {3. Toca em Pagar e confirma por Face ID};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, inner sep=2pt] (b3) at (4.1,-2.6) {Folha da carteira envia o pagamento};
+        \node[r2bloco, font=\scriptsize, text width=2.0cm, inner sep=2pt] (e3) at (12.8,-2.6) {Autoriza o pagamento};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (d4) at (10.15,-3.9) {Grava a venda no estoque RFID (S07)};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, inner sep=2pt] (b4) at (4.1,-3.9) {Mostra a confirmação};
+        \node[r2destaque, font=\scriptsize, text width=2.2cm, inner sep=2pt] at (1.3,-3.9) {R03 $\leq$ 45\,s};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, inner sep=2pt] (b5) at (4.1,-5.2) {4. Pede: aperte o botão da etiqueta};
+        \node[r2bloco, font=\scriptsize, text width=2.2cm, inner sep=2pt] (a5) at (1.3,-5.2) {Aperta o botão};
+        \node[r2bloco, font=\scriptsize, text width=2.7cm, inner sep=2pt] (c6) at (7.15,-6.5) {Acorda, gera o nonce e anuncia por 30\,s};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, inner sep=2pt] (b7) at (4.1,-7.8) {Conecta sem pareamento};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, inner sep=2pt] (b8) at (4.1,-9.1) {5. Pede o token};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (d8) at (10.15,-9.1) {Confere o pagamento e emite o token};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, inner sep=2pt] (b9) at (4.1,-10.4) {Escreve o token na etiqueta};
+        \node[r2bloco, font=\scriptsize, text width=2.7cm, inner sep=2pt] (c10) at (7.15,-11.7) {Valida: AUTORIZADA; verde piscando, bipe curto};
+        \node[r2bloco, font=\scriptsize, text width=2.2cm, inner sep=2pt] (a11) at (1.3,-13.0) {6. Aperta o botão de novo};
+        \node[r2bloco, font=\scriptsize, text width=2.7cm, inner sep=2pt] (c11) at (7.15,-13.0) {Pino solta: DESTRAVADA; verde fixo, bipe duplo};
+        \node[r2bloco, font=\scriptsize, text width=2.2cm, inner sep=2pt] (a12) at (1.3,-14.3) {7. Deposita a etiqueta no Coletor};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (d12) at (10.15,-14.3) {Coletor lê o \texttt{tag\_id}: RECOLHIDA};
+        \node[r2bloco, font=\scriptsize, text width=2.6cm, inner sep=2pt] (b13) at (4.1,-15.6) {Mostra: etiqueta devolvida};
+        % ---------------- tempos ----------------
+        \node[r2rotulo, text width=1.9cm] at (15.1,0) {cerca de 2\,s; até 10\,s no primeiro uso};
+        \node[r2rotulo, text width=1.9cm] at (15.1,-1.3) {livre};
+        \node[r2rotulo, text width=1.9cm] at (15.1,-2.6) {3 a 5\,s (biometria) e 2 a 5\,s (PSP)};
+        \node[r2rotulo, text width=1.9cm] at (15.1,-3.9) {cerca de 15\,s até a confirmação};
+        \node[r2rotulo, text width=1.9cm] at (15.1,-6.5) {anúncio de 30\,s};
+        \node[r2rotulo, text width=1.9cm] at (15.1,-7.8) {1 a 3\,s};
+        \node[r2rotulo, text width=1.9cm] at (15.1,-9.1) {$\leq$ 2\,s (S06)};
+        \node[r2rotulo, text width=1.9cm] at (15.1,-13.0) {$\leq$ 3\,s (E03)};
+        \node[r2rotulo, text width=1.9cm] at (15.1,-14.3) {$\leq$ 5\,s};
+        % ---------------- setas ----------------
+        \draw[r2seta] (a1) -- (b1);
+        \draw[r2seta] (b1) -- (a2);
+        \draw[r2seta] (a2) -- (a3);
+        \draw[r2seta] (a3) -- (b3);
+        \draw[r2seta] (b3) -- (e3);
+        \draw[r2seta] (e3) -- (d4);
+        \draw[r2seta] (d4) -- (b4);
+        \draw[r2seta] (b4) -- (b5);
+        \draw[r2seta] (b5) -- (a5);
+        \draw[r2seta] (a5.south) |- (c6.west);
+        \draw[r2seta] (c6) -- (b7);
+        \draw[r2seta] (b7) -- (b8);
+        \draw[r2seta] (b8) -- (d8);
+        \draw[r2seta] (d8.south) |- (b9.east);
+        \draw[r2seta] (b9) -- (c10);
+        \draw[r2seta] (c10) -- (a11);
+        \draw[r2seta] (a11) -- (c11);
+        \draw[r2seta] (c11) -- (a12);
+        \draw[r2seta] (a12) -- (d12);
+        \draw[r2seta] (d12) -- (b13);
+    \end{tikzpicture}%
+    }
+    \source{Elaborado pelos autores (2026). Tempos estimados pela equipe, a medir no protótipo.}
+\end{figure}
+
+\subsection{Fluxo da Jornada Completa e cenários de exceção}
+
+A parte superior da Figura~\ref{fig:r2-fluxo-completa} mostra a Jornada Completa, que roda no módulo Tag\&Go do app Riachuelo. O cliente entra no app e escolhe a loja, ou lê o QR da entrada; busca a peça e vê o setor em que ela está (nível N1) e a disponibilidade por tamanho; recebe recomendações restritas ao que existe na loja no tamanho do seu perfil; e, se o tamanho procurado faltar, faz o pedido on-line, com retirada na loja sem custo ou entrega sem frete acima de um valor mínimo a definir com a Riachuelo. O setor vem do estoque RFID e do planograma digital, sem depender da etiqueta (Subseção~\ref{sub:r2-localizar}). Em seguida, lê as etiquetas das peças para montar a sacola e paga com o cartão Riachuelo, com a carteira digital ou com Pix. A liberação repete os passos 4 a 7 da Compra Rápida, já que a etiqueta e o protocolo pertencem ao núcleo comum. Depois do registro de ``etiqueta devolvida'', o cashback do Ria Club é creditado, o que amarra o benefício ao retorno da etiqueta, e o app mostra um cartão de sustentabilidade da compra, com estimativas por categoria acompanhadas de faixa e fonte.
+
+A parte inferior da figura trata dos oito cenários de exceção que a meta R07 obriga a cobrir com uma alternativa humana, cada um com a primeira resposta do sistema. A falta de dados móveis (X1), o celular descarregado depois do pagamento (X2) e a etiqueta sem energia ou sem resposta BLE (X3) resolvem-se no Liberador de Balcão, que energiza a etiqueta pelos contatos, entrega o token e conclui a liberação em até 60\,s depois que o funcionário localiza a compra pelo CPF, pelo e-mail da carteira ou pelo número do pedido (S09); no caso X1, o cliente pode ainda usar o Wi-Fi de convidados do Ponto de Apoio, com acesso livre aos domínios da Plataforma e do PSP (S08). O Pix pendente (X4), o token expirado (X5) e o pagamento recusado (X6) resolvem-se no próprio app, e a etiqueta segue TRAVADA até haver pagamento confirmado e token válido. A falha total da eletrônica (X7), cuja frequência deverá ficar em até 0,1\% das liberações, leva à remoção destrutiva no Ponto de Apoio, com registro, e a etiqueta sai do ciclo como REPROVADA. O alarme do pórtico com compra paga (X8) é atendido com discrição, e o app mostra o comprovante, o que responde à necessidade de concluir a compra sem constrangimento registrada no Relatório 1. Em todos os casos, o Ponto de Apoio é a última instância, o que garante os 100\% de R07.
+
+Os cenários X1 e X2 aplicam a regra de conectividade da Subseção~\ref{sub:r2-caminhos}: a etiqueta não precisa de rede, e o celular sem dados ou sem bateria leva a compra ao Ponto de Apoio.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Fluxo da Jornada Completa e cenários de exceção}
+    \label{fig:r2-fluxo-completa}
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[font=\scriptsize]
+        % ---------------- Jornada Completa ----------------
+        \node[font=\footnotesize, text=r2azul] at (7.9,1.2) {Jornada Completa (módulo Tag\&Go do app Riachuelo)};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (j1) at (1.5,0) {Entra no app e escolhe a loja (ou lê o QR da entrada)};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (j2) at (4.7,0) {Busca a peça: setor (N1) e disponibilidade por tamanho};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (j3) at (7.9,0) {Recomendações da loja no tamanho do perfil};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (j4) at (11.1,0) {Lê as etiquetas e monta a sacola};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (j5) at (14.3,0) {Paga: cartão Riachuelo, carteira ou Pix};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (j6) at (14.3,-1.9) {Libera a etiqueta (passos 4 a 7 da Compra Rápida)};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (j7) at (11.1,-1.9) {Cashback do Ria Club após etiqueta devolvida};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (j8) at (7.9,-1.9) {Cartão de sustentabilidade da compra, por categoria};
+        \node[r2neutro, font=\scriptsize, text width=2.5cm, inner sep=2pt] (jo) at (4.7,-1.9) {Pedido on-line do tamanho ausente: retirada sem custo ou entrega sem frete};
+        \draw[r2seta] (j1) -- (j2);
+        \draw[r2seta] (j2) -- (j3);
+        \draw[r2seta] (j3) -- (j4);
+        \draw[r2seta] (j4) -- (j5);
+        \draw[r2seta] (j5) -- (j6);
+        \draw[r2seta] (j6) -- (j7);
+        \draw[r2seta] (j7) -- (j8);
+        \draw[r2setafina, dashed] (j2) -- node[r2rotulo, left] {falta o\\ tamanho} (jo);
+        % ---------------- cenarios de excecao ----------------
+        \node[font=\footnotesize, text=r2azul] at (7.9,-3.3) {Cenários de exceção (R07: alternativa humana em 100\% dos cenários)};
+        \node[shape=diamond, draw=r2azul, fill=r2azulclaro, font=\scriptsize, inner sep=1pt, minimum size=8mm] (x1) at (0.55,-4.2) {X1};
+        \node[shape=diamond, draw=r2azul, fill=r2azulclaro, font=\scriptsize, inner sep=1pt, minimum size=8mm] (x2) at (0.55,-5.2) {X2};
+        \node[shape=diamond, draw=r2azul, fill=r2azulclaro, font=\scriptsize, inner sep=1pt, minimum size=8mm] (x3) at (0.55,-6.2) {X3};
+        \node[shape=diamond, draw=r2azul, fill=r2azulclaro, font=\scriptsize, inner sep=1pt, minimum size=8mm] (x4) at (0.55,-7.2) {X4};
+        \node[shape=diamond, draw=r2azul, fill=r2azulclaro, font=\scriptsize, inner sep=1pt, minimum size=8mm] (x5) at (0.55,-8.2) {X5};
+        \node[shape=diamond, draw=r2azul, fill=r2azulclaro, font=\scriptsize, inner sep=1pt, minimum size=8mm] (x6) at (0.55,-9.2) {X6};
+        \node[shape=diamond, draw=r2azul, fill=r2azulclaro, font=\scriptsize, inner sep=1pt, minimum size=8mm] (x7) at (0.55,-10.2) {X7};
+        \node[shape=diamond, draw=r2azul, fill=r2azulclaro, font=\scriptsize, inner sep=1pt, minimum size=8mm] (x8) at (0.55,-11.2) {X8};
+        \node[r2bloco, font=\scriptsize, text width=7.4cm, minimum height=7mm, inner sep=2pt, align=left] (b1) at (5.35,-4.2) {Sem dados móveis: QR do Wi-Fi de convidados (S08) ou pagamento no Ponto de Apoio};
+        \node[r2bloco, font=\scriptsize, text width=7.4cm, minimum height=7mm, inner sep=2pt, align=left] (b2) at (5.35,-5.2) {Celular descarregou após o pagamento: o funcionário localiza a compra e libera no Liberador de Balcão};
+        \node[r2bloco, font=\scriptsize, text width=7.4cm, minimum height=7mm, inner sep=2pt, align=left] (b3) at (5.35,-6.2) {Etiqueta sem energia ou sem resposta BLE: o Liberador energiza e entrega o token pelos contatos};
+        \node[r2bloco, font=\scriptsize, text width=7.4cm, minimum height=7mm, inner sep=2pt, align=left] (b4) at (5.35,-7.2) {Pix pendente: o app aguarda o webhook; a etiqueta segue TRAVADA};
+        \node[r2bloco, font=\scriptsize, text width=7.4cm, minimum height=7mm, inner sep=2pt, align=left] (b5) at (5.35,-8.2) {Token expirado (nonce com mais de 120\,s): o app pede novo desafio automaticamente};
+        \node[r2bloco, font=\scriptsize, text width=7.4cm, minimum height=7mm, inner sep=2pt, align=left] (b6) at (5.35,-9.2) {Pagamento recusado: a etiqueta segue TRAVADA e o app oferece outro meio};
+        \node[r2bloco, font=\scriptsize, text width=7.4cm, minimum height=7mm, inner sep=2pt, align=left] (b7) at (5.35,-10.2) {Falha total da eletrônica ($\leq$ 0,1\% das liberações): remoção destrutiva, com registro; etiqueta REPROVADA};
+        \node[r2bloco, font=\scriptsize, text width=7.4cm, minimum height=7mm, inner sep=2pt, align=left] (b8) at (5.35,-11.2) {Alarme no pórtico com compra paga: atendimento discreto; o app mostra o comprovante};
+        \node[r2destaque, font=\scriptsize, text width=4.4cm, inner sep=3pt] (ap) at (12.9,-7.7) {Ponto de Apoio com Liberador de Balcão\\ o funcionário localiza a compra (CPF, e-mail da carteira ou número do pedido), energiza a etiqueta pelos contatos e entrega o token (S09: $\leq$ 60\,s)};
+        \foreach \i in {1,...,8} {\draw[r2setafina] (x\i.east) -- (b\i.west);}
+        \foreach \i in {1,...,8} {\draw[r2cinza] (b\i.east) -- (9.6,-3.2-\i);}
+        \draw[r2cinza] (9.6,-4.2) -- (9.6,-11.2);
+        \draw[r2seta] (9.6,-7.7) -- (ap.west);
+        \draw[r2setafina, dashed] (j6.south) -- node[r2rotulo, right] {falha em\\ qualquer passo} (ap.north);
+    \end{tikzpicture}%
+    }
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+
+\subsection{Segurança da autorização}
+
+A segurança do conceito parte de uma premissa conservadora: o celular do cliente é tratado como um retransmissor não confiável. Ele leva mensagens entre a etiqueta e a Plataforma, sem guardar nenhum segredo capaz de abrir a etiqueta, e a decisão de liberar é tomada pela própria etiqueta, que confere uma autorização emitida pela Plataforma para um desafio que ela mesma gerou. O protocolo tem sete passos. Na leitura, a URL traz só o \texttt{tag\_id}, e o serviço Itens e Carrinho resolve o \texttt{tag\_id} no EPC da peça e o EPC no SKU e no preço; o preço vem sempre do EPC. No pagamento, o canal paga pelo serviço Pagamento, por meio do PSP e das carteiras tokenizadas, e, confirmada a transação, a Plataforma grava a peça como vendida no estoque RFID (S07). No desafio, o cliente aperta o botão, e a etiqueta acorda, gera um nonce de 128 bits com o gerador aleatório do chip e o expõe por GATT, sem pareamento.
+
+Na emissão, o celular envia ao serviço Autorização o \texttt{tag\_id}, o nonce e o identificador da transação. A Plataforma confere que o pagamento foi confirmado, que a associação entre o \texttt{tag\_id} e o EPC está vigente e que essa transação ainda não liberou a etiqueta; em seguida, deriva no HSM a chave da etiqueta a partir de uma chave mestra e calcula o token:
+\begin{equation}
+    K_{\text{tag}} = \text{HMAC}\left(K_{\text{mestra}},\ \text{tag\_id}\right)
+\end{equation}
+\begin{equation}
+    \text{token} = \text{HMAC-SHA256}\left(K_{\text{tag}},\ \text{tag\_id} \,\|\, \text{EPC} \,\|\, \text{nonce} \,\|\, \text{transação}\right)
+\end{equation}
+
+Na validação, a etiqueta recalcula o HMAC no periférico dedicado do ESP32-C3, com a chave gravada no eFuse protegido contra leitura, que calcula o HMAC-SHA256 sem expor a chave ao software \cite{espressif2026hmac}. Ela confere também que o nonce é o atual e tem menos de 120\,s, medidos pelo relógio da própria etiqueta enquanto está acordada, o que dispensa hora absoluta, e aceita o token uma única vez. Na liberação, com o segundo aperto do botão, o pino solta, e a etiqueta descarta o nonce e registra o evento. Na devolução, no estado DESTRAVADA, a etiqueta anuncia por 10\,min para que o Coletor registre o \texttt{tag\_id} e depois entra em modo transporte, com o botão desativado; a partir daí, só acorda pelos contatos da Bandeja de Recarga ou do Liberador de Balcão.
+
+O mesmo protocolo funciona sem o celular. No Liberador de Balcão, a etiqueta é energizada pelos contatos, e os passos de desafio, emissão, validação e liberação passam pela interface serial dos contatos. Nesse caso, quem pede o token à Plataforma é o próprio Liberador, dispositivo autenticado da loja, depois do pagamento no PDV ou de o funcionário localizar a compra feita pelo celular. A equipe manteve, assim, uma única regra de autorização para o fluxo principal e para as exceções, o que simplifica a auditoria: toda emissão de token e toda liberação ficam registradas com \texttt{tag\_id}, EPC, transação e horário (S10), à semelhança das travas eletrônicas de expositores com trilha de auditoria \cite{invue2026locks}.
+
+A Tabela~\ref{tab:r2-ameacas} relaciona as ameaças que a equipe considerou e a resposta do projeto a cada uma. Ela servirá de roteiro para o ensaio de ataque de R06, que exige zero liberações sem pagamento confirmado em pelo menos 200 tentativas.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Ameaças à liberação autorizada e respostas do projeto}
+    \label{tab:r2-ameacas}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{5.0cm}
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Ameaça} & \textbf{Resposta do projeto} \\
+        \midrule
+        Celular modificado forja o token & o celular não tem a chave; atua só como retransmissor não confiável \\
+        Repetição de um token já usado & nonce novo a cada despertar; token de uso único, válido por 120\,s \\
+        Token de uma etiqueta usado em outra & chave e \texttt{tag\_id} próprios de cada etiqueta \\
+        Troca de etiqueta entre peças (peça cara com a etiqueta de uma barata) & associação entre \texttt{tag\_id} e EPC no cadastro; preço sempre pelo EPC; pórtico RFID alarma se o EPC da peça que sai não estiver vendido \\
+        Destacador magnético & carretel não ferromagnético (E11) \\
+        Firmware trocado & Secure Boot v2 e criptografia da flash \\
+        Leitura física da chave & eFuse protegido contra leitura; o periférico HMAC não expõe a chave \\
+        Retransmissão do BLE a distância & sem efeito: o token só vale para o nonce daquela etiqueta, e a liberação exige o botão físico \\
+        Estorno ou chargeback depois da liberação & risco financeiro residual; antifraude do PSP e carteiras tokenizadas \\
+        Devolução da peça pelo cliente & a peça volta sem etiqueta; estoque de exceção de etiquetas LIVRE (até 1\% da frota), cadastradas no Liberador em modo cadastro, ou revenda só com o RFID \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026) com base em \citeonline{espressif2026hmac} e \citeonline{espressif2026secureboot}.}
+\end{table}
+
+A escolha de HMAC com chave simétrica por etiqueta, em lugar de uma assinatura ECDSA, seguiu o hardware disponível. O ESP32-C3 tem periférico HMAC com chave em eFuse, Secure Boot v2 e criptografia da flash, e não lista acelerador dedicado de curvas elípticas \cite{espressif2026esp32c3, espressif2026secureboot}; como o tempo de uma verificação ECDSA nesse chip não foi medido, a equipe não o usou como critério. A derivação da chave por etiqueta limita o dano de um vazamento, já que quem extrair a chave de uma etiqueta conseguirá abrir apenas aquela etiqueta. Dois riscos ficam fora do alcance da criptografia e aparecem na tabela como residuais: o estorno depois da liberação, uma janela que o caixa com funcionário não tem, e a devolução da peça, que exige um pequeno estoque de etiquetas livres na loja.
+
+\subsection{Ciclo da etiqueta e logística reversa}
+\label{sub:r2-ciclo}
+
+A Figura~\ref{fig:r2-ciclo} mostra o ciclo fechado da etiqueta, com os estados e as etapas logísticas. A etiqueta chega LIVRE à Estação de Cadastro, onde é fixada na peça e associada ao EPC dela, e passa a TRAVADA. Com um token válido, passa a AUTORIZADA; com o botão, a DESTRAVADA; e, se passarem 120\,s sem o botão, volta a TRAVADA. O registro no Coletor de Etiquetas ou no Liberador de Balcão a leva a RECOLHIDA, e a aprovação na Bancada de Inspeção, seguida da recarga na Bandeja de Recarga, a devolve a LIVRE. A etiqueta reprovada na Bancada sai do ciclo como REPROVADA. O estado oficial vive no serviço Ciclo da Etiqueta; a etiqueta guarda só a condição da trava, o que evita divergência entre o registro da Plataforma e o que cada unidade informa.
+
+O cadastro foi levado para a origem, prática conhecida como \textit{source tagging}, que pode ocorrer no fabricante, no armazém, no CD ou na loja \cite{sensormatic2025sourcetagging}. A equipe definiu dois ramos. No ramo fábrica, as peças próprias, cerca de 40\% do volume vendido pela rede \cite{bloomberglinea2026riachuelo}, recebem a etiqueta e o cadastro no fim da linha da fábrica de Natal, junto ao leitor RFID de expedição que existe desde o início do projeto com a Mozaiko \cite{tiinside2022riachuelo}. No ramo CD, as peças de fornecedores nacionais e importadas, cerca de 60\%, são etiquetadas no CD de Guarulhos, de Natal ou de Manaus, na separação para a loja. A equipe preferiu a separação ao recebimento para reduzir o tempo de etiqueta parada no CD, que entra diretamente no tamanho da frota. Com os dois ramos, a loja deixa de etiquetar e de cadastrar. O ganho para a loja é tempo, não custo total zero: aplicar a etiqueta custa R\$~0,14 por peça na origem (estimativa da equipe), o mesmo que na loja.
+
+Da origem, a etiqueta viaja presa à peça no caminhão da frota própria até a loja \cite{bloomberglinea2026riachuelo, folhape2023guararapes}, onde permanece até a venda. Depois da liberação pelo cliente, ela vai ao Coletor; quando a compra passa pelo caixa, é liberada no Liberador e guardada no caixa do PDV. As etiquetas recolhidas voltam ao CD no Malote de Retorno, no retorno do mesmo caminhão, à semelhança da recirculação de etiquetas rígidas que a Sensormatic faz com o \textit{back-haul} dos caminhões \cite{sensormatic2024recirculacao}. No CD, a Bancada de Inspeção testa botão, LED, buzzer, BLE, motor, célula e firmware, verifica a retenção por amostragem, limpa e faz a triagem; a Bandeja de Recarga recarrega 20 etiquetas por vez, em cerca de 2\,h; e a etiqueta aprovada entra na fila da Estação de Cadastro. A meta é concluir o recondicionamento em até 2 dias úteis, com pelo menos 60 etiquetas por hora por posto (S03), e reprovar no máximo 2\% das etiquetas por ciclo (E10).
+
+Três pontos de perda foram marcados na figura. P1 é a saída do cliente com a etiqueta na sacola; P2, o extravio entre o Coletor ou o caixa e o malote; e P3, a perda no malote e no transporte. A resposta a P2 e a P3 é de controle: caixa trancado, conferência por \texttt{tag\_id} das etiquetas liberadas no Liberador, lacre numerado no malote e conferência no despacho e no recebimento. O ponto P1 depende do comportamento do cliente e é tratado pelos mecanismos M1 a M4, que sustentam a meta de retorno de 99\% (S01), contra a faixa de 80\% a 83\% observada na recirculação de etiquetas rígidas \cite{pact2026etiquetas, sensormatic2024recirculacao}. O efeito econômico de não atingir a meta está na Figura~\ref{fig:r2-custo-uso}, da Seção~\ref{sec:r2-valor}.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Ciclo da etiqueta e logística reversa}
+    \label{fig:r2-ciclo}
+    \resizebox{\textwidth}{!}{%
+    \begin{tikzpicture}[font=\scriptsize]
+        % ---------------- cadastro na origem ----------------
+        \node[r2rotulo, text=r2azul] at (0,6.4) {Estação de Cadastro: LIVRE $\rightarrow$ TRAVADA};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (rf) at (0,5.3) {Ramo fábrica\\ fim da linha de Natal\\ peças próprias (cerca de 40\%)};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (rc) at (0,3.5) {Ramo CD\\ Guarulhos, Natal ou Manaus\\ na separação (cerca de 60\%)};
+        % ---------------- ida ----------------
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (or) at (3.6,4.4) {Origem, já etiquetada\\ TRAVADA};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (tr) at (6.9,4.4) {Trânsito CD-loja\\ frota própria};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (lj) at (10.2,4.4) {Loja até a venda\\ TRAVADA};
+        \node[r2destaque, font=\scriptsize, text width=2.6cm, inner sep=2pt] (vd) at (13.7,2.2) {Venda\\ token válido: AUTORIZADA\\ botão: DESTRAVADA};
+        % ---------------- volta ----------------
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (co) at (10.2,0) {Coletor ou Liberador\\ RECOLHIDA};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (ma) at (6.9,0) {Malote de Retorno\\ modo transporte};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (bi) at (3.6,0) {Bancada de Inspeção e Bandeja de Recarga};
+        \node[r2bloco, font=\scriptsize, text width=2.5cm, inner sep=2pt] (fi) at (0,0) {Fila para cadastro\\ LIVRE};
+        \node[r2neutro, font=\scriptsize, text width=3.0cm, inner sep=2pt] (rp) at (3.6,-2.2) {REPROVADA\\ desmontagem; célula e placa ao reciclador licenciado (PNRS)};
+        % ---------------- tempos e etiquetas por etapa ----------------
+        \node[r2rotulo] at (3.6,5.1) {10\,d; 680 etiquetas};
+        \node[r2rotulo] at (6.9,5.1) {3\,d; 204 etiquetas};
+        \node[r2rotulo] at (10.2,5.1) {60\,d; 4.080 etiquetas};
+        \node[r2rotulo] at (10.2,0.65) {2\,d; 136 etiquetas};
+        \node[r2rotulo] at (6.9,0.65) {4\,d; 272 etiquetas};
+        \node[r2rotulo] at (3.6,0.65) {2\,d; 136 etiquetas};
+        \node[r2rotulo] at (0,-0.7) {3\,d; 204 etiquetas};
+        % ---------------- nota central ----------------
+        \node[r2neutro, font=\scriptsize, text width=5.6cm, inner sep=3pt, align=left] at (6.9,2.2) {Reserva ($k = 1{,}2$): 1.142 etiquetas\\ Frota: $N = 6.854$ etiquetas por loja\\ M1 elemento EAS ativo na etiqueta solta\\ M2 Coletor antes do pórtico\\ M3 etiqueta devolvida libera o cashback\\ M4 liberação junto ao Coletor (a testar)};
+        % ---------------- pontos de perda ----------------
+        \node[text=r2laranja, font=\scriptsize, anchor=west, align=left] at (13.8,0.9) {P1 cliente sai\\ com a etiqueta};
+        \node[text=r2laranja, font=\scriptsize] at (10.2,-0.85) {P2 Coletor e caixa};
+        \node[text=r2laranja, font=\scriptsize] at (6.9,-0.85) {P3 malote e transporte};
+        % ---------------- setas ----------------
+        \draw[r2seta] (rf.east) -- ++(0.5,0) |- (or.west);
+        \draw[r2seta] (rc.east) -- ++(0.5,0) |- (or.west);
+        \draw[r2seta] (or) -- (tr);
+        \draw[r2seta] (tr) -- (lj);
+        \draw[r2seta] (lj.east) -| (vd.north);
+        \draw[r2seta] (vd.south) |- (co.east);
+        \draw[r2seta] (co) -- (ma);
+        \draw[r2seta] (ma) -- (bi);
+        \draw[r2seta] (bi) -- (fi);
+        \draw[r2seta] (fi.north) -- (rc.south);
+        \draw[r2seta] (fi.west) -- ++(-0.35,0) |- (rf.west);
+        \draw[r2setafina] (bi.south) -- (rp.north);
+        \draw[r2setafina] (vd.west) -| node[r2rotulo, pos=0.25, above] {120\,s sem botão} (lj.south);
+    \end{tikzpicture}%
+    }
+    \source{Elaborado pelos autores (2026). Tempos e quantidades por loja no caso base, estimados pela equipe.}
+\end{figure}
+
+A frota por loja foi dimensionada pela lei de Little, a partir da composição do ciclo médio T por etapa. Os tempos são premissas da equipe:
+\begin{equation}
+    T = 10 + 3 + 60 + 2 + 4 + 2 + 3 = 84 \text{ dias}
+\end{equation}
+\begin{equation}
+    N = S \times T \times k = 68 \times 84 \times 1{,}2 \approx 6.854 \text{ etiquetas por loja}
+\end{equation}
+Nessas expressões, S são as 68 liberações diárias de uma loja padrão, isto é, 10\% das 682 peças vendidas por dia, fração de peças com etiqueta rígida adotada como premissa, e o fator k de 1,2 é uma reserva para variabilidade e perdas no processo. As parcelas de T seguem a ordem das etapas da Figura~\ref{fig:r2-ciclo}, e os 10 dias na origem são a média ponderada de 20 dias no ramo fábrica e de 3 dias no ramo CD. A permanência de 60 dias em loja é a premissa mais incerta: ela equivale a cerca de dois terços do prazo médio de estoques de 95 dias da Renner no 4T25 \cite{renner2026resultados}, adotado como âncora porque o indicador da Riachuelo não foi verificado.
+
+A Figura~\ref{fig:r2-frota} mostra onde a frota está em cada momento. A loja concentra 4.080 etiquetas (59,5\%), seguida da reserva, com 1.142 (16,7\%), e do estoque na origem, com 680 (9,9\%); as etapas de transporte, coleta, inspeção e fila somam os 13,9\% restantes. A equipe concluiu, a partir dessa composição, que, entre as etapas do ciclo, a que mais pesa no tamanho da frota é o tempo em loja, e que encurtar a logística reversa teria efeito pequeno: com permanência de 40 dias, T cai para 64 dias e a frota para 5.222 etiquetas; com 95 dias, T sobe para 119 dias e a frota para 9.710. Fora do ciclo, a fração de peças etiquetadas tem efeito ainda maior, com 3.427 etiquetas para 5\% das peças e 13.709 para 20\%. Por isso, a recomendação de usar o Tag\&Go nas peças de giro rápido que hoje já recebem etiqueta rígida, discutida na Seção~\ref{sec:r2-valor}, reduz diretamente a frota. Com o ciclo de 84 dias e a reserva, cada etiqueta faz cerca de 3,62 ciclos por ano, ou 18,1 ciclos em 5 anos de vida (E10), e é esse número, e não a resistência do mecanismo, que limita os usos de cada unidade.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Composição da frota por etapa do ciclo}
+    \label{fig:r2-frota}
+    \begin{tikzpicture}
+        \begin{axis}[
+            r2eixo,
+            xbar,
+            ymajorgrids=false,
+            xmajorgrids,
+            width=0.72\textwidth,
+            height=7.5cm,
+            xmin=0, xmax=5000,
+            scaled x ticks=false,
+            xtick={0,1000,2000,3000,4000,5000},
+            ytick={1,2,3,4,5,6,7,8},
+            yticklabels={Reserva para variabilidade, Fila para cadastro, Inspeção e recarga, Retorno loja-CD, Coletor até o malote, Loja até a venda, Trânsito CD-loja, Origem já etiquetada},
+            enlarge y limits=0.08,
+            bar width=4mm,
+            point meta=x,
+            nodes near coords,
+            nodes near coords align={horizontal},
+            nodes near coords style={font=\footnotesize},
+            xlabel={Etiquetas por loja (caso base)},
+            title={N = 6.854 etiquetas por loja},
+            title style={font=\footnotesize},
+        ]
+            \addplot[bar shift=0pt, fill=r2azulmedio, draw=r2azul] coordinates {(680,8) (204,7) (4080,6) (136,5) (272,4) (136,3) (204,2)};
+            \addplot[bar shift=0pt, fill=r2cinza, draw=r2cinza] coordinates {(1142,1)};
+            \node[anchor=south east, font=\footnotesize, align=right] at (rel axis cs:0.98,0.04) {faixa: 5.222 (40 dias em loja)\\ a 9.710 (95 dias em loja)};
+        \end{axis}
+    \end{tikzpicture}
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+
+O transporte das etiquetas exige cuidado porque cada uma leva uma célula de lítio. A etiqueta viajará em modo transporte, com o botão desativado e despertar apenas pelos contatos, com a célula instalada, em caixa rígida com divisórias antiestáticas e identificação de baterias de lítio instaladas em equipamento (UN 3481). Para Manaus, a equipe recomenda o modal rodofluvial; se o transporte for aéreo, deverá seguir a instrução de embalagem para baterias instaladas em equipamento, com a carga reduzida.
+
+No fim de vida, a etiqueta REPROVADA será desmontada na Bancada de Inspeção. A carcaça e o mecanismo serão reaproveitados quando possível, e a célula e a placa seguirão como resíduo eletroeletrônico para um reciclador licenciado, em linha com a Política Nacional de Resíduos Sólidos, que exige sistemas de logística reversa para pilhas e baterias e para produtos eletroeletrônicos \cite{brasil2010pnrs}. O Decreto 10.240/2020 trata de eletroeletrônicos de uso doméstico \cite{brasil2020decreto} e, na interpretação da equipe, que não constitui parecer jurídico, não se aplica diretamente a um ativo corporativo como a etiqueta.
+
+\subsection{Plano macro de processo}
+
+A fabricação da etiqueta seguirá sete etapas: injeção das duas carcaças; montagem SMT da placa única; montagem da garra, do cursor, do came e do micromotor; gravação do firmware com Secure Boot e criptografia da flash; gravação, no eFuse, da chave da etiqueta derivada no HSM; teste final de rádio, motor e retenção; e homologação na Anatel. A gravação da chave é a etapa mais sensível do processo, porque a chave mestra não pode sair do HSM, e por isso deverá ocorrer num posto controlado, com registro de cada \texttt{tag\_id} gravado. A operação, por sua vez, repete o ciclo da Figura~\ref{fig:r2-ciclo}: cadastro na origem, permanência na loja, recolhimento, malote, inspeção, recarga, fila e novo cadastro. Materiais, tolerâncias de fabricação e tempos de cada operação serão detalhados no Relatório 3, junto com as cotações de volume da célula, do micromotor e do molde.
