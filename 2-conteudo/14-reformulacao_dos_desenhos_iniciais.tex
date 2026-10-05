@@ -6,16 +6,16 @@ A reformulação seguiu o procedimento de \citeonline{rozenfeld2006gestao} para 
 \subsection{Matriz morfológica}
 \label{subsec:reform_matriz}
 
-A matriz morfológica dispõe as funções nas linhas e os princípios de solução nas colunas, e cada caminho que liga um princípio por linha forma uma alternativa de concepção \cite{rozenfeld2006gestao}. Como o procedimento recomenda trabalhar com até dez funções, a equipe levou à matriz as seis em que a Galeria apontou mais de um princípio viável (Figura~\ref{fig:reform_matriz}). As outras doze ficaram fora da matriz por dois motivos. Parte delas, como comparar a peça com a transação e registrar o vínculo, depende de onde a função será executada (no dispositivo, na loja ou no servidor), decisão de arquitetura que não altera a forma do dispositivo. Outra parte, como informar o estado da peça ao antifurto existente, depende de informações que a Riachuelo ainda não forneceu. Nessas funções, a equipe adotou o princípio da Tabela~\ref{tab:aprov_sintese} em todas as alternativas.
+A matriz morfológica dispõe as funções nas linhas e os princípios de solução nas colunas, e cada caminho que liga um princípio por linha forma uma alternativa de concepção \cite{rozenfeld2006gestao}. Como o procedimento recomenda trabalhar com até dez funções, a equipe levou à matriz as sete que definem a forma do dispositivo e em que a Galeria apontou mais de um princípio viável (Figura~\ref{fig:reform_matriz}). As outras onze ficaram fora da matriz por dois motivos. Parte delas, como comparar a peça com a transação e registrar o vínculo, depende de onde a função será executada (no dispositivo, na loja ou no servidor), decisão de arquitetura que não altera a forma do dispositivo. Outra parte, como informar o estado da peça ao antifurto existente, depende de informações que a Riachuelo ainda não forneceu. Nessas funções, a equipe adotou o princípio da Tabela~\ref{tab:aprov_sintese} em todas as alternativas.
 
 \begin{figure}[p]
     \centering
-    \caption{Matriz morfológica das seis funções com mais de um princípio de solução viável}
-    \includegraphics[width=\textwidth]{imagens/reformulacao_desenhos/matriz_morfologica.png}
+    \caption{Matriz morfológica das sete funções com mais de um princípio de solução viável}
+    \includegraphics[width=0.88\textwidth]{imagens/reformulacao_desenhos/matriz_morfologica.png}
     \label{fig:reform_matriz}
     \source{Elaborado pelos autores (2026), a partir dos cartões da Galeria.}
 \end{figure}
 
-Cada linha reúne quatro princípios, identificados pelo código do cartão de origem. Dos 24 princípios, 18 foram avaliados como consistentes na Galeria e seis ficaram a aprofundar, três deles marcados para explorar. Nenhum portador avaliado como problema entrou na matriz. Os princípios de uma mesma linha estão no mesmo nível de generalidade, e nenhum deles fixa material ou dimensão.
+Cada linha reúne quatro princípios, identificados pelo código do cartão de origem. Dos 28 princípios, 22 foram avaliados como consistentes na Galeria e seis ficaram a aprofundar, dois deles marcados para explorar. Nenhum portador avaliado como problema entrou na matriz. Os princípios de uma mesma linha estão no mesmo nível de generalidade, e nenhum deles fixa material ou dimensão.
 
 As dependências registradas na Galeria restringem as combinações. A mola com gatilho e o botão com pino de segurança pedem um atuador pequeno, o que os torna compatíveis com a célula de menor capacidade. O solenoide e o micromotor consomem mais em cada acionamento e pedem a célula recarregável ou o supercapacitor. O destravador magnético e a chave mecânica dependem de um funcionário, e por isso servem como via de liberação da equipe, combinada com um dos outros dois princípios da linha.
