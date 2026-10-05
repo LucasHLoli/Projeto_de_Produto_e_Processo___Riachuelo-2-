@@ -58,3 +58,40 @@ A alternativa 2 reúne os princípios que as notas da Galeria apontaram como os 
 A alternativa 3 dispensa a perfuração do tecido. A garra com came excêntrica e os mordentes de face macia prendem a peça por aperto, e o comprador fornece a força de abertura ao apertar o botão, que só se move depois que um pino de segurança é retirado. A identificação e a autorização ocorrem pelo mesmo toque do celular, e a célula primária é trocada no fim da vida útil. É a alternativa de menor consumo e a de maior incerteza: a retenção por aperto ainda depende de ensaio de segurança, e a célula primária exige troca.
 
 Nas três alternativas, o destravador magnético ou a chave mecânica permanece como via de liberação da equipe, para os casos em que o celular do comprador falhar. As onze funções fora da matriz usam os mesmos princípios nas três.
+
+\subsection{Escolha da alternativa}
+\label{subsec:reform_escolha}
+
+A alternativa 2 obteve a maior nota na matriz de decisão, 4,00 em 5, e foi adotada como base do desenho reformulado (Tabela~\ref{tab:reform_decisao}). A equipe comparou as três alternativas por seis critérios, cada um com um peso, e atribuiu notas de 1 (pior) a 5 (melhor). A nota final de cada alternativa é a soma das notas multiplicadas pelos pesos.
+
+Os critérios vieram de seções anteriores. A segurança da retenção, o tamanho e a massa e o reuso são qualificadores no estudo de diferenciação (Seção~\ref{sec:estudo_diferenciacao}). A facilidade de uso corresponde aos requisitos de clareza do fluxo e de conclusão da compra sem funcionário (Tabela~\ref{tab:requisitos}). O consumo de energia decorre das revisões da Galeria, e a preservação da peça é uma das funções de estima da modelagem funcional. A segurança da retenção recebeu o maior peso porque, sem ela, o dispositivo deixa de cumprir a função antifurto.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Matriz de decisão das alternativas de concepção}
+    \label{tab:reform_decisao}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{3.1cm}
+        c c c c
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Critério} & \textbf{Peso} & \textbf{Alt. 1} & \textbf{Alt. 2} & \textbf{Alt. 3} & \textbf{Justificativa das notas} \\
+        \midrule
+        Segurança da retenção & 25\% & 5 & 5 & 2 & O pino com embreagem de esferas é o princípio consolidado. A garra por aperto depende de ensaio de segurança \\
+        Consumo de energia & 20\% & 2 & 4 & 5 & O solenoide e a escuta por rádio consomem mais. Na alternativa 2, a mola fornece a força. Na 3, o comprador a fornece \\
+        Tamanho e massa & 15\% & 2 & 3 & 3 & O solenoide pede célula maior. A alternativa 2 leva a bobina de recarga, e a 3, os mordentes de área ampla \\
+        Facilidade de uso pelo comprador & 15\% & 5 & 4 & 3 & Na alternativa 1, a peça é liberada sem novo gesto. Na 2, o comprador encosta o celular. Na 3, encosta o celular e aperta o botão \\
+        Facilidade de reuso na loja & 15\% & 3 & 4 & 2 & A indução recarrega sem contato, mas a mola precisa ser armada a cada reuso. A célula primária exige troca \\
+        Preservação da peça & 10\% & 3 & 3 & 5 & As alternativas 1 e 2 perfuram o tecido. A 3 prende sem furo e com face macia \\
+        \midrule
+        Nota final & 100\% & 3,45 & 4,00 & 3,20 & \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+A alternativa 2 superou a alternativa 1 no consumo de energia, no tamanho e no reuso, e empatou com ela na segurança, porque as duas usam o pino com embreagem de esferas. A alternativa 1 teve a melhor nota em facilidade de uso, e a equipe aceitou a perda nesse critério: o toque do celular acrescenta um gesto, mas dispensa a escuta contínua por rádio e prova que o comprador está junto da peça. A alternativa 3 ficou em último lugar por causa da segurança da retenção, embora tenha as melhores notas em consumo e em preservação da peça.
+
+As notas são avaliações da equipe a partir das revisões da Galeria e das referências de cada princípio. Nenhuma alternativa foi construída ou ensaiada. O resultado se mantém quando o peso da preservação da peça é dobrado, caso em que a alternativa 2 continua à frente. Ele muda se a garra com came excêntrica alcançar, em ensaio, a mesma segurança do pino: nesse caso a alternativa 3 chegaria a 3,95 e praticamente empataria com a alternativa 2. Por isso, o ensaio de retenção da garra ficou registrado como verificação para a etapa do protótipo.
