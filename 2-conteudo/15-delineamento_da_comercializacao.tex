@@ -1,0 +1,58 @@
+\section{Delineamento da comercialização/distribuição}\label{sec:delineamento_comercializacao}
+
+
+
+
+Durante o desenvolvimento do projeto, é interessante que quatro processos de negócio de apoio à comercialização, isto é, vendas, distribuição, atendimento ao cliente e assistência técnica, estejam desenhados e implantados antes de o produto chegar ao mercado \cite{rozenfeld2006gestao}. Para cada um deles, há a mesma sequência de tarefas: desenhar o processo, adquirir os recursos necessários, desenvolver a documentação e os sistemas de apoio, contratar e treinar o pessoal e implantar o processo, o que inclui um período de adaptação e correção dos problemas que surgirem. O desenho da distribuição é feito de forma integrada ao da produção, das vendas e da assistência técnica. Por isso, as seis decisões desta seção (canais, pontos de venda, condições de comercialização, cobertura geográfica, distribuição física e assistência técnica) foram tratadas como partes de um único arranjo, e cada informação aparece em apenas um dos tópicos.
+
+
+
+\subsection{Determinação dos canais de venda}
+
+Segundo Rozenfeld et al. \cite{rozenfeld2006gestao}, a escolha do canal define quanto contato a empresa mantém com o cliente no momento da compra. A tecnologia da informação permite hoje a venda direta em setores que antes dependiam de intermediários, e essa proximidade devolve à empresa informação sobre o comportamento do cliente, que alimenta o marketing e o desenvolvimento de produtos. 
+
+Aplicado ao projeto, o canal principal é a venda direta, do tipo \textit{key account}, à Riachuelo. Duas características do contexto sustentam essa escolha. Primeiro, o número de compradores potenciais é pequeno: o segmento-alvo se resume a Renner, Riachuelo e C\&A, e o mercado obtível no curto prazo é a própria Riachuelo, de modo que não há pulverização que justifique atacado. Segundo, o produto exige integração com a detecção na saída (R18), com o meio de pagamento (R03) e com o estoque (R02), e um intermediário revendedor não teria como se responsabilizar por essa integração. A venda direta mantém ainda o contato com o cliente e com os dados de desempenho do dispositivo, condição para o desenvolvimento contínuo do produto.
+
+Os demais canais foram descartados ou relegados a papel complementar. O atacado não se aplica pelas razões acima. As franquias não fazem sentido como canal de venda do dispositivo, pois o comprador é o varejista. A internet, como canal de venda do hardware, também foi descartada, porque um dispositivo de segurança patrimonial com integração de sistemas não é adquirido por catálogo. A internet permanece, porém, como canal do consumidor, já que o aplicativo é o meio pelo qual ele identifica a peça e paga. Como hipótese para a expansão a outras redes, a equipe considera parcerias com integradores de sistemas antifurto, aos quais poderiam caber instalação e manutenção locais. Esses integradores só entrariam depois de validada a solução na Riachuelo.
+
+\subsection{Determinação das características dos pontos de venda}
+
+Os processos de venda e de distribuição precisam ser projetados com a infraestrutura, os sistemas de apoio e o pessoal que os sustentarão. O treinamento deve envolver a equipe com o produto e com a empresa, porque isso melhora a qualidade do atendimento, e pode ainda servir para colher informações úteis a novos produtos \cite{rozenfeld2006gestao}.
+
+Neste projeto, o ponto de venda é a loja da Riachuelo, onde o dispositivo será utilizado, e o consumidor não o adquire. A caracterização do ponto parte do formato em que a rede já opera: as lojas conceito com self-checkout em todos os caixas, como as de Curitiba e do Shopping Eldorado. Quatro requisitos de infraestrutura decorrem das especificações-meta. O primeiro é cobertura de rede móvel em condição normal na loja, base da medição de R03, embora a liberação em si dispense a rede da loja. O segundo é um sistema de detecção na saída compatível com o dispositivo, cujo tipo precisa ser confirmado na loja piloto. O terceiro é a integração do aplicativo com o registro de peças e o estoque da unidade, sem a qual a consulta de disponibilidade não atinge a acurácia-meta. O quarto é uma área de liberação e devolução dos dispositivos, próxima à saída, com sinalização do fluxo, ponto de coleta e presença de um funcionário.
+
+
+
+
+\subsection{Definição das condições gerais de comercialização}
+
+Os acordos comerciais devem estabelecer os serviços e as responsabilidades de cada parte, a remuneração e os indicadores de acompanhamento do desempenho \cite{rozenfeld2006gestao}. O autor observa também que, em produtos com manutenção inevitável, o serviço de assistência técnica é vendido junto ao produto e passa a ser fonte de receita, e que garantias prolongadas tornam a empresa responsável pelos problemas por meio de uma interface única de atendimento.
+
+
+A equipe propõe um contrato de serviço em três partes: a frota de dispositivos, a licença e operação do sistema (aplicativo, autorização e integração com pagamento e estoque) e o suporte com nível de serviço acordado. Para a frota, considera-se mais coerente o fornecimento sob locação ou comodato do que a venda definitiva. O dispositivo é um ativo que circula, e sua viabilidade depende de retorno e recondicionamento, o que aproxima a lógica de cobrança do custo por compra concluída. A remuneração pode ser mensal por dispositivo em circulação ou por compra concluída, e o valor será fixado depois de a Riachuelo informar o custo de processar uma compra no caixa tradicional, que é o teto do custo por uso. Como esse dado não existe no projeto, nenhum preço é proposto. O mesmo vale para o prazo de garantia, ainda por definir.
+
+A implantação seguirá a sequência do processo, com pilotos acompanhados. Os papéis de controlador e operador dos dados dependem de análise do jurídico da Riachuelo. A aplicação do dispositivo nas peças e a operação de liberação e devolução exigem treinamento dos funcionários. O contrato deve prever indicadores de desempenho ligados às metas técnicas: mediana do tempo de pagamento, divergências de liberação, alarmes indevidos e falhas de detecção, taxa de retorno e tempo da alternativa humana. Deve garantir, por fim, a manutenção do atendimento humano como opção sempre disponível, o que responde a N02 e N08. O relacionamento com o cliente terá dois níveis: um canal técnico com a gestão e a operação da Riachuelo, para o acompanhamento dos indicadores, e um canal de atendimento com interface única para as ocorrências, alinhado ao processo de atendimento ao cliente descrito na literatura, que também serve para levantar requisitos de novas versões.
+
+\subsection{Definição da cobertura geográfica}
+
+A localização dos distribuidores e dos pontos de produção em relação aos mercados atendidos é, para Rozenfeld et al., um dos pontos centrais do processo de distribuição, e a integração com a assistência técnica é essencial para repor suprimentos em regiões distantes \cite{rozenfeld2006gestao}.
+
+
+
+Como alternativa fundamentada no estágio do projeto, a equipe propõe uma expansão em fases. A primeira é um piloto em uma única loja conceito da região metropolitana de São Paulo, por exemplo a do Shopping Eldorado. Ela se apoia na proximidade da equipe, necessária para os ensaios de R18, e na compatibilidade com a região em que o survey foi feito. A segunda é a extensão à loja conceito de Curitiba, que testa o suporte à distância e a reposição fora da região do piloto. A terceira é a onda de lojas conceito seguinte, em cidades a confirmar com a Riachuelo. A quarta, condicionada à validação, é a oferta a outras redes do segmento-alvo, começando pela C\&A, que já tem autoatendimento por radiofrequência nas lojas do conceito Energia. A Renner, que já integra RFID e antifurto, tende a ser concorrente indireta mais que cliente.
+
+\subsection{Planejamento da distribuição física}
+
+
+
+No projeto, o fluxo físico é um ciclo fechado, e não uma cadeia linear, porque o dispositivo é reutilizado. O ciclo começa na produção de protótipos. Em seguida, os dispositivos seguem diretamente para as lojas, e são vinculados às peças no sistema por meio do código gráfico impresso, o que permite ao cliente identificar a peça ao pagar. 
+
+Depois da liberação, o cliente devolve o dispositivo no ponto de coleta da loja. Ele é acumulado em caixas e retorna ao estoque. No retorno, cada unidade passa por inspeção, teste funcional, recondicionamento de energia e atualização, e volta ao estoque para nova aplicação.
+
+\subsection{Assistência técnica}
+
+A literatura observa que os produtos tornam-se mais confiáveis, com mais componentes eletrônicos e maior modularização, o que facilita a substituição de partes defeituosas sem grande impacto no cliente. O processo de assistência técnica tem natureza sobretudo organizacional, e seu conteúdo técnico é definido na fase de projeto detalhada, quando os requisitos de manutenabilidade são atendidos por meio do DFx aplicado à manutenção \cite{rozenfeld2006gestao}. O autor recomenda ainda que a assistência seja desenhada em conjunto com o atendimento ao cliente, que costuma ser o canal que a aciona.
+
+O produto demanda uma estrutura de assistência técnica, apesar de a evolução descrita acima reduzir o volume de intervenções. Ele combina partes mecânicas (esferas, copo cônico, mola e carretel), eletrônicas (atuador, bateria, indicador luminoso, comunicação e controle) e software (aplicativo, autorização e integração com pagamento e estoque). As falhas têm impacto direto na compra: um dispositivo que não libera uma peça paga bloqueia o cliente, e um que libera sem pagamento anula a função antifurto. O catálogo de cenários de R07 já lista oito falhas para as quais deve existir alternativa humana em até 60 s. 
+
+A estrutura proposta tem três níveis. No primeiro, a própria loja resolve a falha no momento da compra, pela liberação humana e pela troca imediata por um dispositivo de um estoque reserva local, sem a ideia de reparo no local. No segundo, o centro de recondicionamento, ligado ao fluxo de retorno descrito em 13.5, faz o diagnóstico, a substituição de módulos, como bateria e atuador, e o reparo ou descarte da carcaça e do mecanismo. No terceiro, a equipe do produto trata das falhas de software e de projeto, com base nos registros por identificador de dispositivo, cujos dados alimentam também a evolução do produto. Para viabilizar essa estrutura, o projeto detalhado deve adotar módulos substituíveis e acesso ao mecanismo sem destruir a carcaça. O prazo de garantia e a divisão de custos entre a equipe e a Riachuelo permanecem por definir, dependendo do contrato descrito em 13.3.

@@ -1,0 +1,139 @@
+% =============================================================================
+% Item D do roteiro (Aula 14): estudo de aproveitamento técnico.
+% Base empírica: quadro da Galeria no Miro, https://miro.com/app/board/uXjVEe1I-Mw=/
+% (lido em 04/10/2026): 18 painéis, 101 efeitos físicos, 126 portadores,
+% 27 rótulos "explorar" e 22 notas da equipe.
+% Figura: imagens/aproveitamento_tecnico/galeria_painel_F1-1.pdf
+% A combinação dos princípios em alternativas e a arquitetura (item E do
+% roteiro) ficam na Seção 14 (sec:reformulacao_desenhos).
+% =============================================================================
+
+\section{ESTUDO DE APROVEITAMENTO TÉCNICO}\label{sec:aproveitamento_tecnico}
+
+A modelagem funcional (Seção~\ref{sec:modelagem_funcional}) descreveu o sistema por funções, sem referência a princípios físicos. No passo seguinte do projeto conceitual, que \citeonline{rozenfeld2006gestao} descrevem como a passagem da função à forma, a equipe precisava encontrar, para cada função, meios físicos capazes de cumpri-la, atividade que os autores chamam de desenvolver princípios de solução para as funções (Figura~\ref{fig:estrutura_funcoes}): que efeitos físicos podem cumpri-la, que sistema concreto porta cada efeito e em que produto esse sistema já funciona. As respostas formaram o repertório que a equipe vai combinar em alternativas de concepção, por meio da matriz morfológica, na reformulação dos desenhos (Seção~\ref{sec:reformulacao_desenhos}).
+
+\subsection{Planejamento }
+\label{subsec:aprov_fundamentacao}
+
+Segundo \citeonline{rozenfeld2006gestao}, um princípio de solução combina um efeito físico, que explica por que a função pode ser cumprida, e um portador do efeito, sistema físico definido de forma qualitativa por seus elementos e pelas relações entre eles. Uma função admite vários efeitos, e cada efeito admite vários portadores. O portador indica tipo, quantidade, forma, posição e movimento dos elementos, sem fixar o material específico nem as dimensões.
+
+Durante a disciplina, foram apresentadas três fontes de princípios de solução: bancos de dados, catálogos e métodos de criatividade, entre os quais destaca o \textit{brainstorming}, a galeria e o método morfológico. Na galeria, que \citeonline{rozenfeld2006gestao} classificam como método intuitivo, cada integrante propõe soluções individualmente, por meio de desenhos e textos fixados numa parede, e o grupo analisa as propostas em seguida. Os autores o consideram adequado a problemas em que os componentes já foram projetados e falta decidir como agrupá-los num produto; inclui-se entre os meios de obter princípios de solução, uso que a equipe adotou.
+
+A equipe usou a galeria como dinâmica de geração e deu a cada proposta a forma da decomposição de \citeonline{rozenfeld2006gestao}: todo cartão nomeia um efeito físico ou um portador ligado a um efeito. Com isso, as ideias de uma mesma função ficam no mesmo nível de generalidade, condição que o procedimento da matriz morfológica recomenda para a lista de princípios de cada função \cite[Quadro 7.4]{rozenfeld2006gestao}. Como a equipe montou uma parede por função, cada parede corresponde a uma linha candidata da futura matriz, e a galeria, método intuitivo, passará depois a alimentar o método morfológico, que \citeonline{rozenfeld2006gestao} classificam como sistemático. A cada portador, a equipe associou ainda uma referência: um produto em que aquele sistema já funciona, na mesma função ou numa função análoga. Na geração de ideias, o grupo também consultou uma ferramenta de inteligência artificial para explorar princípios de solução alternativos e discutir soluções potenciais, por meio do plugin \texttt{/brainstorm} da Anthropic para \textit{Product Management}.
+
+\subsection{Organização da Galeria}
+\label{subsec:aprov_galeria}
+
+A galeria ocupou um quadro do Miro intitulado ``PRO3474 · Galeria de ideias · efeitos e portadores'', disponível em \url{https://miro.com/app/board/uXjVEe1I-Mw=/}. O quadro tem uma parede, aqui chamada de painel, para cada uma das 18 funções secundárias necessárias e acessórias da estrutura de funções. Os painéis seguem a estrutura: uma fileira para os desdobramentos de \emph{reter a peça} (F1.1 a F1.3), outra para os de \emph{vincular a peça ao pagamento} (F2.1 a F2.5), outra para os de \emph{liberar a peça} (F3.1 a F3.4), uma para as funções acessórias (A1 a A5) e um painel para a função auxiliar F0. As funções básicas F1, F2 e F3 entram por meio de seus desdobramentos. O quadro materializa a parede da galeria: as propostas, em texto e com um pictograma, ficam fixadas por função, e a análise do grupo aparece nos rótulos de avaliação, nas revisões e nas notas assinadas.
+
+Cada painel abre com os fluxos de entrada e saída da função, coerentes com a estrutura de funções (em F1.1, ``Entra: peça livre. Sai: peça retida''), e as propostas respondem a essa transformação. À esquerda fica a função; à direita, os cartões cinzentos de efeito físico, cada um com o nome do efeito e uma frase que explica o fenômeno, acompanhado de um pictograma; abaixo de cada efeito, os cartões de portador. O cartão de portador tem campos fixos: \emph{Como}, que descreve os elementos do sistema e as relações entre eles; \emph{Ref.}, a referência de produto; \emph{Revisão}, o julgamento do grupo; e, quando o uso tem restrição, \emph{Condição}. A Figura~\ref{fig:aprov_painel} reproduz parte do painel F1.1.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Recorte do painel F1.1 (\emph{iniciar a retenção da peça}) do quadro da Galeria, com três efeitos físicos, seis portadores avaliados e duas notas da equipe}
+    \includegraphics[width=\textwidth]{imagens/aproveitamento_tecnico/painel_galeria.png}
+    \label{fig:aprov_painel}
+    \source{Elaborado pelos autores (2026), a partir do quadro da Galeria no Miro. Textos, cores e ligações reproduzidos do quadro; as notas foram aproximadas dos cartões.}
+\end{figure}
+
+No recorte, o efeito E1, travamento por cunha, recebeu dois portadores consistentes: o pino com embreagem de esferas, tirado das etiquetas rígidas antifurto, e a garra com came excêntrica, tirada do mordedor de cabo de veleiros. A garra retém sem perfurar o tecido, vantagem destacada numa das notas, e recebeu o rótulo explorar. Em E2, a pinça de mola ficou a aprofundar, com a proposta de combiná-la a uma trava de F1.3, e o clipe de lâmina terminou como problema, porque qualquer pessoa o solta. Em E3, os dois arranjos de ímãs dependem de ensaio: o par de ímãs perde a segurança diante de um ímã externo mais forte.
+
+As referências dos 126 portadores formam o benchmarking do estudo. A comparação ocorre no nível da função e do conceito, dois dos tipos que a Aula 14 lista, e é qualitativa: indicadores de desempenho, como a força de retenção (E12) e o tempo de liberação (E04), ficam para as especificações-meta e os ensaios. Parte das referências vem do próprio varejo, como a etiqueta rígida antifurto, o destravador magnético do caixa, os portais RFID de saída e as etiquetas eletrônicas de preço. Outra parte vem de setores distantes da loja: o retrator e a fivela do cinto de segurança, as fechaduras de hotel, as garras de robótica, a válvula termostática de radiador e os \textit{pagers} de restaurante. A referência também serviu de prova de existência, porque o rótulo \emph{consistente} exige que o princípio já funcione num produto conhecido.
+
+A análise em grupo, segundo momento da galeria, usou a legenda do próprio quadro, reproduzida na faixa inferior da Figura~\ref{fig:aprov_painel}. Com três rótulos, o grupo julgou cada portador frente à função: \emph{consistente}, quando cumpre a função e tem referência conhecida; \emph{aprofundar}, quando é plausível, mas falta dado, teste ou confirmação; e \emph{problema}, quando apresenta falha técnica ou conceitual. Um quarto rótulo, \emph{explorar}, marcou as ideias que seguem para os princípios de solução e pode acompanhar um cartão consistente ou um cartão a aprofundar. Os cartões com problema permanecem no quadro, como a legenda determina, e o campo \emph{Revisão} guarda o motivo de cada descarte.
+
+O grupo registrou notas com pareceres individuais sobre o quadro-geral de uma função. Algumas comparam portadores (``giroscópio e magnetômetro pouco acrescentam ao acelerômetro'', em A1); outras ligaram o quadro a dores relatadas pela loja, como a estação de pareamento que ``acrescenta tempo ao recebimento'' (F1.2), ou à acessibilidade (``cor não funciona para daltônicos'', em A3).
+
+Durante a análise, a equipe reformulou três portadores: a pinça de mola de F1.1 passou a depender de uma trava de F1.3; o atuador piezoelétrico de F3.2, de curso curto demais para soltar um trinco, virou candidato a gatilho da mola pré-tensionada; e o corpo de polímero rígido de F1.3 passou a valer como especificação-meta, porque a resistência do material se aplica a qualquer portador e, como anotou o grupo: ``vai para as especificações''. Revisões e notas apontam ainda dependências entre funções que a combinação na matriz morfológica terá de respeitar. O pino de dentes flexíveis de F1.1 só funciona com um par definido em F3.2; a liberação por fluido magnetorreológico de F3.2 depende da mesma validação da trava de F1.3; e os registros irreversíveis de F2.4, a marcação a laser e o papel térmico, não têm par em F2.5, que precisa desfazer o vínculo no estorno. Por fim, a equipe conferiu as propostas contra a decisão, registrada na modelagem funcional, de indicar a liberação por luz: nas revisões da tinta eletrônica e do filme eletrocrômico de F3.3, o grupo registrou o conflito, porque esses portadores não emitem luz.
+
+A mesma legenda valeu para os cartões que trazem a marca de um revisor. Quase todos ocupam o fim dos painéis, e a maioria traz efeitos pouco usuais no varejo, como vácuo, eletroadesão, fluido magnetorreológico, comunicação pelo corpo e quimioluminescência. Nove deles terminaram como problema, e sete receberam o rótulo explorar.
+
+\begin{table}[H]
+    \centering
+    \caption{Efeitos físicos e portadores por painel da Galeria, com a avaliação dos portadores}
+    \label{tab:aprov_galeria}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{1.0cm}
+        >{\RaggedRight\arraybackslash}X
+        c c c c c c@{}}
+        \toprule
+        \textbf{Painel} & \textbf{Função} & \textbf{Efeitos} & \textbf{Portadores} & \textbf{Consist.} & \textbf{Aprof.} & \textbf{Probl.} & \textbf{Explorar} \\
+        \midrule
+        F1.1 & Iniciar a retenção da peça & 7 & 11 & 3 & 5 & 3 & 2 \\
+        F1.2 & Associar a retenção à identidade da peça & 4 & 8 & 4 & 3 & 1 & 0 \\
+        F1.3 & Manter a retenção & 7 & 10 & 5 & 4 & 1 & 2 \\
+        F2.1 & Receber a seleção e o comprador & 9 & 10 & 2 & 5 & 3 & 3 \\
+        F2.2 & Receber a confirmação de pagamento & 4 & 6 & 3 & 3 & 0 & 2 \\
+        F2.3 & Comparar a peça com a transação & 2 & 4 & 2 & 2 & 0 & 1 \\
+        F2.4 & Registrar o vínculo & 6 & 7 & 4 & 2 & 1 & 1 \\
+        F2.5 & Desfazer o vínculo & 3 & 5 & 2 & 3 & 0 & 0 \\
+        F3.1 & Receber a autorização de liberação & 6 & 6 & 3 & 3 & 0 & 2 \\
+        F3.2 & Encerrar a retenção & 10 & 11 & 4 & 3 & 4 & 3 \\
+        F3.3 & Indicar a liberação ao comprador & 8 & 10 & 3 & 5 & 2 & 2 \\
+        F3.4 & Informar o estado da peça ao antifurto existente & 5 & 5 & 0 & 4 & 1 & 2 \\
+        F0 & Suprir energia & 9 & 10 & 3 & 6 & 1 & 3 \\
+        \midrule
+        A1 & Registrar o manuseio da peça & 5 & 5 & 2 & 3 & 0 & 2 \\
+        A2 & Localizar a peça no salão & 5 & 6 & 1 & 5 & 0 & 0 \\
+        A3 & Indicar a pendência ao comprador & 4 & 4 & 3 & 1 & 0 & 1 \\
+        A4 & Atualizar o estado da peça no estoque & 3 & 3 & 2 & 1 & 0 & 1 \\
+        A5 & Informar exceções à equipe & 4 & 5 & 3 & 2 & 0 & 0 \\
+        \midrule
+        \multicolumn{2}{@{}l}{\textbf{Total}} & \textbf{101} & \textbf{126} & \textbf{49} & \textbf{60} & \textbf{17} & \textbf{27} \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026), a partir do quadro da Galeria no Miro.}
+\end{table}
+
+As 27 ideias marcadas para explorar formam o principal resultado do estudo: são os princípios que a equipe levará para a matriz morfológica, cada um com o produto de origem (Tabela~\ref{tab:aprov_explorar}).
+
+\begin{table}[p]
+    \centering
+    \caption{Ideias marcadas para explorar, com o efeito físico e a referência de origem}
+    \label{tab:aprov_explorar}
+    \scriptsize
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{0.9cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{3.5cm}
+        >{\RaggedRight\arraybackslash}p{4.0cm}
+        >{\RaggedRight\arraybackslash}p{1.5cm}@{}}
+        \toprule
+        \textbf{Painel} & \textbf{Portador} & \textbf{Efeito físico} & \textbf{Referência} & \textbf{Avaliação} \\
+        \midrule
+        F1.1 & Garra com came excêntrica & Travamento por cunha & Mordedor de cabo de veleiros & consistente \\
+        F1.1 & Par de ímãs com o tecido entre as faces & Atração magnética & Fecho magnético de bolsa & aprofundar \\
+        F1.3 & Placa eletroadesiva com eletrodos intercalados & Eletroadesão & Garras eletroadesivas de robótica & aprofundar \\
+        F1.3 & Trava com fluido magnetorreológico & Variação de viscosidade em fluido magnetorreológico & Embreagens e amortecedores magnetorreológicos & aprofundar \\
+        F2.1 & Código 2D gravado no dispositivo & Reflexão difusa e absorção de luz & Pagamento por QR; autoatendimento por leitura no celular & consistente \\
+        F2.1 & LED que pisca um código lido pela câmera & Eletroluminescência modulada & Pareamento de dispositivos por luz piscante & aprofundar \\
+        F2.1 & Toque físico do celular no dispositivo & Correlação de aceleração & Troca de contatos por toque entre celulares & aprofundar \\
+        F2.2 & \textit{Smartphone} do comprador como retransmissor & Propagação de radiofrequência em rede sem fio & Fechaduras inteligentes que recebem a chave pelo celular & consistente \\
+        F2.2 & \textit{Token} assinado entregue por toque ao dispositivo & Acoplamento indutivo (NFC) & Chaves digitais de quarto de hotel & aprofundar \\
+        F2.3 & Trava de combinação com discos numerados & Interferência geométrica seletiva & Cadeado de mala; cofre de hotel & aprofundar \\
+        F2.4 & Chave biestável no dispositivo & Biestabilidade mecânica & Indicador mecânico de estado em disjuntores & aprofundar \\
+        F3.1 & Bobina receptora no dispositivo & Acoplamento indutivo & Pagamento por aproximação & consistente \\
+        F3.1 & Comunicação intracorporal da mão ao dispositivo & Acoplamento capacitivo pelo corpo & Pesquisa em redes de área corporal & aprofundar \\
+        F3.2 & Ímã eletropermanente & Comutação de fluxo magnético em ímã eletropermanente & Garras magnéticas de robótica & aprofundar \\
+        F3.2 & Mola de torção com gatilho & Energia potencial elástica liberada & Fechadura de cofre com mola armada & consistente \\
+        F3.2 & Botão de desengate com pino de segurança & Energia muscular com movimento bloqueado & Fivela de cinto de segurança com trava & consistente \\
+        F3.3 & Conjunto de LEDs em anel & Eletroluminescência em junção semicondutora & Anel luminoso de assistentes de voz & consistente \\
+        F3.3 & Guia de luz de polímero transparente & Reflexão interna total & Indicadores de painel automotivo & consistente \\
+        F3.4 & Interface de rede com o controlador do portal & Propagação guiada em rede & Integração de portais RFID com sistemas de venda & aprofundar \\
+        F3.4 & Chip RFID da peça com campo de estado regravável & Retroespalhamento com estado regravável & Bit de vigilância em etiquetas RFID de varejo & aprofundar \\
+        F0 & Bobina receptora com estação transmissora & Indução mútua & Carregadores sem fio de celular & consistente \\
+        F0 & Gerador eletromagnético acionado pelo gesto & Indução de Faraday por movimento & Interruptores sem fio e sem bateria & aprofundar \\
+        F0 & Arara com trilho energizado & Condução elétrica por contato com a arara & Trilhos eletrificados de iluminação & aprofundar \\
+        A1 & Antenas fixas no salão registram as leituras & Atenuação e reflexão de radiofrequência & Inventário RFID contínuo & consistente \\
+        A1 & Arara com célula de carga & Deformação elástica medida por extensômetro & Prateleiras com balança no varejo & aprofundar \\
+        A3 & Notificação na tela do celular do comprador & Emissão de luz pela tela do celular & Notificações de \textit{apps} de pagamento & consistente \\
+        A4 & Leitores na saída da loja & Retroespalhamento de radiofrequência & Portais RFID de saída & consistente \\
+        \bottomrule
+    \end{tabularx}
+    \footnotesize
+    \source{Elaborado pelos autores (2026), a partir do quadro da Galeria no Miro.}
+\end{table}

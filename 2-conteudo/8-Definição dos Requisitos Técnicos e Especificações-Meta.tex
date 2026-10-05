@@ -4,27 +4,32 @@
 % (Tabela tab:matriz_ndd). A casa da qualidade segue o modelo de QFD da
 % disciplina (SITE_Template_QFD): qualidade exigida, planejada, projetada,
 % telhado e benchmarking tecnico. Pesos calculados por script (qfd_calc.py).
+% Cadeia de rastreabilidade das especificacoes-meta (Subsecao
+% subsec:especificacoes_meta): voz do cliente -> requisito tecnico (R01 a R07)
+% -> especificacao E01 a E09 (parte 1); criterios sem voz do cliente, tratados
+% como qualificadores (Kano) -> E10 a E18 (parte 2). Valores sem fonte
+% publicada estao marcados como meta ou estimativa da equipe.
 % =============================================================================
 
 \section{DEFINIÇÃO DE REQUISITOS TÉCNICOS E ESPECIFICAÇÕES-META}
 \label{sec:definicao_requisitos}
 
-Para transformar as necessidades identificadas na Seção~\ref{sec:ndd} em características que orientem o desenvolvimento e a avaliação do produto, a equipe utilizou o método \textit{Quality Function Deployment} (QFD), que relaciona a voz do cliente a requisitos técnicos e evita que as necessidades sejam traduzidas diretamente em soluções sem análise técnica. Como o projeto será desenvolvido em escala de protótipo, as especificações precisaram ser compatíveis com os recursos financeiros, tecnológicos e materiais da equipe. O objetivo foi, portanto, definir critérios que permitam verificar se o conceito resolve as principais dores identificadas na pesquisa, sem fixar requisitos de uma solução industrial definitiva.
+Para transformar as necessidades da Seção~\ref{sec:ndd} em características que orientem o desenvolvimento e a avaliação do produto, a equipe usou o método \textit{Quality Function Deployment} (QFD). O método relaciona a voz do cliente a requisitos técnicos e evita que as necessidades virem soluções sem análise técnica. O projeto terá escala de protótipo, e as especificações precisaram caber nos recursos financeiros, tecnológicos e materiais da equipe. Os critérios definidos permitem verificar se o conceito resolve as principais dores da pesquisa, sem fixar os requisitos de uma solução industrial definitiva.
 
 \subsection{Requisitos dos clientes}
 \label{subsec:requisitos_dos_clientes}
 
 A pesquisa com consumidores mostrou perfis com comportamentos distintos em relação à autonomia, ao atendimento humano, ao uso de tecnologia e à busca por produtos, sem que essas características se excluíssem. Um mesmo consumidor pode valorizar autonomia e rapidez em uma compra simples e preferir atendimento em uma compra com maior incerteza, como a de uma peça de maior valor ou a que exige uma segunda opinião. Por isso, a equipe não partiu da premissa de que substituir o atendimento humano por tecnologia seria desejável em todas as situações.
 
-As entrevistas também registraram dificuldades de disponibilidade e localização de produtos, casos em que o consumidor precisou de um vendedor para verificar o estoque e episódios de perda de confiança em informações digitais de disponibilidade que não correspondiam à loja. No pagamento, alguns entrevistados relataram desistências de compra por causa de fila, sobretudo em períodos de maior movimento, enquanto outros demonstraram interesse em realizar etapas da compra sem interação constante com vendedores, desde que houvesse suporte disponível caso algo desse errado. Esses achados apontaram para uma solução que combine autonomia e rapidez com segurança e possibilidade de atendimento.
+As entrevistas também registraram dificuldades de disponibilidade e localização de produtos, casos em que o consumidor precisou de um vendedor para verificar o estoque e episódios de perda de confiança em informações digitais de disponibilidade que não correspondiam à loja. No pagamento, alguns entrevistados relataram desistências de compra por causa de fila em períodos de maior movimento, e outros demonstraram interesse em realizar etapas da compra sem interação constante com vendedores, desde que houvesse suporte disponível caso algo desse errado. Esses achados apontaram para uma solução que combine autonomia e rapidez com segurança e possibilidade de atendimento.
 
 A partir desse conjunto, a equipe selecionou sete das vinte vozes da Seção~\ref{sec:ndd} para o QFD, de modo a representar as três categorias da análise (necessidades, desejos e demandas) e a priorizar as vozes relacionadas às funções que a integração entre a etiqueta antifurto e o aplicativo pode contemplar. Os códigos utilizados a seguir são os mesmos da Tabela~\ref{tab:matriz_ndd}.
 
-Entre as necessidades, foram selecionadas quatro. A primeira, encontrar o produto procurado com facilidade (N03), refere-se à etapa de busca, em que a dificuldade pode impedir a compra mesmo quando há interesse pelo produto. A evidência concentrou-se no Cluster 3, no qual a dificuldade foi relatada de forma intensa, e o aplicativo poderá apoiar a identificação do produto e o acesso a informações sobre a peça. A segunda, confiar na precisão do estoque informado (N05), é condição para que uma solução digital agregue valor: como as entrevistas registraram perda de confiança após divergências entre o site e a loja, disponibilizar informações sobre produtos não bastará se o usuário não confiar em sua precisão.
+Entre as necessidades, a equipe selecionou quatro. A primeira, encontrar o produto procurado com facilidade (N03), refere-se à etapa de busca, em que a dificuldade pode impedir a compra mesmo quando há interesse pelo produto. A evidência concentrou-se no Cluster 3, no qual os entrevistados relataram a dificuldade de forma intensa, e o aplicativo poderá apoiar a identificação do produto e o acesso a informações sobre a peça. A segunda, confiar na precisão do estoque informado (N05), é condição para que uma solução digital agregue valor: como as entrevistas registraram perda de confiança após divergências entre o site e a loja, disponibilizar informações sobre produtos não bastará se o usuário não confiar em sua precisão.
 
-A terceira necessidade, contar com atendimento humano quando necessário (N08), reflete o achado de que autonomia tecnológica não implica rejeição ao atendimento. A solução deverá, assim, complementar o atendimento existente, para que o uso da etiqueta e do aplicativo não gere insegurança ou abandono da compra entre consumidores menos confortáveis com o autoatendimento. A quarta, concluir a compra sem constrangimentos (N06), liga-se diretamente à mudança que o produto introduz no procedimento de saída da loja. Embora o survey tenha mostrado pouca variação nesse aspecto, as entrevistas registraram o receio de ser visto como alguém que não pagou e o desconforto com verificações adicionais. Além de garantir que a transação ocorra corretamente, a solução deverá, portanto, transmitir segurança e legitimidade ao consumidor durante a saída.
+A terceira necessidade, contar com atendimento humano quando necessário (N08), reflete o achado de que autonomia tecnológica não implica rejeição ao atendimento. A solução deverá complementar o atendimento existente, para que a etiqueta e o aplicativo não gerem insegurança ou abandono da compra entre consumidores menos confortáveis com o autoatendimento. A quarta, concluir a compra sem constrangimentos (N06), liga-se à mudança que o produto introduz no procedimento de saída da loja. O survey mostrou pouca variação nesse aspecto, mas as entrevistas registraram o receio de ser visto como alguém que não pagou e o desconforto com verificações adicionais. Além de garantir a transação correta, a solução deverá transmitir segurança e legitimidade ao consumidor durante a saída.
 
-Entre os desejos, a equipe selecionou receber confirmação imediata do pagamento (D03), pela relação direta com a experiência de pagamento e com a confiança do consumidor ao deixar a loja. As entrevistas indicaram a expectativa de um aviso inequívoco de que a operação foi concluída e de que o cliente está autorizado a sair com o produto. O item foi classificado como desejo porque aumenta o conforto e a segurança percebida sem ter aparecido como barreira universal à compra.
+Entre os desejos, a equipe selecionou receber confirmação imediata do pagamento (D03), pela relação direta com a experiência de pagamento e com a confiança do consumidor ao deixar a loja. As entrevistas indicaram a expectativa de um aviso inequívoco de que a operação foi concluída e de que o cliente está autorizado a sair com o produto. A equipe classificou o item como desejo porque aumenta o conforto e a segurança percebida sem ter aparecido como barreira universal à compra.
 
 Por fim, duas demandas foram selecionadas. Reduzir o tempo de espera no caixa (DE01) está associada a um comportamento observável de abandono: o survey mostrou maior incidência de desistência por fila no Cluster 2, e as entrevistas trouxeram episódios concretos em promoções e no horário de almoço. Ter pagamento rápido e atendimento adequado (DE05), sintetiza a variação do nível de autonomia desejado conforme o contexto: alguns entrevistados separaram a reposição rápida, em que valorizam agilidade, das compras mais complexas, em que preferem o apoio de um vendedor. A proposta deverá, então, permitir uma jornada rápida e autônoma quando o consumidor quiser, mantendo o atendimento disponível nos casos em que a assistência for valorizada.
 
@@ -33,103 +38,105 @@ As necessidades selecionadas concentram-se na obtenção de informações confi�
 \subsection{Requisitos do produto}
 \label{subsec:requisitos_do_produto}
 
-Com base nas sete vozes selecionadas, a equipe definiu sete requisitos técnicos para o sistema formado pela etiqueta antifurto e pelo aplicativo. Cada requisito foi formulado primeiro em termos funcionais, isto é, pelo que o sistema deverá fazer, e só depois associado a um critério de desempenho. As especificações-meta foram depois comparadas com o desempenho estimado dos concorrentes no benchmarking técnico (Seção~\ref{subsubsec:benchmarking_tecnico}). Os requisitos e seus critérios estão reunidos na Tabela~\ref{tab:requisitos}.
+Com base nas sete vozes selecionadas, a equipe definiu sete requisitos técnicos para o sistema formado pela etiqueta antifurto e pelo aplicativo. A equipe formulou cada requisito primeiro em termos funcionais, isto é, pelo que o sistema deverá fazer, e depois associou a ele uma métrica, uma unidade e um valor-meta. A Tabela~\ref{tab:requisitos} lista os requisitos, com a unidade e o valor-meta de cada um, e as vozes que cada um atende. Na tabela, as vozes sem parênteses têm relação de intensidade 9 com o requisito na Tabela~\ref{tab:qfd}, as vozes entre parênteses têm intensidade 3, e as relações de intensidade 1 ficaram fora. A Subseção~\ref{subsubsec:benchmarking_tecnico} reúne as referências publicadas para esses requisitos, e a Subseção~\ref{subsec:especificacoes_meta} consolida as metas com métrica, unidade, critério de verificação e origem do valor.
 
 \begin{table}[htbp]
     \centering
-    \caption{Requisitos técnicos e critérios de desempenho}
+    \caption{Requisitos técnicos e vozes do cliente atendidas}
     \label{tab:requisitos}
     \footnotesize
     \renewcommand{\arraystretch}{1.3}
     \begin{tabularx}{\textwidth}{@{}
         >{\RaggedRight\arraybackslash}p{1.0cm}
-        >{\RaggedRight\arraybackslash}p{2.8cm}
+        >{\RaggedRight\arraybackslash}p{2.5cm}
         >{\RaggedRight\arraybackslash}X
-        >{\RaggedRight\arraybackslash}X@{}}
+        >{\RaggedRight\arraybackslash}p{1.0cm}
+        >{\RaggedRight\arraybackslash}p{3.0cm}
+        >{\RaggedRight\arraybackslash}p{1.9cm}@{}}
         \toprule
-        \textbf{Código} & \textbf{Requisito} & \textbf{Formulação funcional} & \textbf{Critério de desempenho} \\
+        \textbf{Código} & \textbf{Requisito} & \textbf{Formulação funcional} & \textbf{Unidade} & \textbf{Valor-meta} & \textbf{Vozes atendidas} \\
         \midrule
         R01 & Apoio à localização da peça na loja
-            & O sistema deverá ajudar o cliente a identificar em que área da loja se encontra a peça procurada.
-            & A especificação-meta é que pelo menos 90\% das solicitações apresentem a localização correta do produto nos testes realizados. \\
+            & O sistema deverá ajudar o cliente a identificar em que área (setor) da loja se encontra a peça procurada.
+            & \% & $\geq$~90 & N03 \\
         \addlinespace
         R02 & Consulta de disponibilidade na unidade
             & O sistema deverá permitir consultar a disponibilidade de um produto na unidade selecionada.
-            & A especificação-meta é que pelo menos 95\% das consultas apresentem informações corretas de disponibilidade. \\
+            & \% & $\geq$~95, com estoque atualizado há no máximo 24\,h & N05 \\
         \addlinespace
         R03 & Tempo para concluir o pagamento
-            & O fluxo de pagamento no aplicativo deverá ser concluído em menos tempo que a espera no caixa.
-            & A especificação-meta é que o processo seja concluído em até 45 segundos, desconsiderando eventuais atrasos externos relacionados a instituições financeiras ou serviços de terceiros.\\
+            & O fluxo de pagamento no aplicativo deverá ser concluído em menos tempo que a espera no caixa, e a liberação da etiqueta deverá ocorrer em seguida à confirmação, dentro de um tempo máximo.
+            & s & Mediana $\leq$~45 e percentil 80 $\leq$~60; liberação $\leq$~3 & DE01, DE05 \\
         \addlinespace
         R04 & Conclusão da compra sem intervenção de funcionário
             & O cliente deverá conseguir identificar a peça, pagar e liberar a etiqueta sem ajuda de um funcionário.
-            & A especificação-meta é que pelo menos 80\% dos usuários concluam a jornada de forma autônoma. \\
+            & \% & $\geq$~80 & DE05 (N06, N08) \\
         \addlinespace
         R05 & Clareza do fluxo no aplicativo
             & O fluxo principal do aplicativo deverá poder ser concluído sem instruções adicionais.
-            & A especificação-meta é que pelo menos 85\% dos participantes concluam corretamente o fluxo principal na primeira tentativa. \\
+            & \% & $\geq$~85 & DE05 (N06, N08) \\
         \addlinespace
         R06 & Liberação condicionada ao pagamento
             & A etiqueta deverá liberar a peça somente após a confirmação válida do pagamento, e a confirmação exibida ao cliente deverá corresponder ao estado real da transação.
-            & A especificação-meta é atingir 100\% de correspondência entre pagamento confirmado, confirmação apresentada ao usuário e autorização para liberação nos testes controlados. \\
+            & \% & 100 & N06, D03, DE01 (DE05) \\
         \addlinespace
         R07 & Acesso a atendimento humano
-            & Todo cenário de falha previsto no protótipo deverá oferecer uma alternativa de atendimento humano que permita concluir a compra.
-            & A especificação-meta é que 100\% dos cenários de falha previstos no protótipo possuam uma alternativa de atendimento humano, permitindo a continuidade ou conclusão da compra. \\
+            & Todo cenário de falha previsto no protótipo deverá oferecer uma alternativa de atendimento humano que permita concluir a compra dentro de um tempo máximo.
+            & \%; s & 100\% dos cenários catalogados; conclusão $\leq$~60\,s & N08 (N06, D03, DE05) \\
         \bottomrule
     \end{tabularx}
     \source{Elaborado pelos autores (2026).}
 \end{table}
 
-Os requisitos cobrem as dimensões presentes nas vozes selecionadas. O apoio à localização (R01) e a consulta de disponibilidade (R02) respondem às dificuldades na busca pelos produtos e à necessidade de confiar nas informações do aplicativo. A localização foi formulada em nível amplo, e sua forma de implementação ficou para uma etapa posterior, porque as evidências apontam para a dificuldade de encontrar e confirmar a existência da peça, sem indicar que uma localização precisa dentro da loja seja indispensável. O tempo de pagamento (R03) e a conclusão sem intervenção (R04) atendem à demanda por uma jornada mais rápida e menos dependente do caixa, e a clareza do fluxo (R05) está associada à facilidade de uso da tecnologia.
+Os requisitos cobrem as dimensões presentes nas vozes selecionadas. O apoio à localização (R01) e a consulta de disponibilidade (R02) respondem às dificuldades na busca pelos produtos e à necessidade de confiar nas informações do aplicativo. A equipe formulou a localização em nível amplo e deixou a forma de implementação para uma etapa posterior, porque as evidências apontam para a dificuldade de encontrar e confirmar a existência da peça e não indicam que uma localização precisa dentro da loja seja indispensável. O tempo de pagamento (R03) e a conclusão sem intervenção (R04) atendem à demanda por uma jornada mais rápida e menos dependente do caixa, e a clareza do fluxo (R05) está associada à facilidade de uso da tecnologia.
 
-A liberação condicionada ao pagamento (R06) trata ao mesmo tempo da confiança do consumidor e da redução de verificações na saída, uma vez que o sistema deverá fornecer evidência clara de que a transação foi concluída e permitir a saída sem insegurança. Por fim, o acesso a atendimento humano (R07) garante que a automação não elimine o suporte ao consumidor, aspecto relevante sobretudo para os clientes que valorizam assistência durante a jornada. Esse é também o único requisito cuja meta foi fixada em cobertura total sem depender de medição, já que decorre de uma decisão de projeto.
+A liberação condicionada ao pagamento (R06) trata da confiança do consumidor e da redução de verificações na saída: o sistema deverá dar evidência clara de que a transação terminou e permitir a saída sem insegurança. O acesso a atendimento humano (R07) garante que a automação não elimine o suporte ao consumidor, aspecto relevante para os clientes que valorizam assistência durante a jornada. R07 é também o único requisito cuja meta a equipe fixou em cobertura total sem depender de medição, porque decorre de uma decisão de projeto.
 
 \subsection{Casa da qualidade}
 \label{subsec:QFD}
 
-A casa da qualidade foi montada conforme o modelo de QFD adotado na disciplina, baseado em \citeonline{rozenfeld2006gestao}, em quatro passos: a matriz da qualidade exigida, que registra as vozes do cliente e seu grau de importância; a matriz da qualidade planejada, que compara o desempenho atual com o dos concorrentes e define o nível pretendido para cada voz; a matriz da qualidade projetada, que relaciona as vozes aos requisitos do produto; e o benchmarking técnico, que compara os requisitos em unidades mensuráveis. O telhado da casa completa a análise com a correlação entre os requisitos.
+A equipe montou a casa da qualidade conforme o modelo de QFD da disciplina, baseado em \citeonline{rozenfeld2006gestao}, em quatro passos: a matriz da qualidade exigida, que registra as vozes do cliente e seu grau de importância; a matriz da qualidade planejada, que registra o desempenho atual e define o nível pretendido para cada voz; a matriz da qualidade projetada, que relaciona as vozes aos requisitos do produto; e o benchmarking técnico, que reúne as referências publicadas para os requisitos. O telhado da casa completa a análise com a correlação entre os requisitos.
 
 \subsubsection{Qualidade exigida e qualidade planejada}
 
-O grau de importância de cada voz, de 1 (irrelevante) a 5 (extremamente importante), foi mantido da seleção feita na Seção~\ref{subsec:requisitos_dos_clientes}. Na avaliação de desempenho, a equipe atribuiu notas de 1 (péssimo) a 5 (ótimo) ao processo atual de pagamento e saída da Riachuelo, tomado como produto de referência, e a três concorrentes do segmento-alvo: a Renner, com terminais de autoatendimento por radiofrequência em 213 lojas \cite{consumidormoderno2025renner}; a C\&A, que passou a oferecer autoatendimento com etiquetas de radiofrequência no conceito de loja Energia, lançado em 2025 \cite{brazileconomy2025cea}; e a Zara, cujas lojas brasileiras reabertas a partir de 2023 incluem leitura digital das peças, provadores automáticos e consulta de estoque \cite{infomoney2023zara}. O modelo prevê dois concorrentes, e a equipe incluiu um terceiro para cobrir as três redes citadas com mais frequência na pesquisa e na definição do mercado. As notas refletem a avaliação da equipe com base nos recursos documentados nessas fontes e nos relatos das entrevistas, e deverão ser revisadas após as visitas descritas na Seção~\ref{subsubsec:benchmarking_tecnico}.
+A equipe manteve o grau de importância de cada voz, de 1 (irrelevante) a 5 (extremamente importante), da seleção feita na Seção~\ref{subsec:requisitos_dos_clientes}. Na avaliação de desempenho, a equipe atribuiu notas de 1 (péssimo) a 5 (ótimo) ao processo atual de pagamento e saída da Riachuelo, tomado como produto de referência. As notas refletem a avaliação da equipe e deverão ser revisadas após as visitas descritas na Seção~\ref{subsubsec:benchmarking_tecnico}. A equipe não atribuiu notas aos concorrentes. As fontes documentam os recursos da Renner, com terminais de autoatendimento por radiofrequência em 213 lojas \cite{consumidormoderno2025renner}, da C\&A, com autoatendimento e etiquetas de radiofrequência no conceito de loja Energia, lançado em 2025 \cite{brazileconomy2025cea}, e da Zara, com leitura digital das peças, provadores automáticos e consulta de estoque \cite{infomoney2023zara}, mas não trazem dados de desempenho que sustentem uma nota.
 
-Em seguida, a equipe definiu o plano de qualidade, isto é, a nota pretendida para a solução em cada voz, e o argumento de venda, que vale 1,5 para as vozes com alto apelo comercial, 1,2 para as de apelo intermediário e 1,0 para as demais. O índice de melhoria resulta da divisão entre o plano de qualidade e a nota atual da Riachuelo, e o peso absoluto de cada voz, do produto entre grau de importância, índice de melhoria e argumento de venda. Os valores estão reunidos na Tabela~\ref{tab:qualidade_planejada}.
+Em seguida, a equipe definiu o plano de qualidade, isto é, a nota pretendida para a solução em cada voz, e o argumento de venda, que vale 1,5 para as vozes com alto apelo comercial, 1,2 para as de apelo intermediário e 1,0 para as demais. O índice de melhoria resulta da divisão entre o plano de qualidade e a nota atual da Riachuelo, e o peso absoluto de cada voz, do produto entre grau de importância, índice de melhoria e argumento de venda. A Tabela~\ref{tab:qualidade_planejada} reúne os valores.
 
 \begin{table}[htbp]
     \centering
     \caption{Matriz da qualidade exigida e da qualidade planejada}
     \label{tab:qualidade_planejada}
-    \scriptsize
-    \setlength{\tabcolsep}{3pt}
+    \footnotesize
+    \setlength{\tabcolsep}{4pt}
     \renewcommand{\arraystretch}{1.3}
-    \begin{tabularx}{\textwidth}{@{}l >{\RaggedRight\arraybackslash}X *{10}{c}@{}}
+    \begin{tabularx}{\textwidth}{@{}l >{\RaggedRight\arraybackslash}X *{7}{c}@{}}
         \toprule
-        & & & \multicolumn{4}{c}{Avaliação de desempenho} & \multicolumn{2}{c}{Planejamento} & \multicolumn{3}{c}{Peso} \\
-        \cmidrule(lr){4-7}\cmidrule(lr){8-9}\cmidrule(l){10-12}
-        Código & Voz do cliente & Imp. & Riachuelo & Renner & C\&A & Zara & Plano & Arg. & Índice & Abs. & Rel. \\
+        & & & & \multicolumn{2}{c}{Planejamento} & \multicolumn{3}{c}{Peso} \\
+        \cmidrule(lr){5-6}\cmidrule(l){7-9}
+        Código & Voz do cliente & Imp. & Riachuelo & Plano & Arg. & Índice & Abs. & Rel. \\
         \midrule
-        N03 & Encontrar o produto procurado com facilidade & 3 & 2 & 2 & 4 & 4 & 3 & 1,0 & 1,50 & 4,50 & 8,0\% \\
-        N05 & Confiar na informação de estoque digital & 2 & 2 & 2 & 3 & 4 & 4 & 1,0 & 2,00 & 4,00 & 7,1\% \\
-        N06 & Sair da loja sem constrangimento por falha ou checagem & 5 & 3 & 4 & 3 & 3 & 5 & 1,5 & 1,67 & 12,50 & 22,3\% \\
-        N08 & Contar com atendimento humano quando necessário & 1 & 5 & 4 & 4 & 3 & 4 & 1,0 & 0,80 & 0,80 & 1,4\% \\
-        D03 & Receber confirmação imediata do pagamento & 4 & 4 & 4 & 4 & 4 & 5 & 1,2 & 1,25 & 6,00 & 10,7\% \\
-        DE01 & Reduzir o tempo de espera no caixa & 5 & 2 & 4 & 3 & 4 & 5 & 1,5 & 2,50 & 18,75 & 33,4\% \\
-        DE05 & Ter pagamento rápido sem perder o atendimento & 4 & 2 & 5 & 4 & 3 & 4 & 1,2 & 2,00 & 9,60 & 17,1\% \\
+        N03 & Encontrar o produto procurado com facilidade & 3 & 2 & 3 & 1,0 & 1,50 & 4,50 & 8,0\% \\
+        N05 & Confiar na informação de estoque digital & 2 & 2 & 4 & 1,0 & 2,00 & 4,00 & 7,1\% \\
+        N06 & Sair da loja sem constrangimento por falha ou checagem & 5 & 3 & 5 & 1,5 & 1,67 & 12,50 & 22,3\% \\
+        N08 & Contar com atendimento humano quando necessário & 1 & 5 & 4 & 1,0 & 0,80 & 0,80 & 1,4\% \\
+        D03 & Receber confirmação imediata do pagamento & 4 & 4 & 5 & 1,2 & 1,25 & 6,00 & 10,7\% \\
+        DE01 & Reduzir o tempo de espera no caixa & 5 & 2 & 5 & 1,5 & 2,50 & 18,75 & 33,4\% \\
+        DE05 & Ter pagamento rápido sem perder o atendimento & 4 & 2 & 4 & 1,2 & 2,00 & 9,60 & 17,1\% \\
         \midrule
-        \multicolumn{10}{@{}l}{Total} & 56,15 & 100\% \\
+        \multicolumn{7}{@{}l}{Total} & 56,15 & 100\% \\
         \bottomrule
     \end{tabularx}
-    \source{Elaborado pelos autores (2026) com base em \citeonline{consumidormoderno2025renner}, \citeonline{brazileconomy2025cea}, \citeonline{infomoney2023zara} e \citeonline{ecommercenews2020zara}.}
+    \source{Elaborado pelos autores (2026).}
 \end{table}
 
-A Riachuelo recebeu nota inferior à dos três concorrentes nas duas vozes ligadas ao pagamento. Na redução da espera no caixa (DE01) e na oferta de uma via rápida sem perder o atendimento (DE05), sua nota foi 2, porque o autoatendimento existe apenas nas lojas conceito, enquanto a Renner já o oferece em mais da metade da rede e mantém, em paralelo, o caixa, o pagamento pelo aplicativo e a venda móvel com funcionário \cite{consumidormoderno2025renner}. Nas vozes de busca e estoque (N03 e N05), a C\&A e a Zara ficaram à frente por oferecerem consulta de tamanhos ou de estoque pelo aplicativo e, no caso da Zara, localização da peça no plano da loja, recurso documentado nas lojas espanholas \cite{ecommercenews2020zara}. A Riachuelo obteve a nota mais alta apenas no atendimento humano (N08), já que o caixa tradicional mantém um funcionário em todas as compras.
+Na avaliação da equipe, a Riachuelo recebeu nota 2 na redução da espera no caixa (DE01) e na oferta de uma via rápida sem perder o atendimento (DE05), porque o autoatendimento existe apenas nas lojas conceito, e obteve a nota mais alta no atendimento humano (N08), já que o caixa tradicional mantém um funcionário em todas as compras.
 
-Como resultado, a redução da espera no caixa (DE01) concentrou 33,4\% do peso total, seguida da saída sem constrangimento (N06), com 22,3\%, e do pagamento rápido sem perda de atendimento (DE05), com 17,1\%. O atendimento humano (N08) ficou com apenas 1,4\%, porque o plano prevê manter o nível atual e seu índice de melhoria ficou abaixo de 1.
+Como resultado, a redução da espera no caixa (DE01) concentrou 33,4\% do peso total, seguida da saída sem constrangimento (N06), com 22,3\%, e do pagamento rápido sem perda de atendimento (DE05), com 17,1\%. O atendimento humano (N08) ficou com 1,4\%, porque o plano prevê manter o nível atual e seu índice de melhoria ficou abaixo de 1.
 
 \subsubsection{Qualidade projetada}
 
-Na matriz da qualidade projetada, cada voz foi relacionada a cada requisito do produto com intensidade 1 (baixa influência), 3 (média) ou 9 (alta), e as células vazias indicam ausência de influência. A importância de cada requisito resultou da soma dos produtos entre a intensidade da relação e o peso relativo da voz. A linha de direção da melhoria indica se o valor do requisito deve ser aumentado ($\uparrow$), diminuído ($\downarrow$) ou mantido ($\circ$). A matriz completa está na Tabela~\ref{tab:qfd}.
+Na matriz da qualidade projetada, a equipe relacionou cada voz a cada requisito do produto com intensidade 1 (baixa influência), 3 (média) ou 9 (alta), e as células vazias indicam ausência de influência. A importância de cada requisito resultou da soma dos produtos entre a intensidade da relação e o peso relativo da voz. A linha de direção da melhoria indica se o valor do requisito deve ser aumentado ($\uparrow$), diminuído ($\downarrow$) ou mantido ($\circ$). A matriz completa está na Tabela~\ref{tab:qfd}.
 
 \begin{table}[htbp]
     \centering
@@ -159,9 +166,9 @@ Na matriz da qualidade projetada, cada voz foi relacionada a cada requisito do p
     \source{Elaborado pelos autores (2026).}
 \end{table}
 
-A liberação condicionada ao pagamento (R06) obteve a maior importância técnica, 33,1\% do total, principalmente pelas relações fortes com a saída sem constrangimento (N06), com a redução da espera no caixa (DE01) e com a confirmação do pagamento (D03). Em seguida vieram o tempo para concluir o pagamento (R03), com 24,4\%, ligado sobretudo às duas demandas de rapidez, a clareza do fluxo no aplicativo (R05), com 13,7\%, e a conclusão da compra sem intervenção de funcionário (R04), com 13,2\%. O acesso a atendimento humano (R07) ficou com 8,3\%, e o apoio à localização da peça (R01) e a consulta de disponibilidade (R02), com 3,7\% cada.
+A liberação condicionada ao pagamento (R06) obteve a maior importância técnica, 33,1\% do total, por causa das relações fortes com a saída sem constrangimento (N06), com a redução da espera no caixa (DE01) e com a confirmação do pagamento (D03). Em seguida vieram o tempo para concluir o pagamento (R03), com 24,4\%, ligado às duas demandas de rapidez, a clareza do fluxo no aplicativo (R05), com 13,7\%, e a conclusão da compra sem intervenção de funcionário (R04), com 13,2\%. O acesso a atendimento humano (R07) ficou com 8,3\%, e o apoio à localização da peça (R01) e a consulta de disponibilidade (R02), com 3,7\% cada.
 
-Os três requisitos de maior importância, R06, R03 e R05, somaram 71,2\% do total, o que concentrou as prioridades de desenvolvimento na confiabilidade da transação, na rapidez do pagamento e na execução correta do fluxo pelo usuário. Os requisitos de busca e disponibilidade ficaram no fim da lista porque as vozes N03 e N05 se relacionam com um único requisito cada e receberam peso relativo menor, o que reforçou a decisão de tratar a localização da peça como requisito secundário.
+Os três requisitos de maior importância, R06, R03 e R05, somaram 71,2\% do total. As prioridades de desenvolvimento ficam na confiabilidade da transação, na rapidez do pagamento e na execução correta do fluxo pelo usuário. Os requisitos de busca e disponibilidade ficaram no fim da lista, porque N03 e N05 se relacionam com um único requisito cada e têm peso relativo menor. Por isso a equipe tratou a localização da peça como requisito secundário.
 
 \subsubsection{Telhado da casa da qualidade}
 
@@ -188,41 +195,210 @@ A correlação entre os requisitos está na Tabela~\ref{tab:teto_qfd}, em que ``
     \source{Elaborado pelos autores (2026).}
 \end{table}
 
-O tempo de pagamento (R03), a conclusão sem intervenção (R04) e a clareza do fluxo (R05) reforçam-se mutuamente, assim como a localização (R01) e a disponibilidade (R02). O acesso a atendimento humano (R07), por sua vez, apresentou correlação negativa com R03, R04 e R05, o que expressa um conflito de projeto: oferecer atendimento humano durante a compra tende a alongar o fluxo e a reduzir a autonomia. A solução precisará acomodar esse conflito, por exemplo mantendo o atendimento como opção acionada pelo cliente, fora do fluxo principal.
+O tempo de pagamento (R03), a conclusão sem intervenção (R04) e a clareza do fluxo (R05) se reforçam, assim como a localização (R01) e a disponibilidade (R02). O acesso a atendimento humano (R07) tem correlação negativa com R03, R04 e R05, o que expressa um conflito de projeto: atendimento humano durante a compra tende a alongar o fluxo e reduzir a autonomia. A solução precisará acomodar esse conflito, por exemplo mantendo o atendimento como opção acionada pelo cliente, fora do fluxo principal.
 
 \subsubsection{Benchmarking técnico}
 \label{subsubsec:benchmarking_tecnico}
 
-No benchmarking técnico, cada requisito recebeu uma unidade de medida, e a equipe estimou o valor atingido pela Riachuelo e pelos concorrentes, a partir dos recursos documentados nas fontes citadas e dos relatos das entrevistas. Apenas a parcela dos pagamentos feita nos terminais da Renner é um valor publicado \cite{consumidormoderno2025renner}; os demais valores são estimativas da equipe e estão identificados como tal. A última linha registra o plano, isto é, a especificação-meta de cada requisito. Os valores estão na Tabela~\ref{tab:benchmark_tecnico}.
+No benchmarking técnico, a equipe buscou nas fontes do projeto valores publicados para os requisitos e encontrou dois. Para R02, a acurácia de estoque por produto sem leitura automática fica entre 55\% e 65\% \cite{auburn2026acuracia}. Para R04, 38\% dos pagamentos da Renner são feitos nos terminais de autoatendimento, onde eles existem \cite{consumidormoderno2025renner}, e o valor mede outra grandeza, de modo que serve como referência parcial. Para R01, R03, R05, R06 e R07 a equipe não encontrou valor publicado, e não os substituiu por estimativas. A Tabela~\ref{tab:benchmark_tecnico} registra as referências e as metas.
 
 \begin{table}[htbp]
     \centering
-    \caption{Benchmarking técnico por requisito do produto}
+    \caption{Referências publicadas e metas por requisito do produto}
     \label{tab:benchmark_tecnico}
     \footnotesize
-    \setlength{\tabcolsep}{4pt}
     \renewcommand{\arraystretch}{1.3}
-    \begin{tabularx}{\textwidth}{@{}>{\RaggedRight\arraybackslash}X c c c c c c c@{}}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{1.0cm}
+        >{\RaggedRight\arraybackslash}p{1.0cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{3.4cm}@{}}
         \toprule
-        & R01 & R02 & R03 & R04 & R05 & R06 & R07 \\
+        \textbf{Requisito} & \textbf{Unidade} & \textbf{Referência publicada} & \textbf{Meta} \\
         \midrule
-        Unidade de medida & \% & \% & s & \% & \% & \% & \% \\
-        \midrule
-        Riachuelo & N.D. & N.D. & 120 & 0 & N.A. & 98 & 100 \\
-        Renner & N.D. & N.D. & 60 & 38* & 80 & 98 & 90 \\
-        C\&A & 70 & 80 & 90 & 20 & 70 & 95 & 90 \\
-        Zara & 85 & 90 & 60 & 50 & 80 & 98 & 80 \\
-        \midrule
-        Plano (meta) & 90 & 95 & 45 & 80 & 85 & 100 & 100 \\
+        R01 & \% & Não encontrada & $\geq$~90 \\
+        R02 & \% & 55 a 65 de acurácia por produto, sem leitura automática do estoque \cite{auburn2026acuracia} & $\geq$~95, com estoque atualizado há no máximo 24\,h \\
+        R03 & s & Não encontrada & Mediana $\leq$~45 e percentil 80 $\leq$~60 \\
+        R04 & \% & 38 dos pagamentos da Renner em terminais de autoatendimento, onde existem \cite{consumidormoderno2025renner}; grandeza diferente & $\geq$~80 \\
+        R05 & \% & Não encontrada & $\geq$~85 \\
+        R06 & \% & Não encontrada & 100 \\
+        R07 & \% & Não encontrada & 100 dos cenários catalogados \\
         \bottomrule
     \end{tabularx}
-    \source{Elaborado pelos autores (2026). Valores estimados pela equipe, exceto o marcado com asterisco, que corresponde à parcela dos pagamentos feita nos terminais de autoatendimento da Renner \cite{consumidormoderno2025renner}. N.D.: recurso não documentado. N.A.: não se aplica, pois o fluxo é operado pelo funcionário.}
+    \source{Elaborado pelos autores (2026), com base em \citeonline{auburn2026acuracia} e \citeonline{consumidormoderno2025renner}.}
 \end{table}
 
-As unidades seguem as especificações da Tabela~\ref{tab:requisitos}: R01, percentual de solicitações com localização correta da peça; R02, percentual de consultas com disponibilidade correta; R03, tempo entre o início do pagamento e a confirmação, sem contar a fila; R04, percentual de compras concluídas sem funcionário; R05, percentual de clientes que concluem o fluxo corretamente na primeira tentativa; R06, percentual de liberações que correspondem a um pagamento confirmado; e R07, percentual dos cenários de falha com alternativa de atendimento humano.
+A definição completa da métrica de cada requisito, com sua unidade, está na Tabela~\ref{tab:especificacoes}. No benchmarking, R03 refere-se ao tempo entre o início do pagamento e a confirmação, sem contar a fila, e os demais requisitos, ao percentual indicado nessa tabela.
 
-A comparação levou a dois ajustes nas especificações-meta. A meta de tempo de pagamento passou de 60 para 45 segundos, porque 60 segundos apenas igualaria a estimativa para a Renner e a Zara e não representaria vantagem competitiva. As metas de liberação condicionada ao pagamento (R06) e de acesso a atendimento humano (R07) passaram a 100\%, já que a Riachuelo, com o caixa tradicional, alcança valores próximos disso, e uma meta de 90\% significaria aceitar liberar uma peça sem pagamento confirmado em uma de cada dez compras.
+Sem referência publicada para cinco dos sete requisitos, a equipe fixou as metas como hipóteses de trabalho e as identificou como metas da equipe na Tabela~\ref{tab:especificacoes}. R06 e R07 têm meta de 100\% por decisão de projeto: uma meta de 90\% aceitaria liberar uma peça sem pagamento confirmado em uma de cada dez compras (R06), e a automação não pode deixar o cliente sem saída (R07).
 
-As estimativas deverão ser substituídas por medições em visitas às lojas de Riachuelo, Renner, C\&A e Zara, no mesmo dia e horário e, sempre que possível, no mesmo shopping. Em cada loja, duas pessoas da equipe realizarão a mesma compra padrão, de uma peça básica, e registrarão em ficha o tempo de fila, o tempo de pagamento, o número de passos e de erros no processo, o tempo para conseguir ajuda de um funcionário e a forma de liberação da peça.
+A equipe obterá as referências que faltam por medições em visitas às lojas de Riachuelo, Renner, C\&A e Zara, no mesmo dia e horário e, se possível, no mesmo shopping. Em cada loja, duas pessoas da equipe farão a mesma compra padrão, de uma peça básica, e registrarão em ficha o tempo de fila, o tempo de pagamento, o número de passos e de erros no processo, o tempo para conseguir ajuda de um funcionário e a forma de liberação da peça.
 
 Como a solução é formada pela integração entre a etiqueta e o aplicativo, a equipe concluiu, a partir da matriz, que o desenvolvimento deverá priorizar o funcionamento do sistema integrado, capaz de proporcionar uma jornada de compra rápida, confiável e executável pelo próprio consumidor, mais do que o desempenho isolado de cada componente.
+
+\subsection{Especificações-meta}
+\label{subsec:especificacoes_meta}
+
+O Projeto Informacional termina no conjunto de especificações-meta, que orienta a geração das soluções e serve de base para avaliar e decidir nas etapas seguintes \cite{rozenfeld2006gestao}. Cada especificação recebe um código sequencial (E01 a E18), uma unidade ou forma de medição e um valor-meta ou faixa admissível. As metas são valores específicos (E07, 100\%) ou limites mínimos e máximos, que equivalem a faixas com um extremo aberto (E01, por exemplo, de 90\% a 100\%). A coluna de fundamentação registra a origem de cada valor. Os valores sem fonte publicada aparecem como metas ou estimativas da equipe e podem mudar com as medições em loja e com o protótipo, porque as especificações têm natureza evolucionária. As especificações dizem o que o produto precisa atingir e não fixam princípio de solução, componente, fornecedor nem arquitetura, decisões do Projeto Conceitual.
+
+\subsubsection{Especificações associadas aos requisitos apresentados}
+\label{subsubsec:espec_requisitos}
+
+As especificações E01 a E09 transformam os requisitos R01 a R07 da Tabela~\ref{tab:requisitos} em metas verificáveis, e a rastreabilidade segue a cadeia voz do cliente da Seção~\ref{sec:ndd}, requisito do produto e especificação-meta. Cada linha indica, entre parênteses, o requisito e as vozes de que deriva. Os valores de R01 a R07 são os que a equipe já havia fixado (Tabela~\ref{tab:benchmark_tecnico}). Cada meta vira uma contagem conferível no teste, sem tolerâncias que a amostra não sustenta. E04 e E09 são métricas complementares de R03 e R07, que já tratam do tempo do cliente. Sem esses limites, uma etapa cumpriria a meta e reproduziria a fila que o produto pretende eliminar.
+
+\begingroup
+\captionsetup{font=normalsize}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}
+    >{\RaggedRight\arraybackslash}p{0.9cm}
+    >{\RaggedRight\arraybackslash}p{3.2cm}
+    >{\RaggedRight\arraybackslash}p{3.2cm}
+    >{\RaggedRight\arraybackslash}p{2.4cm}
+    >{\RaggedRight\arraybackslash}p{4.4cm}@{}}
+    \caption{Especificações-meta associadas aos requisitos R01 a R07} \label{tab:especificacoes} \\
+    \toprule
+    \textbf{Código} & \textbf{Especificação} & \textbf{Unidade e forma de medição} & \textbf{Valor-meta ou faixa admissível} & \textbf{Fundamentação} \\
+    \midrule
+    \endfirsthead
+    \multicolumn{5}{c}{Tabela~\ref{tab:especificacoes} (continuação)} \\
+    \toprule
+    \textbf{Código} & \textbf{Especificação} & \textbf{Unidade e forma de medição} & \textbf{Valor-meta ou faixa admissível} & \textbf{Fundamentação} \\
+    \midrule
+    \endhead
+    \midrule
+    \multicolumn{5}{r}{\textit{continua na próxima página}} \\
+    \endfoot
+    \bottomrule
+    \multicolumn{5}{@{}p{14.1cm}@{}}{\footnotesize Fonte: Elaborado pelos autores (2026), com base em \citeonline{auburn2026acuracia} e \citeonline{consumidormoderno2025renner}.} \\
+    \endlastfoot
+    E01 & (R01; N03) Consultas em que o setor indicado pelo sistema coincide com o setor real da peça
+        & \%; 30 peças disponíveis sorteadas, em loja e em horário normal, com observador que confere o setor
+        & $\geq$~90 (aceito com $\geq$~27 setores corretos)
+        & O setor é o nível mínimo que resolve a dificuldade relatada (encontrar e confirmar a existência da peça) sem exigir localização precisa. N03 pesa 8,0\% no QFD, o que não justifica meta mais alta. Meta da equipe, sem referência publicada \\
+    \addlinespace
+    E02 & (R02; N05) Consultas em que a disponibilidade (existe ou não, por produto e tamanho) coincide com a contagem física
+        & \%; 50 combinações de produto e tamanho comparadas à contagem física
+        & $\geq$~95 (aceito com $\geq$~48 corretas), com estoque atualizado há no máximo 24\,h
+        & As entrevistas registraram perda de confiança após divergências entre site e loja, e a meta admite uma divergência em cada 20 consultas. Sem leitura automática do estoque, a acurácia por produto fica entre 55\% e 65\% \cite{auburn2026acuracia}, e por isso a meta depende do limite de 24\,h. Meta da equipe; validar com os registros de estoque da Riachuelo \\
+    \addlinespace
+    E03 & (R03; DE01, DE05) Tempo entre o toque em ``Pagar'' e a confirmação exibida ao cliente
+        & s; cronometragem por etapa em $\geq$~20 compras, com rede móvel em cobertura normal; exclui fila, liquidação assíncrona do meio de pagamento e atrasos de terceiros
+        & Mediana $\leq$~45 e percentil 80 $\leq$~60
+        & Não há referência publicada. Os valores são hipóteses de trabalho da equipe, e o percentil 80 impede que a cauda de tempos reproduza a fila. Substituir pelas medições das visitas às lojas \\
+    \addlinespace
+    E04 & (R03, complementar) Tempo entre a confirmação do pagamento e a etiqueta livre para retirada
+        & s; cronometragem em bancada e no teste de usabilidade, $\geq$~20 liberações
+        & $\leq$~3 (meta preliminar)
+        & Meta preliminar da equipe, a confirmar com o protótipo \\
+    \addlinespace
+    E05 & (R04; DE05) Participantes que identificam a peça, pagam e liberam a etiqueta sem ajuda de funcionário
+        & \%; teste de usabilidade com 20 participantes, compra padrão de uma peça, observação estruturada
+        & $\geq$~80 (aceito com $\geq$~16 conclusões autônomas)
+        & A Riachuelo tem 0\% de autonomia com o caixa tradicional. O único valor publicado é o da Renner, com 38\% dos pagamentos nos terminais de autoatendimento \cite{consumidormoderno2025renner}, que mede outra grandeza. A equipe não fixou 100\% porque as entrevistas mostraram clientes que preferem atendimento em compras mais complexas (E08). Meta da equipe \\
+    \addlinespace
+    E06 & (R05; DE05) Participantes que concluem o fluxo principal sem erro na primeira tentativa e sem instruções adicionais
+        & \%; mesmo teste de E05, com registro de erros por observador
+        & $\geq$~85 (aceito com $\geq$~17 de 20 sem erro)
+        & Não há referência publicada. Difere de E05 porque conta apenas conclusões corretas na primeira tentativa, e E05 admite novas tentativas sem funcionário. Meta da equipe \\
+    \addlinespace
+    E07 & (R06; N06, D03, DE01) Tentativas em que a autorização de liberação, a confirmação exibida e o estado real da transação coincidem
+        & \%; ensaio em bancada com $\geq$~200 tentativas, válidas e inválidas (pagamento recusado, pendente ou expirado; reutilização de autorização; abertura com destacador magnético comercial)
+        & 100 (0 divergências)
+        & Liberar uma peça sem pagamento confirmado anula a função antifurto, e uma confirmação divergente reproduz a desconfiança relatada nas entrevistas. Com 0 falhas em 200 tentativas, a taxa real de falha é inferior a cerca de 1,5\% com 95\% de confiança (regra dos três, 3/$n$). Decisão de projeto \\
+    \addlinespace
+    E08 & (R07; N08) Cenários de falha catalogados que possuem alternativa humana capaz de concluir a compra
+        & \%; revisão do fluxo e teste de mesa de cada cenário do catálogo
+        & 100 dos cenários catalogados
+        & A automação não pode deixar o cliente sem saída. Decisão de projeto \\
+    \addlinespace
+    E09 & (R07, complementar) Tempo para concluir a compra pela alternativa humana, a partir da localização da compra pelo funcionário
+        & s; teste de mesa cronometrado, $\geq$~5 repetições por cenário do catálogo
+        & $\leq$~60 (meta preliminar)
+        & O limite evita que a via humana reproduza a fila (DE01). Estimativa preliminar da equipe \\
+\end{longtable}
+\endgroup
+
+O catálogo de cenários de falha de E08 reúne, no mínimo, os oito casos previstos para o protótipo: falta de dados móveis no celular do cliente, celular descarregado depois do pagamento, etiqueta que não responde, pagamento pendente, autorização expirada, pagamento recusado, falha total da eletrônica da etiqueta e alarme de saída com compra paga. O catálogo poderá crescer com os testes, e a meta continuará em 100\% dos cenários catalogados. Os tamanhos de amostra cabem no protótipo e não sustentam inferência estatística sobre a população de clientes, de modo que os testes com pessoas (E01 a E06) são indicativos. O ensaio de bancada de E07 é o único com alcance estatístico explícito.
+
+\subsubsection{Especificações associadas a outros critérios relevantes para o produto}
+\label{subsubsec:espec_outros}
+
+As especificações E10 a E18 não vêm de vozes do cliente: nenhuma foi identificada nas entrevistas nem na pesquisa de mercado. Elas derivam de referências físicas, da função antifurto do enunciado do problema e das normas relevantes, e a equipe as trata como qualificadores segundo a lógica do diagrama de Kano, isto é, atributos que o cliente não pediu e cuja falha compromete a aceitação do produto. Na classificação da equipe, E10 a E13, E15, E17 e E18 são atributos básicos, que geram insatisfação quando ausentes, e E14 e E16 são atributos de desempenho. Esse julgamento não foi validado com clientes. A equipe incluiu só o que delimita o produto: envelope, massa, retenção, energia, vida útil, interface com a saída da loja, sinalização e conformidade legal. Entre as normas e leis, registrou a LGPD e as resoluções da Anatel, cuja aplicabilidade deve ser confirmada, porque a equipe não fez revisão jurídica. Nas linhas E10 a E14, ``dispositivo'' designa o que fica preso à peça, qualquer que seja a divisão de funções entre ele e a infraestrutura da loja.
+
+\begingroup
+\captionsetup{font=normalsize}
+\scriptsize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}
+    >{\RaggedRight\arraybackslash}p{0.9cm}
+    >{\RaggedRight\arraybackslash}p{3.2cm}
+    >{\RaggedRight\arraybackslash}p{3.2cm}
+    >{\RaggedRight\arraybackslash}p{2.4cm}
+    >{\RaggedRight\arraybackslash}p{4.4cm}@{}}
+    \caption{Especificações-meta associadas a outros critérios relevantes para o produto} \label{tab:especificacoes_outros} \\
+    \toprule
+    \textbf{Código} & \textbf{Especificação} & \textbf{Unidade e forma de medição} & \textbf{Valor-meta ou faixa admissível} & \textbf{Fundamentação} \\
+    \midrule
+    \endfirsthead
+    \multicolumn{5}{c}{Tabela~\ref{tab:especificacoes_outros} (continuação)} \\
+    \toprule
+    \textbf{Código} & \textbf{Especificação} & \textbf{Unidade e forma de medição} & \textbf{Valor-meta ou faixa admissível} & \textbf{Fundamentação} \\
+    \midrule
+    \endhead
+    \midrule
+    \multicolumn{5}{r}{\textit{continua na próxima página}} \\
+    \endfoot
+    \bottomrule
+    \multicolumn{5}{@{}p{14.1cm}@{}}{\footnotesize Fonte: Elaborado pelos autores (2026), com base em \citeonline{hexport2026pencil}, \citeonline{lojaautomacao2026minitag}, \citeonline{renner2026resultados}, \citeonline{sensormatic2024recirculacao}, \citeonline{pact2026etiquetas}, \citeonline{brasil2018lgpd}, \citeonline{anatel2017res680} e \citeonline{anatel2019res715}.} \\
+    \endlastfoot
+    E10 & Envelope externo do que fica preso à peça (comprimento, largura e altura)
+        & mm; paquímetro em cinco exemplares
+        & Máximo de $98 \times 82 \times 26$; se a identificação for por código gráfico, menor lado da face superior $\geq$~28
+        & O limite superior é o envelope do desenho inicial (Seção~\ref{sec:elaboracao_desenhos}), de 7 a 13 vezes o volume das etiquetas comerciais: a \textit{pencil} mede $60 \times 18 \times 15$\,mm \cite{hexport2026pencil}, e a \textit{mini tag} mede 48 por 42\,mm em comprimento e largura \cite{lojaautomacao2026minitag}, com espessura a medir. Não vem de norma e deve ser reduzido se o conceito permitir. O limite inferior vem do código gráfico de 28\,mm adotado na representação inicial \\
+    \addlinespace
+    E11 & Massa do que fica preso à peça
+        & g; balança de precisão; teste de caimento em tecido leve, com deformação da peça não superior à causada pela etiqueta comercial de referência, após 24\,h
+        & $\leq$~130 (limite preliminar)
+        & A \textit{pencil} pesa 10\,g em 16,2\,cm$^3$, densidade efetiva de 0,62\,g/cm$^3$. Aplicada ao envelope de E10 (208,9\,cm$^3$), dá cerca de 129\,g. O valor é estimativa de engenharia, e o critério de caimento é comparativo porque a equipe não encontrou norma nem dado sobre o peso máximo aceitável \\
+    \addlinespace
+    E12 & Força de tração axial suportada no estado travado, sem liberar
+        & N; dinamômetro; cinco exemplares do dispositivo e cinco da etiqueta comercial, na mesma montagem de ensaio
+        & $\geq$ o maior entre 120\,N e o valor medido na etiqueta comercial de referência
+        & Decorre da proteção contra furto do enunciado do problema e de E07. O valor de 120\,N é meta preliminar da equipe, porque a força das etiquetas comerciais não consta em fonte publicada. A regra do maior valor evita aceitar um dispositivo mais fraco que o atual \\
+    \addlinespace
+    E13 & Tempo de espera em estado travado sem recarga nem troca de energia, se o dispositivo tiver fonte própria
+        & dias; medição da corrente de espera e ensaio acelerado
+        & $\geq$~168 (duas vezes o ciclo médio de 84\,dias)
+        & O ciclo médio de 84\,dias é premissa do projeto (60 dias na loja mais as etapas logísticas), com a permanência em loja ancorada no prazo médio de estoques de 95\,dias da Renner no quarto trimestre de 2025 \cite{renner2026resultados}. A permanência real na Riachuelo não foi verificada. Vale só se houver fonte de energia própria, o que a especificação não impõe \\
+    \addlinespace
+    E14 & Vida útil do dispositivo; taxa de retorno por ciclo de uso
+        & anos; \%; registro da frota por identificador do dispositivo e ensaio de ciclos em bancada
+        & $\geq$~5 anos (cerca de 22 ciclos de 84\,dias); retorno $\geq$~99\% por ciclo
+        & A recirculação de etiquetas rígidas no mercado fica entre 80\% e 83\% \cite{sensormatic2024recirculacao,pact2026etiquetas}, o que corresponde a uma perda média a cada 5 a 6 usos, calculada como $1/(1-\eta)$. A meta de 99\% é da equipe e supera a referência porque o dispositivo custa mais que uma etiqueta comum e o reuso é premissa do projeto \\
+    \addlinespace
+    E15 & Peças não liberadas que saem sem alarme; alarmes em compras pagas
+        & \% das passagens; passagens pelo sistema de saída da loja piloto: $\geq$~600 de peça não liberada e $\geq$~300 de peça paga
+        & Falha de detecção $<$~0,5; alarme indevido $\leq$~1 (metas preliminares)
+        & Decorre de N06 (peso de 22,3\% no QFD). As metas são do esboço de requisitos da equipe. Pela regra dos três, 600 passagens sem falha sustentam falha inferior a 0,5\%, e 300 sem alarme indevido, inferior a 1\%, com 95\% de confiança. O tipo de sistema de saída da Riachuelo precisa ser confirmado na loja piloto \\
+    \addlinespace
+    E16 & Estados do dispositivo (travada, autorizada, liberada e erro) distinguíveis por mais de um canal sensorial
+        & estados; canais; teste com cinco pessoas, incluindo simulação de daltonismo, que identificam cada estado
+        & 4 estados, cada um por $\geq$~2 canais
+        & Decorre de D03 e de E06. Dois canais evitam depender de um único sentido, e os quatro estados vêm do fluxo de uso. Meta da equipe \\
+    \addlinespace
+    E17 & Equipamentos de radiocomunicação certificados
+        & \%; conferência documental de certificados
+        & 100 antes do uso em loja
+        & Resoluções da Anatel 680/2017 e 715/2019 \cite{anatel2017res680,anatel2019res715}. Meta de conformidade, sem tolerância; aplicabilidade a confirmar com o organismo certificador \\
+    \addlinespace
+    E18 & Tratamentos de dados pessoais sem base legal
+        & tratamentos; conferência do registro de tratamento de dados
+        & 0
+        & LGPD, Lei 13.709/2018 \cite{brasil2018lgpd}, e voz D07, sobre privacidade de dados de comportamento. Meta de conformidade, sem tolerância; aplicabilidade a confirmar com o jurídico da Riachuelo \\
+\end{longtable}
+\endgroup
+
+Envelope, massa, retenção e autonomia competem entre si, porque mais energia armazenada e mais material aumentam volume e massa. As metas fixam teto de envelope (E10) e de massa (E11) e piso de retenção (E12) e de autonomia (E13), e o conceito deverá cumprir todos ou alterar um com justificativa. Ambiente de operação, resistência à queda, fixação na peça, tempo de aplicação e custo por compra ficaram sem especificação, porque a equipe não tem dado nem fonte para fixar valor. As visitas às lojas devem levantar temperatura e umidade, tempo de aplicação, massa, dimensões e força de retenção das etiquetas em uso e o custo de uma compra no caixa. A amostra pequena dos testes com pessoas deixa E01 a E06 indicativas, e E15 depende do tipo de sistema de saída da loja.
