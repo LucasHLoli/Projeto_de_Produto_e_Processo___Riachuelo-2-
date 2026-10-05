@@ -3,3 +3,19 @@
 O desenho inicial (Seção~\ref{sec:elaboracao_desenhos}) foi feito antes da modelagem funcional e partiu de uma única solução: um dispositivo rígido com retenção por embreagem de esferas e um atuador interno que desloca o carretel. As duas etapas seguintes mostraram o que esse desenho deixou em aberto. A modelagem funcional (Seção~\ref{sec:modelagem_funcional}) listou 18 funções, e o desenho inicial tratava de parte delas: não havia fonte de energia definida, nem forma de informar o estado da peça ao antifurto da loja. O estudo de aproveitamento técnico (Seção~\ref{sec:aproveitamento_tecnico}) reuniu, para cada função, princípios de solução vindos de outros produtos, e 27 deles foram selecionados para esta etapa (Tabela~\ref{tab:aprov_explorar}).
 
 A reformulação seguiu o procedimento de \citeonline{rozenfeld2006gestao} para a passagem dos princípios de solução às alternativas de concepção. A equipe montou a matriz morfológica com as funções em que há mais de um princípio viável, combinou os princípios em alternativas de concepção, comparou as alternativas por critérios derivados dos requisitos e redesenhou o dispositivo com base na alternativa escolhida.
+\subsection{Matriz morfológica}
+\label{subsec:reform_matriz}
+
+A matriz morfológica dispõe as funções nas linhas e os princípios de solução nas colunas, e cada caminho que liga um princípio por linha forma uma alternativa de concepção \cite{rozenfeld2006gestao}. Como o procedimento recomenda trabalhar com até dez funções, a equipe levou à matriz as seis em que a Galeria apontou mais de um princípio viável (Figura~\ref{fig:reform_matriz}). Nas outras doze, a análise do estudo de aproveitamento técnico deixou um único princípio com referência consolidada, e ele foi mantido fixo em todas as alternativas.
+
+\begin{figure}[p]
+    \centering
+    \caption{Matriz morfológica das seis funções com mais de um princípio de solução viável}
+    \includegraphics[width=\textwidth]{imagens/reformulacao_desenhos/matriz_morfologica.png}
+    \label{fig:reform_matriz}
+    \source{Elaborado pelos autores (2026), a partir dos cartões da Galeria.}
+\end{figure}
+
+Cada linha reúne quatro princípios, identificados pelo código do cartão de origem. A equipe incluiu os portadores avaliados como consistentes e os marcados para explorar, e deixou de fora os avaliados como problema. Os princípios de uma mesma linha estão no mesmo nível de generalidade, e nenhum deles fixa material ou dimensão.
+
+As dependências registradas na Galeria restringem as combinações. A mola com gatilho e o botão com pino de segurança pedem um atuador pequeno, o que os torna compatíveis com a célula de menor capacidade. O solenoide e o micromotor consomem mais em cada acionamento e pedem a célula recarregável ou o supercapacitor. O destravador magnético e a chave mecânica dependem de um funcionário, e por isso servem como via de liberação da equipe, combinada com um dos outros dois princípios da linha.
