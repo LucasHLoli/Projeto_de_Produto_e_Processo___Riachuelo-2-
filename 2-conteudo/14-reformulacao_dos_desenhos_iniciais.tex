@@ -45,7 +45,7 @@ A equipe formou três alternativas de concepção, cada uma com um princípio po
         Receber a autorização de liberação & Receptor de radiofrequência de baixo consumo & Bobina receptora no dispositivo & Bobina receptora no dispositivo \\
         Encerrar a retenção & Solenoide que recolhe o trinco & Mola de torção com gatilho & Botão de desengate com pino de segurança \\
         Indicar a liberação ao comprador & LED indicador com difusor & Conjunto de LEDs em anel & Guia de luz de polímero transparente \\
-        Suprir energia & Célula recarregável & Bobina receptora com estação transmissora & Célula primária \\
+        Suprir energia & Célula recarregável, com recarga por contato & Célula recarregada por bobina receptora, com estação transmissora & Célula primária \\
         \bottomrule
     \end{tabularx}
     \source{Elaborado pelos autores (2026).}
@@ -99,7 +99,7 @@ As notas são avaliações da equipe a partir das revisões da Galeria e das ref
 \subsection{Desenho reformulado}
 \label{subsec:reform_desenho}
 
-O desenho reformulado manteve do desenho inicial a retenção da haste por embreagem de esferas e substituiu a forma de liberar, de receber a autorização, de indicar a liberação e de repor a energia (Figura~\ref{fig:reform_desenho}). O esquema mostra a disposição dos elementos e as relações entre eles. Ele está fora de escala, e as dimensões serão definidas no projeto detalhado.
+O desenho reformulado manteve do desenho inicial a retenção da haste por embreagem de esferas e substituiu a forma de liberar, de receber a autorização, de indicar a liberação e de repor a energia (Figura~\ref{fig:reform_desenho}). O esquema representa a arquitetura do dispositivo por seus sistemas, subsistemas e componentes e pelas interfaces entre eles, que é o nível de detalhe previsto para o projeto conceitual \cite{rozenfeld2006gestao}. Os doze elementos numerados formam cinco subsistemas: retenção (1 a 4), liberação (5 e 6), identificação e autorização (7 e 8), indicação (9) e controle e energia (10 a 12). O esquema está fora de escala, e as formas, as dimensões e os materiais serão definidos no projeto detalhado.
 
 \begin{figure}[htbp]
     \centering
@@ -142,4 +142,4 @@ Na face superior ficam o código 2D, que o comprador lê com o celular para iden
 
 O botão do desenho inicial foi retirado, porque a mola passou a abrir a trava sem ação do comprador depois do toque do celular. O destravador da equipe permanece como via de liberação para os casos de falha, e a forma de acioná-lo no novo mecanismo ainda precisa ser definida.
 
-Três pontos ficaram em aberto. O esquema não foi dimensionado: a equipe ainda não calculou a força da mola, o curso do came nem o consumo do microatuador. As três funções que a Galeria apontou como ausentes da estrutura (confirmar que a peça foi solta, detectar tentativa de violação e avisar que a bateria está fraca) não aparecem no desenho. E a forma de informar o estado da peça ao antifurto da loja depende da resposta da Riachuelo sobre o portal de saída. Esses pontos serão tratados no projeto detalhado e no protótipo, em que o desenho será modelado em CAD.
+Três pontos ficaram em aberto. O esquema não foi dimensionado: a equipe ainda não calculou a força da mola, o curso do came nem o consumo do microatuador. As três funções que a Galeria apontou como ausentes da estrutura (confirmar que a peça foi solta, detectar tentativa de violação e avisar que a bateria está fraca) não aparecem no desenho. E a forma de informar o estado da peça ao antifurto da loja depende da resposta da Riachuelo sobre o portal de saída. Esses pontos serão tratados no projeto detalhado, em que o dispositivo será modelado em CAD, com vistas, cotas e materiais suficientes para gerar a lista de materiais inicial, e depois no protótipo.
