@@ -10,7 +10,7 @@ A matriz morfológica dispõe as funções nas linhas e os princípios de soluç
 
 \begin{figure}[p]
     \centering
-    \caption{Matriz morfológica das sete funções com mais de um princípio de solução viável}
+    \caption{Matriz morfológica das sete funções com mais de um princípio de solução viável. Os números indicam as células usadas pelas alternativas 1, 2 e 3}
     \includegraphics[width=0.88\textwidth]{imagens/reformulacao_desenhos/matriz_morfologica.png}
     \label{fig:reform_matriz}
     \source{Elaborado pelos autores (2026), a partir dos cartões da Galeria. Tabela gerada por instrumentos de IA.}
@@ -19,3 +19,42 @@ A matriz morfológica dispõe as funções nas linhas e os princípios de soluç
 Cada linha reúne quatro princípios, identificados pelo código do cartão de origem. Dos 28 princípios, 22 foram avaliados como consistentes na Galeria e seis ficaram a aprofundar, dois deles marcados para explorar. Nenhum portador avaliado como problema entrou na matriz. Os princípios de uma mesma linha estão no mesmo nível de generalidade, e nenhum deles fixa material ou dimensão.
 
 As dependências registradas na Galeria restringem as combinações. A mola com gatilho e o botão com pino de segurança pedem um atuador pequeno, o que os torna compatíveis com a célula de menor capacidade. O solenoide e o micromotor consomem mais em cada acionamento e pedem a célula recarregável ou o supercapacitor. O destravador magnético e a chave mecânica dependem de um funcionário, e por isso servem como via de liberação da equipe, combinada com um dos outros dois princípios da linha.
+
+\subsection{Alternativas de concepção}
+\label{subsec:reform_alternativas}
+
+A equipe formou três alternativas de concepção, cada uma com um princípio por linha da matriz (Tabela~\ref{tab:reform_alternativas}). Os números na Figura~\ref{fig:reform_matriz} indicam as células que cada alternativa usa. As três partiram de orientações diferentes, para que a comparação cobrisse soluções de fato distintas.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Alternativas de concepção formadas na matriz morfológica}
+    \label{tab:reform_alternativas}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{3.3cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Função} & \textbf{Alternativa 1} & \textbf{Alternativa 2} & \textbf{Alternativa 3} \\
+        \midrule
+        Iniciar a retenção da peça & Pino com embreagem de esferas & Pino com embreagem de esferas & Garra com came excêntrica \\
+        Manter a retenção & Trinco com lingueta e mola & Came de bloqueio com batente & Mordentes de área ampla com face macia \\
+        Receber a seleção e o comprador & Código 2D gravado no dispositivo & Código 2D gravado no dispositivo & Etiqueta NFC passiva no dispositivo \\
+        Receber a autorização de liberação & Receptor de radiofrequência de baixo consumo & Bobina receptora no dispositivo & Bobina receptora no dispositivo \\
+        Encerrar a retenção & Solenoide que recolhe o trinco & Mola de torção com gatilho & Botão de desengate com pino de segurança \\
+        Indicar a liberação ao comprador & LED indicador com difusor & Conjunto de LEDs em anel & Guia de luz de polímero transparente \\
+        Suprir energia & Célula recarregável & Bobina receptora com estação transmissora & Célula primária \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+A alternativa 1 é a mais próxima do desenho inicial. O pino com embreagem de esferas prende a peça, um solenoide faz toda a força de liberação, e o dispositivo recebe a autorização por radiofrequência, sem que o comprador precise encostar o celular. Ela muda pouco em relação ao que a equipe já tinha desenhado. Em contrapartida, o solenoide consome mais em cada acionamento, e a escuta por rádio gasta energia também em espera, como as revisões da Galeria registraram.
+
+A alternativa 2 reúne os princípios que as notas da Galeria apontaram como os de menor consumo. A mola de torção guarda a energia de abertura, e o atuador só solta o gatilho. O dispositivo recebe a autorização pelo toque do celular, o que dispensa a escuta contínua e prova que o comprador está junto da peça. A recarga ocorre por indução, numa estação da loja. O anel de LEDs torna a liberação visível para terceiros. A mola precisa ser armada de novo a cada reuso, no momento em que o dispositivo é preso a outra peça.
+
+A alternativa 3 dispensa a perfuração do tecido. A garra com came excêntrica e os mordentes de face macia prendem a peça por aperto, e o comprador fornece a força de abertura ao apertar o botão, que só se move depois que um pino de segurança é retirado. A identificação e a autorização ocorrem pelo mesmo toque do celular, e a célula primária é trocada no fim da vida útil. É a alternativa de menor consumo e a de maior incerteza: a retenção por aperto ainda depende de ensaio de segurança, e a célula primária exige troca.
+
+Nas três alternativas, o destravador magnético ou a chave mecânica permanece como via de liberação da equipe, para os casos em que o celular do comprador falhar. As onze funções fora da matriz usam os mesmos princípios nas três.
