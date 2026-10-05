@@ -93,37 +93,82 @@ A Tabela~\ref{tab:aprov_galeria} resume o resultado da análise por painel. O pa
     \source{Elaborado pelos autores (2026), a partir do quadro da Galeria no Miro.}
 \end{table}
 
-\subsection{Linhas de similaridade}
-\label{subsec:aprov_linhas}
-
-As referências dos portadores vieram de seis linhas de similaridade, isto é, grupos de produtos que cumprem uma função parecida com alguma função do sistema (Tabela~\ref{tab:aprov_linhas}). A linha mais próxima é a do antifurto de varejo, de onde saíram o pino com embreagem de esferas e o destravador magnético. As demais contribuíram em funções específicas: as fechaduras e os cofres na liberação, o setor automotivo na retenção sob carga e na indicação luminosa, a robótica nos portadores que não perfuram o tecido, os sistemas de pagamento e de RFID no vínculo entre a peça e a transação, e os eletrônicos de consumo na energia.
+A Galeria partiu das funções e, por isso, não registrou os produtos que cumprem a função total do sistema. Esses produtos são as seis soluções comparadas no estudo de diferenciação (Tabela~\ref{tab:comparativo-solucoes}). De cada uma delas a equipe aproveitou uma ideia ou uma lição, reunidas na Tabela~\ref{tab:aprov_benchmark}.
 
 \begin{table}[htbp]
     \centering
-    \caption{Linhas de similaridade das referências da Galeria}
-    \label{tab:aprov_linhas}
+    \caption{Ideias e lições aproveitadas das soluções do benchmarking}
+    \label{tab:aprov_benchmark}
     \footnotesize
     \renewcommand{\arraystretch}{1.3}
     \begin{tabularx}{\textwidth}{@{}
-        >{\RaggedRight\arraybackslash}p{3.0cm}
+        >{\RaggedRight\arraybackslash}p{3.6cm}
         >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{3.6cm}@{}}
+        \toprule
+        \textbf{Solução do benchmarking} & \textbf{O que a equipe aproveita} & \textbf{Função atendida} \\
+        \midrule
+        a) Etiqueta rígida e caixa & O pino com embreagem de esferas e o destravador como via de liberação da equipe & Iniciar a retenção; receber a autorização de liberação \\
+        b) Self-checkout por código de barras & A remoção da etiqueta feita pelo próprio cliente, sem operador & Encerrar a retenção \\
+        c) Self-checkout por RFID & A desativação do alarme ligada ao pagamento, pela etiqueta RFID da peça & Informar o estado ao antifurto existente \\
+        d) RFID oculta no rótulo & A lição de que a proteção sem retenção física foi contornada nos testes & Manter a retenção \\
+        e) \textit{Scan \& go} & A leitura do código pelo celular e o pagamento no salão & Receber a seleção e o comprador \\
+        f) Etiqueta inteligente por Bluetooth & O comando de liberação entregue pelo celular aproximado da etiqueta & Receber a autorização de liberação \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026), a partir da Tabela~\ref{tab:comparativo-solucoes}.}
+\end{table}
+
+A solução f), da Zliide, é a que cumpre a função total mais próxima da proposta. Fora do quadro do estudo de diferenciação, a equipe encontrou outras duas soluções para a mesma função. A rapitag, da Alemanha, seguia o princípio da Zliide: enviava uma chave digital do celular à etiqueta por Bluetooth e fez um piloto em seis lojas em 2024 \cite{eurocis2024rapitag}; a empresa entrou em insolvência em 2025 \cite{insolvenzradar2025rapitag}. A Paytag, de Israel, adota outro princípio: o pagamento ocorre no aplicativo, e a peça é levada a uma estação que solta a etiqueta \cite{calcalist2026paytag}. Nenhuma das três descreve, nas fontes consultadas, o mecanismo interno de liberação, de modo que as referências para encerrar a retenção continuaram vindo das fechaduras e dos cofres.
+
+As patentes serviram de segunda fonte. A Sensormatic protege nos Estados Unidos, até 2035, uma etiqueta que se destaca sozinha ao receber um comando sem fio \cite{googlepatents2018us10121339}. A Samsung Eletrônica da Amazônia descreve um método em que o servidor entrega ao aplicativo, depois do pagamento, a chave que desativa o alarme da etiqueta \cite{googlepatents2020us10586228}. Uma patente mais antiga de etiqueta rígida, já expirada, informa força de arrancamento de 356 a 556\,N \cite{googlepatents2006us7148805}. Esse valor serve de dado para a especificação de força de retenção (E12), que prevê igualar a etiqueta comercial. As patentes da Zliide, hoje da Touchtech, são tratadas como risco na Seção~\ref{sec:riscos-diferenciacao}. A consulta foi feita no Google Patents, e a busca na base do Instituto Nacional da Propriedade Industrial (INPI) ficou para a próxima etapa.
+
+\subsection{Ideias aproveitadas e descartadas}
+\label{subsec:aprov_sintese}
+
+Ao fim da análise, a equipe reuniu, para cada função, o princípio que as revisões e as notas do quadro apontaram como o mais promissor (Tabela~\ref{tab:aprov_sintese}). A tabela não substitui a matriz morfológica da Seção~\ref{sec:reformulacao_desenhos}, na qual os princípios serão combinados e comparados. Ela registra o ponto de partida dessa combinação e o produto de onde cada princípio veio.
+
+\begin{table}[p]
+    \centering
+    \caption{Princípio preferido por função, com a referência de origem e o motivo}
+    \label{tab:aprov_sintese}
+    \scriptsize
+    \setlength{\tabcolsep}{4pt}
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.9cm}
+        >{\RaggedRight\arraybackslash}p{3.6cm}
+        >{\RaggedRight\arraybackslash}p{3.2cm}
         >{\RaggedRight\arraybackslash}X@{}}
         \toprule
-        \textbf{Linha de similaridade} & \textbf{Produtos de referência} & \textbf{Funções em que contribuiu} \\
+        \textbf{Função} & \textbf{Princípio preferido} & \textbf{Referência de origem} & \textbf{Motivo} \\
         \midrule
-        Antifurto de varejo & Etiqueta rígida de pino, laço de cabo, destravador magnético do caixa, desativadores de etiqueta & Iniciar e manter a retenção; receber a autorização de liberação; informar o estado ao antifurto existente \\
-        Fechaduras, cofres e cadeados & Fechadura de trinco, fechadura elétrica, armário inteligente, fechadura de hotel, cofre com mola armada, cadeado de combinação & Manter e encerrar a retenção; receber a confirmação de pagamento e a autorização \\
-        Automotivo e náutico & Retrator e fivela do cinto de segurança, rebite de painel, indicadores de painel, mordedor de cabo de veleiros & Iniciar, manter e encerrar a retenção; indicar a liberação \\
-        Robótica e atuadores & Garras eletroadesivas e magnéticas, embreagens magnetorreológicas, atuadores de liga com memória de forma & Manter e encerrar a retenção \\
-        Pagamento e RFID no varejo & Pagamento por QR e por aproximação, estações de codificação de etiquetas, inventário RFID por zona, portais de saída & Receber a seleção e o pagamento; associar a retenção à identidade; registrar o manuseio, localizar a peça e atualizar o estoque \\
-        Eletrônicos de consumo & Carregador sem fio, bateria de celular, luz de estado, anel luminoso de assistentes de voz, etiqueta eletrônica de preço & Suprir energia; indicar a liberação e a pendência \\
+        Iniciar a retenção da peça & Pino com embreagem de esferas; garra com came excêntrica como alternativa & Etiqueta rígida antifurto; mordedor de cabo de veleiros & O pino é o princípio consolidado. A garra retém sem perfurar e depende de ensaio de segurança \\
+        Associar a retenção à identidade da peça & Estação de pareamento com antena de campo próximo & Estações de codificação e antenas de bancada com RFID & Usa a etiqueta que a peça já tem. Acrescenta tempo ao recebimento \\
+        Manter a retenção & Trinco com lingueta e mola, ou came de bloqueio com batente & Fechadura de trinco; retrator do cinto de segurança & Bloqueia sob carga sem gastar energia \\
+        Receber a seleção e o comprador & Código 2D gravado no dispositivo & Pagamento por QR & Custo quase nulo na peça e hábito já difundido \\
+        Receber a confirmação de pagamento & Celular do comprador como retransmissor & Fechaduras inteligentes que recebem a chave pelo celular & Dispensa rede no dispositivo \\
+        Comparar a peça com a transação & Comparação no servidor & Autorização de pagamento em servidor & Padrão do mercado. Depende de conexão no momento da compra \\
+        Registrar o vínculo & Registro central no servidor, com cópia na memória do dispositivo & Banco de dados de vendas; fechaduras eletrônicas & Mantém o histórico e funciona sem rede até a sincronização \\
+        Desfazer o vínculo & Vínculo marcado como cancelado no registro central & Estorno em sistemas de pagamento & Preserva o histórico para auditoria \\
+        Receber a autorização de liberação & Bobina receptora acionada pelo toque do celular & Pagamento por aproximação & O toque prova que o comprador está junto da peça \\
+        Encerrar a retenção & Mola de torção com gatilho, ou botão de desengate com pino de segurança & Cofre com mola armada; fivela do cinto de segurança & A mola ou o gesto do comprador fornece a força, e o atuador só solta um gatilho \\
+        Indicar a liberação ao comprador & Conjunto de LEDs em anel com guia de luz & Anel luminoso de assistentes de voz; painel automotivo & Visível para terceiros, o que ajuda a legitimar a saída \\
+        Informar o estado da peça ao antifurto existente & Interface de rede com o portal, ou campo de estado no chip RFID da peça & Integração de portais RFID com sistemas de venda & Não exige peça nova no dispositivo. Depende do tipo de portal da loja \\
+        Suprir energia & Célula recarregável com recarga por indução & Bateria de celular; carregador sem fio & Recarga sem contato elétrico na rotina da loja \\
+        \midrule
+        Registrar o manuseio da peça & Leituras das antenas fixas do salão & Inventário RFID contínuo & Dispensa sensor no dispositivo \\
+        Localizar a peça no salão & Leitores fixos por zona & Inventário RFID por zona & A resolução de zona basta para a reposição \\
+        Indicar a pendência ao comprador & LED com padrão de pulso e aviso no celular & Luz de estado de roteadores; notificações de pagamento & O pulso não depende de cor, e o celular explica o motivo \\
+        Atualizar o estado da peça no estoque & Leitores na saída da loja & Portais RFID de saída & Usa a infraestrutura que a loja já tem \\
+        Informar exceções à equipe & LED no dispositivo e tela no terminal da equipe & Luz de estado; painéis de pedidos & A luz mostra a peça exata, e a tela mostra o motivo \\
         \bottomrule
     \end{tabularx}
     \source{Elaborado pelos autores (2026), a partir do quadro da Galeria no Miro.}
 \end{table}
 
-A Galeria partiu das funções e, por isso, não registrou os produtos que cumprem a função total do sistema. Esses produtos são as soluções concorrentes comparadas no estudo de diferenciação (Seção~\ref{sec:estudo_diferenciacao}), e a mais próxima é a etiqueta da Zliide, liberada pelo celular depois do pagamento. A equipe encontrou outras duas soluções com o mesmo princípio. A rapitag, da Alemanha, enviava uma chave digital do celular à etiqueta por Bluetooth e fez um piloto em seis lojas em 2024 \cite{eurocis2024rapitag}; a empresa entrou em insolvência em 2025 \cite{insolvenzradar2025rapitag}. A Paytag, de Israel, mantém o pagamento no aplicativo e leva a peça a uma estação que solta a etiqueta \cite{calcalist2026paytag}.
+Três resultados alteram o desenho inicial da Seção~\ref{sec:elaboracao_desenhos}. Na retenção, o pino com embreagem de esferas permaneceu como base, e a garra com came excêntrica seguirá para a matriz morfológica como alternativa sem perfuração do tecido. Na liberação, a mola com gatilho e o botão com pino de segurança reduzem o trabalho do atuador, que no desenho inicial deslocava o carretel e passará a soltar apenas um gatilho. Na energia, a recarga por indução entrou como princípio preferido, e o desenho inicial não tratava da fonte de energia.
 
-As três soluções confirmam portadores que a Galeria avaliou como consistentes, entre eles o celular do comprador como retransmissor e o código lido pela câmera. Nenhuma delas descreve, nas fontes consultadas, o mecanismo interno de liberação, de modo que as referências para encerrar a retenção continuaram vindo das fechaduras e dos cofres.
+Os 17 portadores avaliados como problema foram descartados por cinco motivos. O elo fusível, o fio sacrificial, a cápsula química e a cinta dentada servem a um único uso e contrariam o reuso do dispositivo. O clipe de lâmina e o fecho de ganchos e laços podem ser abertos por qualquer pessoa. O botão, o eletrodo capacitivo e a busca visual não identificam o comprador ou a unidade da peça. O atuador de cera, o atuador piezoelétrico, a ventosa e o gerador termoelétrico não entregam o tempo de resposta, o curso, a vedação ou a potência que a função pede. Os demais conflitam com a operação da loja: os contatos de mola exigiriam trocar a etiqueta atual, a marcação a laser impede o estorno, a sacola blindada serviria também a quem furta e o foco de luz do teto expõe o cliente.
 
-As patentes serviram de segunda fonte. A Sensormatic protege nos Estados Unidos, até 2035, uma etiqueta que se destaca sozinha ao receber um comando sem fio \cite{googlepatents2018us10121339}. A Samsung Eletrônica da Amazônia descreve um método em que o servidor entrega ao aplicativo, depois do pagamento, a chave que desativa o alarme da etiqueta \cite{googlepatents2020us10586228}. Uma patente mais antiga de etiqueta rígida, já expirada, informa força de arrancamento de 356 a 556\,N \cite{googlepatents2006us7148805}. Esse valor serve de dado para a especificação de força de retenção (E12), que prevê igualar a etiqueta comercial. A consulta foi feita no Google Patents, e a busca na base do Instituto Nacional da Propriedade Industrial (INPI) ficou para a próxima etapa.
+A análise deixou duas perguntas para a Riachuelo. A primeira é o protocolo da etiqueta RFID em uso, do qual depende quase todo o painel de associar a retenção à identidade da peça. A segunda é a tecnologia do antifurto do portal de saída, da qual dependem quatro dos cinco portadores do painel correspondente. A equipe também notou três funções sem painel, que serão avaliadas na revisão da estrutura de funções: confirmar que a peça foi solta, detectar tentativa de violação e avisar que a bateria está fraca.
