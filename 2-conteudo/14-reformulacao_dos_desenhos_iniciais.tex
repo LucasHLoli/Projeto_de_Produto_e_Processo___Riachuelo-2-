@@ -95,3 +95,51 @@ Os critérios vieram de seções anteriores. A segurança da retenção, o taman
 A alternativa 2 superou a alternativa 1 no consumo de energia, no tamanho e no reuso, e empatou com ela na segurança, porque as duas usam o pino com embreagem de esferas. A alternativa 1 teve a melhor nota em facilidade de uso, e a equipe aceitou a perda nesse critério: o toque do celular acrescenta um gesto, mas dispensa a escuta contínua por rádio e prova que o comprador está junto da peça. A alternativa 3 ficou em último lugar por causa da segurança da retenção, embora tenha as melhores notas em consumo e em preservação da peça.
 
 As notas são avaliações da equipe a partir das revisões da Galeria e das referências de cada princípio. Nenhuma alternativa foi construída ou ensaiada. O resultado se mantém quando o peso da preservação da peça é dobrado, caso em que a alternativa 2 continua à frente. Ele muda se a garra com came excêntrica alcançar, em ensaio, a mesma segurança do pino: nesse caso a alternativa 3 chegaria a 3,95 e praticamente empataria com a alternativa 2. Por isso, o ensaio de retenção da garra ficou registrado como verificação para a etapa do protótipo.
+
+\subsection{Desenho reformulado}
+\label{subsec:reform_desenho}
+
+O desenho reformulado manteve do desenho inicial a retenção da haste por embreagem de esferas e substituiu a forma de liberar, de receber a autorização, de indicar a liberação e de repor a energia (Figura~\ref{fig:reform_desenho}). O esquema mostra a disposição dos elementos e as relações entre eles. Ele está fora de escala, e as dimensões serão definidas no projeto detalhado.
+
+\begin{figure}[htbp]
+    \centering
+    \caption{Esquema do dispositivo reformulado, em corte lateral e na face superior, sem escala}
+    \includegraphics[width=\textwidth]{imagens/reformulacao_desenhos/desenho_reformulado.png}
+    \label{fig:reform_desenho}
+    \source{Elaborado pelos autores (2026).}
+\end{figure}
+
+A haste atravessa o tecido e entra no copo cônico, onde as esferas a prendem, como no desenho inicial. O carretel mantém as esferas na posição de travamento, e o came de bloqueio, apoiado no batente, impede que o carretel se desloque enquanto a peça está presa. A liberação deixou de depender de um atuador que faz toda a força. Uma mola de torção, armada quando o dispositivo é preso à peça, guarda a energia de abertura. Um microatuador retira o gatilho, a mola gira o came e desloca o carretel, e as esferas soltam a haste.
+
+Na face superior ficam o código 2D, que o comprador lê com o celular para identificar a peça, e o anel de LEDs, que indica a liberação. Sob a face fica a bobina receptora: depois do pagamento, o comprador encosta o celular no dispositivo, e a autorização passa por esse toque. Na face inferior, uma segunda bobina recarrega a célula por indução quando o dispositivo é colocado na estação de recarga da loja. A Tabela~\ref{tab:reform_mudancas} compara os dois desenhos.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Mudanças do desenho inicial para o desenho reformulado}
+    \label{tab:reform_mudancas}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.6cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{3.4cm}@{}}
+        \toprule
+        \textbf{Elemento} & \textbf{Desenho inicial} & \textbf{Desenho reformulado} & \textbf{Origem da mudança} \\
+        \midrule
+        Retenção da haste & Embreagem de três esferas em copo cônico & Mantida & Princípio consolidado nas etiquetas rígidas \\
+        Bloqueio do carretel & Mola que sustenta o carretel & Came de bloqueio apoiado em batente & Retrator do cinto de segurança \\
+        Liberação & Atuador que move um cursor com rampa e desloca o carretel & Mola de torção armada, solta por um microatuador que retira o gatilho & Fechadura de cofre com mola armada \\
+        Autorização & Do celular direto ao dispositivo, sem meio definido & Bobina receptora sob a face, acionada pelo toque do celular & Pagamento por aproximação \\
+        Identificação da peça & Código gráfico impresso na face & Código 2D, mantido & Pagamento por QR \\
+        Indicação & Indicador luminoso e botão de liberação & Anel de LEDs, sem botão & Anel luminoso de assistentes de voz \\
+        Energia & Bateria, sem recarga definida & Célula recarregável com bobina de recarga por indução & Carregadores sem fio de celular \\
+        Preparo para o reuso & Não tratado & Mola armada no ato de prender o dispositivo à peça & Decorre da mola com gatilho \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+O botão do desenho inicial foi retirado, porque a mola passou a abrir a trava sem ação do comprador depois do toque do celular. O destravador da equipe permanece como via de liberação para os casos de falha, e a forma de acioná-lo no novo mecanismo ainda precisa ser definida.
+
+Três pontos ficaram em aberto. O esquema não foi dimensionado: a equipe ainda não calculou a força da mola, o curso do came nem o consumo do microatuador. As três funções que a Galeria apontou como ausentes da estrutura (confirmar que a peça foi solta, detectar tentativa de violação e avisar que a bateria está fraca) não aparecem no desenho. E a forma de informar o estado da peça ao antifurto da loja depende da resposta da Riachuelo sobre o portal de saída. Esses pontos serão tratados no projeto detalhado e no protótipo, em que o desenho será modelado em CAD.
