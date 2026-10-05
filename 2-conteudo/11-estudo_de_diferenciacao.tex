@@ -1,1 +1,199 @@
 \section{Estudo de diferenciação}\label{sec:estudo_diferenciacao}
+
+O dispositivo proposto provavelmente custará mais que uma etiqueta antifurto rígida convencional, e por isso não terá como competir por preço, dessa forma seu valor precisa vir da diferenciação. Segundo Kotler, citado por \citeonline{rozenfeld2006}, diferenciação é o ato de desenvolver um conjunto de diferenças significativas para distinguir a oferta da empresa, entendida como produto mais serviço, da oferta da concorrência. Para diferenciar, é preciso conhecer o pacote de valores de cada perfil de cliente, isto é, os aspectos do produto que esse perfil considera mais importantes. Os autores observam ainda que não há espaço no mercado para produtos com desempenho mediano em todas as características, ou seja, o produto precisa ser melhor justamente naquilo que o cliente mais valoriza.
+
+A equipe combinou esse referencial com a distinção entre critérios ganhadores de pedido e critérios qualificadores, proposta por \citeonline{hill2000}. Critérios qualificadores são aqueles que o produto precisa atender para ser considerado pelo comprador, sem que atendê-los melhor que a concorrência aumente sua chance de venda. Critérios ganhadores de pedido são aqueles em que um desempenho superior ao da concorrência decide a compra. Essa distinção se aproxima da classificação de Kano já adotada na Seção 6.4.2: os atributos básicos tendem a funcionar como qualificadores, e os atributos de desempenho e de encantamento, como candidatos a ganhadores de pedido.
+
+Como a venda é B2B, a análise considerou duas perspectivas. A Riachuelo é quem decide a compra e avalia o produto por custo, segurança, operação e infraestrutura. O consumidor é quem usa o produto, e sua experiência de compra é o que justifica, para a Riachuelo, pagar mais por ele. Um critério só foi tratado como ganhador de pedido quando a vantagem percebida pelo consumidor se converte em um ganho mensurável para a Riachuelo.
+
+% ---------------------------------------------------------------------
+\section{Soluções concorrentes e de referência}
+\label{sec:solucoes-concorrentes}
+
+A concorrência mais próxima do produto não é a etiqueta rígida comum, e sim as soluções que já retiram o caixa da etapa de liberação da peça. Além dos \textit{benchmarks} citados nas Seções 1.4 e 6.3.4, a equipe pesquisou soluções de compra pelo celular aplicadas à moda e encontrou uma concorrente direta, a dinamarquesa Zliide. As soluções foram agrupadas em seis tipos, descritos a seguir.
+
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Etiqueta rígida convencional com liberação no caixa.} É a solução atual da Riachuelo fora das lojas conceito. A etiqueta \textit{pencil} AM mede 60~$\times$~18~$\times$~15~mm, pesa 10~g e custa cerca de R\$~1,73 por unidade, em caixa com mil unidades \cite{hexport2026}. O custo baixo e a retenção física são seus pontos fortes; a dependência do operador para a liberação é a origem do problema do projeto.
+
+  \item \textbf{Self-checkout por código de barras com remoção manual da etiqueta.} É o modelo da maior parte da rede C\&A, em que o cliente paga no terminal e retira a etiqueta antifurto em um destacador na lateral do próprio equipamento \cite{brazileconomy2025}. A fila deixa de depender do operador, mas o cliente ainda se desloca até um terminal fixo.
+
+  \item \textbf{Self-checkout por RFID com desativação do antifurto no pagamento.} É o modelo da Renner, com 742 terminais em 213 lojas, e das lojas Energia da C\&A \cite{consumidormoderno2025, brazileconomy2025}. A leitura simultânea dos itens e a desativação automática do alarme eliminam a remoção manual, mas a compra ainda passa por um terminal, e a proteção deixa de ter retenção física.
+
+  \item \textbf{Etiqueta RFID oculta no rótulo da peça.} A Inditex, dona da Zara, anunciou em 2023 a substituição das etiquetas rígidas por chips RFID inseridos nos rótulos. Nos testes na Espanha, os chips foram retirados por furtadores, e o sistema gerou alarmes indevidos em clientes que voltavam à loja para trocar peças, o que atrasou a implantação \cite{apparelresources2023}. O caso mostra o limite da proteção sem retenção física.
+
+  \item \textbf{\textit{Scan \& go} pelo celular com desativação RFID.} A MishiPay permite ao cliente ler o código do produto no próprio celular, pagar no aplicativo e sair da loja com a etiqueta RFID desativada automaticamente. A Decathlon implantou a solução em lojas da Holanda em 2019 \cite{retailsystems2019}, e a parceria com a Mainetti, de 2022, levou a proposta ao varejo de vestuário \cite{fashionnetwork2022}. Elimina fila e terminal, mas, como em c) e d), não há retenção física da peça.
+
+  \item \textbf{Etiqueta rígida inteligente liberada pelo celular.} A Zliide desenvolveu uma etiqueta rígida com Bluetooth, de 53~$\times$~19~$\times$~25~mm, que o cliente aproxima do celular para ver as informações da peça, pagar e receber o comando de destravamento. Em janeiro de 2021, a solução operava em dez pequenas lojas na Dinamarca, com adesão de 41\% dos clientes \cite{swedberg2021}. Em 2023, a Sensormatic, fabricante de sistemas antifurto, anunciou parceria com a Zliide para oferecer a etiqueta que se abre depois do pagamento \cite{sensormatic2023zliide}. Em julho de 2025, porém, a empresa sueca Touchtech comprou a marca, as patentes, o software e os clientes da Zliide por valor simbólico, para migrá-los a uma solução de corredor infinito, sem mencionar a continuidade da etiqueta \cite{touchtech2025}.
+\end{enumerate}
+
+A Zliide é a referência mais próxima do conceito em estudo e traz duas lições. A primeira é que a liberação pelo celular é tecnicamente viável e teve adesão relevante em lojas pequenas. A segunda é que a viabilidade técnica não bastou para sustentar o negócio: a empresa atuava com marcas pequenas e médias, sem a escala do \textit{mass market}, e a fonte não detalha os motivos da venda dos ativos. A diferenciação do produto proposto precisa, portanto, ser construída também em relação a ela, e não apenas em relação à etiqueta convencional.
+
+% ---------------------------------------------------------------------
+\section{Quadro comparativo}
+\label{sec:quadro-comparativo}
+
+O produto proposto é o único, entre as soluções levantadas, que combina retenção física, pagamento pelo celular no salão, aproveitamento do RFID já presente nas peças e uma alternativa humana definida para cada falha. Em contrapartida, é o maior e o mais caro dispositivo do quadro. A Tabela~\ref{tab:comparativo-solucoes} compara as soluções pelos atributos que os requisitos da Seção 6 tornaram relevantes; a equipe não atribuiu notas, pelo mesmo motivo da Seção 6.3.1, e as células registram apenas o que as fontes descrevem.
+
+\begin{landscape}
+\footnotesize
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{
+  >{\raggedright\arraybackslash}p{3.0cm}
+  >{\raggedright\arraybackslash}p{2.2cm}
+  >{\raggedright\arraybackslash}p{2.8cm}
+  >{\raggedright\arraybackslash}p{2.3cm}
+  >{\raggedright\arraybackslash}p{3.2cm}
+  >{\raggedright\arraybackslash}p{2.8cm}
+  >{\raggedright\arraybackslash}p{2.6cm}
+  >{\raggedright\arraybackslash}p{3.1cm}}
+\caption{Comparativo entre as soluções existentes e o produto proposto}
+\label{tab:comparativo-solucoes} \\
+\toprule
+\textbf{Solução (exemplo)} & \textbf{Onde o cliente paga} & \textbf{Como a peça é liberada} & \textbf{Retenção física} & \textbf{Infraestrutura exigida na loja} & \textbf{Disponibilidade e localização da peça} & \textbf{Alternativa humana} & \textbf{Dispositivo preso à peça} \\
+\midrule
+\endfirsthead
+\multicolumn{8}{l}{\textit{Tabela~\thetable\ (continuação)}} \\
+\toprule
+\textbf{Solução (exemplo)} & \textbf{Onde o cliente paga} & \textbf{Como a peça é liberada} & \textbf{Retenção física} & \textbf{Infraestrutura exigida na loja} & \textbf{Disponibilidade e localização da peça} & \textbf{Alternativa humana} & \textbf{Dispositivo preso à peça} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{8}{r}{\textit{continua na próxima página}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+a) Etiqueta rígida e caixa (Riachuelo, rede atual) & Caixa com operador & Destacador magnético no caixa & Sim & Caixas, destacadores, antena de saída & Não & Sempre presente & \textit{Pencil} AM: 60~$\times$~18~$\times$~15~mm, 10~g, cerca de R\$~1,73 \\
+b) Self-checkout por código de barras (C\&A) & Terminal fixo & Cliente usa destacador no terminal & Sim & Terminais com destacador, antena de saída & Não & Funcionário na área dos terminais & Etiqueta rígida convencional \\
+c) Self-checkout por RFID (Renner; C\&A Energia) & Terminal fixo & Desativação automática do alarme no pagamento & Não descrita nas fontes & Terminais RFID, antena de saída, etiquetagem RFID & Não descrita & Funcionário na área dos terminais & Etiqueta RFID \\
+d) RFID oculta no rótulo (Inditex/Zara) & Caixa ou terminal & Desativação sem contato & Não; chips retirados em testes & Leitores RFID, antena de saída & Consulta de estoque na loja & Caixa atendido & Chip no rótulo \\
+e) \textit{Scan \& go} (MishiPay; Decathlon) & Celular, no salão & Desativação RFID pelo sistema & Não & Integração RFID e antena de saída & Não descrita & Não descrita nas fontes & Etiqueta RFID \\
+f) Etiqueta inteligente por Bluetooth (Zliide) & Celular, encostado à etiqueta & Comando de destravamento após o pagamento & Sim & Aplicativo e etiquetas próprios; antena de saída opcional & Informações da peça e corredor infinito & Não descrita nas fontes & 53~$\times$~19~$\times$~25~mm \\
+\midrule
+\textbf{Produto proposto} & Aplicativo da Riachuelo, no salão & Autorização do celular direto ao dispositivo, sem a rede da loja & Sim; $\geq$~120~N ou o valor da etiqueta comercial (E12) & Antena de saída existente e ponto de devolução; sem terminal & Setor e disponibilidade pelo RFID já existente (R01, R02) & Em 100\% das falhas catalogadas, em até 60~s (E08, E09) & Até 98~$\times$~82~$\times$~26~mm e 130~g (E10, E11); custo a definir \\
+\end{longtable}
+\vspace{-0.8\baselineskip}
+\fonte{Elaborado pelos autores (2026), com base em \citeonline{hexport2026}, \citeonline{brazileconomy2025}, \citeonline{consumidormoderno2025}, \citeonline{apparelresources2023}, \citeonline{retailsystems2019}, \citeonline{fashionnetwork2022}, \citeonline{swedberg2021} e \citeonline{sensormatic2023zliide}.}
+\end{landscape}
+
+A leitura por coluna mostra onde está o espaço de diferenciação. As soluções b) e c) tiram o operador da liberação, mas mantêm o cliente preso a um terminal fixo; as soluções c), d) e e) abrem mão da retenção física, e o caso da Inditex indica o custo disso. Apenas a Zliide e o produto proposto liberam uma trava física a partir do celular, e a diferença entre os dois está nas colunas de infraestrutura, disponibilidade e alternativa humana, e não na função básica. Na coluna do dispositivo, o produto proposto fica em desvantagem: seu envelope máximo tem cerca de 209~cm$^3$, oito vezes o volume da etiqueta da Zliide (25~cm$^3$).
+
+% ---------------------------------------------------------------------
+\section{Critérios ganhadores de pedido e qualificadores}
+\label{sec:ganhadores-qualificadores}
+
+A equipe identificou quatro critérios ganhadores de pedido, sete qualificadores e um ganhador potencial, ainda sem evidência suficiente. Os ganhadores coincidem com os requisitos de maior importância técnica no QFD: R06 (33,1\%) e R03 (24,4\%), ligados às vozes DE01 (33,4\%) e N06 (22,3\%). Os qualificadores correspondem, em sua maioria, aos atributos básicos de Kano da Seção 6.4.2. A Tabela~\ref{tab:ganhadores-qualificadores} consolida a classificação.
+
+{\footnotesize
+\setlength{\tabcolsep}{3pt}
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{
+  >{\raggedright\arraybackslash}p{3.0cm}
+  >{\raggedright\arraybackslash}p{1.7cm}
+  >{\raggedright\arraybackslash}p{1.7cm}
+  >{\raggedright\arraybackslash}p{2.3cm}
+  >{\raggedright\arraybackslash}p{1.9cm}
+  >{\raggedright\arraybackslash}p{4.1cm}}
+\caption{Classificação dos critérios de compra do produto}
+\label{tab:ganhadores-qualificadores} \\
+\toprule
+\textbf{Critério} & \textbf{Classifi\-cação} & \textbf{Perspec\-tiva} & \textbf{Rastrea\-bilidade} & \textbf{Concor\-rentes que também atendem} & \textbf{Justificativa} \\
+\midrule
+\endfirsthead
+\multicolumn{6}{l}{\textit{Tabela~\thetable\ (continuação)}} \\
+\toprule
+\textbf{Critério} & \textbf{Classifi\-cação} & \textbf{Perspec\-tiva} & \textbf{Rastrea\-bilidade} & \textbf{Concor\-rentes que também atendem} & \textbf{Justificativa} \\
+\midrule
+\endhead
+\midrule
+\multicolumn{6}{r}{\textit{continua na próxima página}} \\
+\endfoot
+\bottomrule
+\endlastfoot
+Pagar e liberar a peça no salão, sem fila nem terminal & Ganhador & Consumidor e Riachuelo & DE01, DE05; R03, R04; E03, E05 & e) e f) & Maior peso do QFD; elimina a fila sem o investimento em terminais exigido por b) e c) \\
+Liberar a trava física somente com pagamento confirmado & Ganhador & Riachuelo & N06, D03; R06; E07, E12 & f) & Une a autonomia de e) à retenção física que c), d) e e) perdem; responde ao caso da Inditex \\
+Saída legitimada, com estado da peça visível no próprio dispositivo & Ganhador & Consumidor & N06, D03; R06; E15, E16 & Nenhum descrito nas fontes & O indicador e a comunicação com a antena de saída atacam o receio de ser acusado, voz com 22,3\% do peso \\
+Concluir a liberação sem depender da rede da loja & Ganhador & Riachuelo & R07; E08 (Seção 7.2) & Não descrito nas fontes & Reduz o cenário de falha mais provável em dias de pico, quando a rede e a fila estão mais carregadas \\
+Disponibilidade e localização da peça a partir do RFID existente & Ganhador potencial & Consumidor e Riachuelo & N03, N05, DE04; R01, R02; A1, A2, A4 & d), f) em parte & Diferencial forte para o Cluster 3, mas com peso baixo no QFD (3,7\% cada) e dependente da acurácia de estoque (E02) \\
+Retenção pelo menos igual à da etiqueta comercial & Qualificador & Riachuelo & E12 & a), b), f) & Sem ela, o produto é descartado como antifurto \\
+Compatibilidade com a antena de saída já instalada & Qualificador & Riachuelo & E15; F3.4 & a) a e) & Trocar a infraestrutura de saída anularia a vantagem de dispensar terminais \\
+Alternativa humana em toda falha catalogada & Qualificador & Consumidor e Riachuelo & N02, N08; R07; E08, E09 & a), b), c) & Exigência do Cluster 1 (39\% da amostra) e condição do contrato (Seção 13.3) \\
+Envelope e massa aceitáveis na peça & Qualificador & Consumidor e Riachuelo & E10, E11; função de estima \textit{preservar a aparência da peça} & a), b), f) & Hoje é o ponto fraco do conceito frente à Zliide \\
+Reuso com retorno de pelo menos 99\% por ciclo & Qualificador & Riachuelo & E14 & a), b) com 80\% a 83\% & Sem reuso, o custo unitário inviabiliza o produto \\
+Conformidade com Anatel e LGPD & Qualificador & Riachuelo & E17, E18; D07 & Não avaliado & Exigência legal, sem tolerância \\
+Custo por compra concluída menor que o da compra no caixa & Qualificador econômico & Riachuelo & Seção 13.3 & a) define o teto & O produto não compete por preço, mas precisa caber nesse teto; valor ainda não informado pela Riachuelo \\
+\end{longtable}
+\vspace{-0.8\baselineskip}
+\fonte{Elaborado pelos autores (2026).}
+}
+
+A classificação tem três consequências para o projeto. A primeira é que nenhum ganhador depende sozinho de uma tecnologia nova: o que diferencia o produto é a combinação entre retenção física, liberação pelo celular e integração com sistemas que a Riachuelo já opera, o que é coerente com a conclusão da Seção 6.3.4 de que o sistema integrado importa mais que o desempenho isolado de cada componente. A segunda é que o preço aparece apenas como qualificador, na forma de um teto de custo por compra, e não como fator de escolha. A terceira é que o envelope e a massa, hoje acima de todos os concorrentes, são um qualificador em risco: um ganhador de pedido não compensa um qualificador reprovado, e a redução do dispositivo deve ser tratada como prioridade no projeto conceitual (Seção 11).
+
+% ---------------------------------------------------------------------
+\section{Posicionamento e fator de diferenciação}
+\label{sec:posicionamento}
+
+O fator de diferenciação do produto é permitir que o cliente conclua a compra no salão, pelo celular, sem que a Riachuelo abra mão da retenção física da peça nem do atendimento humano. A Figura~\ref{fig:posicionamento} posiciona as soluções da Tabela~\ref{tab:comparativo-solucoes} em dois eixos tirados dos ganhadores de pedido: a retenção física da peça e o local em que o cliente conclui a compra. As posições indicam apenas o quadrante, sem gradação dentro dele.
+
+\begin{figure}[htbp]
+\centering
+\caption{Posicionamento das soluções por retenção física e local de conclusão da compra}
+\label{fig:posicionamento}
+\begin{tikzpicture}[x=1.15cm, y=1cm, font=\footnotesize]
+  % quadrante-alvo destacado
+  \fill[gray!12] (6,4) rectangle (12,8);
+  % moldura e linhas médias
+  \draw[gray!70, rounded corners=3pt] (0,0) rectangle (12,8);
+  \draw[gray!45] (6,0) -- (6,8);
+  \draw[gray!45] (0,4) -- (12,4);
+  % nomes dos quadrantes
+  \node[anchor=north west, text=gray!80!black, font=\scriptsize] at (0.2,7.85) {Trava física, compra no caixa ou terminal};
+  \node[anchor=north west, text=gray!80!black, font=\scriptsize] at (6.2,7.85) {Trava física, compra pelo celular};
+  \node[anchor=north west, text=gray!80!black, font=\scriptsize] at (0.2,3.85) {Sem trava, compra no terminal};
+  \node[anchor=north west, text=gray!80!black, font=\scriptsize] at (6.2,3.85) {Sem trava, compra pelo celular};
+  % soluções
+  \fill[gray!55] (0.9,6.3) circle (0.1);  \node[anchor=west] at (1.1,6.3) {a) Riachuelo, rede atual};
+  \fill[gray!55] (0.9,5.4) circle (0.1);  \node[anchor=west] at (1.1,5.4) {b) C\&A, código de barras};
+  \fill[gray!55] (0.9,2.3) circle (0.1);  \node[anchor=west] at (1.1,2.3) {c) Renner; C\&A Energia};
+  \fill[gray!55] (0.9,1.4) circle (0.1);  \node[anchor=west] at (1.1,1.4) {d) Inditex/Zara, RFID no rótulo};
+  \fill[gray!55] (6.9,1.9) circle (0.1);  \node[anchor=west] at (7.1,1.9) {e) MishiPay; Decathlon};
+  \fill[gray!55] (6.9,6.4) circle (0.1);  \node[anchor=west] at (7.1,6.4) {f) Zliide};
+  \node[anchor=west, text=gray!80!black, font=\footnotesize] at (7.1,5.95) {ativos vendidos em 2025};
+  \draw[blue!70!black, line width=1pt, fill=blue!10] (6.9,5.0) circle (0.15);
+  \node[anchor=west] at (7.1,5.0) {\textbf{Produto proposto}};
+  \node[anchor=west, text=gray!80!black, font=\footnotesize] at (7.1,4.55) {+ RFID existente e via humana};
+  % eixo vertical
+  \node[anchor=east, font=\footnotesize, text=gray!80!black] at (-0.15,7.8) {com trava};
+  \node[anchor=east, font=\footnotesize, text=gray!80!black] at (-0.15,0.2) {sem trava};
+  \node[rotate=90, font=\footnotesize\bfseries] at (-1.3,4) {Retenção física da peça};
+  % eixo horizontal
+  \node[anchor=north west, font=\footnotesize, text=gray!80!black] at (0,-0.15) {caixa ou terminal fixo};
+  \node[anchor=north east, font=\footnotesize, text=gray!80!black] at (12,-0.15) {celular, no salão};
+  \node[font=\footnotesize\bfseries] at (6,-1.0) {Onde o cliente conclui a compra};
+\end{tikzpicture}
+\fonte{Elaborado pelos autores (2026).}
+\end{figure}
+
+O quadrante superior direito, que combina autonomia e trava física, não está vazio: a Zliide já o ocupou. Dentro dele, o produto se distingue por três características que a Zliide, segundo as fontes, não oferecia: o uso da identificação RFID que a Riachuelo já aplica às peças, no lugar de um cadastro próprio de etiquetas; a alternativa humana definida para cada falha; e a liberação sem dependência da rede da loja. A diferenciação está, portanto, na integração com a operação de uma grande rede, e não na função de destravar pelo celular.
+
+Entre as estratégias de Deschamps e Nayak apresentadas por \citeonline{rozenfeld2006}, a que melhor descreve o produto é a de valor do dinheiro pago, que busca o máximo de valor com o menor custo total de propriedade. O dispositivo é mais caro por unidade, mas é reutilizado (E14), pode ser cobrado por compra concluída (Seção 13.3) e dispensa os terminais exigidos pelos modelos b) e c). A estratégia de atendimento entra como complemento, por meio dos módulos substituíveis e da assistência técnica em três níveis (Seção 13.6). A estratégia de baixo custo foi descartada desde o início.
+
+Com base nesses elementos, a equipe formulou a declaração de posicionamento do produto, no sentido de Kotler citado por \citeonline{rozenfeld2006}: \textit{para redes de moda mass market que já usam RFID e estão expandindo o self-checkout, e que precisam reduzir filas sem aumentar perdas, o produto é uma trava antifurto que o cliente libera pelo celular depois de pagar; diferentemente do self-checkout por RFID, mantém a retenção física e dispensa terminais, e, diferentemente da Zliide, aproveita a identificação já presente na peça e garante uma alternativa humana em cada falha.} Entre os consumidores, o público primário é o Cluster 2, de autonomia digital; o Cluster 3 é alcançado pela informação de disponibilidade, e o Cluster 1, indiretamente, pela redistribuição de funcionários para o salão (Seção 5.8).
+
+% ---------------------------------------------------------------------
+\section{Riscos à diferenciação e validação}
+\label{sec:riscos-diferenciacao}
+
+A diferenciação descrita nas seções anteriores é uma hipótese, e quatro riscos podem anulá-la. Cada um deles está associado a uma forma de verificação.
+
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Precedente da Zliide.} Uma solução com a mesma função básica, apoiada por um fabricante líder de antifurto, não se sustentou como negócio \cite{touchtech2025}. Além do risco comercial, as patentes da empresa, que cobrem a etiqueta liberada pelo celular, pertencem hoje à Touchtech. A equipe deverá fazer uma busca de anterioridade em bases de patentes, como as do INPI e do Espacenet, antes de consolidar a arquitetura do mecanismo.
+
+  \item \textbf{Envelope e massa.} O dispositivo pode ser recusado por deformar a peça ou incomodar na prova, independentemente dos ganhadores de pedido. O teste de caimento de E11 e a comparação com a etiqueta da Zliide devem orientar as alternativas de solução da Seção 11.
+
+  \item \textbf{Preferência da Riachuelo pelo modelo da Renner.} O self-checkout por RFID já é comprovado no mercado e tem custo por peça menor. O argumento do produto proposto depende de dois dados que a equipe ainda não tem: o custo de uma compra no caixa e a diferença de perdas entre itens com e sem retenção física na própria Riachuelo. Os dois devem ser solicitados à empresa.
+
+  \item \textbf{Adesão limitada dos consumidores.} Apenas 24\% da amostra endossou a saída sem checagem manual, e a Zliide registrou adesão de 41\% em lojas pequenas \cite{swedberg2021}. Os ganhadores de pedido só geram valor para a parcela que usar o produto, o que reforça o desenho como via rápida opcional (DE05), ao lado do caixa.
+\end{enumerate}
+
+A validação em campo pode aproveitar as visitas já previstas na Seção 6.3.4 às lojas de Riachuelo, Renner, C\&A e Zara. Além dos tempos de fila e de pagamento, a ficha de visita deve registrar o tipo de etiqueta usado em cada loja, a forma de liberação no self-checkout e a presença de funcionários na área dos terminais, informações que completam as células marcadas como não descritas na Tabela~\ref{tab:comparativo-solucoes}. Os critérios ganhadores também devem ser apresentados à gestão da Riachuelo, para confirmar se a empresa os reconhece como decisivos, já que a operação e a gestão da loja ainda não foram investigadas.
