@@ -1,1 +1,138 @@
-\section{ESCALA VERTICAL E VALOR MERCADOLÓGICO}\label{sec:escala_vertical}
+% =============================================================================
+% Item C do roteiro (Aula 13): escala vertical e valor mercadológico.
+% Dados: dados/pesquisa-precos/precos-escala.csv (preços, lojas, fotos, URLs)
+%        dados/formulario-precos/form_microsoft.pdf (formulário aplicado)
+%        dados/formulario-precos/Respostas_TagGo.docx (respostas, n = 3)
+% Preços consultados em 05/10/2026, preço de tabela (cartão), mediana de 3 lojas.
+% =============================================================================
+
+\section{Escala Vertical e Valor Mercadológico}\label{sec:escala_vertical}
+
+O estudo de diferenciação (Seção~\ref{sec:estudo_diferenciacao}) mostrou que o dispositivo não competirá por preço, e o delineamento da comercialização (Seção~\ref{sec:delineamento_comercializacao}) não propõe preço, porque falta o custo de uma compra no caixa, que a Riachuelo não informou. Esta seção estima quanto o varejista considera razoável pagar pelo dispositivo, por meio da escala vertical de preços. O resultado é o valor mercadológico: o preço que o comprador atribui ao produto quando o compara com produtos que já conhece. Ele serve de referência para o custo e para o contrato, mas não é o preço de venda.
+
+\subsection{Método}
+\label{subsec:escala_metodo}
+
+O método da escala vertical tem quatro passos. Primeiro, monta-se uma escala de quatro a seis produtos que o segmento conhece, ordenados por preço. Depois, numa clínica de preços, de 15 a 30 pessoas do segmento leem a descrição do produto e indicam em que ponto da escala ele deveria ficar. As respostas formam um histograma, no qual se procuram três distorções: votos acumulados num extremo, sinal de que a escala não cobre o produto; votos dispersos, sinal de que os respondentes não reconhecem o produto ou os degraus; e dois picos, sinal de dois públicos. Por fim, o valor mercadológico é a posição mais votada, justificada pelos respondentes e confirmada por produtos da mesma faixa de preço.
+
+Como a venda é B2B, a equipe adaptou o método em três pontos:
+
+\begin{enumerate}[label=\alph*)]
+  \item \textbf{Respondentes.} A clínica foi dirigida ao lado comprador (gerentes, compradores e donos de loja), porque quem compra o dispositivo é o varejista, e o consumidor não conhece o preço de uma etiqueta antifurto.
+  \item \textbf{Unidade de preço.} A escala compara o preço por dispositivo preso à peça, sem antenas, terminais ou software. Essa é a unidade que o comprador já conhece; os equipamentos custam centenas ou milhares de reais e criariam degraus distantes demais; e ratear a infraestrutura exigiria premissas de volume e de vida útil que dependem do próprio preço em estudo.
+  \item \textbf{Pergunta aberta.} Quem posicionasse o produto acima do último degrau indicaria um valor em reais, para que o resultado não ficasse sem número caso a escala inteira estivesse abaixo do produto.
+\end{enumerate}
+
+\subsection{Construção da escala}
+\label{subsec:escala_construcao}
+
+A escala reúne apenas etiquetas antifurto aplicáveis a roupa e com alguma semelhança funcional com o produto, isto é, dispositivos presos à peça que a protegem até a compra. Cada degrau corresponde a uma das soluções do estudo de diferenciação (Seção~\ref{sec:solucoes-concorrentes}). Para cada etiqueta, a equipe consultou três lojas on-line em 05/10/2026 e adotou a mediana dos preços unitários, que é menos sensível a uma oferta isolada do que a média. Usou-se o preço de tabela, no cartão; quando a loja mostrava só o preço no PIX, com 5\,\% de desconto, o preço de tabela foi recalculado. O preço unitário é o do lote anunciado, de 100 a 5.000 unidades. A Tabela~\ref{tab:escala_degraus} apresenta os cinco degraus.
+
+\begin{table}[H]
+    \centering
+    \caption{Degraus da escala vertical: etiquetas antifurto para roupa, por preço unitário}
+    \label{tab:escala_degraus}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        c
+        >{\RaggedRight\arraybackslash}p{3.6cm}
+        >{\RaggedRight\arraybackslash}p{1.6cm}
+        >{\RaggedRight\arraybackslash}X
+        c@{}}
+        \toprule
+        \textbf{Degrau} & \textbf{Etiqueta} & \textbf{Soluções} & \textbf{Preço unitário nas três lojas (R\$)} & \textbf{Mediana (R\$)} \\
+        \midrule
+        1 & Etiqueta RFID UHF de vestuário, de papel & c), d), e) & 0,45 (Loja RFID); 0,62 (Atlas RFID Store); 1,18 (Amazon) & 0,62 \\
+        2 & Mini tag RF (bolacha), com pino & a), b) & 0,87 (Allcard); 0,90 (Canal Automação); 1,15 (Mercado Livre) & 0,90 \\
+        3 & \textit{Golf tag} RF (redonda), com pino & a), b) & 1,21 e 1,33 (Amazon); 1,30 (I9 Automação) & 1,30 \\
+        4 & \textit{Pencil} AM (palito), com pino & a), b) & 0,96 (I9 Automação); 1,39 (Canal Automação); 1,73 (Hexport) & 1,40 \\
+        5 & \textit{Pencil} AM com cabo de aço, para peças com alça, bolsas e calçados & a), b) & 2,19 (Canal Automação); 2,19 (Amazon); 2,20 (Mercado Livre) & 2,19 \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026), com base em \citeonline{lojarfid2026uhf}, \citeonline{atlasrfid2026tags}, \citeonline{allcard2026minitag}, \citeonline{canalautomacao2026minitag}, \citeonline{i9automacao2026etiquetas}, \citeonline{canalautomacao2026pencil}, \citeonline{hexport2026pencil}, \citeonline{canalautomacao2026cabo}, \citeonline{amazon2026etiquetas} e \citeonline{mercadolivre2026etiquetas}. Preços consultados em 05/10/2026.}
+\end{table}
+
+Três preços pedem ressalva. A etiqueta da Atlas RFID Store custa US\$~0,12 e foi convertida pela PTAX de 25/09/2026 (R\$~5,1991), sem impostos de importação. O degrau 3 tem só duas lojas independentes, porque as duas ofertas da Amazon são, provavelmente, do mesmo vendedor. E os preços de I9 Automação, Amazon e Mercado Livre foram lidos no Google Shopping, porque esses sites bloquearam o acesso direto ou exigiram login. A mediana do degrau 4 (R\$~1,40) difere do preço citado no estudo de diferenciação (R\$~1,73), que é o de uma das três lojas.
+
+A equipe testou e descartou outros itens. A etiqueta adesiva RF (mediana de R\$~0,18) não corresponde a nenhuma das soluções do estudo de diferenciação. A bolacha de tinta e a bolacha com autoalarme não têm oferta no varejo nacional, só importada. O cabo alarme e a aranha AM, de R\$~74 e R\$~99, são indicados para supermercado, e a etiqueta AM para óculos, de cerca de R\$~4,22, não se aplica a roupa. O desacoplador (mediana de R\$~316) e o par de antenas RF (mediana de R\$~2.990) são equipamentos de loja e ficam fora da unidade de preço adotada. As etiquetas liberadas pelo celular, como a da Zliide, não têm preço público: a Zliide vendia por assinatura mensal, com aluguel ou compra das etiquetas \cite{swedberg2021}, e a alemã rapitag e a chinesa DTO também não divulgam preço.
+
+A escala vai, portanto, de R\$~0,62 a R\$~2,19. A equipe procurou um degrau intermediário entre R\$~2,19 e algumas dezenas de reais, mais próximo do produto, mas não encontrou etiqueta aplicável a roupa e com semelhança funcional nessa faixa. A escala foi mantida com cinco degraus, e o risco de que os votos se concentrem acima do topo foi tratado com a pergunta aberta descrita na Seção~\ref{subsec:escala_metodo}.
+
+\subsection{Clínica de preços}
+\label{subsec:escala_clinica}
+
+A clínica foi aplicada por um formulário on-line no Microsoft Forms, anônimo, com três telas e cerca de dois minutos de duração. O estudo foi às cegas: o formulário não cita a Riachuelo, para que o nome do parceiro não influenciasse as respostas. O produto foi apresentado com o nome provisório Tag\&Go.
+
+A primeira tela filtra o perfil: quem nunca trabalhou em loja de roupas encerra o formulário, e quem trabalha ou trabalhou indica a função (gerente ou subgerente, vendedor ou caixa, prevenção de perdas, dono da loja ou outra). A segunda tela descreve o produto em linhas curtas: na arara, na compra, na saída (coletor, retorno ao centro de distribuição e recarga), segurança, tamanho, vantagens para o cliente e o que acontece se algo falhar. A terceira tela mostra os cinco degraus da Tabela~\ref{tab:escala_degraus}, cada um com preço e uma linha no mesmo formato (o que é, se é descartável ou reutilizável e como é retirado), e uma linha equivalente para o Tag\&Go. Em seguida vêm três perguntas: em qual de seis faixas deveria ficar o preço de uma etiqueta Tag\&Go para a loja (abaixo de R\$~0,62, entre cada par de degraus ou acima de R\$~2,19); quanto, em reais, para quem escolheu a última faixa; e por quê.
+
+O formulário foi enviado a três profissionais de perfis diferentes, escolhidos por porte de loja: um comprador de uma grande rede, um gerente de operações de uma rede de médio porte e o dono de uma loja de rua. A amostra é de três respostas, abaixo das 15 a 30 que o método prevê, e por isso os resultados são indicativos.
+
+\subsection{Resultados}
+\label{subsec:escala_resultados}
+
+A Tabela~\ref{tab:escala_respostas} reúne as respostas e a síntese de cada justificativa.
+
+\begin{table}[H]
+    \centering
+    \caption{Respostas da clínica de preços}
+    \label{tab:escala_respostas}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.6cm}
+        >{\RaggedRight\arraybackslash}p{2.2cm}
+        >{\RaggedRight\arraybackslash}p{1.6cm}
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Perfil} & \textbf{Faixa escolhida} & \textbf{Valor indicado} & \textbf{Síntese da justificativa} \\
+        \midrule
+        Grande rede; comprador de materiais indiretos & Acima de R\$~2,19 & Cerca de R\$~8,00 & O produto compete com o custo do caixa, e não com a etiqueta; tirar fila e liberar funcionários justifica pagar mais, e o reuso dilui o custo. O teto vem do investimento inicial em centenas de milhares de unidades, dos custos que a etiqueta comum não tem (perda no coletor, logística de retorno e recarga, bateria) e do tamanho maior. Acima disso, preferiria RFID com autoatendimento \\
+        Rede de médio porte; gerente de operações & Acima de R\$~2,19 & Cerca de R\$~5,00 & Compra menos etiquetas e vende peças mais caras, então aceita pagar mais por unidade, e gostou da compra sem fila. Mas o caixa quase nunca enche, e a loja não tem estrutura para recolher, recarregar e trocar bateria: o fornecedor teria de cuidar disso dentro do preço \\
+        Loja de rua; dono & Entre R\$~0,90 e R\$~1,30 & Não se aplica & Quem atende e cobra é a mesma pessoa, então não há fila a resolver, e a etiqueta comum já segura o furto. Gostou de ver preço e tamanho pelo celular, mas não pagaria muito mais; teme bateria, recarga e clientes que esqueçam de devolver \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026), com base na clínica de preços.}
+\end{table}
+
+Com três respostas, um histograma teria uma barra de altura dois e outra de altura um, e não acrescentaria leitura. A equipe usou, no lugar dele, a frequência por faixa da Tabela~\ref{tab:escala_frequencia}.
+
+\begin{table}[H]
+    \centering
+    \caption{Frequência das respostas por faixa da escala}
+    \label{tab:escala_frequencia}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.2}
+    \begin{tabular}{@{}llc@{}}
+        \toprule
+        \textbf{Faixa} & \textbf{Posição na escala} & \textbf{Votos} \\
+        \midrule
+        Abaixo de R\$~0,62 & Abaixo do degrau 1 & 0 \\
+        R\$~0,62 a R\$~0,90 & Entre os degraus 1 e 2 & 0 \\
+        R\$~0,90 a R\$~1,30 & Entre os degraus 2 e 3 & 1 \\
+        R\$~1,30 a R\$~1,40 & Entre os degraus 3 e 4 & 0 \\
+        R\$~1,40 a R\$~2,19 & Entre os degraus 4 e 5 & 0 \\
+        Acima de R\$~2,19 & Acima do degrau 5 & 2 \\
+        \midrule
+        \textbf{Total} & & \textbf{3} \\
+        \bottomrule
+    \end{tabular}
+    \source{Elaborado pelos autores (2026), com base na clínica de preços.}
+\end{table}
+
+Duas das três distorções previstas no método aparecem. A primeira é a concentração no extremo superior: dois votos ficaram acima do último degrau, o que confirma que uma escala só de etiquetas fica abaixo do produto para quem tem fila no caixa. A segunda são os dois picos: os votos se separam pelo porte da loja. As redes média e grande comparam o produto com o custo do caixa e o põem acima da escala; a loja pequena, sem fila, compara-o com a etiqueta e o põe no meio dela. Não houve dispersão sem padrão, já que cada voto tem justificativa coerente com o perfil de quem respondeu.
+
+\subsection{Valor mercadológico}
+\label{subsec:escala_valor}
+
+A equipe define o valor mercadológico do produto entre R\$~5 e R\$~8 por etiqueta, acima do degrau 5, para redes de moda de médio e grande porte. A posição mais votada é acima de R\$~2,19, e os dois valores indicados delimitam a faixa. A loja pequena fica fora do público-alvo, o que é coerente com o segmento-alvo definido na Seção~\ref{subsec:segmento_alvo}, de grandes redes. Os dois respondentes que valorizaram o produto o fizeram pelo ganho no caixa, e não pela proteção contra furto, o que confirma o fator de diferenciação da Seção~\ref{sec:posicionamento}.
+
+Como nenhuma etiqueta para roupa foi encontrada nessa faixa de preço, a confirmação foi feita pelo custo por uso, que coloca etiquetas de vida útil diferentes na mesma base. Com a vida útil de E14, de cerca de 22 ciclos, a faixa de R\$~5 a R\$~8 equivale a R\$~0,23 a R\$~0,36 por uso. As etiquetas rígidas convencionais recirculam de 80\,\% a 83\,\% por ciclo \cite{sensormatic2024recirculacao,pact2026etiquetas}, o que dá de 5 a 6 usos por etiqueta (Seção~\ref{subsec:especificacoes_meta}): R\$~0,15 a R\$~0,18 por uso para a mini tag e R\$~0,24 a R\$~0,28 para a \textit{pencil} AM. O valor proposto fica, por uso, na mesma ordem de grandeza da etiqueta mais comum e no máximo cerca de 50\,\% acima dela, diferença que o comprador da grande rede atribuiu à retirada do caixa. A comparação vale se o retorno de 99\,\% por ciclo de E14 for atingido; com a recirculação atual do mercado, o custo por uso do produto seria cerca de quatro vezes maior.
+
+\subsection{Implicações e limitações}
+\label{subsec:escala_implicacoes}
+
+O valor mercadológico tem três implicações para o projeto. A primeira é econômica: o custo estimado do protótipo, com peças de prateleira, é de cerca de R\$~60 por etiqueta. O número não é custo de produção, mas indica que o valor percebido está cerca de uma ordem de grandeza abaixo do custo atual. Vender a etiqueta como unidade não fecha a conta, o que reforça o fornecimento sob locação ou com cobrança por compra concluída, proposto na Seção~\ref{sec:delineamento_comercializacao}, e dá ao custo-meta uma referência que a Seção~
+\ref{sec:definicao_requisitos} não tinha. A segunda é técnica: as objeções dos respondentes coincidem com especificações já registradas, o tamanho (E10), o retorno da etiqueta (E14), a bateria e a logística de recarga, e devem orientar a reformulação dos desenhos (Seção~\ref{sec:reformulacao_desenhos}). A terceira é comercial: o respondente de médio porte só aceitou o valor com recolhimento, recarga e troca de bateria a cargo do fornecedor, o que confirma o contrato de serviço da Seção~\ref{sec:delineamento_comercializacao}.
+
+O resultado tem quatro limitações. A amostra tem três respostas, contra 15 a 30 previstas pelo método, e nenhuma é da Riachuelo. A escala termina em R\$~2,19, e esse topo pode ter ancorado os valores abertos para baixo. Os preços são de catálogo on-line, sem negociação de volume, e vários foram lidos por \textit{snippet} de busca. Por fim, o degrau 3 tem só duas lojas independentes. A faixa de R\$~5 a R\$~8 deve, portanto, ser tratada como referência inicial, a confirmar com uma amostra maior de compradores de grandes redes e com o custo de uma compra no caixa, que a Riachuelo ainda precisa informar.
