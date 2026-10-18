@@ -1,0 +1,704 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Desenho 2D Tag&amp;Go</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<style>
+:root{
+  --bg:#f6f7f9; --panel:#ffffff; --ink:#1b2430; --soft:#566170; --line:#c9d0d9;
+  --case:#e4e8ee; --jaw:#c8d0da; --qi:#f3c9a5; --pb:#b9d3ee; --board:#cfe6c8; --board2:#e9e2c4; --servo:#bcd0f5; --print:#f6cf95; --rub:#3a3f46;
+  --metal:#8d96a3; --mag:#b3262b; --fabric:#3d5a80; --accent:#1f5fa8; --on-accent:#ffffff;
+  --red:#d0312d; --yellow:#f2b705; --green:#3d9a45; --ok:#2a7a33; --off:#aeb6c1; --screen:#20262e; --hdr:#3b4450;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14181d; --panel:#1c2229; --ink:#e8edf3; --soft:#a3aebb; --line:#3a444f;
+    --case:#2b333d; --jaw:#46515f; --qi:#8a5a35; --pb:#2f5278; --board:#35573a; --board2:#5a5433; --servo:#34518a; --print:#8a6427; --rub:#0c0e11;
+    --metal:#a9b2bf; --mag:#e0484d; --fabric:#5f86b8; --accent:#6fb0f5; --on-accent:#0d1620;
+    --off:#4a545f; --screen:#0b0e12; --hdr:#0b0e12;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14181d; --panel:#1c2229; --ink:#e8edf3; --soft:#a3aebb; --line:#3a444f;
+  --case:#2b333d; --jaw:#46515f; --qi:#8a5a35; --pb:#2f5278; --board:#35573a; --board2:#5a5433; --servo:#34518a; --print:#8a6427; --rub:#0c0e11;
+  --metal:#a9b2bf; --mag:#e0484d; --fabric:#5f86b8; --accent:#6fb0f5; --on-accent:#0d1620;
+  --off:#4a545f; --screen:#0b0e12; --hdr:#0b0e12;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif}
+main{max-width:1160px;margin:0 auto;padding:16px}
+h1{font-size:1.15rem;margin:0 0 10px}
+
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.three{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:12px}
+svg{display:block;width:100%;height:auto}
+.cap{display:grid;grid-template-columns:1fr 1.25fr;gap:18px;padding:12px 16px;border-top:1px solid var(--line)}
+@media (max-width:720px){.cap{grid-template-columns:1fr}}
+.cap h2{font-size:1.05rem;margin:0 0 4px}
+.cap p,.note{margin:0;color:var(--soft);line-height:1.45}
+#now{margin-top:8px;color:var(--ink);font-weight:600}
+.note{padding:0 16px 12px;font-size:.88rem}
+dl{margin:0;display:grid;grid-template-columns:auto 1fr;gap:4px 10px;font-size:.88rem;line-height:1.4}
+dt{font-weight:600;white-space:nowrap}dd{margin:0;color:var(--soft)}
+.ctl{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:12px}
+button,.lnk{font:inherit;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:7px 14px;cursor:pointer;text-decoration:none}
+button:hover,.lnk:hover{border-color:var(--accent)}
+button:focus-visible,.lnk:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+#play{background:var(--accent);color:var(--on-accent);border-color:var(--accent);min-width:104px}
+.bar{display:flex;gap:14px;flex:1;min-width:300px}
+.grp{display:flex;flex-direction:column;gap:4px}
+.grp span{font-size:.7rem;color:var(--soft)}
+.segs{display:flex;gap:3px}
+.seg{width:20px;height:12px;border-radius:3px;background:var(--line);padding:0;border:0;position:relative;overflow:hidden}
+.seg i{position:absolute;left:0;top:0;bottom:0;background:var(--accent);width:0}
+.seg.done i{width:100%}
+.gh{padding:12px 16px 0}
+.tw{overflow-x:auto;padding:0 16px 12px}
+table{border-collapse:collapse;width:100%;font-size:.86rem}
+th,td{text-align:left;padding:5px 10px 5px 0;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--soft);font-weight:600}
+.tp{display:inline-block;border:1px solid var(--line);border-radius:10px;padding:3px 10px;font-size:.78rem;white-space:nowrap}
+.tp.e{border-color:var(--red);color:var(--red)}
+text{fill:var(--ink);font-family:"Segoe UI",system-ui,Arial,sans-serif}
+.sm{font-size:9px;fill:var(--soft)}.lb{font-size:10px}.ttl{font-size:11px;font-weight:600}.dm{font-size:10px;font-weight:600}
+.st{stroke:var(--ink);stroke-width:1}
+.dl{stroke:var(--soft);stroke-width:.8;fill:none}
+.el{font-size:10px;fill:var(--soft)}.el.on{fill:var(--ink);font-weight:600}
+main .eyb{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin:0 0 6px;line-height:1.3}
+/* mesma identidade da simulação 3D */
+:root{--f-d:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;--f-b:"IBM Plex Sans","Segoe UI",system-ui,sans-serif;--f-m:"IBM Plex Mono",Consolas,monospace;
+  --bg:#e9edf2;--panel:#ffffff;--ink:#0f1c2e;--soft:#566376;--line:#d3dae3;--accent:#0b3a6f;--on-accent:#ffffff;--band:#0b3a6f;--on-band:#ffffff;--band-muted:#b9cbe2;--signal:#f2b705}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--bg:#0c1219;--panel:#131b25;--ink:#e6edf5;--soft:#93a2b5;--line:#263242;--accent:#7fb6f2;--on-accent:#06121f;--band:#101a26;--on-band:#e6edf5;--band-muted:#8fa1b6}}
+:root[data-theme="dark"]{--bg:#0c1219;--panel:#131b25;--ink:#e6edf5;--soft:#93a2b5;--line:#263242;--accent:#7fb6f2;--on-accent:#06121f;--band:#101a26;--on-band:#e6edf5;--band-muted:#8fa1b6}
+body{font-family:var(--f-b);font-size:15px}
+text{font-family:var(--f-b)}
+.top{background:var(--band);color:var(--on-band);display:flex;align-items:center;gap:12px 24px;padding:10px 16px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px}.brand svg{width:30px;height:30px}
+.brand strong{font-family:var(--f-d);font-weight:700;font-size:1.35rem;line-height:1;display:block}
+.brand span{font-size:.78rem;color:var(--band-muted);display:block;margin-top:2px}
+.top .sp{margin-left:auto;display:flex;gap:16px;font-size:.85rem}.top .sp a{color:var(--on-band)}.top .sp span{color:var(--band-muted)}
+.vh{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%)}
+main{padding-top:14px}
+.card{border-radius:8px}
+main .eyb{font-family:var(--f-d);font-size:.76rem;font-weight:600;letter-spacing:.12em;color:var(--soft)}
+.cap h2{font-family:var(--f-d);font-size:1.4rem;font-weight:600;line-height:1.15}
+button,.lnk{border-radius:6px}
+#play{font-weight:600}
+.seg{border-radius:2px}
+.sm,.lb,.dm{font-family:var(--f-m)}
+th{font-family:var(--f-d);letter-spacing:.1em;text-transform:uppercase;font-size:.74rem}
+:focus-visible{outline:2px solid var(--signal)!important;outline-offset:2px}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><rect x="3" y="9" width="26" height="15" rx="3" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 9 L20 3 L22 7" fill="none" stroke="var(--signal)" stroke-width="2.4" stroke-linejoin="round"/><circle cx="23" cy="16.5" r="2.4" fill="var(--signal)"/><path d="M8 14h8M8 19h5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    <div><h1 class="vh">Tag&amp;Go, desenho 2D em escala</h1><strong>Tag&amp;Go</strong><span>Desenho 2D em escala · variante A</span></div>
+  </div>
+  <div class="sp"><span>PRO3474 · Poli-USP · Grupo 4</span><a href="simulacao-3d.html">Simulação 3D</a></div>
+</header>
+<main>
+<div class="ctl">
+  <button id="prev">Anterior</button>
+  <button id="play">Pausar</button>
+  <button id="next">Próximo</button>
+  <div class="bar">
+    <div class="grp"><span>Construção</span><div class="segs" id="sa"></div></div>
+    <div class="grp"><span>Funcionamento</span><div class="segs" id="sb"></div></div>
+  </div>
+</div>
+<div class="card">
+  <svg id="scene" viewBox="0 0 990 760" role="img" aria-label="Corte lateral no eixo do pino e vista de cima, em escala"></svg>
+  <div class="cap">
+    <div><p class="eyb" id="fase"></p><h2 id="tit"></h2><p id="txt"></p><p id="now"></p></div>
+    <div><h2 class="eyb">Detalhes desta etapa</h2><dl id="cfg"></dl></div>
+  </div>
+</div>
+<div class="three">
+  <div class="card"><div class="gh"><h2 class="eyb">Como os dentes seguram o tecido</h2></div><svg id="teeth" viewBox="0 0 480 330" role="img" aria-label="Corte dos dentes da garra, visto de lado"></svg><p class="note">Estimativa: com 20 a 50 N de aperto, o atrito segura de 12 a 80 N, e o zigue-zague aumenta isso. Um pino que fura segura uns 350 N. Por isso vale prender atrás de uma bainha.</p></div>
+  <div class="card"><div class="gh"><h2 class="eyb">Como a embreagem trava a garra</h2></div><svg id="clutch" viewBox="0 0 480 330" role="img" aria-label="Corte ampliado da embreagem"></svg><p class="note" id="cnote"></p></div>
+  <div class="card"><div class="gh"><h2 class="eyb">Ligações no expansor do ESP32</h2></div><svg id="wiring" viewBox="0 0 480 330" role="img" aria-label="Tabela de ligações dos módulos"></svg><p class="note">Jumper do expansor em 3,3 V. Só o servo usa 5 V.</p></div>
+</div>
+<div class="card">
+  <div class="gh"><h2 class="eyb">Para onde vai cada informação</h2></div>
+  <svg id="graph" viewBox="0 0 990 350" role="img" aria-label="Grafo das informações entre celular, servidor e caixa"></svg>
+</div>
+<div class="card">
+  <div class="gh"><h2 class="eyb">Medidas e de onde vieram</h2></div>
+  <div class="tw"><table id="med"><thead><tr><th>Peça</th><th>Medida</th><th>Origem</th></tr></thead><tbody></tbody></table></div>
+  <p class="note">O que está como estimativa precisa ser medido com paquímetro antes de modelar as peças impressas.</p>
+</div>
+</main>
+<script>
+// Dados compartilhados pelo desenho 2D (animacao.html) e pelo manual em 3D (simulacao-3d.html).
+// Medidas em mm. Origem no canto interno da base: x = comprimento, y = altura, z = largura.
+const D = {
+  L: 206, W: 72, H: 50, wall: 2, floor: 1.6, lid: 2.4,          // caixa: 210 x 76 x 54 por fora
+  qi: {x: 80, z: 19, l: 67, w: 34, h: 1},
+  pb: {x: 40, z: 1, l: 150, w: 70, y: 1, h: 18},
+  exp: {x: 46, z: 9.25, l: 73, w: 53.5, y: 21},
+  esp: {x: 56, z: 21.5, l: 53, w: 29, y: 31.1},
+  C: {x: 16, z: 52},                                           // eixo do pino e da embreagem
+  A: {x: 16, z: 36}, R: 16,                                    // eixo do servo e raio do braço
+  clutch: {r: 6.5, y0: 40.2, y1: 51.2}, shelf: {y0: 39.4, y1: 40.2}, mag: {r: 5, y0: 27.2, y1: 39.2},
+  jaw: {hx: 70, hy: 59.4, x0: -2, x1: 66, z0: 38, z1: 70, th: 8, open: .56},
+  pin: {len: 16},
+  fab: {x0: 34, x1: 64, z0: 40},
+  ridL: [46, 52, 58, 64], ridJ: [43, 49, 55, 61, 67],
+  slot: {x0: 42, x1: 64, zs: [46, 54, 62], w: 3.6, dip: 5.6},       // variante C: rasgos da tampa e dedos da garra
+  jawSw: {x: 27, z: 38, px: 34, pz: 50},
+  qr: {cx: 150, cz: 36, s: 34},                                // adesivo do QR colado na tampa
+  sem: {x: 186, z: 8.25, l: 13, w: 55.5, cx: 192.5, zs: [21, 36, 51]},
+  baseSw: {x: 24, z: 2}
+};
+
+const MEDIDAS = [
+  ['Caixa (por fora)', '210 × 76 × 54 mm. Com a garra fechada, 65 mm de altura', 'projeto'],
+  ['Garra', '68 × 32 × 8 mm, abre cerca de 30°', 'projeto'],
+  ['Power bank Basike 10.000 mAh', '150 × 70 × 15 mm no site da marca; 147,5 × 69 × 18 mm na Amazon. Usei 150 × 70 × 18', 'anúncio'],
+  ['Receptor de indução USB-C', '67 × 34 × 1 mm, 5 V e 0,5 a 1 A, folga de 2 a 6 mm', 'anúncio'],
+  ['Base de indução Lelong LE-520', 'Ø 100 × 8 mm', 'estimativa'],
+  ['ESP32 DevKit 30 pinos', '53 × 29 mm, fileiras a 25,8 mm', 'anúncio'],
+  ['Expansor de ESP32', '73 × 53,5 × 16 mm, 4 furos M3', 'anúncio'],
+  ['Servo SG90', 'corpo 22,7 × 12,1 × 22,6 mm; abas com 32,4 mm; 30,7 mm até o topo do eixo; eixo a 5,8 mm da ponta', 'anúncio'],
+  ['Adesivo do QR', '34 × 34 mm, impresso em papel adesivo', 'projeto'],
+  ['Chave fim de curso', '25 × 13,7 × 5,8 mm, haste de 13 mm, curso de 2,5 mm', 'anúncio'],
+  ['Semáforo de LED', '55,5 × 13 × 13 mm, LEDs de 8 mm a cada 15 mm', 'anúncio'],
+  ['Ímã de neodímio', 'Ø 10 × 4 mm, cerca de 2,5 kg de força e 4.500 G na face (dado do N52)', 'anúncio'],
+  ['Pino da etiqueta', 'haste de Ø 1,2 mm, cabeça de Ø 12 mm, 16 mm de comprimento', 'anúncio'],
+  ['Esferas da embreagem', 'Ø 2,5 mm', 'patente'],
+  ['Embreagem (copo de metal)', 'Ø 13 × 11 mm', 'estimativa'],
+  ['Força para arrancar o pino', 'cerca de 36 kgf (alvo de projeto de uma patente)', 'patente'],
+  ['Destacador de loja comum', '4.500 G', 'anúncio']
+];
+
+// O que comprar: [nome, quantidade, preço visto, link, para que serve]. Preços vistos entre 29/09 e 07/10/2026, sem frete.
+const COMPRAS = {
+  etq: ['Etiquetas rígidas de loja, com pino (pacote com 20)', '1 pacote', 'R$ 67,78', 'https://www.amazon.com.br/dp/B0GP6ZF16R', 'De dentro de uma delas saem a embreagem e o pino. As outras ficam para teste.'],
+  ima: ['Ímãs de neodímio N50, 10 × 4 mm (kit com 10)', '1 kit', 'R$ 21,48', 'https://www.usinainfo.com.br/imas-de-neodimio-e-acessorios-magneticos/ima-de-neodimio-n50-super-forte-10mm-x-4mm-kit-com-10-unidades-5012.html', 'Três empilhados abrem a embreagem.'],
+  esp: ['ESP32 com USB-C, 30 pinos', '1', 'R$ 56,81', 'https://www.usinainfo.com.br/esp32/esp32-wifi-e-bluetooth-com-usb-c-30-pinos-e-cp2102-9114.html', 'É o computador da caixa. Tem Wi-Fi.'],
+  exp: ['Expansor para ESP32 de 30 pinos', '1', 'R$ 21,19', 'https://www.usinainfo.com.br/expansores-shields/expansor-para-esp32-devkit-v1-30-pinos-usb-c-e-micro-8795.html', 'Placa onde o ESP32 encaixa. Dá pinos fáceis para ligar os fios, sem solda.'],
+  srv: ['Microservo SG90', '2 (um de reserva)', 'R$ 28,32', 'https://www.usinainfo.com.br/servo-motores/micro-servo-motor-9g-sg90-180-16kgfcm-de-posicao-2299.html', 'Motor pequeno que gira o braço dos ímãs.'],
+  chv: ['Módulo chave fim de curso', '2', 'R$ 9,58', 'https://www.usinainfo.com.br/sensor-de-vibracao/modulo-chave-fim-curso-sensor-de-impacto-para-projetos-4618.html', 'Uma sente a garra fechar e a outra sente a base de carga.'],
+  sem: ['Semáforo de LED', '1', 'R$ 7,78', 'https://www.usinainfo.com.br/outros-modulos-arduino/semaforo-led-33v5v-8mm-s3-5466.html', 'Os três LEDs: vermelho, amarelo e verde.'],
+  jff: ['Jumpers fêmea-fêmea, 20 cm (40 un.)', '1', 'R$ 7,50', 'https://www.eletrogate.com/jumpers-femea-femea-40-unidades-de-20-cm', 'Os fios de encaixe. São usados 10.'],
+  jmf: ['Jumpers macho-fêmea, 20 cm (40 un.)', '1', 'R$ 8,46', 'https://www.eletrogate.com/jumpers-macho-femea-40-unidades-de-20-cm', 'Três deles ligam o plugue do servo.'],
+  pwb: ['Power bank Basike 10.000 mAh, com visor', '1', 'R$ 95,00', 'https://www.amazon.com.br/dp/B0DHVLRFGD', 'A bateria da caixa.'],
+  qir: ['Receptor de indução com plugue USB-C', '1', 'R$ 67,93', 'https://www.magazineluiza.com.br/adaptador-sem-fio-wireless-qi-inducao-receptor-universal-tipo-c-brasil-home/p/gkj66889f8/in/usba/', 'Folha fina que recebe a carga sem fio e passa para o power bank.'],
+  qib: ['Base de carregador sem fio Lelong LE-520', '1', 'R$ 28,69', 'https://www.magazineluiza.com.br/carregador-por-inducao-15w-sem-fio-usb-acompanha-cabo-usb-c-le520-lelong/p/ke9dh49dk3/te/accp/', 'Onde a caixa é posta para recarregar.'],
+  prf: ['Kit de parafusos e porcas M2 a M5', '1', 'R$ 18,72', 'https://www.amazon.com.br/dp/B0GS5M3LC5', 'Parafusos da tela, do módulo e da tampa.'],
+  pla: ['Filamento PLA 1,75 mm, 1 kg', '1', 'cerca de R$ 100', '', 'Plástico da impressora 3D. Qualquer marca e cor.'],
+  cap: ['Capacitor eletrolítico de 1.000 µF, 16 V', '1 (opcional)', 'cerca de R$ 2', '', 'Só se o ESP32 reiniciar quando o servo mexe.']
+};
+const CASA = ['Fita dupla face de espuma', 'Cola instantânea em gel', 'Um pregador de roupa (para tirar a mola)', 'Parafuso M3 de 40 mm com porca (eixo da garra)', 'Tira de borracha: câmara de ar de bicicleta ou fita antiderrapante', 'Cabo USB-C que passe dados (o de carregar celular costuma servir)', 'Adesivo com o QR da caixa: uma folha de papel adesivo e uma impressora comum'];
+const FERR = ['Serrinha ou arco de serra', 'Óculos de proteção', 'Chave Philips pequena', 'Paquímetro ou régua', 'Lixa fina', 'Estilete', 'Alicate de bico', 'Notebook com porta USB', 'Celular com câmera'];
+
+// Ligações: [módulo, pino do módulo, destino no expansor, cor em código, nome da cor]
+const LIG = [
+  ['LEDs', 'GND', 'GND', '#222222', 'preto'], ['LEDs', 'R', 'GPIO 19', '#d32f2f', 'vermelho'], ['LEDs', 'Y', 'GPIO 21', '#f9a825', 'amarelo'], ['LEDs', 'G', 'GPIO 22', '#2e7d32', 'verde'],
+  ['Chave da garra', 'VCC', '3V3', '#d32f2f', 'vermelho'], ['Chave da garra', 'GND', 'GND', '#222222', 'preto'], ['Chave da garra', 'OUT', 'GPIO 27', '#6a1b9a', 'roxo'],
+  ['Chave da base', 'VCC', '3V3', '#d32f2f', 'vermelho'], ['Chave da base', 'GND', 'GND', '#222222', 'preto'], ['Chave da base', 'OUT', 'GPIO 33', '#00838f', 'azul-claro'],
+  ['Servo', 'marrom', 'GND', '#6b3f1d', 'marrom'], ['Servo', 'vermelho', '5 V fixo', '#c62828', 'vermelho'], ['Servo', 'laranja', 'GPIO 13', '#f08a1c', 'laranja']
+];
+const W0 = .06, W1 = .98;
+const fioP = n => W0 + (W1 - W0) * n / LIG.length;           // progresso em que o fio n entra
+function textoFio(n) {
+  const l = LIG[n], srv = l[0] == 'Servo';
+  const de = srv ? 'Enfie a ponta com pino de um jumper macho-fêmea no furo do fio ' + l[1] + ' do plugue do servo.' :
+    'Encaixe uma ponta de um jumper ' + l[4] + ' no pino ' + l[1] + ' ' + (l[0] == 'LEDs' ? 'do semáforo' : 'da ' + l[0].toLowerCase()) + '.';
+  const para = l[2] == 'GND' ? 'num pino G (terra) do expansor' : l[2] == '3V3' ? 'num pino V (3,3 V) do expansor' : l[2] == '5 V fixo' ? 'no pino 5V do conector de força do expansor' : 'no pino S da porta ' + l[2].replace('GPIO ', '') + ' do expansor';
+  return 'Fio ' + (n + 1) + ' de ' + LIG.length + '. ' + de + ' A outra ponta vai ' + para + '.';
+}
+
+// Etapas de construção e de funcionamento: [título, texto, [[rótulo, detalhe], ...], [[progresso, o que fazer agora], ...]]
+const STEPS = [
+ ['Tirar a embreagem da etiqueta', 'A embreagem é a trava que as lojas usam. Ela vem pronta dentro de cada etiqueta: é só abrir e tirar.',
+  [['O que é', 'Um copinho de metal com três esferas dentro. O pino entra e não sai.'], ['Onde cortar', 'Em volta da base da cúpula, sem encostar no metal.'], ['Guardar', 'O pino de 16 mm que vem com a etiqueta.']],
+  [[0, 'Pegue uma etiqueta do pacote. O pino vem separado: guarde, porque ele vai na garra.'], [.2, 'Segure a etiqueta firme na mesa e serre em volta da cúpula (a parte redonda e alta), bem rente à base. Vá devagar e pare quando sentir o metal.'], [.56, 'Tire a tampa da cúpula com a mão ou com o alicate.'], [.72, 'Lá dentro tem um copinho de metal: é a embreagem. Puxe para fora inteira, sem amassar.']]],
+ ['Módulo da trava: embreagem', 'O módulo da trava é uma peça impressa que segura a embreagem em cima e o servo embaixo.',
+  [['Encaixe', 'Furo com 0,2 mm de folga e um pingo de cola instantânea.'], ['Parede', '0,8 mm de plástico por baixo da embreagem. O ímã desliza encostado nela.'], ['Por que um módulo', 'Embreagem e servo na mesma peça: a distância entre eles não depende de fechar a tampa.']],
+  [[0, 'Ponha o módulo da trava em pé na mesa. A prateleira com o anel fica em cima.'], [.3, 'Vire a embreagem: o lado do furo do pino fica para cima.'], [.48, 'Leve a embreagem até o anel da prateleira. Esse anel é o berço dela.'], [.62, 'Passe um pingo de cola por fora do copo e empurre até encostar na prateleira.']]],
+ ['Módulo da trava: servo', 'O servo é o motor. Ele desce entre os dois apoios do módulo e fica preso pelas abas.',
+  [['Medida', 'Corpo de 22,7 × 12,1 × 22,6 mm, abas com 32,4 mm.'], ['Parafusos', 'Os dois compridos que vêm no saquinho do servo.'], ['Posição', 'Eixo a 16 mm do centro da embreagem.']],
+  [[0, 'Desça o servo entre os dois apoios, com o eixo branco para cima e do lado da embreagem. As abas dele apoiam em cima dos apoios.'], [.5, 'Parafuse a primeira aba. Aperte só até firmar.'], [.7, 'Parafuse a segunda aba.']]],
+ ['Módulo da trava: braço e ímãs', 'O braço impresso leva os três ímãs até embaixo da embreagem.',
+  [['Cola', 'Instantânea em gel. Lixe antes o ímã e o anel.'], ['Folga', '0,2 mm entre o topo dos ímãs e a parede de 0,8 mm.'], ['Parafuso do braço', 'Só na etapa de teste, depois de pôr o servo em 0°.']],
+  [[0, 'Lixe de leve os três ímãs e o lado de dentro do anel do braço, para a cola pegar.'], [.15, 'Passe cola no anel e encaixe o primeiro ímã.'], [.3, 'Encoste o segundo ímã no primeiro. Eles se grudam sozinhos e batem forte: cuidado com o dedo.'], [.45, 'Encoste o terceiro. O topo da pilha fica rente com o topo do anel.'], [.62, 'Encaixe o braço no eixo do servo, apontando para longe da embreagem. Ainda sem parafuso.']]],
+ ['Base: receptor e power bank', 'A base é a caixa impressa. Primeiro entram o receptor de carga sem fio e a bateria.',
+  [['Base', '210 × 76 × 54 mm por fora. Paredes de 2 mm, fundo de 1,6 mm.'], ['Receptor', '67 × 34 × 1 mm. Fica longe dos ímãs.'], ['Testar antes', 'Se o power bank carrega e alimenta ao mesmo tempo, e se não desliga sozinho com pouco consumo.']],
+  [[0, 'Ponha a base impressa na mesa, de boca para cima.'], [.2, 'Cole o receptor de indução no fundo com fita dupla face. O lado que encosta no carregador fica virado para baixo.'], [.45, 'Cole o power bank por cima, com a entrada USB-C virada para a ponta onde sobra espaço.'], [.75, 'Encaixe o plugue USB-C do receptor na entrada do power bank.']]],
+ ['ESP32 no expansor', 'O ESP32 é o computador da caixa. Ele encaixa no expansor, que fica colado em cima do power bank.',
+  [['Expansor', '73 × 53,5 mm. Cada porta tem três pinos: S (sinal), V (tensão) e G (terra).'], ['Jumper do expansor', 'Em 3,3 V. Em 5 V queima as entradas do ESP32.'], ['Energia', 'Cabo USB-C do power bank na entrada do ESP32.']],
+  [[0, 'Cole um pedaço de fita dupla face em cima do power bank.'], [.2, 'Cole o expansor na fita.'], [.45, 'Encaixe o ESP32 nos dois soquetes pretos do expansor. Alinhe todos os pinos antes de empurrar. A porta USB-C fica virada para o lado da trava.'], [.66, 'Confira o jumper do expansor: tem que estar na posição 3V3.'], [.7, 'Ligue o cabo USB-C do power bank no ESP32. Uma luz acende na placa. Depois desligue o cabo para continuar.']]],
+ ['Módulo da trava na caixa', 'O módulo pronto vai para a ponta livre da caixa.',
+  [['Fixação', 'Dois parafusos M3 curtos.'], ['Chave da base', 'Colada no fundo, sobre o furo do pino-guia.'], ['Conferir', 'O braço gira de 0 a 90° sem bater em nada.']],
+  [[0, 'Segure o módulo da trava pela base.'], [.25, 'Leve até a ponta livre da caixa, com a embreagem do lado da frente.'], [.55, 'Desça até encostar no fundo e prenda com dois parafusos M3 curtos.'], [.8, 'Cole uma chave fim de curso no fundo, ao lado, com a haste de metal para cima.']]],
+ ['Tampa por dentro', 'Com a tampa virada na mesa, os LEDs e a chave da garra são presos pelo lado de dentro.',
+  [['LEDs', 'Três furos de 8,6 mm, a cada 15 mm.'], ['Chave da garra', 'Fecha quando a garra abaixa. Um pino branco atravessa a tampa e encosta na garra.'], ['Sem tela', 'O QR é um adesivo colado por fora, no fim da montagem.']],
+  [[0, 'Vire a tampa: o lado de dentro, que é liso, fica para cima.'], [.2, 'Encaixe os três LEDs do semáforo nos três furos e prenda com dois pingos de cola.'], [.5, 'Cole uma chave fim de curso ao lado do furo pequeno, com a haste sobre o pino branco. É ela que sente a garra fechar.']]],
+ ['Garra', 'A garra é a parte que prende a roupa. Ela gira numa dobradiça e uma mola de pregador a mantém aberta.',
+  [['Dentes', 'Cinco fileiras na garra e quatro na tampa, com tira de borracha colada.'], ['Pino', 'O de 16 mm, liso, solto numa bolsa da garra e com um funil na entrada. Fica fora da área do tecido.'], ['Dobradiça', 'Parafuso M3 de 40 mm como eixo, com a porca frouxa.'], ['Mola', 'De pregador de roupa. Abre a garra quando a embreagem solta.']],
+  [[0, 'Desvire a tampa e apoie sobre os módulos.'], [.3, 'Corte tiras de borracha de 36 × 2 mm e cole em cima dos quatro dentes da tampa.'], [.45, 'Na garra: cole borracha nos cinco dentes, solte o pino na bolsa e feche com a tampinha. O pino fica pendurado.'], [.65, 'Tire a mola de um pregador de roupa e encaixe entre os dois apoios da dobradiça.'], [.8, 'Alinhe o furo da garra com os apoios e passe o parafuso M3 de 40 mm. Ponha a porca sem apertar: a garra tem que girar.']]],
+ ['Fiação', 'Cada fio (jumper) liga um pino de um módulo a um pino do expansor. É um fio por vez, sem pressa.',
+  [['LEDs', 'Vermelho 19, amarelo 21, verde 22, mais GND.'], ['Chaves', 'Garra 27, base 33. Cada uma com 3V3 e GND.'], ['Servo', 'Sinal no 13, força no pino 5V do conector de força.']],
+  [[0, 'Ponha a tampa em pé atrás da caixa, aberta. Confira que nada está ligado na energia.']]],
+ ['Programa e teste', 'O ESP32 recebe o programa pelo cabo USB e cada parte é testada sozinha.',
+  [['Ordem', 'LEDs, servo e chaves. Só depois o Wi-Fi.'], ['Servo', 'Se o ESP32 reiniciar quando o servo mexe, falta o capacitor.'], ['Depois', 'Repetir tudo no power bank por 30 minutos.']],
+  [[0, 'Tire o cabo do power bank do ESP32 e ligue o cabo do notebook.'], [.1, 'Carregue o programa de teste. Os LEDs acendem um por vez: vermelho, amarelo, verde.'], [.58, 'O servo vai até 90° e volta para 0°.'], [.78, 'Com o servo parado em 0°, ajuste o braço apontando para longe da embreagem e prenda com o parafusinho do saquinho do servo.'], [.92, 'Aperte cada chave com o dedo e veja o valor mudar no Monitor Serial.']]],
+ ['Fechar a caixa', 'A tampa desce, é presa com quatro parafusos e recebe o adesivo do QR.',
+  [['Parafusos', 'M3 direto no plástico, em furo de 2,5 mm.'], ['Fios', 'Dobrados para o lado do expansor, longe do braço do servo.'], ['QR', 'Adesivo de 34 × 34 mm com o endereço da caixa, por exemplo seusaas/c/01.']],
+  [[0, 'Tire o cabo do notebook e religue o cabo do power bank no ESP32.'], [.08, 'Dobre os fios para o lado do expansor e abaixe a tampa devagar. Nenhum fio pode ficar perto do braço do servo.'], [.6, 'Prenda com quatro parafusos M3 nos cantos.'], [.86, 'Imprima o QR da caixa em papel adesivo e cole na tampa. Teste com a câmera do celular: tem que abrir o endereço.']]],
+ ['Prender a roupa', 'A garra fica aberta pela mola. O funcionário põe a borda da roupa dentro e fecha a garra com a mão.',
+  [['Sem furo', 'Os dentes com borracha apertam o tecido em zigue-zague.'], ['Trava', 'O pino da garra desce na embreagem, ao lado do tecido. Ela segura o pino em qualquer altura, então serve para tecido fino ou grosso.'], ['Onde prender', 'De preferência atrás de uma bainha. As etiquetas sem pino da Sensormatic pedem o mesmo.']],
+  [[0, 'Garra aberta. A roupa entra pela frente até o batente.'], [.36, 'Apertar a garra para baixo.'], [.6, 'Travou. LED vermelho.']]],
+ ['Cadastrar', 'O funcionário lê com o celular o QR colado na caixa. Como a caixa está livre, a página que abre é a de cadastro.',
+  [['QR fixo', 'É sempre o mesmo endereço. O servidor decide a página pelo estado da caixa.'], ['Senha', 'O cadastro pede a senha do funcionário.'], ['Servidor', 'Ao salvar, a caixa passa de livre para à venda.']],
+  [[0, 'O QR está colado na tampa.'], [.25, 'Ler o QR com o celular.'], [.62, 'Informar a roupa e o preço.'], [.8, 'Servidor: à venda.']]],
+ ['Tentativa de furto', 'Alguém segura a caixa e puxa a roupa. Os dentes seguram o tecido e a garra não abre, porque o pino está travado.',
+  [['Força', 'Estimativa de 12 a 80 N só com o atrito, mais o ganho do zigue-zague. Um pino que fura segura uns 350 N. Medir no teste.'], ['Reforço', 'Prender atrás de uma costura ou bainha, que não passa entre os dentes.'], ['Alerta', 'Se a chave da garra abrir sem ordem, o painel da loja avisa.']],
+  [[0, 'A roupa está presa.'], [.15, 'Puxão na roupa.'], [.8, 'Continua presa.']]],
+ ['Pagar', 'O cliente lê o mesmo QR. Como a caixa agora está à venda, a página que abre é a de compra.',
+  [['Servidor', 'Estado à venda: abre a compra. Ao pagar, passa para paga.'], ['Pagamento', 'Simulado no protótipo.'], ['Sem aplicativo', 'É uma página comum, aberta pela câmera.']],
+  [[0, 'O mesmo QR da tampa.'], [.2, 'Ler o QR com o celular.'], [.55, 'Página de compra.'], [.8, 'Pago.']]],
+ ['Soltar', 'A caixa recebe a ordem e gira os ímãs para baixo da embreagem. O pino solta e a mola abre a garra.',
+  [['Servo', 'Gira 90° e segura por 8 s.'], ['Garra', 'Abre sozinha, cerca de 30°.'], ['A testar', 'Se a mola atrapalha a soltura. Mola fraca é melhor.']],
+  [[0, 'O ESP32 pergunta ao servidor se há ordem.'], [.12, 'O servo gira os ímãs para baixo da embreagem.'], [.4, 'A garra abre. LED verde.'], [.58, 'O cliente tira a roupa.'], [.88, 'O servo volta.']]],
+ ['Recarregar', 'A caixa vazia é posta na base de indução. O painel da loja mostra a bateria de cada caixa.',
+  [['Base', 'Berço impresso com pino-guia, que entra no furo do fundo e aperta a chave.'], ['LED', 'Amarelo enquanto a chave da base está apertada.'], ['Bateria no aplicativo', 'É uma estimativa: o ESP32 informa há quantas horas saiu da base e o servidor calcula a porcentagem. Medir de verdade exige trocar o power bank por outra bateria.']],
+  [[0, 'Levantar a caixa.'], [.2, 'Base de indução no lugar.'], [.5, 'Descer a caixa na base.'], [.68, 'Carregando. LED amarelo.'], [.74, 'No painel da loja aparece o estado e a bateria estimada da caixa.']]]
+];
+const NA = 12;
+LIG.forEach((l, n) => STEPS[9][3].push([fioP(n), textoFio(n)]));
+const DUR = i => i < NA ? Math.max(9000, STEPS[i][3].length * 4200) : 10000;
+const EST = ['livre', 'à venda', 'paga', 'liberada', 'na base'];
+
+// Manual de cada etapa de construção: materiais (códigos de COMPRAS ou texto), ferramentas, como conferir e erros comuns.
+const MAN = [
+ {mats: ['etq'], ferr: ['Serrinha', 'Óculos de proteção', 'Alicate de bico'], ok: 'Enfie o pino na embreagem: ele entra e não sai. Encoste três ímãs empilhados no lado oposto ao furo: o pino solta.', erros: ['Serrar fundo demais e cortar o copo de metal.', 'Se o copo abrir e as esferas caírem, use outra etiqueta.']},
+ {mats: ['Módulo da trava (impresso)', 'A embreagem da etapa anterior', 'Cola instantânea em gel'], ferr: [], ok: 'A embreagem não gira nem sobe quando você puxa com o dedo. O furo está limpo.', erros: ['Cola dentro do furo trava o mecanismo. Use pouca.', 'Embreagem de cabeça para baixo: o pino não entra.']},
+ {mats: ['srv', 'Os dois parafusos compridos do saquinho do servo'], ferr: ['Chave Philips pequena'], ok: 'O servo não balança e o fio sai livre por baixo.', erros: ['Apertar demais racha o plástico impresso.', 'Servo virado ao contrário: o eixo tem que ficar do lado da embreagem.']},
+ {mats: ['Braço do ímã (impresso)', 'ima', 'Cola instantânea em gel'], ferr: ['Lixa fina'], ok: 'Girando o braço com a mão, os ímãs passam por baixo da embreagem sem raspar.', erros: ['Deixar os ímãs perto de celular, cartão ou relógio.', 'Prender o dedo entre dois ímãs.']},
+ {mats: ['Base (impressa)', 'qir', 'pwb', 'Fita dupla face'], ferr: [], ok: 'Com a base em cima do carregador de indução, o visor do power bank mostra que está carregando.', erros: ['Receptor de cabeça para baixo: não carrega.', 'Fundo da caixa com mais de 2 mm: a carga falha.']},
+ {mats: ['exp', 'esp', 'Fita dupla face'], ferr: [], ok: 'A luz do ESP32 acende quando o cabo do power bank é ligado.', erros: ['Um pino do ESP32 fora do soquete entorta. Olhe de lado antes de empurrar.', 'Jumper do expansor em 5 V.']},
+ {mats: ['Dois parafusos M3 curtos (do kit)', 'chv', 'Fita dupla face'], ferr: ['Chave Philips pequena'], ok: 'O braço gira de 0 a 90° sem bater na parede nem no power bank.', erros: ['Fio do servo preso embaixo do módulo.']},
+ {mats: ['Tampa (impressa)', 'sem', 'chv', 'Cola instantânea em gel'], ferr: [], ok: 'Desvirando a tampa, os três LEDs aparecem nos furos e o pino branco da chave sobe e desce.', erros: ['Cola na ponta dos LEDs.', 'Chave colada torta: o pino branco não aperta a haste.']},
+ {mats: ['Garra (impressa)', 'O pino guardado da etiqueta', 'Tampinha do pino (impressa)', 'Tira de borracha', 'Mola de um pregador de roupa', 'Parafuso M3 de 40 mm com porca', 'Cola instantânea em gel'], ferr: ['Estilete', 'Alicate de bico'], ok: 'A garra abre sozinha pela mola e fecha com um dedo. O pino aponta para o furo da embreagem.', erros: ['Porca apertada: a garra não gira.', 'Borracha grossa demais: a garra não fecha até o pino travar.']},
+ {mats: ['jff', 'jmf'], ferr: [], ok: 'Cada fio está firme nas duas pontas, e nenhum pino V está ligado num pino G.', erros: ['Fio no pino vizinho. Conte os pinos duas vezes.', 'Plugue do servo com as cores trocadas.', 'Chave ligada no pino V de 5 V.']},
+ {mats: ['Cabo USB-C de dados', 'O parafusinho do saquinho do servo'], ferr: ['Notebook', 'Chave Philips pequena'], ok: 'LEDs, servo e as duas chaves respondem.', erros: ['ESP32 reinicia quando o servo mexe: falta o capacitor.', 'Erro ao carregar: segure o botão BOOT da placa.'], aviso: 'O programa de teste ainda vai ser escrito. Ele entra junto com o programa final.'},
+ {mats: ['Quatro parafusos M3 (do kit)', 'Adesivo com o QR da caixa'], ferr: ['Chave Philips pequena'], ok: 'A tampa assenta sem forçar, o braço do servo continua livre e o QR abre o endereço da caixa.', erros: ['Fio esmagado entre a tampa e a parede.']}
+];
+
+// Capítulos de preparação, antes de construir. view: o que o 3D mostra.
+const PREP = [
+ {tit: 'O que vamos construir e o que comprar', txt: 'Uma caixa que prende a roupa com uma garra, tem um QR colado para cadastrar e pagar, e solta sozinha depois do pagamento.', view: 'final', compras: true,
+  passos: [[0, 'Este é o aparelho pronto. Gire com o mouse para ver de todos os lados.'], [.34, 'Tudo o que é comprado está na lista ao lado, com o link de cada loja. Os preços foram vistos entre 29/09 e 07/10/2026, sem frete.'], [.67, 'Compre primeiro as etiquetas e os ímãs. Com eles você faz o teste que decide o projeto: se três ímãs empilhados abrem a embreagem.']],
+  ok: 'Você sabe o que cada peça faz e de onde ela vem.', erros: ['Comprar etiqueta do tipo superlock: o ímã pequeno não abre.', 'Comprar o ESP32 de 38 pinos: ele não encaixa no expansor de 30.']},
+ {tit: 'Ferramentas e coisas de casa', txt: 'Nada aqui precisa de solda nem de ferramenta elétrica.', view: 'final', ferramentas: true,
+  passos: [[0, 'Separe as ferramentas da lista ao lado.'], [.5, 'Separe também as coisas de casa: fita dupla face, cola em gel, um pregador de roupa, uma tira de borracha e um cabo USB-C que passe dados.']],
+  ok: 'Tudo da lista está na mesa.', erros: ['Cabo USB que só carrega: o notebook não enxerga a placa.']},
+ {tit: 'Imprimir as peças', txt: 'As peças de plástico são feitas na impressora 3D, que derrete um fio de plástico e desenha a peça camada por camada.', view: 'print',
+  aviso: 'Os arquivos das peças para imprimir ainda vão ser gerados. Antes disso é preciso medir a embreagem de verdade com paquímetro.',
+  cfg: [['Material', 'PLA de 1,75 mm. É o mais fácil de imprimir.'], ['Bico e camada', 'Bico de 0,4 mm, camada de 0,2 mm.'], ['Paredes', '3 voltas. Na garra e no módulo, 4.'], ['Temperatura', '200 a 210 °C no bico e 60 °C na mesa.'], ['Onde imprimir', 'Num laboratório da faculdade ou numa impressora de mesa de 220 × 220 mm.']],
+  passos: [[0, 'Instale um fatiador gratuito, como o Cura ou o OrcaSlicer. É o programa que transforma o desenho da peça em instruções para a impressora.', -1],
+   [.09, 'No fatiador, escolha PLA, camada de 0,2 mm e 3 paredes. Abra o arquivo da peça, confira a posição na mesa e clique em fatiar. Salve no cartão ou mande pela rede.', -1],
+   [.94, 'Depois de imprimir: tire as rebarbas com estilete. Teste se o parafuso M3 entra nas colunas e se a embreagem entra no berço. Se ficar apertado, lixe.', -1]],
+  ok: 'As peças saem sem empenar e os encaixes entram com a mão.', erros: ['Primeira camada não gruda: limpe a mesa com álcool e nivele.', 'Furo apertado: é normal sair 0,1 a 0,3 mm menor. Lixe ou alargue.', 'Imprimir tudo antes de medir a embreagem.']},
+ {tit: 'Preparar o computador', txt: 'O programa do ESP32 é enviado pelo Arduino IDE, que é gratuito. Isso é feito uma vez só.', view: 'pc',
+  links: [['Baixar o Arduino IDE', 'https://www.arduino.cc/en/software'], ['Driver CP210x, se a porta não aparecer', 'https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers']],
+  codigo: 'https://raw.githubusercontent.com/espressif/arduino-esp32/gh-pages/package_esp32_index.json',
+  passos: [[0, 'Instale o Arduino IDE 2.'], [.14, 'Abra Arquivo > Preferências. No campo "URLs adicionais para gerenciadores de placas", cole o endereço que está no quadro ao lado.'],
+   [.28, 'Abra Ferramentas > Placa > Gerenciador de placas. Procure "esp32", da Espressif, e instale.'],
+   [.42, 'Ligue o ESP32 no notebook com o cabo USB-C. Se nenhuma porta nova aparecer em Ferramentas > Porta, instale o driver CP210x.'],
+   [.56, 'Em Ferramentas > Placa, escolha "DOIT ESP32 DEVKIT V1". Em Ferramentas > Porta, escolha a porta que apareceu.'],
+   [.7, 'Em Sketch > Incluir biblioteca > Gerenciar bibliotecas, instale: ESP32Servo e ArduinoJson.'],
+   [.84, 'Teste: abra Arquivo > Exemplos > 01.Basics > Blink e clique na seta Carregar. A luz azul da placa começa a piscar.']],
+  ok: 'A luz azul do ESP32 pisca depois de carregar o Blink.', erros: ['"Failed to connect": segure o botão BOOT da placa enquanto carrega.', 'Porta não aparece: cabo que só carrega, ou falta o driver.']},
+ {tit: 'Noções de elétrica em cinco minutos', txt: 'Para ligar os fios você só precisa saber três letras e duas regras.', view: 'fios',
+  passos: [[0, 'Três tipos de pino. G é a terra, o lado negativo. V é a tensão, o lado positivo. S é o sinal, por onde passa a informação.'],
+   [.15, 'O expansor repete G, V e S para cada porta do ESP32. O número impresso ao lado de cada trio é o número da porta.'],
+   [.3, 'O jumper é um fio com um encaixe em cada ponta. Empurre o encaixe no pino, reto, até o fim. Ele fica firme sozinho.'],
+   [.45, 'Regra 1: nunca ponha nem tire fio com o power bank ou o cabo USB ligado.'],
+   [.6, 'Regra 2: o jumper amarelo do expansor escolhe a tensão dos pinos V. Deixe em 3V3. Em 5 V, as entradas do ESP32 queimam.'],
+   [.75, 'Só o servo usa 5 V. Ele pega num conector separado do expansor, marcado 5V.'],
+   [.88, 'A cor do fio não muda nada na eletricidade. Usamos vermelho para V e preto para G só para não confundir.']],
+  ok: 'Você sabe achar G, V e S no expansor e sabe onde fica o jumper de 3V3.', erros: ['Ligar V direto em G: é curto-circuito e o power bank desliga.']}
+];
+const NP = PREP.length;
+
+const FLOW = [
+ {act: ['sen', 'led', 'e2s'], lab: {sen: 'garra = 1', led: 'vermelho', e2s: '{"caixa":"01","garra":1,"fora_da_base_s":40}'}},
+ {act: ['c2s', 's2c', 'sdb', 's2e', 'span'], lab: {c2s: 'GET /c/01, depois POST cadastro', s2c: 'estado livre: página de cadastro', sdb: 'roupa, preço, estado = à venda', s2e: 'estado = à venda'}},
+ {act: ['sen', 'e2s', 'span'], lab: {sen: 'garra = 1, segue presa', e2s: '{"caixa":"01","garra":1}', span: 'se garra = 0 sem ordem: alerta'}},
+ {act: ['c2s', 's2c', 'sdb', 'span'], lab: {c2s: 'GET /c/01, depois POST pagar', s2c: 'estado à venda: página de compra', sdb: 'venda, estado = paga'}},
+ {act: ['e2s', 's2e', 'srvo', 'led', 'sen', 'sdb'], lab: {e2s: 'tem ordem?', s2e: '{"ordem":"soltar"}', srvo: '90° por 8 s', led: 'verde', sen: 'garra = 0', sdb: 'estado = liberada'}},
+ {act: ['sen', 'led', 'e2s', 'sdb', 'span'], lab: {sen: 'base = 1', led: 'amarelo', e2s: '{"caixa":"01","base":1}', sdb: 'estado = na base, zera a bateria estimada', span: 'bateria estimada de cada caixa'}}
+];
+
+const cl = x => Math.max(0, Math.min(1, x));
+const seg = (p, a, b) => cl((p - a) / (b - a));
+const ez = p => p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2;
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// Estado do produto na etapa i, com progresso p de 0 a 1.
+// jaw: 1 aberta, 0 fechada. cin: quanto o tecido entrou. mag: 0 repouso, 1 sob a embreagem.
+function estado(i, p) {
+  const o = {jaw: 1, cin: 0, cloth: 0, pull: 0, press: 0, led: 'off', scr: 'off', btn: 0, ph: 0, mode: 'cam', who: 'funcionário', est: '', mag: 0, lift: 0, base: 0, seat: 0, grip: 0};
+  if (i == 10) { o.led = p > .1 && p < .25 ? 'red' : p >= .25 && p < .4 ? 'yellow' : p >= .4 && p < .55 ? 'green' : 'off';
+    o.mag = ez(seg(p, .58, .66)) * (1 - ez(seg(p, .69, .77))); }
+  if (i < NA) return o;
+  const s = i - NA; o.est = 'livre';
+  if (s == 0) { o.cloth = 1; o.cin = ez(seg(p, .02, .3)); o.press = p > .36 && p < .62 ? 1 : 0; o.jaw = 1 - ez(seg(p, .42, .6)); o.led = p > .6 ? 'red' : 'off'; }
+  if (s >= 1 && s <= 3) { o.cloth = 1; o.cin = 1; o.jaw = 0; o.led = 'red'; }
+  if (s == 1) { o.ph = ez(seg(p, .25, .4)); o.mode = p < .62 ? 'cam' : 'cad'; o.est = p < .75 ? 'livre' : 'à venda'; }
+  if (s == 2) { o.est = 'à venda'; o.pull = ez(seg(p, .15, .3)) * (1 - seg(p, .8, .95)); o.grip = o.pull; }
+  if (s == 3) { o.who = 'cliente'; o.ph = ez(seg(p, .2, .35)); o.mode = p < .55 ? 'cam' : p < .8 ? 'buy' : 'ok'; o.est = p < .85 ? 'à venda' : 'paga'; }
+  if (s == 4) { o.cloth = 1; o.mag = ez(seg(p, .12, .38)) * (1 - ez(seg(p, .88, 1))); o.jaw = ez(seg(p, .4, .5)); o.cin = 1 - ez(seg(p, .58, .84));
+    o.led = p < .4 ? 'red' : 'green'; o.est = p < .46 ? 'paga' : 'liberada'; }
+  if (s == 5) { const up = ez(seg(p, .05, .22)), dn = ez(seg(p, .5, .68)); o.lift = up * 34 - dn * 26; o.base = ez(seg(p, .2, .45)); o.seat = p > .68 ? 1 : 0;
+    o.led = o.seat ? 'yellow' : 'green'; o.est = !o.seat ? 'liberada' : p < .9 ? 'na base' : 'livre'; o.ph = ez(seg(p, .74, .86)); o.mode = 'pan'; o.who = 'painel da loja'; o.bat = Math.round(lerp(38, 46, seg(p, .74, 1))); }
+  return o;
+}
+function magPos(m) { const a = lerp(0, Math.PI / 2, m); return {x: D.A.x + D.R * Math.cos(a), z: D.A.z + D.R * Math.sin(a), a}; }
+// Quantos fios já estão no lugar na etapa de fiação.
+function fiosProntos(i, p) { return i > 9 ? LIG.length : i < 9 ? 0 : LIG.filter((l, n) => p >= fioP(n)).length; }
+// Índice do passo atual dentro de uma lista [[progresso, texto], ...].
+function passoAtual(lista, p) { let k = 0; lista.forEach((e, n) => { if (p >= e[0] - 1e-6) k = n; }); return k; }
+function agora(i, p) { const s = STEPS[i][3]; return s[passoAtual(s, p)][1]; }
+
+// ---------- variantes do produto (usadas pelo manual em 3D) ----------
+// Cada etapa tem um nome curto fixo. Uma variante é uma lista de etapas, com trocas onde ela é diferente.
+const IDS = ['tag', 'clutch', 'servo', 'arm', 'base', 'esp', 'place', 'lid', 'jaw', 'wire', 'test', 'close', 'f_lock', 'f_reg', 'f_pull', 'f_pay', 'f_rel', 'f_chg'];
+const ETAPA = {}; IDS.forEach((id, k) => ETAPA[id] = {tit: STEPS[k][0], txt: STEPS[k][1], cfg: STEPS[k][2], passos: STEPS[k][3], man: MAN[k] || {}});
+const VAR = {
+ emb: {nome: 'A. Embreagem de loja e ímãs', curto: 'A: embreagem e ímãs',
+  resumo: 'A garra é travada por um pino que desce numa embreagem tirada de uma etiqueta de loja. O servo leva três ímãs para baixo dela e o pino solta.',
+  ids: IDS.slice(), over: {}, sem: [], casa: [], custo: 'cerca de R$ 440', nImp: 7,
+  pros: ['Trava pronta e forte: a patente fala em 36 kgf.', 'Segura o pino em qualquer altura, então serve para tecido fino ou grosso.', 'O servo não faz força contra a trava, só leva o ímã.'],
+  contras: ['Depende de o ímã abrir a embreagem através de 0,8 mm de plástico.', 'O pino entra em arco. Não achei produto que faça assim.', 'Montagem de precisão: 0,2 mm de folga entre ímã e parede.'],
+  teste: 'Encostar três ímãs empilhados numa embreagem e ver se o pino solta. Custa R$ 89 e leva uma hora.',
+  print: [[.18, 'Base: de boca para cima, sem suporte, 20% de preenchimento. É a maior e ocupa quase toda a mesa.', 0], [.3, 'Tampa: com o lado de dentro apoiado na mesa. Os dentes, o batente e os apoios da dobradiça ficam para cima. Sem suporte.', 1],
+   [.42, 'Garra: com o lado liso apoiado na mesa e os dentes para cima. 40% de preenchimento e 4 paredes, porque é a peça que faz força.', 2], [.54, 'Módulo da trava: em pé, como vai ficar na caixa. Ligue o suporte, por causa da prateleira. 40% de preenchimento.', 3],
+   [.66, 'Braço do ímã: de cabeça para baixo, com o anel apoiado na mesa. 100% de preenchimento.', 4], [.76, 'Berço da base de carga: apoiado no lado maior, sem suporte.', 5], [.86, 'Tampinha do pino: é pequena, imprima duas.', 6]]},
+ lin: {nome: 'B. Lingueta com mola e servo', curto: 'B: lingueta e mola',
+  resumo: 'A garra tem um gancho que desce pela tampa. Uma lingueta com mola entra no gancho e faz o clique. O servo puxa a lingueta para trás e a garra abre.',
+  ids: ['servo', 'bolt', 'horn', 'base', 'esp', 'place', 'lid', 'jaw', 'wire', 'test', 'close', 'f_lock', 'f_reg', 'f_pull', 'f_pay', 'f_rel', 'f_chg'],
+  sem: ['etq', 'ima'], casa: ['Mola de caneta (para a lingueta)'], custo: 'cerca de R$ 350', nImp: 6,
+  pros: ['Não compra etiqueta nem ímã.', 'Dá para ver a trava funcionando e corrigir reimprimindo uma peça pequena.', 'É o que o relatório descreve: mola, gatilho e microatuador.', 'Sem ímã perto da carga por indução.'],
+  contras: ['Trava numa altura só. A espessura do tecido fica por conta da borracha dos dentes.', 'A trava é de plástico impresso: aguenta menos e gasta com o uso.', 'O atrito do plástico varia. Pode precisar de duas ou três impressões.'],
+  teste: 'Imprimir só a lingueta, o gancho e o trilho, e soltar com o dedo dez vezes seguidas. Não precisa comprar nada.',
+  print: [[.18, 'Base: de boca para cima, sem suporte, 20% de preenchimento. É a maior e ocupa quase toda a mesa.', 0], [.3, 'Tampa: com o lado de dentro apoiado na mesa. Os dentes, o batente e os apoios da dobradiça ficam para cima. Sem suporte.', 1],
+   [.42, 'Garra: com o lado liso apoiado na mesa, os dentes e o gancho para cima. 40% de preenchimento e 4 paredes. O gancho é a parte que faz força.', 2], [.54, 'Módulo da trava: em pé, com o trilho da lingueta em cima. Ligue o suporte. 40% de preenchimento.', 3],
+   [.66, 'Lingueta: deitada, 100% de preenchimento. Imprima duas, uma de reserva.', 4], [.78, 'Berço da base de carga: apoiado no lado maior, sem suporte.', 5]],
+  over: {
+   servo: {tit: 'Módulo da trava: servo', txt: 'O módulo da trava é uma peça impressa com dois apoios para o servo embaixo e um trilho para a lingueta em cima.',
+    cfg: [['Medida do servo', 'Corpo de 22,7 × 12,1 × 22,6 mm, abas com 32,4 mm.'], ['Parafusos', 'Os dois compridos que vêm no saquinho do servo.'], ['Trilho', 'Canal de 6 × 6 mm para a lingueta, com 0,3 mm de folga.']],
+    passos: [[0, 'Ponha o módulo da trava em pé na mesa. Embaixo ficam os dois apoios do servo e em cima o trilho da lingueta.'], [.35, 'Desça o servo entre os dois apoios, com o eixo branco para cima.'], [.72, 'Parafuse a primeira aba. Aperte só até firmar.'], [.86, 'Parafuse a segunda aba.']],
+    man: {mats: ['Módulo da trava (impresso)', 'srv', 'Os dois parafusos compridos do saquinho do servo'], ferr: ['Chave Philips pequena'], ok: 'O servo não balança e o fio sai livre por baixo.', erros: ['Apertar demais racha o plástico impresso.', 'Servo virado: o eixo fica embaixo do meio do trilho.']}},
+   bolt: {tit: 'Módulo da trava: lingueta e mola', txt: 'A lingueta é a peça que segura o gancho da garra. Uma mola de caneta a empurra para a frente.',
+    cfg: [['Lingueta', '5,6 × 5,6 × 20 mm, com a ponta chanfrada em cima.'], ['Curso', '6 mm para trás solta o gancho.'], ['Mola', 'De caneta, cortada com cerca de 12 mm.']],
+    passos: [[0, 'Lixe de leve a lingueta impressa, até ela correr solta no trilho.'], [.3, 'Ponha a mola no fundo do trilho.'], [.55, 'Empurre a lingueta para dentro do trilho, com a ponta chanfrada para cima e para a frente. O pino dela fica para baixo.'], [.8, 'Aperte e solte com o dedo: ela tem que voltar sozinha, todas as vezes.']],
+    man: {mats: ['Lingueta (impressa)', 'Mola de caneta'], ferr: ['Lixa fina', 'Alicate de bico, para cortar a mola'], ok: 'A lingueta volta sozinha dez vezes seguidas, sem prender.', erros: ['Lingueta justa demais: lixe até correr solta.', 'Mola comprida demais: a lingueta não recolhe os 6 mm.']}},
+   horn: {tit: 'Módulo da trava: braço do servo', txt: 'O braço do servo é a alavanca que puxa a lingueta para trás.',
+    cfg: [['Braço', 'O de uma ponta só, que vem no saquinho do servo.'], ['Parafuso', 'Só na etapa de teste, depois de pôr o servo em 0°.'], ['Força', 'Com braço curto o servo puxa mais forte. Use o furo mais perto do eixo.']],
+    passos: [[0, 'Pegue o braço de uma ponta só que vem no saquinho do servo.'], [.4, 'Encaixe no eixo, encostado no pino da lingueta. Ainda sem parafuso.']],
+    man: {mats: ['Braço de uma ponta, do saquinho do servo'], ferr: [], ok: 'Girando o braço com a mão, a lingueta recolhe e volta.', erros: ['Braço do outro lado do pino: o servo empurra em vez de puxar.']}},
+   jaw: {txt: 'A garra é a parte que prende a roupa. Ela gira numa dobradiça, uma mola de pregador a mantém aberta, e o gancho dela desce pelo rasgo da tampa.',
+    cfg: [['Dentes', 'Cinco fileiras na garra e quatro na tampa, com tira de borracha de 2 a 3 mm.'], ['Gancho', 'Já vem impresso na garra. Tem uma janela onde a lingueta entra.'], ['Dobradiça', 'Parafuso M3 de 40 mm como eixo, com a porca frouxa.'], ['Mola', 'De pregador de roupa. Abre a garra quando a lingueta recolhe.']],
+    passos: [[0, 'Desvire a tampa e apoie sobre os módulos.'], [.3, 'Corte tiras de borracha de 36 × 2 mm e cole em cima dos quatro dentes da tampa.'], [.45, 'Na garra: cole borracha nos cinco dentes. O gancho fica do lado da ponta e aponta para o rasgo da tampa.'], [.65, 'Tire a mola de um pregador de roupa e encaixe entre os dois apoios da dobradiça.'], [.8, 'Alinhe o furo da garra com os apoios e passe o parafuso M3 de 40 mm. Ponha a porca sem apertar: a garra tem que girar.']],
+    man: {mats: ['Garra com gancho (impressa)', 'Tira de borracha', 'Mola de um pregador de roupa', 'Parafuso M3 de 40 mm com porca', 'Cola instantânea em gel'], ferr: ['Estilete', 'Alicate de bico'], ok: 'A garra abre sozinha pela mola e, ao fechar, o gancho entra no rasgo sem raspar.', erros: ['Porca apertada: a garra não gira.', 'Borracha grossa demais: o gancho não desce até a lingueta.']}},
+   test: {passos: [[0, 'Tire o cabo do power bank do ESP32 e ligue o cabo do notebook.'], [.1, 'Carregue o programa de teste. Os LEDs acendem um por vez: vermelho, amarelo, verde.'], [.58, 'O servo vai até a posição de soltar e volta para 0°. A lingueta recolhe e volta junto.'], [.78, 'Com o servo parado em 0°, ajuste o braço encostado no pino da lingueta e prenda com o parafusinho do saquinho do servo.'], [.92, 'Aperte cada chave com o dedo e veja o valor mudar no Monitor Serial.']]},
+   f_lock: {txt: 'A garra fica aberta pela mola. O funcionário põe a borda da roupa dentro e fecha a garra com a mão, até o clique.',
+    cfg: [['Sem furo', 'Os dentes com borracha apertam o tecido em zigue-zague.'], ['Clique', 'O gancho empurra a lingueta, passa, e a mola a devolve para dentro da janela do gancho.'], ['Onde prender', 'De preferência atrás de uma bainha.']],
+    passos: [[0, 'Garra aberta. A roupa entra pela frente até o batente.'], [.36, 'Apertar a garra para baixo.'], [.6, 'Clique: a lingueta entrou no gancho. LED vermelho.']]},
+   f_pull: {txt: 'Alguém segura a caixa e puxa a roupa. Os dentes seguram o tecido e a garra não abre, porque o gancho está preso na lingueta.',
+    cfg: [['Força', 'A lingueta de plástico aguenta menos que uma embreagem de metal. Precisa ser medida no teste.'], ['Reforço', 'Prender atrás de uma costura ou bainha, que não passa entre os dentes.'], ['Alerta', 'Se a chave da garra abrir sem ordem, o painel da loja avisa.']]},
+   f_rel: {txt: 'A caixa recebe a ordem e o servo puxa a lingueta para trás. O gancho fica livre e a mola abre a garra.',
+    cfg: [['Servo', 'Puxa 6 mm e segura por 1 a 2 s.'], ['Garra', 'Abre sozinha, cerca de 30°.'], ['A testar', 'Se o servo consegue puxar com a mola da garra empurrando o gancho contra a lingueta.']],
+    passos: [[0, 'O ESP32 pergunta ao servidor se há ordem.'], [.12, 'O servo puxa a lingueta para trás.'], [.4, 'A garra abre. LED verde.'], [.58, 'O cliente tira a roupa.'], [.88, 'O servo solta e a lingueta volta.']]}
+  }}
+};
+// Opções pesquisadas que não foram modeladas em 3D.
+const OUTRAS = [
+ ['Mini trava solenoide de 12 V', 'Pronta no Brasil por R$ 35 a 49, mas precisa de relé e de um elevador de tensão. Mais fios e risco de reiniciar o ESP32.'],
+ ['Mini trava solenoide de 5 a 6 V', 'Ligaria direto no power bank com um relé, mas só achei importada.'],
+ ['Catraca impressa com gatilho', 'Trava em várias alturas, mas o servo não consegue soltar o gatilho sob carga sem um segundo gatilho em alavanca.'],
+ ['Eletroímã', 'Abre quando acaba a bateria e gasta energia o tempo todo.']
+];
+// Variante C: mesma trava da B (lingueta com mola), mas a garra tem dedos que empurram o tecido para dentro de rasgos na tampa.
+VAR.gar = {nome: 'C. Garra com dedos e rasgos', curto: 'C: dedos e rasgos',
+  resumo: 'A garra tem três dedos que empurram a borda da roupa para dentro de três rasgos na tampa. O tecido faz um zigue-zague dentro da caixa e fica preso pelo atrito das curvas. A garra trava com a mesma lingueta com mola da variante B.',
+  ids: VAR.lin.ids.slice(), sem: ['etq', 'ima'], casa: ['Mola de caneta (para a lingueta)'], nImp: 6, herda: 'lin',
+  pros: ['Segura muito mais que os dentes: o tecido dá três meias-voltas dentro da caixa, e cada curva multiplica o atrito.', 'Não fura a roupa.', 'Não compra etiqueta nem ímã.', 'Os dedos e os rasgos saem da impressora junto com a garra e a tampa.'],
+  contras: ['Pode deixar o tecido marcado se a peça ficar presa muitos dias.', 'Tecido grosso (jeans, moletom) pode não caber no rasgo. A folga precisa de teste.', 'Precisa de uma bolsa sob a tampa, onde o tecido dobra, longe dos fios.', 'A trava continua sendo a lingueta de plástico da variante B.'],
+  teste: 'Imprimir só um pedaço de tampa com os rasgos e a garra com os dedos. Prender um tecido fino e um grosso e puxar com uma balança de mala.',
+  print: [[.18, 'Base: de boca para cima, sem suporte, 20% de preenchimento. É a maior e ocupa quase toda a mesa.', 0], [.3, 'Tampa: com o lado de dentro para cima, para a bolsa dos rasgos sair sem suporte. Bordas dos rasgos com chanfro de 0,5 mm, para não cortar o tecido.', 1],
+   [.42, 'Garra: deitada, com os dedos e o gancho para cima. 40% de preenchimento e 4 paredes. Os dedos e o gancho fazem força.', 2], [.54, 'Módulo da trava: em pé, com o trilho da lingueta em cima. Ligue o suporte. 40% de preenchimento.', 3],
+   [.66, 'Lingueta: deitada, 100% de preenchimento. Imprima duas, uma de reserva.', 4], [.78, 'Berço da base de carga: apoiado no lado maior, sem suporte.', 5]],
+  over: {
+   lid: {txt: 'Com a tampa virada na mesa, os LEDs e a chave da garra são presos pelo lado de dentro. Nesta variante a tampa já sai da impressora com os três rasgos e a bolsa onde o tecido dobra.',
+    cfg: [['Rasgos', 'Três, de 22 × 3,6 mm, a cada 8 mm, com as bordas chanfradas.'], ['Bolsa', 'Caixa de 24 × 28 mm e 5,5 mm de fundo sob os rasgos. O tecido dobra ali dentro, longe dos fios.'], ['LEDs', 'Três furos de 8,6 mm, a cada 15 mm.'], ['Chave da garra', 'Fecha quando a garra abaixa.']],
+    passos: [[0, 'Vire a tampa: o lado de dentro fica para cima. A bolsa dos rasgos aparece como uma caixinha.'], [.2, 'Encaixe os três LEDs do semáforo nos três furos e prenda com dois pingos de cola.'], [.5, 'Cole uma chave fim de curso ao lado do furo pequeno, com a haste sobre o pino branco.'], [.75, 'Passe o dedo dentro dos três rasgos: tem que estar liso. Lixe qualquer rebarba, porque ela rasga o tecido.']],
+    man: {mats: ['Tampa com rasgos (impressa)', 'sem', 'chv', 'Cola instantânea em gel'], ferr: ['Lixa fina'], ok: 'Os LEDs aparecem nos furos, o pino branco da chave sobe e desce, e os rasgos estão lisos por dentro.', erros: ['Rebarba no rasgo: rasga o tecido.', 'Cola na ponta dos LEDs.']}},
+   jaw: {txt: 'A garra desta variante tem três dedos no lugar dos dentes. Ao fechar, os dedos entram nos rasgos da tampa e levam o tecido junto. O gancho trava na lingueta, como na variante B.',
+    cfg: [['Dedos', '22 × 2,4 × 8,6 mm. Entram cerca de 5,6 mm abaixo da face da tampa.'], ['Folga', 'Cerca de 0,6 mm de cada lado entre dedo e rasgo, para o tecido passar. Ajustar no teste.'], ['Gancho', 'O mesmo da variante B, com janela para a lingueta.'], ['Dobradiça', 'Parafuso M3 de 40 mm como eixo e mola de pregador.']],
+    passos: [[0, 'Desvire a tampa e apoie sobre os módulos.'], [.3, 'Confira na garra que os três dedos estão retos. Feche a garra devagar, ainda sem eixo: cada dedo tem que entrar no seu rasgo sem raspar.'], [.45, 'Posicione a garra sobre os apoios da dobradiça, com o gancho apontando para o rasgo do gancho.'], [.65, 'Tire a mola de um pregador de roupa e encaixe entre os dois apoios da dobradiça.'], [.8, 'Passe o parafuso M3 de 40 mm e ponha a porca sem apertar: a garra tem que girar.']],
+    man: {mats: ['Garra com dedos e gancho (impressa)', 'Mola de um pregador de roupa', 'Parafuso M3 de 40 mm com porca'], ferr: ['Lixa fina', 'Alicate de bico'], ok: 'A garra abre sozinha pela mola e, ao fechar, os três dedos entram nos rasgos e o gancho desce até a lingueta.', erros: ['Dedo torto: imprima a garra deitada, com os dedos para cima.', 'Folga pequena demais: tecido grosso não entra e a garra não trava.']}},
+   f_lock: {txt: 'A garra fica aberta pela mola. O funcionário estende a borda da roupa sobre os rasgos e fecha a garra até o clique. Os dedos empurram o tecido para dentro da caixa.',
+    cfg: [['Sem furo', 'O tecido é dobrado, não perfurado.'], ['Zigue-zague', 'O tecido desce e sobe em volta de cada dedo. Cada curva soma atrito.'], ['Clique', 'O gancho passa pela lingueta e a mola a devolve para a janela do gancho.']],
+    passos: [[0, 'Garra aberta. A borda da roupa fica estendida sobre os três rasgos.'], [.36, 'Apertar a garra para baixo. Os dedos levam o tecido para dentro dos rasgos.'], [.6, 'Clique: a lingueta entrou no gancho. LED vermelho.']]},
+   f_pull: {txt: 'Alguém segura a caixa e puxa a roupa. Para sair, o tecido teria de escorregar pelas curvas em volta dos três dedos, e o atrito cresce a cada curva.',
+    cfg: [['Força', 'Pela equação do cabrestante, uma meia-volta com coeficiente de atrito de 0,5 multiplica a força por cerca de 4,8. Três meias-voltas dão cerca de 110 vezes. É estimativa: medir no ensaio.'], ['Limite', 'Quem segura de verdade passa a ser a lingueta e o gancho, que são de plástico.'], ['Alerta', 'Se a chave da garra abrir sem ordem, o painel da loja avisa.']]}
+  }};
+const varDe = v => VAR[v].herda ? [v, VAR[v].herda] : [v];   // variantes cujas peças e passos valem para v
+
+// ---------- lista de compras (preços conferidos em 14/10/2026, frete para o CEP 05508-010) ----------
+// uso por variante: o = obrigatório, r = reserva, x = opcional; ausente = não precisa
+const LOJA = {
+  'Usinainfo': {frete: 14.36, como: 'JT Express, 4 a 7 dias úteis. Calculado no carrinho com a lista completa'},
+  'Amazon': {frete: 0, como: 'Entrega grátis mostrada na página. Itens importados chegam de 28/10 a 04/11'},
+  'Magazine Luiza': {frete: 12.90, como: 'Só a base de indução paga frete. Estimativa da página para a região de Osasco'},
+  '3D Fila': {frete: null, como: 'A cotar'},
+  'Ímã de Neodímio': {frete: null, como: 'A cotar'}
+};
+const TODAS = {emb: 'o', lin: 'o', gar: 'o'};
+const BUY = [
+ {n: 'ESP32 DevKit V1 30 pinos, USB-C', q: 2, nota: '1 + 1 reserva', pix: 56.81, card: 59.80, loja: 'Usinainfo', f: 'Controlar', link: 'https://www.usinainfo.com.br/esp32/esp32-wifi-e-bluetooth-com-usb-c-30-pinos-e-cp2102-9114.html', uso: TODAS},
+ {n: 'Expansor para ESP32 30 pinos', q: 1, pix: 21.19, card: 22.30, loja: 'Usinainfo', f: 'Controlar', link: 'https://www.usinainfo.com.br/expansores-shields/expansor-para-esp32-devkit-v1-30-pinos-usb-c-e-micro-8795.html', uso: TODAS},
+ {n: 'Micro servo SG90', q: 3, nota: '1 + 2 reserva', pix: 14.16, card: 14.90, loja: 'Usinainfo', f: 'Liberar', link: 'https://www.usinainfo.com.br/servo-motores/micro-servo-motor-9g-sg90-180-16kgfcm-de-posicao-2299.html', uso: TODAS},
+ {n: 'Micro servo MG90S, engrenagem metálica', q: 1, nota: 'se o SG90 não tiver força', pix: 34.87, card: 36.70, loja: 'Usinainfo', f: 'Liberar', link: 'https://www.usinainfo.com.br/servo-motores/micro-servo-9g-tower-pro-mg90s-180-22kgfcm-de-posicao-com-engrenagens-metalicas-3628.html', uso: {emb: 'r', lin: 'r', gar: 'r'}},
+ {n: 'Módulo chave fim de curso', q: 3, nota: '2 + 1 reserva', pix: 4.79, card: 5.04, loja: 'Usinainfo', f: 'Controlar', link: 'https://www.usinainfo.com.br/sensor-de-vibracao/modulo-chave-fim-curso-sensor-de-impacto-para-projetos-4618.html', uso: TODAS},
+ {n: 'Semáforo LED 8 mm', q: 2, nota: '1 + 1 reserva', pix: 7.78, card: 8.19, loja: 'Usinainfo', f: 'Indicar', link: 'https://www.usinainfo.com.br/outros-modulos-arduino/semaforo-led-33v5v-8mm-s3-5466.html', uso: TODAS},
+ {n: 'Jumper fêmea-fêmea 20 cm, kit 20', q: 1, pix: 5.79, card: 6.09, loja: 'Usinainfo', f: 'Controlar', link: 'https://www.usinainfo.com.br/jumper/jumper-premium-para-protoboard-femea-femea-20cm-kit-c-20-pecas-2612.html', uso: TODAS},
+ {n: 'Jumper macho-fêmea 20 cm, kit 20', q: 1, pix: 5.79, card: 6.09, loja: 'Usinainfo', f: 'Controlar', link: 'https://www.usinainfo.com.br/jumper/jumper-premium-para-protoboard-macho-femea-20cm-kit-c-20-pecas-2314.html', uso: TODAS},
+ {n: 'Capacitor eletrolítico 1000 µF 16 V', q: 2, nota: '1 + 1 reserva', pix: 1.94, card: 2.04, loja: 'Usinainfo', f: 'Energia', link: 'https://www.usinainfo.com.br/capacitor-eletrolitico/capacitor-eletrolitico-1000uf-16v-3052.html', uso: TODAS},
+ {n: 'Etiqueta rígida antifurto com pino, pacote 20 (dela sai a embreagem)', q: 1, nota: '20 embreagens e 20 pinos', pix: 64.84, card: 64.84, loja: 'Amazon', f: 'Reter', link: 'https://www.amazon.com.br/dp/B0GP6ZF16R', uso: {emb: 'o'}, aviso: 'Só 1 em estoque e vem do exterior: comprar logo'},
+ {n: 'Ímã de neodímio N50 10 × 4 mm, kit 10', q: 1, nota: 'usa 3', pix: 21.48, card: 22.61, loja: 'Usinainfo', f: 'Liberar', link: 'https://www.usinainfo.com.br/imas-de-neodimio-e-acessorios-magneticos/ima-de-neodimio-n50-super-forte-10mm-x-4mm-kit-com-10-unidades-5012.html', uso: {emb: 'o'}},
+ {n: 'Kit de molas de compressão e extensão, 200 peças', q: 1, nota: 'mola da lingueta', pix: 44.49, card: 46.83, loja: 'Usinainfo', f: 'Reter', link: 'https://www.usinainfo.com.br/robotica-educacional/kit-de-molas-para-robotica-200-pecas-mola-de-compressao-e-extensao-para-projetos-diy-5160.html', uso: {emb: 'r', lin: 'o', gar: 'o'}},
+ {n: 'Power bank Basike 10.000 mAh com visor', q: 1, pix: 95.00, card: 95.00, loja: 'Amazon', f: 'Energia', link: 'https://www.amazon.com.br/dp/B0DHVLRFGD', uso: TODAS},
+ {n: 'Receptor de carga sem fio Qi, USB-C', q: 1, pix: 67.93, card: 78.99, loja: 'Magazine Luiza', f: 'Energia', link: 'https://www.magazineluiza.com.br/adaptador-sem-fio-wireless-qi-inducao-receptor-universal-tipo-c-brasil-home/p/gkj66889f8/in/usba/', uso: TODAS},
+ {n: 'Carregador por indução Lelong LE-520 (base)', q: 1, pix: 30.74, card: 30.74, loja: 'Magazine Luiza', f: 'Energia', link: 'https://www.magazineluiza.com.br/carregador-por-inducao-15w-sem-fio-usb-acompanha-cabo-usb-c-le520-lelong/p/ke9dh49dk3/te/accp/', uso: TODAS},
+ {n: 'Kit de parafusos inox M2 a M5, 120 peças', q: 1, pix: 18.72, card: 18.72, loja: 'Amazon', f: 'Montar', link: 'https://www.amazon.com.br/dp/B0GS5M3LC5', uso: TODAS},
+ {n: 'Filamento PLA preto 1,75 mm, 1 kg', q: 1, nota: 'dispensável se o laboratório tiver', pix: 89.90, card: 97.09, loja: '3D Fila', f: 'Montar', link: 'https://3dfila.com.br/produto/filamento-pla-preto/', uso: TODAS},
+ {n: 'Etiqueta NFC NTAG215, kit 10', q: 1, nota: 'pagar encostando o celular', pix: 23.90, card: 23.90, loja: 'Amazon', f: 'Identificar', link: 'https://www.amazon.com.br/dp/B0CKTK9HSJ', uso: {emb: 'x', lin: 'x', gar: 'x'}},
+ {n: 'Ímã de neodímio N42 20 × 10 mm', q: 1, nota: 'se os ímãs pequenos não abrirem', pix: 24.87, card: 24.87, loja: 'Ímã de Neodímio', f: 'Liberar', link: 'https://www.imadeneodimio.com/ima-de-neodimio-disco-20mm-x-10mm-n42', uso: {emb: 'x'}}
+];
+const CASA_ZERO = ['mola de pregador de roupa', 'fita dupla face', 'cola instantânea em gel', 'borracha (câmara de ar ou fita antiderrapante)', 'papel adesivo para o QR', 'mola de caneta, se não comprar o kit de molas'];
+// total da variante: itens obrigatórios e reservas, mais o frete das lojas usadas
+function totalVar(v, campo = 'pix') { let t = 0; const lojas = new Set();
+  BUY.forEach(b => { const u = b.uso[v]; if (u == 'o' || u == 'r') { t += b.q * b[campo]; lojas.add(b.loja); } });
+  let fr = 0; const cotar = []; lojas.forEach(l => { if (LOJA[l].frete == null) cotar.push(l); else fr += LOJA[l].frete; });
+  return {itens: t, frete: fr, total: t + fr, cotar}; }
+function etapaDe(v, id) { const b = ETAPA[id] || {}, h = VAR[v].herda, o = VAR[v].over[id] || (h && VAR[h].over[id]) || {}; return {tit: o.tit || b.tit, txt: o.txt || b.txt, cfg: o.cfg || b.cfg || [], passos: o.passos || b.passos, man: o.man || b.man || {}}; }
+function estadoId(id, p) { return estado(IDS.indexOf(id), p); }
+
+</script>
+<script>
+const $ = id => document.getElementById(id);
+try { const tm = localStorage.getItem('tema'); if (tm == 'claro' || tm == 'escuro') document.documentElement.dataset.theme = tm == 'claro' ? 'light' : 'dark'; } catch (e) {}
+const S = 3.3, X0 = 150, ZB = 380, T0 = 450;
+const sx = x => X0 + (x + 2) * S, sy = y => ZB - (y + 1.6) * S, tz = z => T0 + (z + 2) * S;
+const f = n => (+n).toFixed(1);
+const rs = (x0, x1, y0, y1, fill, a = '') => `<rect x="${f(sx(x0))}" y="${f(sy(y1))}" width="${f((x1-x0)*S)}" height="${f((y1-y0)*S)}" fill="${fill}" class="st" ${a}/>`;
+const rt = (x0, x1, z0, z1, fill, a = '') => `<rect x="${f(sx(x0))}" y="${f(tz(z0))}" width="${f((x1-x0)*S)}" height="${f((z1-z0)*S)}" fill="${fill}" class="st" ${a}/>`;
+const tx = (x, y, t, c = 'sm', an = 'middle', a = '') => `<text x="${f(x)}" y="${f(y)}" text-anchor="${an}" class="${c}" ${a}>${t}</text>`;
+const dimH = (x1, x2, y, t) => `<path class="dl" d="M${f(x1)} ${y-4}V${y+4}M${f(x2)} ${y-4}V${y+4}M${f(x1)} ${y}H${f(x2)}"/>` + tx((x1+x2)/2, y-4, t, 'dm');
+const dimV = (x, y1, y2, t) => `<path class="dl" d="M${x-4} ${f(y1)}H${x+4}M${x-4} ${f(y2)}H${x+4}M${x} ${f(y1)}V${f(y2)}"/>` + `<text class="dm" text-anchor="middle" transform="translate(${x-5} ${f((y1+y2)/2)}) rotate(-90)">${t}</text>`;
+const {C, A, R} = D, pb = D.pb, qi = D.qi, ex = D.exp, es = D.esp, sm = D.sem, QR = D.qr, J = D.jaw, bs = D.baseSw, js = D.jawSw, FB = D.fab;
+// grupos de peças e a etapa em que cada um aparece
+const G = [];
+const add = (st, side, top) => G.push({st, side, top});
+add(4, `<path d="M${f(sx(-2))} ${f(sy(50))}V${ZB}H${f(sx(208))}V${f(sy(50))}H${f(sx(206))}V${f(sy(0))}H${f(sx(0))}V${f(sy(50))}Z" fill="var(--case)" class="st"/>` +
+    rs(qi.x, qi.x + qi.l, 0, 1, 'var(--qi)') + rs(pb.x, pb.x + pb.l, 1, 19, 'var(--pb)', 'rx="6"') + rs(190, 199, 7.5, 12.5, 'var(--case)') + tx(sx(160), sy(8), 'power bank', 'lb'),
+  rt(-2, 208, -2, 74, 'var(--case)') + rt(0, 206, 0, 72, 'var(--panel)') + [[3, 3], [203, 3], [203, 69], [37, 69]].map(p => rt(p[0] - 2.5, p[0] + 2.5, p[1] - 2.5, p[1] + 2.5, 'var(--case)')).join('') +
+    rt(qi.x, qi.x + qi.l, qi.z, qi.z + qi.w, 'var(--qi)') + rt(pb.x, pb.x + pb.l, pb.z, pb.z + pb.w, 'var(--pb)', 'rx="14" fill-opacity=".9"') + rt(190, 199, 30.5, 41.5, 'var(--case)') + tx(sx(160), tz(66), 'power bank 150 × 70'));
+add(5, rs(ex.x, ex.x + ex.l, 19, 21, 'var(--panel)') + rs(ex.x, ex.x + ex.l, 21, 22.6, 'var(--board2)') + rs(es.x + 7.5, es.x + 45.6, 22.6, 31.1, 'var(--hdr)') + rs(es.x, es.x + es.l, 31.1, 32.7, 'var(--board)') + rs(es.x + 27, es.x + 52.5, 32.7, 35.8, 'var(--metal)') + tx(sx(es.x + 14), sy(34.5), 'ESP32'),
+  rt(ex.x, ex.x + ex.l, ex.z, ex.z + ex.w, 'var(--board2)') + rt(es.x, es.x + es.l, es.z, es.z + es.w, 'var(--board)') + tx(sx(es.x + 26), tz(37), 'ESP32 53 × 29') + tx(sx(ex.x + 36), tz(ex.z + 6), 'expansor 73 × 53,5'));
+add(1, rs(6, 26, 0, .5, 'var(--print)') + rs(8, 13, 0, 39.4, 'var(--print)', 'fill-opacity=".45"') + rs(6, 31, 39.4, 40.2, 'var(--print)') + rs(7.7, 24.3, 40.2, 51.2, 'none', 'stroke-dasharray="3 2"') +
+    rs(9.5, 22.5, 40.2, 51.2, 'var(--metal)') + `<path d="M${f(sx(15))} ${f(sy(51.2))}V${f(sy(50.4))}H${f(sx(13.9))}L${f(sx(11.1))} ${f(sy(43.2))}V${f(sy(41.2))}H${f(sx(20.9))}V${f(sy(43.2))}L${f(sx(18.1))} ${f(sy(50.4))}H${f(sx(17))}V${f(sy(51.2))}Z" fill="var(--panel)" class="st"/>` +
+    `<rect id="plgS" x="${f(sx(12.4))}" width="${f(7.2*S)}" height="${f(1.4*S)}" fill="var(--soft)"/><circle id="b1S" r="${1.25*S}" fill="var(--panel)" class="st"/><circle id="b2S" r="${1.25*S}" fill="var(--panel)" class="st"/>`,
+  rt(6, 26, 12, 70, 'var(--print)', 'fill-opacity=".5"') + rt(8, 13, 60, 70, 'var(--print)') + rt(26, 31, 62, 70, 'var(--print)') + rt(6, 31, 42, 70, 'none', 'stroke-dasharray="3 2"') +
+    `<circle cx="${f(sx(C.x))}" cy="${f(tz(C.z))}" r="${6.5*S}" fill="var(--metal)" class="st"/>`);
+add(2, rs(9.95, 22.05, .5, 23.1, 'var(--servo)', 'fill-opacity=".8"') + rs(9.95, 22.05, 23.1, 27.6, 'var(--servo)', 'fill-opacity=".8"') + rs(13.6, 18.4, 27.6, 31.2, 'var(--panel)') + tx(sx(16), sy(10), 'servo'),
+  rt(9.95, 22.05, 14.25, 46.65, 'var(--case)') + rt(9.95, 22.05, 19.1, 41.8, 'var(--servo)') + `<circle cx="${f(sx(A.x))}" cy="${f(tz(16.2))}" r="2.2" class="st" fill="var(--metal)"/><circle cx="${f(sx(A.x))}" cy="${f(tz(44.7))}" r="2.2" class="st" fill="var(--metal)"/>`);
+add(3, rs(11.4, 20.6, 28.2, 36.2, 'var(--print)') + `<rect id="armS" y="${f(sy(39.2))}" height="${f(4.2*S)}" fill="var(--print)" class="st"/><g id="magS">` + rs(25.4, 38.6, 35, 39.2, 'var(--print)') + [0, 1, 2].map(n => rs(27, 37, 27.2 + 4 * n, 31.2 + 4 * n, 'var(--mag)')).join('') + '</g>',
+  `<path d="M${f(sx(A.x + R))} ${f(tz(A.z))}A${R*S} ${R*S} 0 0 1 ${f(sx(C.x))} ${f(tz(C.z))}" class="dl" stroke-dasharray="4 3"/><line id="hornT" x1="${f(sx(A.x))}" y1="${f(tz(A.z))}" stroke="var(--print)" stroke-width="${8*S}" stroke-linecap="round"/>` +
+    `<line id="hornT2" x1="${f(sx(A.x))}" y1="${f(tz(A.z))}" stroke="var(--ink)" stroke-width="1"/><circle id="magT" r="${5*S}" fill="var(--mag)" class="st"/>`);
+add(6, rs(bs.x, bs.x + 13.7, 0, 1.6, 'var(--board)') + rs(bs.x + 3.8, bs.x + 9.8, 1.6, 5.8, 'var(--hdr)'),
+  rt(bs.x, bs.x + 13.7, bs.z, bs.z + 25, 'var(--board)') + tx(sx(bs.x + 7), tz(bs.z + 11), 'chave') + tx(sx(bs.x + 7), tz(bs.z + 15), 'da base'));
+add(7, rs(-2, 9.1, 50, 52.4, 'var(--case)') + rs(22.9, 208, 50, 52.4, 'var(--case)') + rs(9.1, 15, 51.2, 52.4, 'var(--case)') + rs(17, 22.9, 51.2, 52.4, 'var(--case)') +
+    rs(24, 26, 52.4, 54.9, 'var(--case)') + rs(28, 64, 52.4, 54.4, 'var(--rub)') + rs(66, 74, 52.4, 63.4, 'var(--case)', 'fill-opacity=".5"') +
+    rs(js.x, js.x + 13.7, 44.2, 45.8, 'var(--board)') + rs(js.x + 3.8, js.x + 9.8, 45.8, 50, 'var(--hdr)') + rs(js.px - 1.5, js.px + 1.5, 50, 55, 'var(--panel)') +
+    rs(sm.x, sm.x + sm.l, 38.4, 40, 'var(--hdr)') + rs(sm.cx - 4, sm.cx + 4, 40, 50.5, 'var(--off)', 'id="ledB"') + `<circle id="ledS" cx="${f(sx(sm.cx))}" cy="${f(sy(50.5))}" r="${4*S}" fill="var(--off)" class="st"/>` +
+    tx(sx(sm.cx), sy(59), 'LEDs'),
+  rt(sm.x, sm.x + sm.l, sm.z, sm.z + sm.w, 'var(--hdr)') +
+    sm.zs.map((z, n) => `<circle id="t${n}" cx="${f(sx(sm.cx))}" cy="${f(tz(z))}" r="${4*S}" fill="var(--off)" class="st"/>`).join('') +
+    D.ridL.map(z => rt(28, 64, z - 1, z + 1, 'var(--rub)')).join('') + rt(24, 26, 38, 74, 'var(--case)') + rt(26, 66, 36, 38, 'var(--case)'));
+add(8, `<g id="jawS">` + rs(J.x0, J.x1, 55.4, 63.4, 'var(--jaw)') + rs(28, 64, 53.4, 55.4, 'var(--rub)', 'fill-opacity=".55"') + rs(2, 26, 63.4, 64.2, 'var(--rub)') + `<circle cx="${f(sx(J.hx))}" cy="${f(sy(J.hy))}" r="${4.4*S}" fill="var(--jaw)" class="st"/><circle cx="${f(sx(J.hx))}" cy="${f(sy(J.hy))}" r="${1.5*S}" fill="var(--metal)" class="st"/></g>` +
+    `<g id="pinS">` + rs(15.4, 16.6, J.hy - D.pin.len, J.hy, 'var(--ink)', 'stroke="none"') + rs(10, 22, J.hy, J.hy + 2, 'var(--metal)') + `</g>` + tx(sx(80), sy(66), 'dobradiça com mola', 'sm', 'start'),
+  rt(J.x0, J.x1, J.z0, J.z1, 'var(--jaw)', 'fill-opacity=".35" stroke-dasharray="5 3"') + `<line x1="${f(sx(J.hx))}" y1="${f(tz(34))}" x2="${f(sx(J.hx))}" y2="${f(tz(74))}" stroke="var(--metal)" stroke-width="${3*S}"/><circle cx="${f(sx(C.x))}" cy="${f(tz(C.z))}" r="${6*S}" fill="var(--metal)" class="st"/>` + tx(sx(16), tz(31), 'garra', 'sm') + tx(sx(C.x), tz(C.z + 12), 'pino'));
+add(11, rs(200.3, 205.7, 52.4, 54.2, 'var(--metal)') + rs(QR.cx - QR.s / 2, QR.cx + QR.s / 2, 52.4, 52.9, 'var(--panel)') + tx(sx(QR.cx), sy(57), 'adesivo do QR'), [[3, 3], [203, 3], [203, 69], [37, 69]].map(p => `<circle cx="${f(sx(p[0]))}" cy="${f(tz(p[1]))}" r="${2.7*S}" fill="var(--metal)" class="st"/>`).join('') + rt(QR.cx - QR.s / 2, QR.cx + QR.s / 2, QR.cz - QR.s / 2, QR.cz + QR.s / 2, 'var(--panel)') + tx(sx(QR.cx), tz(QR.cz + 1), 'QR', 'ttl'));
+
+let h = tx(20, 18, 'Corte lateral no eixo do pino', 'ttl', 'start') + tx(20, T0 - 16, 'Vista de cima, sem a tampa', 'ttl', 'start');
+h += `<text id="bench" x="495" y="230" text-anchor="middle" class="lb"></text>`;
+h += `<line x1="10" y1="${ZB}" x2="870" y2="${ZB}" stroke="var(--soft)" stroke-width="1.5"/>`;
+h += `<g id="base" opacity="0"><rect x="${f(sx(63.5))}" y="${ZB-8*S}" width="${100*S}" height="${8*S}" rx="6" fill="var(--qi)" class="st"/><rect x="${f(sx(20))}" y="${ZB-8*S}" width="${22*S}" height="${8*S}" fill="var(--print)" class="st"/><rect x="${f(sx(29.5))}" y="${ZB-11*S}" width="${3*S}" height="${3*S}" fill="var(--print)" class="st"/>` +
+  tx(sx(113.5), ZB - 9, 'base de indução (cerca de Ø 100 mm)') + `<g id="waves" stroke="var(--yellow)" stroke-width="2.5" fill="none"><path d="M${f(sx(96))} ${ZB-8*S-2}q8 -6 16 0"/><path d="M${f(sx(110))} ${ZB-8*S-2}q8 -6 16 0"/><path d="M${f(sx(124))} ${ZB-8*S-2}q8 -6 16 0"/></g></g>`;
+h += `<g id="boxS">`; G.forEach((g, k) => h += `<g class="ps" data-k="${k}">${g.side}</g>`);
+h += `<rect id="clothS" x="${f(sx(FB.x0))}" width="${f((FB.x1-FB.x0)*S)}" height="${f(1.2*S)}" fill="var(--fabric)" opacity="0"/></g>`;
+h += `<g id="press" opacity="0"><path d="M${f(sx(14))} ${f(sy(108))}v30m-8 -11l8 13l8 -13" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>` + tx(sx(24), sy(104), 'fecha a garra com a mão', 'ttl', 'start', 'style="fill:var(--accent)"') + `</g>`;
+h += dimV(128, sy(63.4), ZB, '65 mm') + dimV(866, sy(52.4), ZB, '54 mm');
+h += `<g id="boxT">`; G.forEach((g, k) => h += `<g class="pt" data-k="${k}">${g.top}</g>`);
+h += `<rect id="clothT" x="${f(sx(FB.x0))}" width="${f((FB.x1-FB.x0)*S)}" fill="var(--fabric)" fill-opacity=".6" opacity="0"/>`;
+h += `<g id="pullT" opacity="0"><path d="M${f(sx(49))} ${f(tz(74))}v26m-8 -11l8 13l8 -13" fill="none" stroke="var(--red)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>` + tx(sx(70), tz(80), 'puxão: não sai', 'ttl', 'start', 'style="fill:var(--red)"') + `</g></g>`;
+h += dimV(128, tz(-2), tz(74), '76 mm');
+const dy = tz(74) + 40;
+h += dimH(sx(-2), sx(40), dy, '42') + dimH(sx(40), sx(190), dy, '150') + dimH(sx(190), sx(208), dy, '18') + dimH(sx(-2), sx(208), dy + 22, '210 mm');
+h += tx(sx(19), dy + 13, 'trava') + tx(sx(115), dy + 13, 'power bank') + tx(sx(199), dy + 13, 'plugue');
+h += `<line id="beam" x1="880" y1="170" x2="${f(sx(QR.cx))}" y2="${f(sy(52.9))}" stroke="var(--accent)" stroke-width="2" stroke-dasharray="5 4" opacity="0"/>`;
+h += `<g id="phone" opacity="0"><rect x="880" y="100" width="100" height="190" rx="12" fill="var(--panel)" class="st"/><rect x="887" y="114" width="86" height="160" rx="4" fill="var(--bg)" stroke="var(--line)"/>
+ <g id="m-cam"><rect x="905" y="160" width="50" height="50" fill="none" stroke="var(--accent)" stroke-width="2" stroke-dasharray="12 7"/>${tx(930,140,'Câmera','lb')}${tx(930,232,'lendo o QR')}</g>
+ <g id="m-cad">${tx(930,138,'Cadastrar','ttl')}${tx(930,164,'Camiseta básica','sm')}${tx(930,180,'R$ 79,90','lb')}<rect x="893" y="200" width="74" height="24" rx="6" fill="var(--ok)"/>${tx(930,216,'Salvo na caixa 01','sm','middle','style="fill:#fff"')}</g>
+ <g id="m-buy">${tx(930,138,'Sua compra','ttl')}${tx(930,164,'Camiseta básica','sm')}${tx(930,180,'R$ 79,90','lb')}<rect x="893" y="200" width="74" height="24" rx="6" fill="var(--accent)"/>${tx(930,216,'Pagar','lb','middle','style="fill:var(--on-accent)"')}</g>
+ <g id="m-ok"><circle cx="930" cy="170" r="20" fill="var(--ok)"/><path d="M920 170l7 7l13 -15" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>${tx(930,212,'Pago','ttl')}${tx(930,228,'a garra vai abrir')}</g>
+ <text id="who" x="930" y="306" text-anchor="middle" class="lb"></text></g>`;
+h += tx(930, T0 + 14, 'QR fixo da caixa', 'ttl') + `<rect x="880" y="${T0+24}" width="100" height="100" rx="5" fill="#fff" class="st"/><g id="qr" transform="translate(888 ${T0+32})"></g>` + tx(930, T0 + 140, 'seusaas/c/01') + tx(930, T0 + 154, 'adesivo de 34 × 34 mm') +
+  `<g id="bat" opacity="0">` + tx(930, T0 + 184, 'No painel da loja', 'ttl') + `<rect x="890" y="${T0+194}" width="74" height="22" rx="3" fill="none" class="st"/><rect x="964" y="${T0+200}" width="5" height="10" fill="var(--ink)"/><rect id="batF" x="893" y="${T0+197}" height="16" fill="var(--ok)"/><text id="batT" x="930" y="${T0+232}" text-anchor="middle" class="lb"></text></g>`;
+$('scene').innerHTML = h;
+
+(function () { const n = 29, q = 84 / n; let s = 7, g = '<rect width="84" height="84" fill="#fff"/>'; const rnd = () => (s = (s * 16807) % 2147483647) / 2147483647;
+  for (let r = 0; r < n; r++) for (let c = 0; c < n; c++) { const cor = (r < 7 && c < 7) || (r < 7 && c > n - 8) || (r > n - 8 && c < 7); let on;
+    if (cor) { const a = r < 7 ? r : r - (n - 7), b = c < 7 ? c : c - (n - 7); on = a == 0 || a == 6 || b == 0 || b == 6 || (a > 1 && a < 5 && b > 1 && b < 5); } else on = rnd() < .48;
+    if (on) g += `<rect x="${f(c*q)}" y="${f(r*q)}" width="${f(q+.2)}" height="${f(q+.2)}" fill="#111"/>`; }
+  $('qr').innerHTML = g; })();
+
+// ---------- dentes ----------
+const TQ = 9, tzx = z => 30 + (z - 34) * TQ, tyy = y => 250 - (y - 52.4) * TQ;
+(function () { let g = '';
+  g += `<rect x="0" y="${tyy(52.4)}" width="${tzx(74)}" height="${2.4*TQ}" fill="var(--case)" class="st"/>` + `<rect x="${tzx(36)}" y="${tyy(55)}" width="${2*TQ}" height="${2.6*TQ}" fill="var(--case)" class="st"/>`;
+  D.ridL.forEach(z => g += `<rect x="${tzx(z-1)}" y="${tyy(53.6)}" width="${2*TQ}" height="${1.2*TQ}" fill="var(--case)" class="st"/><rect x="${tzx(z-1)}" y="${tyy(54.4)}" width="${2*TQ}" height="${.8*TQ}" fill="var(--rub)"/>`);
+  g += `<g id="tJaw"><rect x="${tzx(38)}" y="${tyy(63.4)}" width="${32*TQ}" height="${8*TQ}" fill="var(--jaw)" class="st"/>`;
+  D.ridJ.forEach(z => g += `<rect x="${tzx(z-1)}" y="${tyy(55.4)}" width="${2*TQ}" height="${1.2*TQ}" fill="var(--jaw)" class="st"/><rect x="${tzx(z-1)}" y="${tyy(54.2)}" width="${2*TQ}" height="${.8*TQ}" fill="var(--rub)"/>`);
+  g += tx(tzx(54), tyy(59), 'garra', 'lb') + `</g>`;
+  g += `<polyline id="tCloth" fill="none" stroke="var(--fabric)" stroke-width="${1*TQ}" stroke-linejoin="round" stroke-linecap="round"/>`;
+  g += `<g id="tPull" opacity="0"><path d="M400 ${tyy(54.4)}h44m-14 -9l15 9l-15 9" fill="none" stroke="var(--red)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  g += tx(tzx(52), tyy(52.4) + 15, 'tampa', 'lb') + tx(tzx(37), tyy(52.4) + 34, 'batente', 'sm') + tx(tzx(76), tyy(52.4) + 34, 'borda da caixa', 'sm', 'start') + tx(430, 60, 'visto de lado', 'sm', 'end');
+  $('teeth').innerHTML = g; })();
+
+// ---------- embreagem ampliada ----------
+const K = 15, KX = 150, KY = 262, kx = x => KX + x * K, ky = y => KY - y * K;
+(function () { let g = '';
+  g += `<rect x="${kx(-8.3)}" y="${ky(-.8)}" width="${16.6*K}" height="${.8*K}" fill="var(--print)" class="st"/>`;
+  g += `<g id="kMag"><rect x="${kx(-5)}" y="${ky(-1)}" width="${10*K}" height="${4*K}" fill="var(--mag)" class="st"/>${tx(kx(0), ky(-3.2), 'ímãs', 'lb', 'middle', 'style="fill:#fff"')}</g>`;
+  g += `<path d="M${kx(-6.5)} ${ky(0)}H${kx(6.5)}V${ky(11)}H${kx(1)}V${ky(10.2)}H${kx(2.1)}L${kx(4.9)} ${ky(3)}V${ky(1)}H${kx(-4.9)}V${ky(3)}L${kx(-2.1)} ${ky(10.2)}H${kx(-1)}V${ky(11)}H${kx(-6.5)}Z" fill="var(--metal)" class="st"/>`;
+  g += `<polyline id="kSpr" fill="none" stroke="var(--ink)" stroke-width="1.5"/><g id="kCage"><rect x="${kx(-3.6)}" y="${ky(-2)}" width="${7.2*K}" height="${1.4*K}" fill="var(--soft)" class="st"/>
+   <rect x="${kx(-2.5)}" y="${ky(2.2)}" width="${.5*K}" height="${4.2*K}" fill="var(--soft)"/><rect x="${kx(2)}" y="${ky(2.2)}" width="${.5*K}" height="${4.2*K}" fill="var(--soft)"/>
+   <circle id="kb1" cy="${ky(0)}" r="${1.25*K}" fill="var(--panel)" class="st"/><circle id="kb2" cy="${ky(0)}" r="${1.25*K}" fill="var(--panel)" class="st"/></g>`;
+  g += `<rect id="kPin" x="${kx(-.6)}" width="${1.2*K}" fill="var(--ink)"/>`;
+  g += `<g id="kUp" opacity="0"><path d="M${kx(0)} ${ky(13.5)}v-34m-8 12l8 -14l8 14" fill="none" stroke="var(--red)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  g += `<g id="kDn" opacity="0"><path d="M${kx(7.6)} ${ky(4.5)}v34m-7 -11l7 13l7 -13" fill="none" stroke="var(--accent)" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/></g>`;
+  const L = (t, x, y, lx, ly) => `<path class="dl" d="M${kx(lx)} ${ky(ly)}L${x - 4} ${y - 3}"/>` + tx(x, y, t, 'lb', 'start');
+  g += L('pino da garra, Ø 1,2 mm', 300, 40, .6, 12.5) + L('cone: estreito em cima', 300, 80, 3.6, 7.2) + L('esferas, Ø 2,5 mm', 300, 120, 2.9, 8.2) + L('gaiola de aço', 300, 160, 3.6, 4.6) + L('mola', 300, 200, 2.4, 2.4) + L('parede impressa, 0,8 mm', 300, 262, 8.3, -.4);
+  $('clutch').innerHTML = g; })();
+
+// ---------- ligações ----------
+(function () { let g = '', y = 14, last = '';
+  LIG.forEach(l => { const novo = l[0] != last; if (novo) { last = l[0]; y += 5; }
+    g += (novo ? tx(118, y + 3.5, l[0], 'ttl', 'end') : '') + tx(128, y + 3.5, l[1], 'sm', 'start') +
+      `<line class="wl" x1="184" y1="${y}" x2="356" y2="${y}" stroke="${l[3]}" stroke-width="3" stroke-linecap="round"/><circle cx="184" cy="${y}" r="3" fill="var(--ink)"/><circle cx="356" cy="${y}" r="3" fill="var(--ink)"/>` + tx(366, y + 3.5, l[2], 'lb', 'start'); y += 12.3; });
+  $('wiring').innerHTML = g; })();
+
+// ---------- grafo ----------
+const N = {cel: [30, 40, 160, 56, 'Celular', 'funcionário ou cliente'], pan: [30, 220, 160, 56, 'Painel da loja', 'estado e bateria de cada caixa'], srv: [380, 40, 180, 56, 'Servidor (seu SaaS)', 'decide pelo estado da caixa'],
+  db: [380, 220, 180, 56, 'Banco de dados', 'caixas · roupas · vendas'], esp: [750, 40, 180, 56, 'ESP32 na caixa 01', 'pergunta a cada 1 a 2 s'], sen: [600, 220, 100, 56, 'Sensores', 'garra · base'],
+  srvo: [730, 220, 80, 56, 'Servo', ''], led: [840, 220, 80, 56, 'LEDs', '']};
+const E = {c2s: [190, 56, 380, 56, 285, 48, 'middle'], s2c: [380, 80, 190, 80, 285, 98, 'middle'], e2s: [750, 56, 560, 56, 655, 48, 'middle'], s2e: [560, 80, 750, 80, 655, 98, 'middle'],
+  sdb: [470, 96, 470, 220, 480, 162, 'start'], span: [400, 96, 190, 230, 258, 198, 'start'], sen: [650, 220, 790, 96, 650, 294, 'middle'], srvo: [820, 96, 770, 220, 770, 294, 'middle'], led: [860, 96, 880, 220, 880, 294, 'middle']};
+const DEF = {c2s: 'lê o QR colado e envia o formulário', s2c: 'página conforme o estado', e2s: 'sensores e pergunta por ordem', s2e: 'estado e ordem', sdb: 'lê e grava', span: 'mostra as caixas', sen: '', srvo: '', led: ''};
+(function () {
+  let g = `<defs><marker id="a0" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--line)"/></marker>
+   <marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0L10 5L0 10z" fill="var(--accent)"/></marker></defs>`;
+  for (const k in E) { const e = E[k]; g += `<line id="e-${k}" x1="${e[0]}" y1="${e[1]}" x2="${e[2]}" y2="${e[3]}" stroke="var(--line)" stroke-width="1.5" marker-end="url(#a0)"/><text id="l-${k}" x="${e[4]}" y="${e[5]}" text-anchor="${e[6]}" class="el"></text>`; }
+  for (const k in N) { const n = N[k]; g += `<rect id="n-${k}" x="${n[0]}" y="${n[1]}" width="${n[2]}" height="${n[3]}" rx="8" fill="var(--panel)" stroke="var(--line)" stroke-width="1.5"/>` + tx(n[0] + n[2] / 2, n[1] + (n[5] ? 24 : 32), n[4], 'ttl') + (n[5] ? tx(n[0] + n[2] / 2, n[1] + 40, n[5]) : ''); }
+  g += tx(30, 334, 'Estado da caixa no servidor:', 'lb', 'start');
+  EST.forEach((s, n) => { g += `<rect id="p-${n}" x="${210+n*150}" y="318" width="126" height="24" rx="12" fill="var(--panel)" stroke="var(--line)" stroke-width="1.5"/><text id="pt-${n}" x="${273+n*150}" y="334" text-anchor="middle" class="lb">${s}</text>` + (n < 4 ? `<line x1="${338+n*150}" y1="330" x2="${358+n*150}" y2="330" stroke="var(--line)" stroke-width="1.5" marker-end="url(#a0)"/>` : ''); });
+  $('graph').innerHTML = g; })();
+$('med').tBodies[0].innerHTML = MEDIDAS.map(m => `<tr><td>${m[0]}</td><td>${m[1]}</td><td><span class="tp${m[2] == 'estimativa' ? ' e' : ''}">${m[2]}</span></td></tr>`).join('');
+
+// ---------- animação ----------
+function render(i, p) {
+  const E_ = (k, a = 0, b = .7) => i > k ? 1 : i == k ? ez(seg(p, a, b)) : 0;
+  document.querySelectorAll('.ps').forEach(g => { const e = E_(G[+g.dataset.k].st); g.setAttribute('opacity', e); g.setAttribute('transform', `translate(0 ${f(-(1 - e) * 50)})`); });
+  document.querySelectorAll('.pt').forEach(g => g.setAttribute('opacity', E_(G[+g.dataset.k].st)));
+  $('bench').textContent = i == 0 ? 'A etiqueta é aberta na bancada. A animação desta etapa está no 3D.' : '';
+  const o = estado(i, p), mp = magPos(o.mag), th = o.jaw * J.open;
+  // ímãs e braço
+  $('magS').setAttribute('transform', `translate(${f((mp.x - 32) * S)} 0)`); $('armS').setAttribute('x', f(sx(16))); $('armS').setAttribute('width', f(Math.max(0, mp.x - 16) * S));
+  $('magT').setAttribute('cx', f(sx(mp.x))); $('magT').setAttribute('cy', f(tz(mp.z)));
+  ['hornT', 'hornT2'].forEach(k => { $(k).setAttribute('x2', f(sx(mp.x))); $(k).setAttribute('y2', f(tz(mp.z))); });
+  // garra: gira na dobradiça. O pino fica pendurado, sempre na vertical
+  $('jawS').setAttribute('transform', `rotate(${f(th * 57.2958)} ${f(sx(J.hx))} ${f(sy(J.hy))})`);
+  const hx = J.hx - (J.hx - C.x) * Math.cos(th), hy = J.hy + (J.hx - C.x) * Math.sin(th); $('pinS').setAttribute('transform', `translate(${f((hx - C.x) * S)} ${f(-(hy - J.hy) * S)})`);
+  // embreagem
+  const op = cl((o.mag - .9) / .1), cy = 7.6 + .35 * o.grip - 3 * op, br = 1.85 + .75 * op;
+  $('b1S').setAttribute('cx', f(sx(C.x - br))); $('b2S').setAttribute('cx', f(sx(C.x + br))); $('b1S').setAttribute('cy', f(sy(40.2 + cy))); $('b2S').setAttribute('cy', f(sy(40.2 + cy))); $('plgS').setAttribute('y', f(sy(40.2 + cy - 2)));
+  $('kCage').setAttribute('transform', `translate(0 ${f(-cy * K)})`); $('kb1').setAttribute('cx', kx(-br)); $('kb2').setAttribute('cx', kx(br));
+  let sp = ''; for (let n = 0; n <= 8; n++) sp += `${kx(n % 2 ? 2.4 : -2.4)},${f(ky(lerp(1, cy - 3.4, n / 8)))} `; $('kSpr').setAttribute('points', sp);
+  const tip = hy - D.pin.len - 40.2, pinOn = i >= 8; $('kPin').setAttribute('y', ky(15)); $('kPin').setAttribute('height', Math.max(0, pinOn ? (15 - tip) * K : 0));
+  $('kMag').setAttribute('transform', `translate(${f((1 - o.mag) * 190)} 0)`); $('kMag').setAttribute('opacity', i >= 3 ? 1 : 0);
+  $('kUp').setAttribute('opacity', o.grip); $('kDn').setAttribute('opacity', op);
+  $('cnote').textContent = !pinOn ? 'A mola empurra a gaiola e as esferas para a parte estreita do cone.' : op > .5 ? 'Solta: o ímã puxa a gaiola para baixo, as esferas vão para a parte larga e o pino fica livre. A mola abre a garra.' : o.grip > .3 ? 'Puxão: a garra tenta abrir e puxa o pino. As esferas sobem para a parte estreita e apertam mais.' : o.jaw < .05 ? 'Travada: as esferas ficam presas entre o cone e o pino, em qualquer altura. Não gasta energia.' : 'Garra aberta. O pino está fora da embreagem.';
+  // dentes
+  $('tJaw').setAttribute('transform', `translate(0 ${f(-o.jaw * 60)})`);
+  const cv = o.cloth && o.cin > 0 ? 1 : 0, sh = (1 - o.cin) * 52; let cp = '';
+  for (let z = FB.z0 + sh; z <= 88; z += .5) { const zz = z - sh * 0; let y;
+    if (z <= 70) y = lerp(53.95, 55.3, o.jaw) + (1 - o.jaw) * .85 * Math.sin((z - 43) * Math.PI / 3); else y = 55 - (z > 74 ? .02 * (z - 74) * (z - 74) * (1 - o.pull * .8) : 0);
+    cp += `${f(tzx(z))},${f(tyy(y))} `; }
+  $('tCloth').setAttribute('points', cp); $('tCloth').setAttribute('opacity', cv); $('tPull').setAttribute('opacity', o.pull);
+  // roupa no desenho principal
+  $('clothS').setAttribute('y', f(sy(lerp(55.2, 55.9, o.jaw)))); $('clothS').setAttribute('opacity', cv * (o.cin > .6 ? 1 : 0));
+  $('clothT').setAttribute('y', f(tz(FB.z0 + sh))); $('clothT').setAttribute('height', f(Math.max(0, 84 - FB.z0 - sh) * S)); $('clothT').setAttribute('opacity', cv);
+  $('press').setAttribute('opacity', o.press); $('pullT').setAttribute('opacity', o.pull);
+  // base
+  $('boxS').setAttribute('transform', `translate(0 ${f(-o.lift * S)})`); $('base').setAttribute('opacity', o.base); $('base').setAttribute('transform', `translate(${f((1 - o.base) * 240)} 0)`);
+  $('waves').setAttribute('opacity', o.seat ? .35 + .65 * Math.abs(Math.sin(p * 45)) : 0);
+  // LEDs, tela, botão
+  ['red', 'yellow', 'green'].forEach((c, n) => $('t' + n).setAttribute('fill', o.led == c ? `var(--${c})` : 'var(--off)'));
+  const lc = o.led == 'off' ? 'var(--off)' : `var(--${o.led})`; $('ledS').setAttribute('fill', lc); $('ledB').setAttribute('fill', lc);
+  $('bat').setAttribute('opacity', o.bat ? 1 : 0); if (o.bat) { $('batF').setAttribute('width', f(68 * o.bat / 100)); $('batT').textContent = 'bateria estimada: ' + o.bat + '%'; }
+  $('phone').setAttribute('opacity', o.mode == 'pan' ? 0 : o.ph); $('phone').setAttribute('transform', `translate(${f((1 - o.ph) * 40)} 0)`);
+  ['cam', 'cad', 'buy', 'ok'].forEach(m => $('m-' + m).setAttribute('display', o.mode == m ? 'inline' : 'none')); $('who').textContent = o.who; $('beam').setAttribute('opacity', o.ph > .95 && o.mode == 'cam' ? 1 : 0);
+  // textos
+  $('fase').textContent = i < NA ? 'Construção ' + (i + 1) + ' de ' + NA : 'Funcionamento ' + (i - NA + 1) + ' de ' + (STEPS.length - NA);
+  $('now').textContent = 'Agora: ' + agora(i, p);
+  if (render.last !== i) { render.last = i; $('tit').textContent = STEPS[i][0]; $('txt').textContent = STEPS[i][1]; $('cfg').innerHTML = STEPS[i][2].map(r => `<dt>${r[0]}</dt><dd>${r[1]}</dd>`).join(''); }
+  segs.forEach((b, n) => { b.classList.toggle('done', n < i); b.firstChild.style.width = n == i ? (p * 100) + '%' : ''; });
+  const wl = document.querySelectorAll('.wl'); const nf = fiosProntos(i, p); wl.forEach((l, n) => l.setAttribute('opacity', n < nf ? 1 : .2));
+  // grafo
+  const fl = i >= NA ? FLOW[i - NA] : {act: [], lab: {}};
+  for (const k in E) { const on = fl.act.includes(k), ln = $('e-' + k), lb = $('l-' + k);
+    ln.setAttribute('stroke', on ? 'var(--accent)' : 'var(--line)'); ln.setAttribute('stroke-width', on ? 2.5 : 1.5); ln.setAttribute('marker-end', `url(#a${on ? 1 : 0})`);
+    lb.textContent = on ? (fl.lab[k] || DEF[k]) : DEF[k]; lb.setAttribute('class', on ? 'el on' : 'el'); }
+  const used = {cel: ['c2s', 's2c'], pan: ['span'], srv: ['c2s', 's2c', 'e2s', 's2e', 'sdb', 'span'], db: ['sdb'], esp: ['e2s', 's2e', 'sen', 'srvo', 'led'], sen: ['sen'], srvo: ['srvo'], led: ['led']};
+  for (const k in N) $('n-' + k).setAttribute('stroke', used[k].some(x => fl.act.includes(x)) ? 'var(--accent)' : 'var(--line)');
+  EST.forEach((s, n) => { const on = s == o.est; $('p-' + n).setAttribute('fill', on ? 'var(--accent)' : 'var(--panel)'); $('pt-' + n).style.fill = on ? 'var(--on-accent)' : ''; });
+}
+
+const segs = STEPS.map((s, n) => { const b = document.createElement('button'); b.className = 'seg'; b.title = s[0]; b.setAttribute('aria-label', s[0]);
+  b.appendChild(document.createElement('i')); b.onclick = () => go(n); (n < NA ? $('sa') : $('sb')).appendChild(b); return b; });
+let i = 0, t = 0, playing = !matchMedia('(prefers-reduced-motion: reduce)').matches, last = 0;
+function go(n) { i = Math.max(0, Math.min(STEPS.length - 1, n)); t = playing ? 0 : DUR(i); render(i, playing ? 0 : 1); }
+function setPlay(v) { playing = v; $('play').textContent = v ? 'Pausar' : 'Reproduzir'; }
+function tick(ts) { const d = last ? Math.min(100, ts - last) : 0; last = ts;
+  if (playing) { t += d; const Dn = DUR(i); if (t >= Dn) { if (i < STEPS.length - 1) { i++; t = 0; } else { t = Dn; setPlay(false); } } render(i, cl(t / (DUR(i) * .86))); }
+  requestAnimationFrame(tick); }
+$('prev').onclick = () => go(i - 1); $('next').onclick = () => go(i + 1);
+$('play').onclick = () => { if (!playing && i == STEPS.length - 1) { i = 0; t = 0; } setPlay(!playing); };
+const qs = new URLSearchParams(location.search);
+if (qs.has('i')) { playing = false; i = Math.max(0, Math.min(STEPS.length - 1, +qs.get('i'))); }
+setPlay(playing); render(i, qs.has('i') ? (qs.has('p') ? +qs.get('p') : 1) : playing ? 0 : 1); requestAnimationFrame(tick);
+</script>
+</body>
+</html>
