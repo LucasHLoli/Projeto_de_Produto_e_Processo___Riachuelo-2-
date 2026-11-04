@@ -79,7 +79,7 @@ O parâmetro de maior risco é o campo magnético. Os destacadores de loja para 
 \subsection{Desenho de conjunto}
 \label{subsec:conj_desenho}
 
-A Figura~\ref{fig:conj_desenho} mostra o conjunto em duas vistas na mesma escala, alinhadas pelo comprimento: a vista superior, com a tampa tratada como transparente, e o corte A--A, que passa pelo eixo do pino. Os números dos balões correspondem aos códigos da estrutura do produto (Tabela~\ref{tab:estrut_lista}).
+A Figura~\ref{fig:conj_desenho} mostra o conjunto em duas vistas na mesma escala, alinhadas pelo comprimento: a vista superior, com a tampa tratada como transparente, e o corte A--A, que passa pelo eixo do pino. Os números dos balões correspondem aos códigos da estrutura do produto (Tabela~\ref{tab:estrut_lista}). O mesmo conjunto, revisado pela análise DFMA, está na Figura~\ref{fig:dfma_conjunto} (Seção~\ref{sec:dfma}).
 
 \begin{figure}[p]
     \centering
@@ -105,7 +105,7 @@ A Figura~\ref{fig:conj_camadas} separa o conjunto em camadas, na ordem em que as
     \source{Elaborado pelos autores (2026). Figura gerada com apoio de ferramenta de IA.}
 \end{figure}
 
-A Figura~\ref{fig:conj_modelo} mostra o modelo digital do protótipo. Ele é maior que o produto, porque usa componentes de mercado sem solda: a caixa mede 210~$\times$~76~$\times$~54 mm, contra 120~$\times$~60~$\times$~30 mm do conjunto desta seção. O mecanismo, porém, é o mesmo e tem as mesmas medidas. O modelo foi usado para conferir o percurso dos ímãs, as folgas e a ordem de montagem.
+A Figura~\ref{fig:conj_modelo} mostra o modelo digital do protótipo. Ele é maior que o produto, porque usa componentes de mercado sem solda: a caixa mede 210~$\times$~76~$\times$~54 mm, contra 120~$\times$~60~$\times$~30 mm do conjunto desta seção. O mecanismo, porém, é o mesmo e tem as mesmas medidas. O modelo foi usado para conferir o percurso dos ímãs, as folgas e a ordem de montagem. A diferença entre o produto e o protótipo está na Subseção~\ref{subsec:conj_prototipo}.
 
 \begin{figure}[htbp]
     \centering
@@ -205,3 +205,38 @@ A altura é determinada pela pilha do mecanismo: a embreagem (11 mm), a pratelei
 \end{itemize}
 
 Até que esses caminhos sejam avaliados, a especificação E10 fica registrada como não atendida em comprimento e em altura.
+
+\subsection{Produto final e protótipo}
+\label{subsec:conj_prototipo}
+
+As Seções~\ref{sec:conjunto_produto} a~\ref{sec:plano_macro} descrevem o produto final. O protótipo da apresentação final é uma versão simplificada, montada com componentes de mercado sem solda, que demonstra as funções críticas: prender a peça, reter sem gastar energia, liberar só depois que o servidor confirma o pagamento e recarregar sem fio. A retenção e a liberação usam o mesmo princípio e as mesmas medidas do produto. O restante foi trocado por equivalentes de mercado (Tabela~\ref{tab:conj_prototipo}).
+
+\begin{table}[htbp]
+    \centering
+    \caption{Correspondência entre o produto final e o protótipo}
+    \label{tab:conj_prototipo}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.8cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Item} & \textbf{Produto final} & \textbf{Protótipo} \\
+        \midrule
+        Carcaça & PC/ABS injetado, 120 $\times$ 60 $\times$ 30 mm & PLA impresso em 3D, 210 $\times$ 76 $\times$ 54 mm \\
+        Garra & Alumínio, com revestimento de elastômero & PLA impresso, com borracha colada nos dentes \\
+        Pino e embreagem & Pino de AISI 420 e embreagem especificada ao fornecedor & Pino e embreagem retirados de uma etiqueta rígida comercial \\
+        Liberação & Microatuador e ímã de NdFeB & Micro servo SG90 e três ímãs N50 de $\varnothing$~10~$\times$~4 mm \\
+        Abertura da garra & Mola de torção de inox & Mola de pregador e eixo de parafuso M3 \\
+        Controle & Placa dedicada com rádio & ESP32 DevKit encaixado numa placa expansora, ligado por jumpers \\
+        Sensores & Microchaves & Módulos de chave fim de curso \\
+        Indicação & LED de três cores com guia de luz & Módulo com três LEDs de 8 mm \\
+        Energia e recarga & Célula LiPo e bobina própria & \textit{Power bank} de 10.000 mAh e receptor Qi comercial, sobre uma base Qi de mercado \\
+        Código 2D & Gravado a laser na tampa & Impresso e colado na tampa \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+Por usar componentes de mercado, o protótipo não verifica o envelope (E10), a massa, os materiais da Seção~\ref{sec:constituicao_produto} nem os tempos de montagem da Seção~\ref{sec:dfma}. Se o ensaio do campo mostrar que os ímãs não abrem a embreagem através da prateleira, o protótipo passa a usar a lingueta com mola citada na Subseção~\ref{subsec:conj_revisao}.

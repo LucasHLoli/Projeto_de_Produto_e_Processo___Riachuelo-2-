@@ -1,4 +1,4 @@
-\section{PLANO MACRO DO PROCESSO DE MONTAGEM (ENTREGA 3)}
+\section[PLANO MACRO DO PROCESSO DE MONTAGEM (ENTREGA 3)]{PLANO MACRO DO PROCESSO DE MONTAGEM\\(ENTREGA~3)}
 \label{sec:plano_macro}
 
 O planejamento do processo tem dois níveis. O plano macro fornece a sequência de operações, as máquinas e os equipamentos e os tempos, e é usado pelo planejamento e controle da produção para programar a fabricação ou a montagem. O detalhamento das operações produz as instruções colocadas ao lado do posto de trabalho e garante a repetibilidade de cada operação \cite{rozenfeld2006gestao}. Esta seção trata do primeiro nível para a montagem do Tag\&Go.
@@ -12,16 +12,49 @@ O plano cobre a montagem do dispositivo preso à peça de roupa, com a mesma fro
 O plano adota cinco premissas.
 
 \begin{itemize}
-  \item \textbf{Versão do produto.} O plano monta a versão aprimorada, com as mudanças M1 a M8 (Tabela~\ref{tab:dfma_mudancas}). Como M7 e M8 ainda dependem de verificação, a Subseção~\ref{subsec:plano_pendencias} registra o que muda sem elas.
+  \item \textbf{Versão do produto.} O plano monta a versão aprimorada, com as mudanças M1 a M8 (Tabela~\ref{tab:dfma_mudancas}). Como M7 e M8 ainda não foram avaliadas, a Subseção~\ref{subsec:plano_pendencias} registra o que muda sem elas.
 
-  \item \textbf{Produto de série.} O plano descreve a montagem do produto, e não a do protótipo. O protótipo usa componentes de mercado sem solda, em uma caixa de 210~$\times$~76~$\times$~54~mm, e sua montagem serve para conferir a ordem das operações, não os tempos.
+  \item \textbf{Produto de série.} O plano descreve a montagem do produto, e não a do protótipo. O protótipo usa componentes de mercado sem solda, em uma caixa de 210~$\times$~76~$\times$~54~mm (Subseção~\ref{subsec:conj_prototipo}), e sua montagem serve para conferir a ordem das operações, não os tempos.
 
   \item \textbf{Montagem manual em célula.} A primeira implantação está limitada a uma loja (Subseção~\ref{subsec:comerc_cobertura}), e esse volume não justifica linha automatizada nem posto dedicado por operação. A montagem é feita em uma célula de bancadas, com um operador que percorre os postos na ordem do fluxo.
 
-  \item \textbf{Peças recebidas prontas.} As peças fabricadas chegam dos fornecedores já moldadas, fundidas ou usinadas (Seção~\ref{sec:constituicao_produto}). Os itens comprados montados, como a embreagem, o microatuador e a placa de controle, chegam prontos, e o firmware da placa é gravado pelo fornecedor dela. A gravação do código 2D na tampa é feita pela equipe, porque o endereço de cada dispositivo precisa ser registrado no servidor.
+  \item \textbf{Peças recebidas prontas.} As peças fabricadas chegam dos fornecedores já moldadas, fundidas ou usinadas, pelos processos da Subseção~\ref{subsec:plano_processos}. Os itens comprados montados, como a embreagem, o microatuador e a placa de controle, chegam prontos, e o firmware da placa é gravado pelo fornecedor dela. A gravação do código 2D na tampa é feita pela equipe, porque o endereço de cada dispositivo precisa ser registrado no servidor.
 
   \item \textbf{Tempos.} Os tempos das operações de montagem são os da análise DFA, estimados por classe de dificuldade \cite{boothroyd2011product}. As operações de preparação, de teste e de embalagem não têm tempo de referência nessas tabelas e serão cronometradas no protótipo.
 \end{itemize}
+
+% ---------------------------------------------------------------------
+\subsection{Processos de fabricação das peças}
+\label{subsec:plano_processos}
+
+As seis peças fabricadas sob desenho chegam prontas à célula. A Tabela~\ref{tab:plano_processos} registra o processo de cada uma, escolhido pelos atributos de volume, complexidade da forma, precisão e custo \cite{rozenfeld2006gestao}, e o processo equivalente no protótipo.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Processos de fabricação das peças fabricadas}
+    \label{tab:plano_processos}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.6cm}
+        >{\RaggedRight\arraybackslash}p{2.5cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{3.2cm}@{}}
+        \toprule
+        \textbf{Peça} & \textbf{Material} & \textbf{Processo e máquina na série} & \textbf{Protótipo} \\
+        \midrule
+        Base (TG-111) & PC/ABS & Moldagem por injeção, em injetora com molde de duas placas & Impressão 3D em PLA \\
+        Tampa (TG-112) & PC/ABS para laser & Moldagem por injeção e gravação do código 2D em máquina de marcação a laser & Impressão 3D em PLA, com o código colado \\
+        Suporte (TG-113) & POM copolímero & Moldagem por injeção, com o ponto de injeção perto da prateleira & Impressão 3D em PLA \\
+        Garra (TG-211) & Al 6061-T6 & Usinagem em centro de usinagem CNC nos lotes pequenos. Com a M2, fundição sob pressão em liga de fundição & Impressão 3D em PLA \\
+        Braço dos ímãs (TG-312) & Al 6061-T6 & Usinagem em centro de usinagem CNC, em uma só fixação & Impressão 3D em PLA \\
+        Guia de luz (TG-412) & PC transparente & Moldagem por injeção & Não se aplica \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+Na primeira implantação, limitada a uma loja, o volume não paga os moldes de injeção e de fundição. Até a frota crescer, as peças plásticas podem ser usinadas ou impressas em material de engenharia, com as mesmas cotas.
 
 % ---------------------------------------------------------------------
 \subsection{Organização da montagem}

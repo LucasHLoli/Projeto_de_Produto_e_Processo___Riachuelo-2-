@@ -1,10 +1,9 @@
-\section{ANÁLISE DE ADEQUAÇÃO DO PROJETO PARA A MANUFATURA E MONTAGEM (ENTREGA 3)}\label{sec:dfma}
+\section{ANÁLISE DE ADEQUAÇÃO DO PROJETO PARA A MANUFATURA E MONTAGEM (ENTREGA~3)}\label{sec:dfma}
 
 % Premissas desta seção, a rever quando a equipe decidir (ver TODOs dos arquivos 16-conjunto e 17-estrutura):
 % TODO (equipe): o pino atravessa o tecido. Se passar para o lado do tecido, rever a análise do corpo da garra e do pino.
 % TODO (equipe): o adesivo NFC não entra no produto. Se entrar, acrescentar uma peça comprada e a operação de colagem.
 % TODO (equipe): o torque do microatuador será fixado após o ensaio. A troca do componente não muda a montagem.
-% TODO (equipe): conferir se o rótulo da seção de constituição do produto é sec:constituicao_produto. Se for outro, trocar nas referências desta seção.
 
 Esta seção aplica ao Tag\&Go o método DFMA (\textit{Design for Manufacturing and Assembly}), com o objetivo de aprimorar o produto para a manufatura e a montagem. O ponto de partida é a estrutura do produto (Tabela~\ref{tab:estrut_lista}), com 20 componentes distintos e 27 peças por dispositivo, e a sequência da vista em camadas (Figura~\ref{fig:conj_camadas}). A seção avalia o projeto atual, propõe mudanças e compara as duas versões. As mudanças adotadas aparecem na estrutura revisada (Subseção~\ref{subsec:dfma_estrutura}).
 
@@ -315,7 +314,7 @@ O pino e o revestimento da garra somam outros 14,4~s e são tratados pela mudan�
 \subsection{Projeto aprimorado}
 \label{subsec:dfma_aprimorado}
 
-A versão aprimorada aplica as oito mudanças da Tabela~\ref{tab:dfma_mudancas}. As mudanças M7 e M8 ainda dependem de verificação e, por isso, o resultado é apresentado também sem elas. A Tabela~\ref{tab:dfma_tempos_aprimorado} lista as operações da nova versão, com os mesmos tempos de referência da Tabela~\ref{tab:dfma_tempos_ref}. A coluna de mudança indica a origem de cada alteração.
+A versão aprimorada aplica as oito mudanças da Tabela~\ref{tab:dfma_mudancas}. As mudanças M7 e M8 ainda não foram avaliadas e, por isso, o resultado é apresentado também sem elas. M1, M2, M3 e M5 dependem de confirmação em ensaio (Subseção~\ref{subsec:dfma_limitacoes}). A Tabela~\ref{tab:dfma_tempos_aprimorado} lista as operações da nova versão, com os mesmos tempos de referência da Tabela~\ref{tab:dfma_tempos_ref}. A coluna de mudança indica a origem de cada alteração.
 
 \begingroup
 \footnotesize
@@ -517,7 +516,15 @@ A estrutura passa de 20 componentes distintos e 27 peças para 16 componentes e 
 
 A troca tem um custo. A garra passa a exigir um molde de fundição com o pino como inserto, uma liga de fundição no lugar da 6061-T6 e uma segunda etapa para sobreinjetar o revestimento, e a tampa ganha abas e mancais que tornam o molde mais complexo. O DFMA desloca parte do trabalho da montagem para a fabricação das peças: cada dispositivo fica mais rápido de montar, mas o investimento em moldes cresce. Essa troca favorece o produto à medida que a frota cresce, e o volume da primeira implantação, em uma única loja, deve ser considerado na decisão de adotar a M2 e a M7.
 
-A estrutura da Tabela~\ref{tab:estrut_lista} e o desenho de conjunto (Figura~\ref{fig:conj_desenho}) foram mantidos como registro da versão anterior ao DFMA, assim como a constituição do produto, que ainda descreve os LEDs, a chave da base e o parafuso do braço. Eles serão atualizados depois que as mudanças M7 e M8 forem verificadas.
+A Figura~\ref{fig:dfma_conjunto} mostra o conjunto revisado, nas mesmas vistas e na mesma escala do desenho da Seção~\ref{sec:conjunto_produto}. A estrutura da Tabela~\ref{tab:estrut_lista}, o desenho da Figura~\ref{fig:conj_desenho} e a constituição do produto foram mantidos como registro da versão anterior ao DFMA, porque as mudanças M7 e M8 ainda não foram avaliadas.
+
+\begin{figure}[p]
+    \centering
+    \caption{Desenho de conjunto do Tag\&Go revisado pelo DFMA, em vista superior e em corte pelo eixo do pino. Cotas em mm}
+    \label{fig:dfma_conjunto}
+    \includegraphics[width=\textwidth]{imagens/conjunto_produto/conjunto_dfma.png}
+    \source{Elaborado pelos autores (2026). Figura gerada com apoio de ferramenta de IA.}
+\end{figure}
 
 \subsection{Limitações}
 \label{subsec:dfma_limitacoes}
@@ -541,4 +548,4 @@ A análise tem quatro limitações.
 
 \textbf{Decisões em aberto.} A análise parte de duas decisões que a equipe ainda não fechou. Se o adesivo NFC entrar no produto, a versão aprimorada ganha uma peça e cerca de 4,4~s de montagem, e o índice DFA cai de 0,37 para cerca de 0,35. Se o pino passar a ficar ao lado do tecido, a contagem de peças não muda, mas a análise da retenção, e com ela a verificação da M7 frente à E12, precisa ser refeita.
 
-Em síntese, a aplicação do DFMA reduziu o Tag\&Go de 27 para 16 peças na montagem, cortou o tempo estimado de montagem quase pela metade e elevou o índice DFA de 0,21 para 0,37, sem alterar o princípio de funcionamento definido no conjunto do produto (Seção~\ref{sec:conjunto_produto}). Os materiais da constituição do produto foram mantidos, com uma exceção: se a garra for fundida na série, a liga 6061-T6 deve dar lugar a uma liga de fundição. Os próximos passos são verificar as mudanças M1, M2, M3, M5, M7 e M8, cronometrar a montagem no protótipo, fixar as tolerâncias do mecanismo e atualizar o desenho de conjunto e a estrutura do produto. A sequência de operações da Tabela~\ref{tab:dfma_tempos_aprimorado} é o ponto de partida do plano macro do processo de montagem.
+A aplicação do DFMA reduziu o Tag\&Go de 27 para 16 peças na montagem, cortou o tempo estimado de montagem quase pela metade e elevou o índice DFA de 0,21 para 0,37, sem alterar o princípio de funcionamento definido no conjunto do produto (Seção~\ref{sec:conjunto_produto}). Os materiais da constituição do produto foram mantidos, com uma exceção: se a garra for fundida na série, a liga 6061-T6 deve dar lugar a uma liga de fundição. Os próximos passos são verificar as mudanças M1, M2, M3, M5, M7 e M8, cronometrar a montagem no protótipo, fixar as tolerâncias do mecanismo e atualizar a estrutura do produto. A sequência de operações da Tabela~\ref{tab:dfma_tempos_aprimorado} é o ponto de partida do plano macro do processo de montagem.

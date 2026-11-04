@@ -1,5 +1,6 @@
 # Gera os desenhos do item A da Entrega 3 (conjunto do produto Tag&Go).
-# Uso: python gerar_conjunto.py  ->  conjunto_produto.png e conjunto_camadas.png na mesma pasta.
+# Uso: python gerar_conjunto.py  ->  conjunto_produto.png, conjunto_camadas.png e conjunto_dfma.png na mesma pasta.
+# conjunto_dfma.png é o mesmo conjunto com as mudanças M1 a M8 da análise DFMA (Seção 19).
 # Medidas em mm. Origem no canto externo inferior da base: x = comprimento, z = largura, y = altura.
 # As medidas do mecanismo vêm do modelo digital do protótipo (prototipo/dados.js); as demais são estimativas.
 # Para mudar uma medida, altere o dicionário P e rode de novo.
@@ -36,6 +37,14 @@ LEGENDA = [
     (7, 'TG-312', 'braço dos ímãs'), (8, 'TG-311', 'microatuador rotativo'), (9, 'TG-113', 'suporte do mecanismo'),
     (10, 'TG-411', 'LEDs (3)'), (11, 'TG-511', 'placa de controle'), (12, 'TG-521', 'célula recarregável'),
     (13, 'TG-522', 'bobina de indução'), (14, 'TG-512', 'chave da garra'), (15, 'TG-513', 'chave da base'),
+]
+DF = False                              # True: desenha a versão revisada pelo DFMA
+LEGENDA_DFMA = [
+    (1, 'TG-111', 'base da carcaça'), (2, 'TG-112', 'tampa (M4, M6, M7)'), (3, 'TG-211', 'garra fundida (M2, M7)'),
+    (4, 'TG-221', 'pino, inserto da garra (M2)'), (5, 'TG-222', 'embreagem de esferas'), (6, 'TG-313', 'ímã único Ø 10 × 12 (M1)'),
+    (7, 'TG-312', 'braço, por pressão (M3)'), (8, 'TG-311', 'microatuador rotativo'), (9, 'TG-113', 'suporte do mecanismo'),
+    (10, 'TG-412', 'guia de luz (M6)'), (11, 'TG-511', 'placa, com LED (M5, M6)'), (12, 'TG-521', 'célula recarregável'),
+    (13, 'TG-522', 'bobina de indução'), (14, 'TG-512', 'chave da garra, no suporte (M8)'), (15, 'TG-121', 'parafusos da tampa, 2 (M4)'),
 ]
 FANT = (0, (9, 2, 1.5, 2, 1.5, 2))      # traço e dois pontos (linha fantasma)
 EIXO = (0, (10, 2.5, 1.5, 2.5))         # traço e ponto (linha de centro)
@@ -102,10 +111,18 @@ def vista_superior(ax, oy):
     ax.add_patch(Circle((m['x'], T(m['z'])), 0.6, fc=K))
     for cx, cz in ((e['x'], e['z']), (m['x'], m['z'])):                                               # linhas de centro
         ax.plot([cx - 9, cx + 9], [T(cz)] * 2, color=K, lw=0.4, ls=EIXO); ax.plot([cx] * 2, [T(cz) - 9, T(cz) + 9], color=K, lw=0.4, ls=EIXO)
-    for k_ in ('chg', 'chb'):
+    for k_ in (('chg',) if DF else ('chg', 'chb')):
         h = p[k_]; ret(ax, h['x0'], h['x1'], T(h['z0']), T(h['z1']), fc=COR['chave'])
-    for z, cor in zip(p['leds']['zs'], ['#c00000', '#ffc000', '#548235']):
-        ax.add_patch(Circle((p['leds']['x'], T(z)), p['leds']['r'], fc=cor, ec=K, lw=0.7))
+    if DF:   # LED de três cores na placa; a luz sai por uma guia na tampa (M6)
+        ax.add_patch(Circle((102, T(40)), 2.0, fc='#ddebf7', ec=K, lw=0.8))
+        for zc in (5, 55):   # dois parafusos no lado do mecanismo (M4)
+            ax.add_patch(Circle((5, T(zc)), 1.6, fc='white', ec=K, lw=0.8)); ax.plot([4, 6], [T(zc)] * 2, color=K, lw=0.6); ax.plot([5, 5], [T(zc) - 1, T(zc) + 1], color=K, lw=0.6)
+        for zc in (14, 46):  # abas de encaixe no lado da eletrônica (M4)
+            ret(ax, p['L'] - 3.5, p['L'] - 0.5, T(zc - 3), T(zc + 3), fc='white', lw=0.7)
+        ax.text(p['L'] - 5, T(30), 'abas\n(M4)', ha='right', va='center', fontsize=5.8, color='#444444')
+    else:
+        for z, cor in zip(p['leds']['zs'], ['#c00000', '#ffc000', '#548235']):
+            ax.add_patch(Circle((p['leds']['x'], T(z)), p['leds']['r'], fc=cor, ec=K, lw=0.7))
     g = p['garra']                                                                                    # garra em linha fantasma
     ax.add_patch(Rectangle((g['x0'], T(g['z0'])), g['x1'] - g['x0'], g['z1'] - g['z0'], fc='none', ec=K, lw=0.9, ls=FANT))
     ax.plot([g['x1']] * 2, [T(g['z0'] - 3), T(g['z1'] + 3)], color=K, lw=0.5, ls=EIXO)
@@ -128,8 +145,11 @@ def vista_superior(ax, oy):
     # balões
     balao(ax, 14, (35, T(46)), (-34, T(66))); balao(ax, 3, (4, T(53.5)), (-34, T(55)))
     balao(ax, 6, (5, T(21)), (-34, T(14))); balao(ax, 1, (1.4, T(4)), (-34, T(0)))
-    for n, alvo, bx in ((7, (17, 24), 14), (5, (25.5, 34.2), 27), (8, (35, 21), 40), (15, (47, 6), 53), (13, (78, 11.3), 68),
-                        (12, (93, 14), 84), (11, (103, 17.5), 100), (10, (112.4, 16.8), 116)):
+    baixo = ((15, (5, 5), 0), (7, (17, 24), 14), (5, (25.5, 34.2), 27), (8, (35, 21), 40), (13, (78, 11.3), 66),
+             (12, (93, 14), 82), (11, (103, 17.5), 98), (10, (102, 41.8), 116)) if DF else \
+            ((7, (17, 24), 14), (5, (25.5, 34.2), 27), (8, (35, 21), 40), (15, (47, 6), 53), (13, (78, 11.3), 68),
+             (12, (93, 14), 84), (11, (103, 17.5), 100), (10, (112.4, 16.8), 116))
+    for n, alvo, bx in baixo:
         balao(ax, n, (alvo[0], T(alvo[1])), (bx, T(-14)))
 
 
@@ -137,7 +157,8 @@ def vista_superior(ax, oy):
 def d_base(ax, dy=0):
     p = P
     hach(ax, 0, p['L'], dy, dy + p['fundo']); hach(ax, 0, p['parede'], dy + p['fundo'], dy + 28); hach(ax, p['L'] - p['parede'], p['L'], dy + p['fundo'], dy + 28)
-    h = p['chb']; ret(ax, h['x0'], h['x1'], dy + h['y0'], dy + h['y1'], fc=COR['chave'], lw=0.6)
+    if not DF:
+        h = p['chb']; ret(ax, h['x0'], h['x1'], dy + h['y0'], dy + h['y1'], fc=COR['chave'], lw=0.6)
 
 
 def d_bobina(ax, dy=0):
@@ -151,6 +172,8 @@ def d_celula(ax, dy=0):
 def d_placa(ax, dy=0):
     d = P['pci']; ret(ax, d['x0'], d['x1'], dy + d['y0'], dy + d['y1'], fc=COR['pci'], lw=0.7)
     ret(ax, d['x0'] + 6, d['x0'] + 18, dy + d['y1'], dy + d['y1'] + 2.2, fc='#595959', lw=0.5)
+    if DF:   # LED de três cores soldado na placa (M6)
+        ret(ax, 100.5, 103.5, dy + d['y1'], dy + d['y1'] + 1.6, fc='#f2f2f2', lw=0.5)
 
 
 def d_mecanismo(ax, dy=0, corte=True):
@@ -166,8 +189,15 @@ def d_mecanismo(ax, dy=0, corte=True):
     ret(ax, m['x'] - 3.4, m['x'] + 3.4, dy + m['y0'] + 4.2, dy + m['y0'] + 5.6, fc='#595959', lw=0.4)   # carretel
     for dx in (-1.9, 1.9):
         ax.add_patch(Circle((m['x'] + dx, dy + m['y0'] + 7.6), 1.25, fc='white', ec=K, lw=0.7))
-    for k in range(3):
-        ret(ax, m['x'] - i['r'], m['x'] + i['r'], dy + i['y0'] + k * (i['y1'] - i['y0']) / 3, dy + i['y0'] + (k + 1) * (i['y1'] - i['y0']) / 3, fc=COR['ima'], lw=0.7)
+    if DF:   # ímã único, mesma altura da pilha (M1)
+        ret(ax, m['x'] - i['r'], m['x'] + i['r'], dy + i['y0'], dy + i['y1'], fc=COR['ima'], lw=0.7)
+    else:
+        for k in range(3):
+            ret(ax, m['x'] - i['r'], m['x'] + i['r'], dy + i['y0'] + k * (i['y1'] - i['y0']) / 3, dy + i['y0'] + (k + 1) * (i['y1'] - i['y0']) / 3, fc=COR['ima'], lw=0.7)
+    if DF:   # chave da garra presa num apoio do suporte (M8)
+        h = p['chg']; hach(ax, h['x0'] + 1, h['x1'] - 1, dy + s['y1'], dy + h['y0'] - 2, lw=0.6)
+        ret(ax, h['x0'], h['x1'], dy + h['y0'] - 2, dy + h['y1'] - 2, fc=COR['chave'], lw=0.6)
+        ret(ax, (h['x0'] + h['x1']) / 2 - 0.6, (h['x0'] + h['x1']) / 2 + 0.6, dy + h['y1'] - 2, dy + 28, fc='white', lw=0.5)
     hach(ax, m['x'] - b['larg'] / 2, m['x'] + b['larg'] / 2, dy + b['y0'], dy + b['y1'], h='\\\\\\\\', lw=0.8)
     if corte:   # o microatuador fica à frente do plano de corte: linha fantasma
         ax.add_patch(Rectangle((a['x0'], dy + a['y0']), a['x1'] - a['x0'], a['y1'] - a['y0'], fc='none', ec=K, lw=0.8, ls=FANT))
@@ -179,6 +209,9 @@ def d_tampa(ax, dy=0):
     p = P; m = p['emb']
     hach(ax, 0, m['x'] - 1, dy + 28, dy + 30); hach(ax, m['x'] + 1, p['L'], dy + 28, dy + 30)
     hach(ax, 54, 58.5, dy + 30, dy + 35, lw=0.8)                                                        # apoio da articulação
+    if DF:   # guia de luz encaixada na tampa, do LED da placa até a face (M6)
+        ret(ax, 100.5, 103.5, dy + 14.8, dy + 30, fc='#ddebf7', lw=0.7)
+        return
     h = p['chg']; ret(ax, h['x0'], h['x1'], dy + h['y0'], dy + h['y1'], fc=COR['chave'], lw=0.6)
     x = p['leds']['x']; ret(ax, x - 1.5, x + 1.5, dy + 23, dy + 28, fc='#548235', lw=0.6)
     ax.add_patch(Arc((x, dy + 30), 3, 1.8, theta1=0, theta2=180, color=K, lw=0.7))
@@ -188,7 +221,10 @@ def d_garra(ax, dy=0):
     p = P; g, m = p['garra'], p['emb']; y0 = dy + p['H'] + g['folga']
     hach(ax, g['x0'], m['x'] - 6, y0, y0 + g['esp'], h='\\\\\\\\'); hach(ax, m['x'] + 6, g['x1'], y0, y0 + g['esp'], h='\\\\\\\\')
     hach(ax, m['x'] - 6, m['x'] + 6, y0, y0 + g['esp'] - 2, h='\\\\\\\\')
-    ax.add_patch(Circle((g['x1'] + 1.5, y0 + 3), 2.6, fc='white', ec=K, lw=1.0)); ax.add_patch(Circle((g['x1'] + 1.5, y0 + 3), 0.9, fc=K))
+    if DF:   # munhão fundido na garra, sem eixo separado (M7)
+        ax.add_patch(Circle((g['x1'] + 1.5, y0 + 3), 2.6, fc='#bfbfbf', ec=K, lw=1.0))
+    else:
+        ax.add_patch(Circle((g['x1'] + 1.5, y0 + 3), 2.6, fc='white', ec=K, lw=1.0)); ax.add_patch(Circle((g['x1'] + 1.5, y0 + 3), 0.9, fc=K))
     ret(ax, m['x'] - 6, m['x'] + 6, y0 + g['esp'] - 2, y0 + g['esp'], fc=COR['emb'], lw=0.8)             # cabeça do pino
     ret(ax, m['x'] - 0.6, m['x'] + 0.6, y0 + g['esp'] - 2 - p['pino']['comp'], y0 + g['esp'] - 2, fc='#404040', lw=0.5, zorder=5)
     return y0 + g['esp']
@@ -204,28 +240,31 @@ def corte(ax):
     ax.plot([24, 24], [-2, topo + 3], color=K, lw=0.4, ls=EIXO)
     cota_v(ax, 132, 0, p['H'], '30', (p['L'], p['L']))
     cota_v(ax, 142, 0, topo, f'{topo:g}', (p['L'], 59))
-    balao(ax, 3, (9, topo - 3), (4, 50)); balao(ax, 4, (24.3, 29.5), (18, 50)); balao(ax, 14, (36, 26), (36, 50)); balao(ax, 2, (57, 29), (50, 50))
+    balao(ax, 3, (9, topo - 3), (4, 50)); balao(ax, 4, (24.3, 29.5), (18, 50)); balao(ax, 14, (36, 23) if DF else (36, 26), (36, 50)); balao(ax, 2, (57, 29), (50, 50))
     balao(ax, 5, (18.6, 22.5), (-30, 27)); balao(ax, 9, (13, 16.4), (-30, 16)); balao(ax, 6, (19.6, 8), (-30, 5)); balao(ax, 1, (4, 0.7), (-30, -8))
-    for n, alvo, bx in ((7, (22, 3), 14), (8, (35, 12), 34), (13, (68, 2), 62), (12, (88, 6), 84), (11, (100, 10.8), 102), (10, (112, 25), 118)):
+    baixo = ((7, (22, 3), 14), (8, (35, 12), 34), (13, (68, 2), 62), (12, (88, 6), 84), (11, (96, 10.8), 100), (10, (102, 22), 118)) if DF else \
+            ((7, (22, 3), 14), (8, (35, 12), 34), (13, (68, 2), 62), (12, (88, 6), 84), (11, (100, 10.8), 102), (10, (112, 25), 118))
+    for n, alvo, bx in baixo:
         balao(ax, n, alvo, (bx, -14))
     ax.plot([96, 116], [-25, -25], color=K, lw=2); ax.plot([96, 96, 106, 106, 116, 116], [-26.2, -23.8, -23.8, -26.2, -26.2, -23.8], color=K, lw=0.7)
     for x, tx in ((96, '0'), (106, '10'), (116, '20 mm')):
         ax.text(x, -28, tx, ha='center', va='top', fontsize=6.5)
 
 
-def conjunto(pasta):
+def conjunto(pasta, nome='conjunto_produto.png'):
     fig = plt.figure(figsize=(9.4, 11.6))
     gs = fig.add_gridspec(2, 1, height_ratios=[204, 24], hspace=0.02)
     ax = fig.add_subplot(gs[0]); oy = 84
     vista_superior(ax, oy); corte(ax)
     ax.set_xlim(-42, 148); ax.set_ylim(-32, oy + 88); ax.set_aspect('equal'); ax.axis('off')
     al = fig.add_subplot(gs[1]); al.axis('off'); al.set_xlim(0, 3); al.set_ylim(-1.3, 5.6)
-    for k, (n, cod, nome) in enumerate(LEGENDA):
+    for k, (n, cod, txt) in enumerate(LEGENDA_DFMA if DF else LEGENDA):
         col, lin = divmod(k, 5)
-        al.text(col + 0.02, 5 - lin, f'{n}', fontsize=8, fontweight='bold', va='center'); al.text(col + 0.13, 5 - lin, f'{cod}   {nome}', fontsize=8, va='center')
-    al.text(0.02, -0.25, 'Cotas em mm. As duas vistas estão na mesma escala. Traço cheio: ímãs em repouso. Tracejado: ímãs sob a embreagem.', fontsize=7, color='#333333', va='center')
+        al.text(col + 0.02, 5 - lin, f'{n}', fontsize=8, fontweight='bold', va='center'); al.text(col + 0.13, 5 - lin, f'{cod}   {txt}', fontsize=7.2 if DF else 8, va='center')
+    al.text(0.02, -0.25, ('Cotas em mm. Entre parênteses, a mudança do DFMA que alterou o item. M5: a chave da base saiu; a placa detecta a recarga.' if DF else
+            'Cotas em mm. As duas vistas estão na mesma escala. Traço cheio: ímãs em repouso. Tracejado: ímãs sob a embreagem.'), fontsize=7, color='#333333', va='center')
     al.text(0.02, -1.0, 'Traço e dois pontos: garra, na vista superior, e microatuador, que fica à frente do plano de corte. Dimensões estimadas, exceto as do mecanismo.', fontsize=7, color='#333333', va='center')
-    destino = os.path.join(pasta, 'conjunto_produto.png'); fig.savefig(destino, dpi=220, bbox_inches='tight', facecolor='white'); plt.close(fig); print(destino)
+    destino = os.path.join(pasta, nome); fig.savefig(destino, dpi=220, bbox_inches='tight', facecolor='white'); plt.close(fig); print(destino)
 
 
 def camadas(pasta):
@@ -249,3 +288,4 @@ def camadas(pasta):
 if __name__ == '__main__':
     pasta = os.path.dirname(os.path.abspath(__file__))
     conjunto(pasta); camadas(pasta)
+    DF = True; conjunto(pasta, 'conjunto_dfma.png')
