@@ -20,7 +20,7 @@ O plano adota cinco premissas.
 
   \item \textbf{Peças recebidas prontas.} As peças fabricadas chegam dos fornecedores já moldadas, fundidas ou usinadas, pelos processos da Subseção~\ref{subsec:plano_processos}. Os itens comprados montados, como a embreagem, o microatuador e a placa de controle, chegam prontos, e o firmware da placa é gravado pelo fornecedor dela. A gravação do código 2D na tampa é feita pela equipe, porque o endereço de cada dispositivo precisa ser registrado no servidor.
 
-  \item \textbf{Tempos.} Os tempos das operações de montagem são os da análise DFA, estimados por classe de dificuldade \cite{boothroyd2011product}. As operações de preparação, de teste e de embalagem não têm tempo de referência nessas tabelas e serão cronometradas no protótipo.
+  \item \textbf{Tempos.} Os tempos das operações de montagem são os da análise DFA, estimados por classe de dificuldade \cite{boothroyd2011product}. A inspeção, a gravação do código, a cura, o teste e a embalagem não têm tempo de referência nessas tabelas e serão cronometradas no protótipo.
 \end{itemize}
 
 % ---------------------------------------------------------------------
@@ -44,7 +44,7 @@ As seis peças fabricadas sob desenho chegam prontas à célula. A Tabela~\ref{t
         \textbf{Peça} & \textbf{Material} & \textbf{Processo e máquina na série} & \textbf{Protótipo} \\
         \midrule
         Base (TG-111) & PC/ABS & Moldagem por injeção, em injetora com molde de duas placas & Impressão 3D em PLA \\
-        Tampa (TG-112) & PC/ABS para laser & Moldagem por injeção e gravação do código 2D em máquina de marcação a laser & Impressão 3D em PLA, com o código colado \\
+        Tampa (TG-112) & PC/ABS para laser & Moldagem por injeção. O código 2D é gravado depois, no Posto 0 & Impressão 3D em PLA, com o código colado \\
         Suporte (TG-113) & POM copolímero & Moldagem por injeção, com o ponto de injeção perto da prateleira & Impressão 3D em PLA \\
         Garra (TG-211) & Al 6061-T6 & Usinagem em centro de usinagem CNC nos lotes pequenos. Com a M2, fundição sob pressão em liga de fundição & Impressão 3D em PLA \\
         Braço dos ímãs (TG-312) & Al 6061-T6 & Usinagem em centro de usinagem CNC, em uma só fixação & Impressão 3D em PLA \\
@@ -232,7 +232,7 @@ O plano depende de quatro verificações.
 
 \begin{itemize}
   \item \textbf{Mudanças M7 e M8.} Sem elas, o eixo da articulação volta, a mola volta a ser segurada enquanto o eixo é inserido e a chave da garra volta para a tampa, que passa a ser ligada à placa no Posto 3. A montagem sobe para cerca de 117,1~s, segundo a análise DFMA, e as operações 1.5, 3.9 e 3.10 precisam ser revistas.
-  \item \textbf{Tempos.} Os tempos de montagem são estimativas por classe, e as operações de preparação, teste e embalagem ainda não têm tempo. Todos devem ser cronometrados na montagem do protótipo, com a ressalva de que o protótipo é maior que o produto (Subseção~\ref{subsec:dfma_limitacoes}).
+  \item \textbf{Tempos.} Os tempos de montagem são estimativas por classe, e a inspeção, a gravação, a cura, o teste e a embalagem ainda não têm tempo. Todos devem ser cronometrados na montagem do protótipo, com a ressalva de que o protótipo é maior que o produto (Subseção~\ref{subsec:dfma_limitacoes}).
   \item \textbf{Cura do adesivo.} O tempo de cura depende do adesivo estrutural, ainda não escolhido, e define o tamanho do estoque de braços colados entre o Posto 0 e o Posto 1.
   \item \textbf{Folga entre o ímã e a prateleira.} A tolerância de 0,2~mm só será fixada depois do ensaio do campo (Subseção~\ref{subsec:conj_criticos}). Até lá, o gabarito de colagem e o batente da prensa não podem ser dimensionados.
 \end{itemize}

@@ -30,7 +30,7 @@ A Tabela~\ref{tab:const_selecao} resume a seleção dos 20 componentes da estrut
     \bottomrule
     \endfoot
     TG-111 & Base da carcaça & Deixar passar o campo da bobina e resistir a queda e a arrombamento & PC/ABS, PP, PA 6.6 com fibra, alumínio & PC/ABS injetado \\
-    TG-112 & Tampa & Receber o código 2D gravado a laser, com contraste duradouro & PC, PC/ABS, ABS, PMMA & PC/ABS de grade para marcação a laser \\
+    TG-112 & Tampa & Receber o código 2D gravado a laser, com contraste duradouro & PC, PC/ABS, ABS, PMMA & PC/ABS de grau para marcação a laser \\
     TG-113 & Suporte do mecanismo & Manter plana a prateleira de 0,8 mm, sem desviar o campo & POM, PA 6.6 com fibra, PBT com fibra, alumínio & POM copolímero injetado \\
     TG-121 & Parafuso da tampa & Roscar direto no plástico, sem corrosão & Aço zincado, aço inox & Aço inox A2, rosca para plástico \\
     \midrule
@@ -44,6 +44,7 @@ A Tabela~\ref{tab:const_selecao} resume a seleção dos 20 componentes da estrut
     TG-311 & Microatuador rotativo & Vencer a atração do ímã, sem consumo em repouso & Micro servo, motor de passo, solenoide rotativo & Micro servo com engrenagens metálicas \\
     TG-312 & Braço dos ímãs & Ser rígido com 2 mm, leve e sem magnetismo & Al 6061-T6, latão, POM, PA 6.6 com fibra & Al 6061-T6 usinado \\
     TG-313 & Ímã & Gerar mais de 4.500 G a 1 mm da face & NdFeB, samário-cobalto, ferrite & NdFeB N48 a N52, revestido de Ni-Cu-Ni \\
+    TG-314 & Parafuso do braço & Prender o braço no eixo sem folga e sem desviar o campo & Aço zincado, inox & Inox A2, M2 \\
     \midrule
     TG-411 & LED & Ser visível na loja com pouco consumo & LED de 3 mm, LED RGB & LED de 3 mm em AlGaInP e InGaN, lente difusa \\
     \midrule
@@ -69,6 +70,8 @@ A Tabela~\ref{tab:const_selecao} resume a seleção dos 20 componentes da estrut
 
 \textbf{Ímã e embreagem (TG-313 e TG-222).} Sob a embreagem, o ímã precisa superar os cerca de 4.500~G dos destacadores de loja. Pelo cálculo da equipe, a pilha de NdFeB chega a cerca de 5.200~G a 1~mm (Subseção~\ref{subsec:conj_criticos}). A ferrite fica muito abaixo disso, e o samário-cobalto, mais caro, tem remanência menor. O NdFeB oxida e perde força acima de cerca de 80~$^\circ$C, limites aceitáveis em uso interno e com revestimento de Ni-Cu-Ni. A embreagem é comprada montada. Ao fornecedor se pede copo de latão, que deixa o campo chegar ao carretel, carretel de aço de baixo carbono, que responde ao ímã, esferas de AISI 440C e mola de inox 302.
 
+Quatro escolhas dependem de medição: a composição real da embreagem das etiquetas comerciais, o efeito do pino de AISI 420 sobre a liberação, a planicidade da prateleira de POM com o fornecedor do molde e o grau do ímã, que só será fixado depois do ensaio do campo.
+
 \subsection{Especificação técnica dos materiais}
 \label{subsec:const_especificacao}
 
@@ -93,7 +96,7 @@ A Tabela~\ref{tab:const_especificacao} reúne as propriedades de referência dos
         POM copolímero & TG-113 & 1,41 & Módulo de elasticidade de cerca de 2,8 GPa. Absorção de água de cerca de 0,2\% em 24 h & Reciclável. Marcação $>$POM$<$ \\
         Alumínio 6061-T6 & TG-211, TG-312 & 2,70 & Escoamento de 276 MPa e ruptura de 310 MPa. Não magnético & Reciclável, com cadeia consolidada \\
         AISI 420 temperado & TG-221 & 7,7 & Dureza de até cerca de 50 HRC. Magnético & Reciclável com a sucata de inox \\
-        Inox 302 e 304 & TG-121, TG-212, TG-213 & 7,9 & Austenítico, resistente ao suor & Reciclável com a sucata de inox \\
+        Inox 302 e 304 & TG-121, TG-212, TG-213, TG-314 & 7,9 & Austenítico, resistente ao suor & Reciclável com a sucata de inox \\
         TPE (SEBS) & TG-214 & 0,9 a 1,2 & Dureza Shore A de 60 a 70 & Reciclável, se separado da garra \\
         NdFeB N48 a N52 & TG-313 & 7,5 & Remanência de 1,37 a 1,47 T. Uso até cerca de 80~$^\circ$C & Reaproveitado no recondicionamento \\
         \bottomrule
@@ -106,11 +109,6 @@ A Tabela~\ref{tab:const_especificacao} reúne as propriedades de referência dos
 
 O primeiro recurso de sustentabilidade do Tag\&Go está no modelo de negócio. O dispositivo é alugado e volta ao centro de recondicionamento, que troca as peças gastas e reaproveita as demais (Subseção~\ref{subsec:comerc_distribuicao}). Carcaça, garra e mecanismo passam por vários ciclos de locação antes de chegar ao descarte.
 
-As peças fabricadas usam três famílias de material, todas recicláveis: PC/ABS, POM e alumínio. O alumínio tem cadeia de reciclagem consolidada e pode vir de sucata. Para a base e a tampa existem grades comerciais de PC/ABS com conteúdo reciclado pós-consumo. Eles podem ser adotados se mantiverem a tenacidade e a resposta ao laser, o que fica para o projeto detalhado. Cada peça plástica leva em relevo a sigla do material, conforme a ISO 11469 \cite{iso11469}, para facilitar a triagem no fim da vida.
+As peças fabricadas usam três famílias de material, todas recicláveis: PC/ABS, POM e alumínio. O alumínio tem cadeia de reciclagem consolidada e pode vir de sucata. Para a base e a tampa existem graus comerciais de PC/ABS com conteúdo reciclado pós-consumo. Eles podem ser adotados se mantiverem a tenacidade e a resposta ao laser, o que fica para o projeto detalhado. Cada peça plástica leva em relevo a sigla do material, conforme a ISO 11469 \cite{iso11469}, para facilitar a triagem no fim da vida.
 
 A célula, a placa e a bobina seguem a logística reversa de baterias e de eletroeletrônicos prevista na Política Nacional de Resíduos Sólidos \cite{brasil2010pnrs}. A tampa presa por parafusos permite retirar a célula sem quebrar a carcaça. Há um conflito com o DFMA: na garra fundida da mudança M2, com o pino como inserto e o revestimento sobreinjetado, os três materiais só se separam por moagem. Esse custo para a reciclagem entra na decisão sobre a M2.
-
-\subsection{Pontos a confirmar}
-\label{subsec:const_pendencias}
-
-Quatro escolhas dependem de medição: a composição real da embreagem das etiquetas comerciais, o efeito do pino de AISI 420 sobre a liberação, a planicidade da prateleira de POM com o fornecedor do molde e o grau do ímã, que só será fixado depois do ensaio do campo.

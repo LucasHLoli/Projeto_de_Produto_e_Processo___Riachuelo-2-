@@ -13,7 +13,7 @@ Como a venda é B2B, a análise considerou duas perspectivas. A Riachuelo é que
 A concorrência mais próxima do produto não é a etiqueta rígida comum, e sim as soluções que já retiram o caixa da etapa de liberação da peça. Além dos \textit{benchmarks} citados nas Seções~\ref{subsec:segmento_alvo} e~\ref{subsubsec:benchmarking_tecnico}, foram buscadas outras soluções de compra pelo celular aplicadas à moda e encontrou-se uma concorrente direta, a dinamarquesa Zliide. Outras duas soluções com função parecida, a rapitag e a Paytag, são tratadas no estudo de aproveitamento técnico (Seção~\ref{subsec:aprov_linhas}). As soluções foram agrupadas em seis tipos, descritos a seguir.
 
 \begin{enumerate}[label=\alph*)]
-  \item \textbf{Etiqueta rígida convencional com liberação no caixa.} É a solução atual da Riachuelo fora das lojas conceito. Uma etiqueta comum desse tipo, a \textit{pencil} AM, mede 60~$\times$~18~$\times$~15~mm, pesa 10~g e custa cerca de R\$~1,73 por unidade, em caixa com mil unidades \cite{hexport2026pencil}. O custo baixo e a retenção física são seus pontos fortes; a dependência do operador para a liberação é a origem do problema do projeto.
+  \item \textbf{Etiqueta rígida convencional com liberação no caixa.} É a solução atual da Riachuelo fora das lojas conceito. Uma etiqueta comum desse tipo, a \textit{pencil} AM, mede 60 $\times$ 18 $\times$ 15~mm, pesa 10~g e custa cerca de R\$~1,73 por unidade, em caixa com mil unidades \cite{hexport2026pencil}. O custo baixo e a retenção física são seus pontos fortes; a dependência do operador para a liberação é a origem do problema do projeto.
 
   \item \textbf{Self-checkout por código de barras com remoção manual da etiqueta.} É o modelo da maior parte da rede C\&A, em que o cliente paga no terminal e retira a etiqueta antifurto em um destacador na lateral do próprio equipamento \cite{brazileconomy2025cea}. A fila deixa de depender do operador, mas o cliente ainda se desloca até um terminal fixo.
 
@@ -32,7 +32,7 @@ A Zliide é a referência mais próxima do conceito em estudo e traz duas liçõ
 \subsection{Quadro comparativo}
 \label{sec:quadro-comparativo}
 
-O produto proposto é o único, entre as soluções levantadas, que combina retenção física, pagamento pelo celular no salão, aproveitamento do RFID já presente nas peças e uma alternativa humana definida para cada falha. Em contrapartida, é o maior e o mais caro dispositivo do quadro. A Tabela~\ref{tab:comparativo-solucoes} compara as soluções pelos atributos que os requisitos da Seção~\ref{sec:definicao_requisitos} tornaram relevantes; a equipe não atribuiu notas, pelo mesmo motivo da Seção~\ref{subsubsec:qualidade_planejada}, e as células registram apenas o que as fontes descrevem.
+O produto proposto é o único, entre as soluções levantadas, que combina retenção física, pagamento pelo celular no salão, aproveitamento do RFID já presente nas peças e uma alternativa humana definida para cada falha. Em contrapartida, é o maior dispositivo do quadro. A Tabela~\ref{tab:comparativo-solucoes} compara as soluções pelos atributos que os requisitos da Seção~\ref{sec:definicao_requisitos} tornaram relevantes; a equipe não atribuiu notas, pelo mesmo motivo da Seção~\ref{subsubsec:qualidade_planejada}, e as células registram apenas o que as fontes descrevem.
 
 \begin{landscape}
 \footnotesize
@@ -65,12 +65,12 @@ O produto proposto é o único, entre as soluções levantadas, que combina rete
 \endlastfoot
 a) Etiqueta rígida e caixa (Riachuelo, rede atual) & Caixa com operador & Destacador magnético no caixa & Sim & Caixas, destacadores, antena de saída & Não & Sempre presente & \textit{Pencil} AM: 60~$\times$~18~$\times$~15~mm, 10~g, cerca de R\$~1,73 \\
 b) Self-checkout por código de barras (C\&A) & Terminal fixo & Cliente usa destacador no terminal & Sim & Terminais com destacador, antena de saída & Não & Funcionário na área dos terminais & Etiqueta rígida convencional \\
-c) Self-checkout por RFID (Renner; C\&A Energia) & Terminal fixo & Desativação automática do alarme no pagamento & Não descrita nas fontes & Terminais RFID, antena de saída, etiquetagem RFID & Não descrita & Funcionário na área dos terminais & Etiqueta RFID \\
+c) Self-checkout por RFID (Renner; C\&A Energia) & Terminal fixo & Desativação automática do alarme no pagamento & Não & Terminais RFID, antena de saída, etiquetagem RFID & Não descrita & Funcionário na área dos terminais & Etiqueta RFID \\
 d) RFID oculta no rótulo (Inditex/Zara) & Caixa ou terminal & Desativação sem contato & Não; chips retirados em testes & Leitores RFID, antena de saída & Consulta de estoque na loja & Caixa atendido & Chip no rótulo \\
 e) \textit{Scan \& go} (MishiPay; Decathlon) & Celular, no salão & Desativação RFID pelo sistema & Não & Integração RFID e antena de saída & Não descrita & Não descrita nas fontes & Etiqueta RFID \\
 f) Etiqueta inteligente por Bluetooth (Zliide) & Celular, encostado à etiqueta & Comando de destravamento após o pagamento & Sim & Aplicativo e etiquetas próprios; antena de saída opcional & Informações da peça e corredor infinito & Não descrita nas fontes & 53~$\times$~19~$\times$~25~mm \\
 \midrule
-\textbf{Produto proposto} & Celular, no salão & Autorização do celular direto ao dispositivo, sem a rede da loja & Sim; $\geq$~120~N ou o valor da etiqueta comercial (E12) & Antena de saída existente e ponto de devolução; sem terminal & Setor e disponibilidade pelo RFID já existente (R01, R02) & Em 100\% das falhas catalogadas, em até 60~s (E08, E09) & Até 98~$\times$~82~$\times$~26~mm e 130~g (E10, E11); custo a definir \\
+\textbf{Produto proposto} & Celular, no salão & Autorização do celular direto ao dispositivo, sem a rede da loja & Sim; $\geq$ o maior entre 120~N e o valor da etiqueta comercial (E12) & Antena de saída existente e ponto de devolução; sem terminal & Setor e disponibilidade pelo RFID já existente (R01, R02) & Em 100\% das falhas catalogadas, em até 60~s (E08, E09) & Até 98~$\times$~82~$\times$~26~mm e 130~g (E10, E11); custo a definir \\
 \end{longtable}
 \vspace{-0.8\baselineskip}
 \begin{center}
@@ -119,7 +119,7 @@ Concluir a liberação sem depender da rede da loja & Ganhador & Riachuelo & R07
 Disponibilidade e localização da peça a partir do RFID existente & Ganhador potencial & Consumidor e Riachuelo & N03, N05, DE04; R01, R02; A1, A2, A4 & d), f) em parte & Diferencial forte para o Cluster 3, mas com peso baixo no QFD (3,7\% cada) e dependente da acurácia de estoque (E02) \\
 Retenção pelo menos igual à da etiqueta comercial & Qualificador & Riachuelo & E12 & a), b), f) & Sem ela, o produto é descartado como antifurto \\
 Compatibilidade com a antena de saída já instalada & Qualificador & Riachuelo & E15; F3.4 & a) a e) & Trocar a infraestrutura de saída anularia a vantagem de dispensar terminais \\
-Alternativa humana em toda falha catalogada & Qualificador & Consumidor e Riachuelo & N02, N08; R07; E08, E09 & a), b), c) & Exigência do Cluster 1 (39\% da amostra) e condição do contrato (Seção~\ref{subsec:comerc_condicoes}) \\
+Alternativa humana em toda falha catalogada & Qualificador & Consumidor e Riachuelo & N02, N08; R07; E08, E09 & a) a d) & Exigência do Cluster 1 (39\% da amostra) e condição do contrato (Seção~\ref{subsec:comerc_condicoes}) \\
 Envelope e massa aceitáveis na peça & Qualificador & Consumidor e Riachuelo & E10, E11; função de estima \textit{preservar a aparência da peça} & a), b), f) & Hoje é o ponto fraco do conceito frente à Zliide \\
 Reuso com retorno de pelo menos 99\% por ciclo & Qualificador & Riachuelo & E14 & a), b) com 80\% a 83\% & Sem reuso, o custo unitário inviabiliza o produto \\
 Conformidade com Anatel e LGPD & Qualificador & Riachuelo & E17, E18; D07 & Não avaliado & Exigência legal, sem tolerância \\

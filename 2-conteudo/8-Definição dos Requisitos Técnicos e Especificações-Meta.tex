@@ -11,7 +11,7 @@
 % publicada estao marcados como meta ou estimativa da equipe.
 % =============================================================================
 
-\section{DEFINIÇÃO DE REQUISITOS TÉCNICOS E ESPECIFICAÇÕES-META}
+\section[DEFINIÇÃO DE REQUISITOS TÉCNICOS E ESPECIFICAÇÕES-META]{DEFINIÇÃO DE REQUISITOS TÉCNICOS E\\ESPECIFICAÇÕES-META}
 \label{sec:definicao_requisitos}
 
 Para transformar as necessidades da Seção~\ref{sec:ndd} em características que orientem o desenvolvimento e a avaliação do produto, a equipe usou o método \textit{Quality Function Deployment} (QFD). O método relaciona a voz do cliente a requisitos técnicos e evita que as necessidades virem soluções sem análise técnica. O projeto terá escala de protótipo, e as especificações precisaram caber nos recursos financeiros, tecnológicos e materiais da equipe. Os critérios definidos permitem verificar se o conceito resolve as principais dores da pesquisa, sem fixar os requisitos de uma solução industrial definitiva.
@@ -31,7 +31,7 @@ A terceira necessidade, contar com atendimento humano quando necessário (N08), 
 
 Entre os desejos, a equipe selecionou receber confirmação imediata do pagamento (D03), pela relação direta com a experiência de pagamento e com a confiança do consumidor ao deixar a loja. As entrevistas indicaram a expectativa de um aviso inequívoco de que a operação foi concluída e de que o cliente está autorizado a sair com o produto. A equipe classificou o item como desejo porque aumenta o conforto e a segurança percebida sem ter aparecido como barreira universal à compra.
 
-Por fim, duas demandas foram selecionadas. Reduzir o tempo de espera no caixa (DE01) está associada a um comportamento observável de abandono: o survey mostrou maior incidência de desistência por fila no Cluster 2, e as entrevistas trouxeram episódios concretos em promoções e no horário de almoço. Ter pagamento rápido e atendimento adequado (DE05), sintetiza a variação do nível de autonomia desejado conforme o contexto: alguns entrevistados separaram a reposição rápida, em que valorizam agilidade, das compras mais complexas, em que preferem o apoio de um vendedor. A proposta deverá, então, permitir uma jornada rápida e autônoma quando o consumidor quiser, mantendo o atendimento disponível nos casos em que a assistência for valorizada.
+Por fim, duas demandas foram selecionadas. Reduzir o tempo de espera no caixa (DE01) está associado a um comportamento observável de abandono: o survey mostrou maior incidência de desistência por fila no Cluster 2, e as entrevistas trouxeram episódios concretos em promoções e no horário de almoço. Ter pagamento rápido e atendimento adequado (DE05) sintetiza a variação do nível de autonomia desejado conforme o contexto: alguns entrevistados separaram a reposição rápida, em que valorizam agilidade, das compras mais complexas, em que preferem o apoio de um vendedor. A proposta deverá, então, permitir uma jornada rápida e autônoma quando o consumidor quiser, mantendo o atendimento disponível nos casos em que a assistência for valorizada.
 
 As necessidades selecionadas concentram-se na obtenção de informações confiáveis, na busca pelo produto, na disponibilidade de suporte humano e na saída sem constrangimento. O desejo refere-se à qualidade da experiência de pagamento, e as demandas, a comportamentos concretos de compra, como o abandono diante de filas e a busca por agilidade em compras simples.
 
@@ -47,10 +47,10 @@ Com base nas sete vozes selecionadas, a equipe definiu sete requisitos técnicos
     \footnotesize
     \renewcommand{\arraystretch}{1.3}
     \begin{tabularx}{\textwidth}{@{}
-        >{\RaggedRight\arraybackslash}p{1.0cm}
+        >{\RaggedRight\arraybackslash}p{1.2cm}
         >{\RaggedRight\arraybackslash}p{2.5cm}
         >{\RaggedRight\arraybackslash}X
-        >{\RaggedRight\arraybackslash}p{1.0cm}
+        >{\RaggedRight\arraybackslash}p{1.3cm}
         >{\RaggedRight\arraybackslash}p{3.0cm}
         >{\RaggedRight\arraybackslash}p{1.9cm}@{}}
         \toprule
@@ -90,7 +90,7 @@ Com base nas sete vozes selecionadas, a equipe definiu sete requisitos técnicos
 
 Os requisitos cobrem as dimensões presentes nas vozes selecionadas. O apoio à localização (R01) e a consulta de disponibilidade (R02) respondem às dificuldades na busca pelos produtos e à necessidade de confiar nas informações do aplicativo. A equipe formulou a localização em nível amplo e deixou a forma de implementação para uma etapa posterior, porque as evidências apontam para a dificuldade de encontrar e confirmar a existência da peça e não indicam que uma localização precisa dentro da loja seja indispensável. O tempo de pagamento (R03) e a conclusão sem intervenção (R04) atendem à demanda por uma jornada mais rápida e menos dependente do caixa, e a clareza do fluxo (R05) está associada à facilidade de uso da tecnologia.
 
-A liberação condicionada ao pagamento (R06) trata da confiança do consumidor e da redução de verificações na saída: o sistema deverá dar evidência clara de que a transação terminou e permitir a saída sem insegurança. O acesso a atendimento humano (R07) garante que a automação não elimine o suporte ao consumidor, aspecto relevante para os clientes que valorizam assistência durante a jornada. R07 é também o único requisito cuja meta a equipe fixou em cobertura total sem depender de medição, porque decorre de uma decisão de projeto.
+A liberação condicionada ao pagamento (R06) trata da confiança do consumidor e da redução de verificações na saída: o sistema deverá dar evidência clara de que a transação terminou e permitir a saída sem insegurança. O acesso a atendimento humano (R07) garante que a automação não elimine o suporte ao consumidor, aspecto relevante para os clientes que valorizam assistência durante a jornada. Como R06, R07 tem meta de cobertura total fixada por decisão de projeto, sem depender de medição.
 
 \subsection{Casa da qualidade}
 \label{subsec:QFD}
@@ -169,7 +169,7 @@ Na matriz da qualidade projetada, a equipe relacionou cada voz a cada requisito 
 
 A liberação condicionada ao pagamento (R06) obteve a maior importância técnica, 33,1\% do total, por causa das relações fortes com a saída sem constrangimento (N06), com a redução da espera no caixa (DE01) e com a confirmação do pagamento (D03). Em seguida vieram o tempo para concluir o pagamento (R03), com 24,4\%, ligado às duas demandas de rapidez, a clareza do fluxo no aplicativo (R05), com 13,7\%, e a conclusão da compra sem intervenção de funcionário (R04), com 13,2\%. O acesso a atendimento humano (R07) ficou com 8,3\%, e o apoio à localização da peça (R01) e a consulta de disponibilidade (R02), com 3,7\% cada.
 
-Os três requisitos de maior importância, R06, R03 e R05, somaram 71,2\% do total. As prioridades de desenvolvimento ficam na confiabilidade da transação, na rapidez do pagamento e na execução correta do fluxo pelo usuário. Os requisitos de busca e disponibilidade ficaram no fim da lista, porque N03 e N05 se relacionam com um único requisito cada e têm peso relativo menor. Por isso a equipe tratou a localização da peça como requisito secundário.
+Os três requisitos de maior importância, R06, R03 e R05, somaram 71,2\% do total. As prioridades de desenvolvimento ficam na confiabilidade da transação, na rapidez do pagamento e na execução correta do fluxo pelo usuário. Os requisitos de busca e disponibilidade ficaram no fim da lista, porque N03 e N05 se relacionam com poucos requisitos e têm peso relativo menor. Por isso a equipe tratou a localização da peça como requisito secundário.
 
 \subsubsection{Telhado da casa da qualidade}
 
@@ -210,8 +210,8 @@ No benchmarking técnico, a equipe buscou nas fontes do projeto valores publicad
     \footnotesize
     \renewcommand{\arraystretch}{1.3}
     \begin{tabularx}{\textwidth}{@{}
-        >{\RaggedRight\arraybackslash}p{1.0cm}
-        >{\RaggedRight\arraybackslash}p{1.0cm}
+        >{\RaggedRight\arraybackslash}p{1.6cm}
+        >{\RaggedRight\arraybackslash}p{1.3cm}
         >{\RaggedRight\arraybackslash}X
         >{\RaggedRight\arraybackslash}p{3.4cm}@{}}
         \toprule
@@ -297,7 +297,7 @@ As especificações E01 a E09 transformam os requisitos R01 a R07 da Tabela~\ref
     E05 & (R04; DE05) Participantes que identificam a peça, pagam e liberam a etiqueta sem ajuda de funcionário
         & \%; teste de usabilidade com 20 participantes, compra padrão de uma peça, observação estruturada
         & $\geq$~80 (aceito com $\geq$~16 conclusões autônomas)
-        & A Riachuelo tem 0\% de autonomia com o caixa tradicional. O único valor publicado é o da Renner, com 38\% dos pagamentos nos terminais de autoatendimento \cite{consumidormoderno2025renner}, que mede outra grandeza. A equipe não fixou 100\% porque as entrevistas mostraram clientes que preferem atendimento em compras mais complexas (E08). Meta da equipe \\
+        & A Riachuelo tem 0\% de autonomia com o caixa tradicional. O único valor publicado é o da Renner, com 38\% dos pagamentos nos terminais de autoatendimento \cite{consumidormoderno2025renner}, que mede outra grandeza. A equipe não fixou 100\% porque as entrevistas mostraram clientes que preferem atendimento em compras mais complexas (DE05). Meta da equipe \\
     \addlinespace
     E06 & (R05; DE05) Participantes que concluem o fluxo principal sem erro na primeira tentativa e sem instruções adicionais
         & \%; mesmo teste de E05, com registro de erros por observador
@@ -326,7 +326,7 @@ O catálogo de cenários de falha de E08 reúne, no mínimo, os oito casos previ
 \subsubsection{Especificações associadas a outros critérios relevantes para o produto}
 \label{subsubsec:espec_outros}
 
-As especificações E10 a E18 não vêm de vozes do cliente: nenhuma foi identificada nas entrevistas nem na pesquisa de mercado. Elas derivam de referências físicas, da função antifurto do enunciado do problema e das normas relevantes, e a equipe as trata como qualificadores segundo a lógica do diagrama de Kano, isto é, atributos que o cliente não pediu e cuja falha compromete a aceitação do produto. Na classificação da equipe, E10 a E13, E15, E17 e E18 são atributos básicos, que geram insatisfação quando ausentes, e E14 e E16 são atributos de desempenho. Esse julgamento não foi validado com clientes. A equipe incluiu só o que delimita o produto: envelope, massa, retenção, energia, vida útil, interface com a saída da loja, sinalização e conformidade legal. Entre as normas e leis, registrou a LGPD e as resoluções da Anatel, cuja aplicabilidade deve ser confirmada, porque a equipe não fez revisão jurídica. Nas linhas E10 a E14, ``dispositivo'' designa o que fica preso à peça, qualquer que seja a divisão de funções entre ele e a infraestrutura da loja.
+As especificações E10 a E18 não vêm dos requisitos técnicos do QFD. A maioria não foi pedida nas entrevistas nem na pesquisa de mercado, e as que se apoiam em vozes do cliente (E15, E16 e E18) indicam a voz na própria tabela. Elas derivam de referências físicas, da função antifurto do enunciado do problema e das normas relevantes, e a equipe as trata como qualificadores segundo a lógica do diagrama de Kano, isto é, atributos que o cliente não pediu e cuja falha compromete a aceitação do produto. Na classificação da equipe, E10 a E13, E15, E17 e E18 são atributos básicos, que geram insatisfação quando ausentes, e E14 e E16 são atributos de desempenho. Esse julgamento não foi validado com clientes. A equipe incluiu só o que delimita o produto: envelope, massa, retenção, energia, vida útil, interface com a saída da loja, sinalização e conformidade legal. Entre as normas e leis, registrou a LGPD e as resoluções da Anatel, cuja aplicabilidade deve ser confirmada, porque a equipe não fez revisão jurídica. Nas linhas E10 a E14, ``dispositivo'' designa o que fica preso à peça, qualquer que seja a divisão de funções entre ele e a infraestrutura da loja.
 
 \begingroup
 \captionsetup{font=normalsize}
@@ -368,7 +368,7 @@ As especificações E10 a E18 não vêm de vozes do cliente: nenhuma foi identif
     E12 & Força de tração axial suportada no estado travado, sem liberar
         & N; dinamômetro; cinco exemplares do dispositivo e cinco da etiqueta comercial, na mesma montagem de ensaio
         & $\geq$ o maior entre 120\,N e o valor medido na etiqueta comercial de referência
-        & Decorre da proteção contra furto do enunciado do problema e de E07. O valor de 120\,N é meta preliminar da equipe, porque a força das etiquetas comerciais não consta em fonte publicada. A regra do maior valor evita aceitar um dispositivo mais fraco que o atual \\
+        & Decorre da proteção contra furto do enunciado do problema e de E07. O valor de 120\,N é meta preliminar da equipe. Não há ficha técnica de fabricante com a força das etiquetas atuais, e a única referência encontrada, uma patente expirada de etiqueta rígida, cita de 356 a 556\,N \cite{googlepatents2006us7148805}. A regra do maior valor evita aceitar um dispositivo mais fraco que o atual \\
     \addlinespace
     E13 & Tempo de espera em estado travado sem recarga nem troca de energia, se o dispositivo tiver fonte própria
         & dias; medição da corrente de espera e ensaio acelerado
