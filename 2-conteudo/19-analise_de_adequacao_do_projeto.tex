@@ -1,0 +1,544 @@
+\section{ANÁLISE DE ADEQUAÇÃO DO PROJETO PARA A MANUFATURA E MONTAGEM (ENTREGA 3)}\label{sec:dfma}
+
+% Premissas desta seção, a rever quando a equipe decidir (ver TODOs dos arquivos 16-conjunto e 17-estrutura):
+% TODO (equipe): o pino atravessa o tecido. Se passar para o lado do tecido, rever a análise do corpo da garra e do pino.
+% TODO (equipe): o adesivo NFC não entra no produto. Se entrar, acrescentar uma peça comprada e a operação de colagem.
+% TODO (equipe): o torque do microatuador será fixado após o ensaio. A troca do componente não muda a montagem.
+% TODO (equipe): conferir se o rótulo da seção de constituição do produto é sec:constituicao_produto. Se for outro, trocar nas referências desta seção.
+
+Esta seção aplica ao Tag\&Go o método DFMA (\textit{Design for Manufacturing and Assembly}), com o objetivo de aprimorar o produto para a manufatura e a montagem. O ponto de partida é a estrutura do produto (Tabela~\ref{tab:estrut_lista}), com 20 componentes distintos e 27 peças por dispositivo, e a sequência da vista em camadas (Figura~\ref{fig:conj_camadas}). A seção avalia o projeto atual, propõe mudanças e compara as duas versões. As mudanças adotadas aparecem na estrutura revisada (Subseção~\ref{subsec:dfma_estrutura}).
+
+\subsection{Método}
+\label{subsec:dfma_metodo}
+
+Segundo \citeonline{rozenfeld2006gestao}, o DFMA reúne dois métodos da família DFX, empregados no projeto detalhado para otimizar o produto e o processo. O projeto para a manufatura (DFM) estuda as consequências das decisões de projeto nos processos de fabricação e ajusta as peças aos processos disponíveis, eliminando as características que as tornam difíceis de fabricar. O projeto para a montagem (DFA) estuda as mesmas consequências nos processos de montagem e busca uma montagem fácil e rápida, com menos componentes, menor variedade de componentes e operações mais simples. Os dois métodos fazem parte da engenharia simultânea, que antecipa para o projeto as mudanças que custariam mais caro na produção.
+
+A aplicação combinou duas abordagens. A primeira é o emprego de regras de projeto, que traduzem os princípios do DFM e do DFA em diretrizes para as peças e para a montagem \cite{rozenfeld2006gestao}: a equipe confrontou o Tag\&Go com 13 regras e registrou, para cada uma, se o projeto atual a atende ou que mudança ela sugere. A segunda é a avaliação quantitativa pelo índice DFA, que compara o tempo estimado de montagem com o de um projeto ideal:
+\begin{equation}
+\mathrm{DFA}_i = \frac{N_{\min} \times 3\,\text{s}}{T_m},
+\label{eq:dfa_indice}
+\end{equation}
+em que $N_{\min}$ é o número teórico mínimo de peças e $T_m$ é o tempo total estimado de montagem, em segundos. O fator de 3~s corresponde ao tempo de montagem de uma peça ideal, fácil de pegar e de inserir \cite{boothroyd2011product}. Quanto mais próximo de 1 é o índice, mais próximo o projeto está do ideal.
+
+Uma peça conta para o número mínimo quando a resposta a pelo menos uma de três perguntas é sim \cite{rozenfeld2006gestao}:
+
+\begin{enumerate}
+    \item Existe necessidade de movimento relativo entre a peça e as demais?
+    \item A peça precisa ser de material diferente das demais, por razões físicas ou químicas?
+    \item A peça precisa ser desmontável para facilitar a manutenção?
+\end{enumerate}
+
+No Tag\&Go, a terceira pergunta inclui o recondicionamento do dispositivo, que volta ao fornecedor no regime de locação (Subseção~\ref{subsec:comerc_condicoes}), e a retirada da célula no descarte. Uma peça com resposta não às três perguntas é candidata a ser integrada a outra ou eliminada.
+
+O cálculo adota quatro hipóteses.
+
+\begin{itemize}
+    \item \textbf{Montagem manual.} A primeira implantação está limitada a uma loja (Subseção~\ref{subsec:comerc_cobertura}), e esse volume não justifica a montagem automatizada. A avaliação usa, por isso, o procedimento para produtos montados manualmente.
+    \item \textbf{Tempos estimados.} Os tempos de manuseio e de inserção de cada peça vêm das tabelas de \citeonline{boothroyd2011product}, a partir da forma, do tamanho e do modo de fixação da peça. Nenhum tempo foi cronometrado.
+    \item \textbf{Itens comprados montados.} A embreagem de esferas, o microatuador e a placa de controle contam como uma peça cada, pelo mesmo critério de parada da estrutura do produto (Subseção~\ref{subsec:estrut_criterios}). As operações internas desses itens ficam com o fornecedor.
+    \item \textbf{Fronteira do produto.} A análise cobre o dispositivo preso à peça de roupa. A base de recarga, o servidor e as páginas de cadastro e de compra ficam fora, como na estrutura.
+\end{itemize}
+
+A análise parte também de decisões ainda em aberto. O pino atravessa o tecido, como no desenho de conjunto. O adesivo NFC não faz parte do produto. O torque do microatuador será fixado depois do ensaio, e a troca do componente não altera a montagem. Os materiais das peças fabricadas são os da constituição do produto (Seção~\ref{sec:constituicao_produto}): a base e a tampa são de PC/ABS e o suporte é de poliacetal, injetados na série, e o corpo da garra e o braço dos ímãs são de alumínio 6061-T6, usinados. Os ímãs são colados no braço com adesivo estrutural.
+
+A análise seguiu quatro passos. Primeiro, a equipe aplicou as regras de projeto à versão atual (Subseção~\ref{subsec:dfma_regras}). Depois, determinou o número mínimo de peças e o índice DFA dessa versão (Subseções~\ref{subsec:dfma_minimo} e~\ref{subsec:dfma_indice}). Em seguida, propôs as mudanças e recalculou o índice (Subseção~\ref{subsec:dfma_aprimorado}). Por fim, registrou a estrutura resultante (Subseção~\ref{subsec:dfma_estrutura}).
+
+\subsection{Aplicação das regras de projeto}
+\label{subsec:dfma_regras}
+
+A Tabela~\ref{tab:dfma_regras} confronta o projeto atual com as 13 regras de projeto. Para cada regra, a tabela descreve a situação do Tag\&Go, avalia se ela é atendida e indica a ação. As mudanças propostas recebem um código, de M1 a M8, e estão descritas na Tabela~\ref{tab:dfma_mudancas}. Os códigos TG são os da estrutura do produto (Tabela~\ref{tab:estrut_lista}).
+
+\begingroup
+\footnotesize
+\renewcommand{\arraystretch}{1.3}
+\begin{longtable}{@{}
+    >{\RaggedRight\arraybackslash}p{2.7cm}
+    >{\RaggedRight\arraybackslash}p{6.2cm}
+    >{\RaggedRight\arraybackslash}p{1.7cm}
+    >{\RaggedRight\arraybackslash}p{4.1cm}@{}}
+    \caption{Aplicação das regras de projeto ao Tag\&Go}\label{tab:dfma_regras}\\
+    \toprule
+    \textbf{Regra} & \textbf{Situação no projeto atual} & \textbf{Avaliação} & \textbf{Ação} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Regra} & \textbf{Situação no projeto atual} & \textbf{Avaliação} & \textbf{Ação} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    1. Número mínimo de peças & São 27 peças. Várias não se movem em relação às vizinhas e podem ser integradas: os três ímãs (TG-313), o revestimento (TG-214) e o pino (TG-221) da garra, o eixo da articulação (TG-212) e os parafusos (TG-121 e TG-314) & Não atende & M1 a M7 \\
+    2. Minimizar as variações de peças & Há dois tipos de parafuso, um na tampa e outro no braço, três LEDs de cores diferentes e duas chaves & Atende em parte & M3, M5 e M6 \\
+    3. Peças para usos múltiplos & A tampa fecha a carcaça, leva o código 2D e o furo do pino e apoia a articulação da garra. O suporte posiciona a embreagem e o microatuador e forma a prateleira sob a embreagem & Atende & Mantido. A tampa ganha a guia de luz (M6) e os mancais da garra (M7) \\
+    4. Projeto modular & O mecanismo, a garra e a tampa formam subconjuntos montados antes de entrar na base. A célula fica sob a placa, e a troca da célula exige soltar a placa & Atende em parte & Mantido. A posição da célula está nas limitações (Subseção~\ref{subsec:dfma_limitacoes}) \\
+    5. Peças para fácil fabricação & A base, a tampa e o suporte são injetados, com parede de 2,0 mm, fundo de 1,5 mm e prateleira de 0,8 mm. A garra e o braço são de alumínio usinado, e a garra tem dentes, articulação e furo do pino. O código 2D é diferente em cada dispositivo & Atende em parte & Diretrizes de fabricação, listadas após esta tabela \\
+    6. Monobloco para mecanismos de precisão & Um suporte único (TG-113) fixa a embreagem e o microatuador, e a distância de 16 mm entre os eixos não depende da tampa & Atende & Mantido \\
+    7. Montagem de baixo para cima & As peças entram na base de baixo para cima: bobina, célula, placa, suporte com o mecanismo, tampa e garra (Figura~\ref{fig:conj_camadas}). O lado de aperto dos parafusos da tampa não está definido & Atende & Parafusos apertados pela face superior, para não virar o conjunto \\
+    8. Encaixe natural das peças & A tampa não tem guia de posição além dos parafusos. A pilha de três ímãs precisa ser alinhada. A tampa leva os LEDs e a chave da garra, e os fios precisam ser ligados à placa no fechamento & Não atende & M1, M4, M6 e M8. Chanfro no furo do pino da tampa \\
+    9. Facilitar o manuseio & Os ímãs atraem-se entre si e atraem as ferramentas. A mola de torção pode enroscar em outras molas. O pino de $\varnothing$~1,2 mm e os parafusos são pequenos & Não atende & M1, M2 e M3. Ímã fornecido com separador, ferramentas não magnéticas e molas fornecidas separadas \\
+    10. Eliminar ajustes & A distância entre os eixos é garantida pelo suporte. A folga de 0,2 mm entre o ímã e a prateleira depende das tolerâncias do braço, do eixo do microatuador e da camada de adesivo sob o ímã, e a atração do ímã tende a fechá-la & Atende em parte & Tolerâncias a fixar no projeto detalhado (Subseção~\ref{subsec:dfma_limitacoes}) \\
+    11. Montagem com uma só mão & A maior parte das peças entra por cima, com a base apoiada em um dispositivo de fixação. A garra exige segurar a mola carregada enquanto se insere o eixo, e a tampa exige ligar os fios & Atende em parte & M6, M7 e M8 \\
+    12. Evitar ferramentas & Cinco parafusos pedem chave: quatro na tampa e um no braço & Não atende & M3 e M4 \\
+    13. Montagem pelo cliente & O dispositivo é montado pelo fornecedor. Na loja, o funcionário apenas prende a garra na peça de roupa & Não se aplica & -- \\
+\end{longtable}
+\endgroup
+\begin{center}
+    \vspace{-0.6cm}
+    \footnotesize Fonte: Elaborado pelos autores (2026).
+\end{center}
+
+A regra 5 trata da fabricação das peças. Das cinco peças fabricadas, três são injetadas em termoplástico e duas são de alumínio usinado (Seção~\ref{sec:constituicao_produto}). A equipe registrou as seguintes diretrizes de fabricação.
+
+\begin{itemize}
+    \item \textbf{Ângulo de saída.} As paredes verticais da base, da tampa e do suporte devem ter ângulo de saída da ordem de 1$^\circ$, para que a peça saia do molde sem marcas.
+    \item \textbf{Espessura.} A transição entre a parede de 2,0 mm e o fundo de 1,5 mm deve ser gradual e ter raio na junção, para evitar rechupe e empenamento. As nervuras, quando houver, devem ser mais finas que a parede.
+    \item \textbf{Prateleira do suporte.} Com 0,8 mm, é a região mais fina das peças. A espessura vem do campo dos ímãs e não deve aumentar. O poliacetal tem contração de moldagem elevada, e a planicidade da prateleira, de que depende a folga até o ímã, deve ser confirmada com o fornecedor do molde, junto com o preenchimento. O ponto de injeção deve ficar perto da prateleira.
+    \item \textbf{Rebaixos.} As abas da tampa (M4) e os mancais da garra na tampa (M7) criam rebaixos. Cada um deve ter uma abertura passante sob o gancho, para que o molde abra sem gaveta.
+    \item \textbf{Código 2D.} O endereço é diferente em cada dispositivo, e o molde é o mesmo para todas as peças. Por isso o código não pode ser moldado, e a gravação a laser depois da moldagem é uma operação que não pode ser eliminada. Ela depende do grau de PC/ABS próprio para marcação a laser, escolhido na constituição do produto.
+    \item \textbf{Corpo da garra.} A liga 6061-T6 é uma liga para usinagem e conformação, e não para fundição. Usinada, cada garra exige dentes, articulação e furo do pino, o que encarece a peça na série. Se a série adotar a fundição, que a constituição do produto admite e de que dependem as mudanças M2 e M7, a garra deve passar a uma liga de alumínio de fundição, e o ensaio de arrancamento (E12) deve ser feito com essa liga. As ligas de fundição com alto teor de silício aceitam mal a anodização, e o acabamento também precisa ser revisto.
+    \item \textbf{Braço dos ímãs.} O braço deve ter todas as formas acessíveis por uma só face, para ser usinado em uma única fixação. A profundidade do alojamento do ímã e a camada de adesivo somam-se na folga de 0,2 mm até a prateleira, e por isso o alojamento deve ter fundo plano e tolerância de profundidade fixada no projeto detalhado.
+\end{itemize}
+
+\begin{table}[!htb]
+    \centering
+    \caption{Mudanças propostas pela aplicação das regras de projeto}
+    \label{tab:dfma_mudancas}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{1.1cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{2.3cm}
+        >{\RaggedRight\arraybackslash}p{1.3cm}
+        >{\RaggedRight\arraybackslash}p{2.6cm}@{}}
+        \toprule
+        \textbf{Código} & \textbf{Mudança} & \textbf{Itens afetados} & \textbf{Regras} & \textbf{Situação} \\
+        \midrule
+        M1 & Um ímã de $\varnothing$~10~$\times$~12 mm no lugar da pilha de três ímãs de $\varnothing$~10~$\times$~4 mm. O volume e o grau são os mesmos, e o campo na face praticamente não muda & TG-313 & 1, 8 e 9 & Proposta \\
+        M2 & Garra fundida em liga de alumínio de fundição, com o pino como inserto, e com o revestimento de elastômero sobreinjetado & TG-211, TG-214 e TG-221 & 1, 5 e 9 & Proposta \\
+        M3 & Braço montado por pressão no eixo do microatuador, sem parafuso. O furo do braço é usinado com o perfil do eixo, e a atração do ímã empurra o braço contra o eixo & TG-312 e TG-314 & 1, 2, 9 e 12 & Proposta \\
+        M4 & Tampa presa por duas abas de encaixe, no lado da eletrônica, e por dois parafusos, no lado do mecanismo & TG-112 e TG-121 & 1, 8 e 12 & Proposta \\
+        M5 & Eliminação da chave da base. A placa detecta a recarga pela tensão na saída da bobina & TG-511 e TG-513 & 1 e 2 & Proposta \\
+        M6 & Um LED de três cores, soldado na placa, no lugar dos três LEDs da tampa. A luz chega à face da tampa por uma guia de luz encaixada nela & TG-112, TG-411 e TG-511 & 1, 2, 8 e 11 & Proposta \\
+        M7 & Eixo da articulação substituído por munhões fundidos no corpo da garra, encaixados em mancais da tampa & TG-112, TG-211 e TG-212 & 1, 8 e 11 & A avaliar: resistência do encaixe à força de arrancamento (E12) \\
+        M8 & Chave da garra fixada no suporte, e não na tampa. A tampa fica sem componente elétrico e fecha sem ligação de fios & TG-113 e TG-512 & 8 e 11 & A avaliar: altura do apoio da chave no suporte \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+A M1 mantém a altura da pilha. A redução de altura proposta na Subseção~\ref{subsec:conj_confronto} depende de um ímã de grau maior e do ensaio do campo, e não entra nesta análise.
+
+Três alternativas foram consideradas e descartadas. A primeira prendia a tampa só por encaixes e eliminava os quatro parafusos. Ela foi descartada porque a tampa poderia ser aberta sem ferramenta, o que expõe o mecanismo ao furto, e porque dificultaria o recondicionamento. Pelo mesmo motivo, os dois parafusos da M4 ficam do lado do mecanismo. A segunda integrava o suporte à base. Ela eliminava uma peça, mas obrigava a base e o suporte a usar o mesmo material, contra a escolha de poliacetal para o suporte e de PC/ABS para a base. Ela também impedia montar e testar o mecanismo como subconjunto antes de fechar a carcaça (regra 4), e a distância crítica entre os eixos já é garantida pelo suporte (regra 6). A terceira trocava a mola de abertura por uma lâmina flexível feita na própria garra. Enquanto a peça de roupa está exposta, a garra fica fechada e a lâmina fica sob carga constante. Uma lâmina de plástico sofreria fluência, e uma de alumínio fundido, frágil em seção fina, romperia por fadiga ao longo das aberturas. Nos dois casos a força de abertura se perderia ao longo da vida do dispositivo, e por isso a mola de aço é mantida.
+
+O efeito das mudanças no número de peças e no índice DFA está na Subseção~\ref{subsec:dfma_aprimorado}.
+
+\subsection{Número mínimo teórico de peças}
+\label{subsec:dfma_minimo}
+
+As três perguntas da Subseção~\ref{subsec:dfma_metodo} foram aplicadas a cada peça da estrutura atual, em relação às peças já montadas. Três critérios orientaram as respostas. A base é a primeira peça a entrar na montagem e conta como essencial, por convenção do método \cite{boothroyd2011product}. Os itens com mais de uma unidade foram avaliados peça a peça: a primeira pode ser essencial, e as demais só são essenciais se também responderem sim a uma das perguntas. Um componente eletrônico que pode ser montado na placa de controle, que é comprada montada, não é essencial como peça da montagem final. A Tabela~\ref{tab:dfma_minimo} apresenta o resultado.
+
+\begingroup
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}l >{\RaggedRight\arraybackslash}p{3.0cm} c c c c c >{\RaggedRight\arraybackslash}p{5.6cm}@{}}
+    \caption{Número teórico mínimo de peças da versão atual}\label{tab:dfma_minimo}\\
+    \toprule
+    \textbf{Código} & \textbf{Item} & \textbf{Qtd.} & \textbf{P1} & \textbf{P2} & \textbf{P3} & $\boldsymbol{N_{\min}}$ & \textbf{Justificativa} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Código} & \textbf{Item} & \textbf{Qtd.} & \textbf{P1} & \textbf{P2} & \textbf{P3} & $\boldsymbol{N_{\min}}$ & \textbf{Justificativa} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    TG-111 & Base da carcaça & 1 & -- & -- & -- & 1 & Primeira peça da montagem \\
+    TG-112 & Tampa & 1 & N & N & S & 1 & Precisa sair para o recondicionamento e para a retirada da célula \\
+    TG-113 & Suporte do mecanismo & 1 & N & S & N & 1 & Poliacetal, pela fluência e pela estabilidade da folga. A base é de PC/ABS \\
+    TG-121 & Parafuso da tampa & 4 & N & N & N & 0 & Fixador. A fixação pode ser feita por encaixes \\
+    \midrule
+    TG-211 & Corpo da garra & 1 & S & N & N & 1 & Gira em relação à tampa \\
+    TG-212 & Eixo da articulação & 1 & N & N & N & 0 & Poderia ser feito no corpo da garra, como munhões \\
+    TG-213 & Mola de abertura & 1 & S & S & N & 1 & Deforma-se a cada abertura e precisa ser de metal \\
+    TG-214 & Revestimento de elastômero & 1 & N & S & N & 1 & Elastômero, para aumentar o atrito com o tecido \\
+    TG-221 & Pino & 1 & N & S & N & 1 & Aço, para resistir ao esforço e ser retido pelas esferas \\
+    TG-222 & Embreagem de esferas & 1 & S & N & N & 1 & As esferas e o carretel se movem \\
+    \midrule
+    TG-311 & Microatuador rotativo & 1 & S & N & N & 1 & O eixo gira \\
+    TG-312 & Braço dos ímãs & 1 & S & N & N & 1 & Gira em relação ao suporte \\
+    TG-313 & Ímã de neodímio & 3 & N & S & N & 1 & O primeiro é de material magnético. Os outros dois não se movem em relação a ele e são do mesmo material \\
+    TG-314 & Parafuso do braço & 1 & N & N & N & 0 & Fixador \\
+    \midrule
+    TG-411 & LED & 3 & N & N & N & 0 & Poderia ser montado na placa de controle \\
+    \midrule
+    TG-511 & Placa de controle montada & 1 & N & S & N & 1 & Eletrônica, diferente do plástico da carcaça \\
+    TG-512 & Chave da garra & 1 & N & N & N & 0 & Poderia ser montada na placa de controle \\
+    TG-513 & Chave da base & 1 & N & N & N & 0 & Poderia ser montada na placa de controle \\
+    TG-521 & Célula recarregável & 1 & N & S & S & 1 & Eletroquímica. Precisa sair no descarte \\
+    TG-522 & Bobina de indução & 1 & N & S & N & 1 & Enrolamento de cobre, diferente da placa e da carcaça \\
+    \midrule
+    \multicolumn{2}{@{}l}{\textbf{Total}} & \textbf{27} & & & & \textbf{14} & \\
+\end{longtable}
+\endgroup
+\begin{center}
+    \vspace{-0.6cm}
+    \footnotesize Fonte: Elaborado pelos autores (2026). P1: movimento relativo. P2: material diferente. P3: desmontável para manutenção. S: sim. N: não.
+\end{center}
+
+Das 27 peças, 14 são essenciais, cerca de 52\%. As 13 restantes formam quatro grupos: os cinco parafusos, que como fixadores nunca são essenciais na teoria; dois dos três ímãs, que repetem o primeiro; os três LEDs e as duas chaves, que podem ficar na placa; e o eixo da articulação, que pode ser feito no corpo da garra. As mudanças da Tabela~\ref{tab:dfma_mudancas} atacam os quatro grupos.
+
+O suporte é essencial pela segunda pergunta. A constituição do produto escolheu para ele o poliacetal, pela resistência à fluência e pela estabilidade da folga sob a prateleira, e para a base o PC/ABS (Seção~\ref{sec:constituicao_produto}). Mantê-lo separado tem ainda outra vantagem: o mecanismo pode ser montado e testado antes de fechar a carcaça (regra 4). Também o revestimento e o pino são essenciais pela segunda pergunta, porque são de materiais diferentes do alumínio do corpo da garra. A mudança M2 mantém esses materiais, mas faz da garra uma única peça na montagem, fundida com o pino como inserto e com o revestimento sobreinjetado.
+
+\subsection{Tempo de montagem e índice DFA}
+\label{subsec:dfma_indice}
+
+% TODO (equipe): conferir os tempos de referência da Tabela tab:dfma_tempos_ref nas tabelas de Boothroyd, Dewhurst e Knight (2011)
+%   ou na planilha da disciplina. Se algum valor mudar, refazer as somas das Tabelas tab:dfma_tempos_atual e do projeto aprimorado.
+
+O tempo de cada operação é a soma de um tempo de manuseio, para pegar e orientar a peça, e de um tempo de inserção, para posicioná-la e fixá-la \cite{boothroyd2011product}. A equipe classificou cada operação em uma classe de dificuldade e adotou para cada classe um tempo de referência (Tabela~\ref{tab:dfma_tempos_ref}). A ligação de um conector na placa de controle e a aplicação do adesivo que prende os ímãs no braço não acrescentam peça, mas são operações da montagem e entram como operações à parte. A cura do adesivo ocorre fora da linha e não entra no tempo. Os três LEDs foram considerados ligados por um único chicote.
+
+\begin{table}[H]
+    \centering
+    \caption{Tempos de referência adotados para manuseio e inserção}
+    \label{tab:dfma_tempos_ref}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.25}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.8cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\centering\arraybackslash}p{1.5cm}@{}}
+        \toprule
+        \textbf{Etapa} & \textbf{Classe} & \textbf{Tempo (s)} \\
+        \midrule
+        Manuseio & Peça fácil de pegar, com mais de 15 mm e sem orientação a definir & 1,1 \\
+        Manuseio & Peça que precisa ser orientada em torno de um eixo & 1,5 \\
+        Manuseio & Peça que precisa ser orientada em torno de dois eixos & 1,8 \\
+        Manuseio & Peça entre 6 e 15 mm, ou fina e flexível & 1,9 \\
+        Manuseio & Peça com menos de 6 mm ou que exige pinça & 2,5 \\
+        Manuseio & Peça que gruda ou enrosca em outras & 3,0 \\
+        \midrule
+        Inserção & Colocada sem fixar, fácil de alinhar & 1,5 \\
+        Inserção & Fixada por encaixe logo após a inserção, fácil de alinhar & 2,0 \\
+        Inserção & Colocada sem fixar, difícil de alinhar ou com resistência & 2,5 \\
+        Inserção & Fixada por encaixe com resistência, ou segurada enquanto é fixada & 5,0 \\
+        Inserção & Parafuso apertado logo após a inserção & 6,0 \\
+        \midrule
+        Operação à parte & Encaixe de um conector na placa de controle & 4,0 \\
+        Operação à parte & Aplicação de adesivo no alojamento do ímã & 6,0 \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026), com base em \citeonline{boothroyd2011product}. Os tempos do conector e do adesivo são estimativas da equipe.}
+\end{table}
+
+A Tabela~\ref{tab:dfma_tempos_atual} lista as operações da versão atual na ordem da vista em camadas (Figura~\ref{fig:conj_camadas}). O mecanismo, a tampa e a garra são montados como subconjuntos antes da montagem final.
+
+\begingroup
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}c >{\RaggedRight\arraybackslash}p{7.0cm} c c c c c@{}}
+    \caption{Operações e tempos estimados de montagem da versão atual}\label{tab:dfma_tempos_atual}\\
+    \toprule
+    \textbf{Nº} & \textbf{Operação} & \textbf{Peças} & \textbf{Rep.} & \textbf{Man. (s)} & \textbf{Ins. (s)} & \textbf{Total (s)} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Nº} & \textbf{Operação} & \textbf{Peças} & \textbf{Rep.} & \textbf{Man. (s)} & \textbf{Ins. (s)} & \textbf{Total (s)} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    \multicolumn{7}{@{}l}{\textit{Subconjunto do mecanismo}} \\
+    1 & Suporte (TG-113) no dispositivo de fixação & 1 & 1 & 1,1 & 1,5 & 2,6 \\
+    2 & Embreagem (TG-222) no alojamento do suporte & 1 & 1 & 1,5 & 2,0 & 3,5 \\
+    3 & Microatuador (TG-311) no suporte & 1 & 1 & 1,8 & 2,0 & 3,8 \\
+    4 & Braço (TG-312) no eixo do microatuador & 1 & 1 & 1,8 & 2,5 & 4,3 \\
+    5 & Parafuso do braço (TG-314) & 1 & 1 & 2,5 & 6,0 & 8,5 \\
+    6 & Adesivo no alojamento do braço & 0 & 1 & -- & 6,0 & 6,0 \\
+    7 & Ímãs (TG-313) no braço, um a um & 3 & 3 & 3,0 & 2,5 & 16,5 \\
+    & \textit{Subtotal} & 8 & & & & 45,2 \\
+    \midrule
+    \multicolumn{7}{@{}l}{\textit{Subconjunto da tampa}} \\
+    8 & Tampa (TG-112) no dispositivo, com a face externa para baixo & 1 & 1 & 1,1 & 1,5 & 2,6 \\
+    9 & LEDs (TG-411) nos furos da tampa, com vedação & 3 & 3 & 2,5 & 5,0 & 22,5 \\
+    10 & Chave da garra (TG-512) sob a tampa & 1 & 1 & 1,9 & 2,0 & 3,9 \\
+    & \textit{Subtotal} & 5 & & & & 29,0 \\
+    \midrule
+    \multicolumn{7}{@{}l}{\textit{Subconjunto da garra}} \\
+    11 & Corpo da garra (TG-211) no dispositivo & 1 & 1 & 1,8 & 1,5 & 3,3 \\
+    12 & Revestimento (TG-214) no corpo da garra & 1 & 1 & 1,9 & 5,0 & 6,9 \\
+    13 & Pino (TG-221) no corpo da garra & 1 & 1 & 2,5 & 5,0 & 7,5 \\
+    & \textit{Subtotal} & 3 & & & & 17,7 \\
+    \midrule
+    \multicolumn{7}{@{}l}{\textit{Montagem final}} \\
+    14 & Base (TG-111) no dispositivo & 1 & 1 & 1,1 & 1,5 & 2,6 \\
+    15 & Chave da base (TG-513) & 1 & 1 & 1,9 & 2,0 & 3,9 \\
+    16 & Bobina (TG-522) no fundo da base & 1 & 1 & 1,9 & 2,5 & 4,4 \\
+    17 & Célula (TG-521) sobre a bobina & 1 & 1 & 1,8 & 1,5 & 3,3 \\
+    18 & Placa (TG-511) sobre a célula & 1 & 1 & 1,8 & 2,5 & 4,3 \\
+    19 & Subconjunto do mecanismo na base & 0 & 1 & 1,8 & 2,5 & 4,3 \\
+    20 & Conectores da bobina, da célula, da chave da base e do microatuador na placa & 0 & 4 & -- & 4,0 & 16,0 \\
+    21 & Conectores dos LEDs e da chave da garra, com a tampa segura na mão & 0 & 2 & -- & 4,0 & 8,0 \\
+    22 & Subconjunto da tampa sobre a base & 0 & 1 & 1,8 & 2,5 & 4,3 \\
+    23 & Parafusos da tampa (TG-121) & 4 & 4 & 2,5 & 6,0 & 34,0 \\
+    24 & Mola de abertura (TG-213) na articulação & 1 & 1 & 3,0 & 5,0 & 8,0 \\
+    25 & Subconjunto da garra na articulação, segurando a mola & 0 & 1 & 1,8 & 5,0 & 6,8 \\
+    26 & Eixo da articulação (TG-212) & 1 & 1 & 2,5 & 5,0 & 7,5 \\
+    & \textit{Subtotal} & 11 & & & & 107,4 \\
+    \midrule
+    & \textbf{Total} & \textbf{27} & & & & \textbf{199,3} \\
+\end{longtable}
+\endgroup
+\begin{center}
+    \vspace{-0.6cm}
+    \footnotesize Fonte: Elaborado pelos autores (2026). Rep.: repetições. Man.: manuseio. Ins.: inserção. Total: repetições multiplicadas pela soma de manuseio e inserção.
+\end{center}
+
+Com $N_{\min} = 14$ (Tabela~\ref{tab:dfma_minimo}) e $T_m = 199{,}3$~s, a Equação~\ref{eq:dfa_indice} dá:
+\begin{equation}
+\mathrm{DFA}_i = \frac{14 \times 3\,\text{s}}{199{,}3\,\text{s}} \approx 0{,}21.
+\label{eq:dfa_atual}
+\end{equation}
+
+A montagem atual leva quase cinco vezes o tempo de um projeto ideal com o mesmo número mínimo de peças. O tempo se concentra em cinco pontos, que somam 127,8~s, ou 64\% do total.
+
+\begin{itemize}
+    \item \textbf{Parafusos.} Os cinco parafusos somam 42,5~s, ou 21\% do total. São tratados pelas mudanças M3 e M4.
+    \item \textbf{Conectores.} As seis ligações na placa somam 24,0~s, ou 12\%. As ligações da tampa exigem segurá-la na mão. São tratadas pelas mudanças M5, M6 e M8.
+    \item \textbf{LEDs.} Os três LEDs, colocados um a um e vedados, somam 22,5~s, ou 11\%. São tratados pela mudança M6.
+    \item \textbf{Articulação da garra.} A mola, a garra e o eixo somam 22,3~s, ou 11\%, porque a mola precisa ficar segura enquanto o eixo é inserido. São tratados pela mudança M7.
+    \item \textbf{Ímãs.} Os três ímãs, que grudam entre si, somam 16,5~s, ou 8\%. São tratados pela mudança M1.
+\end{itemize}
+
+O pino e o revestimento da garra somam outros 14,4~s e são tratados pela mudança M2. A aplicação do adesivo, com 6,0~s, permanece na versão aprimorada, porque o ímã continua colado no braço. Os tempos são estimativas por classe e não substituem a cronometragem no protótipo. Por isso, o índice serve sobretudo para comparar as duas versões, calculadas com os mesmos critérios.
+
+\subsection{Projeto aprimorado}
+\label{subsec:dfma_aprimorado}
+
+A versão aprimorada aplica as oito mudanças da Tabela~\ref{tab:dfma_mudancas}. As mudanças M7 e M8 ainda dependem de verificação e, por isso, o resultado é apresentado também sem elas. A Tabela~\ref{tab:dfma_tempos_aprimorado} lista as operações da nova versão, com os mesmos tempos de referência da Tabela~\ref{tab:dfma_tempos_ref}. A coluna de mudança indica a origem de cada alteração.
+
+\begingroup
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}c >{\RaggedRight\arraybackslash}p{5.9cm} >{\RaggedRight\arraybackslash}p{1.1cm} c c c c c@{}}
+    \caption{Operações e tempos estimados de montagem da versão aprimorada}\label{tab:dfma_tempos_aprimorado}\\
+    \toprule
+    \textbf{Nº} & \textbf{Operação} & \textbf{Mud.} & \textbf{Peças} & \textbf{Rep.} & \textbf{Man. (s)} & \textbf{Ins. (s)} & \textbf{Total (s)} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Nº} & \textbf{Operação} & \textbf{Mud.} & \textbf{Peças} & \textbf{Rep.} & \textbf{Man. (s)} & \textbf{Ins. (s)} & \textbf{Total (s)} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    \multicolumn{8}{@{}l}{\textit{Subconjunto do mecanismo}} \\
+    1 & Suporte (TG-113) no dispositivo de fixação & -- & 1 & 1 & 1,1 & 1,5 & 2,6 \\
+    2 & Embreagem (TG-222) no alojamento do suporte & -- & 1 & 1 & 1,5 & 2,0 & 3,5 \\
+    3 & Microatuador (TG-311) no suporte & -- & 1 & 1 & 1,8 & 2,0 & 3,8 \\
+    4 & Braço (TG-312) no eixo do microatuador, por pressão & M3 & 1 & 1 & 1,8 & 5,0 & 6,8 \\
+    5 & Adesivo no alojamento do braço & -- & 0 & 1 & -- & 6,0 & 6,0 \\
+    6 & Ímã único (TG-313) no braço & M1 & 1 & 1 & 3,0 & 2,5 & 5,5 \\
+    7 & Chave da garra (TG-512) no suporte & M8 & 1 & 1 & 1,9 & 2,0 & 3,9 \\
+    & \textit{Subtotal} & & 6 & & & & 32,1 \\
+    \midrule
+    \multicolumn{8}{@{}l}{\textit{Subconjunto da tampa}} \\
+    8 & Tampa (TG-112) no dispositivo, com a face externa para baixo & -- & 1 & 1 & 1,1 & 1,5 & 2,6 \\
+    9 & Guia de luz na tampa, por encaixe & M6 & 1 & 1 & 1,9 & 2,0 & 3,9 \\
+    & \textit{Subtotal} & & 2 & & & & 6,5 \\
+    \midrule
+    \multicolumn{8}{@{}l}{\textit{Montagem final}} \\
+    10 & Base (TG-111) no dispositivo & -- & 1 & 1 & 1,1 & 1,5 & 2,6 \\
+    11 & Bobina (TG-522) no fundo da base & -- & 1 & 1 & 1,9 & 2,5 & 4,4 \\
+    12 & Célula (TG-521) sobre a bobina & -- & 1 & 1 & 1,8 & 1,5 & 3,3 \\
+    13 & Placa (TG-511), já com o LED de três cores, sobre a célula & M6 & 1 & 1 & 1,8 & 2,5 & 4,3 \\
+    14 & Subconjunto do mecanismo na base & -- & 0 & 1 & 1,8 & 2,5 & 4,3 \\
+    15 & Conectores da bobina, da célula, do microatuador e da chave da garra na placa & M5, M6 e M8 & 0 & 4 & -- & 4,0 & 16,0 \\
+    16 & Subconjunto da tampa sobre a base, com as abas encaixadas & M4 & 0 & 1 & 1,8 & 2,5 & 4,3 \\
+    17 & Parafusos da tampa (TG-121) & M4 & 2 & 2 & 2,5 & 6,0 & 17,0 \\
+    18 & Mola de abertura (TG-213) no alojamento da garra & M7 & 1 & 1 & 3,0 & 1,5 & 4,5 \\
+    19 & Garra fundida (TG-211) nos mancais da tampa, por encaixe & M2 e M7 & 1 & 1 & 1,8 & 5,0 & 6,8 \\
+    & \textit{Subtotal} & & 8 & & & & 67,5 \\
+    \midrule
+    & \textbf{Total} & & \textbf{16} & & & & \textbf{106,1} \\
+\end{longtable}
+\endgroup
+\begin{center}
+    \vspace{-0.6cm}
+    \footnotesize Fonte: Elaborado pelos autores (2026). Mud.: mudança. Rep.: repetições. Man.: manuseio. Ins.: inserção.
+\end{center}
+
+O subconjunto da garra deixa de existir, porque a garra passa a ser uma única peça fundida (M2). As ligações na placa caem de seis para quatro: a chave da base sai (M5), o LED já vem soldado na placa (M6) e a chave da garra é ligada com a tampa ainda aberta (M8).
+
+O número mínimo de peças da nova versão é 13. Em relação à Tabela~\ref{tab:dfma_minimo}, entra a guia de luz, essencial pela segunda pergunta por ser de material transparente, e saem o revestimento e o pino, que passam a fazer parte da garra. Os dois parafusos e a chave da garra continuam não essenciais. Com $N_{\min} = 13$ e $T_m = 106{,}1$~s:
+\begin{equation}
+\mathrm{DFA}_i = \frac{13 \times 3\,\text{s}}{106{,}1\,\text{s}} \approx 0{,}37.
+\label{eq:dfa_aprimorado}
+\end{equation}
+
+Sem as mudanças M7 e M8, o eixo da articulação volta, a mola volta a ser segurada durante a inserção do eixo e a chave da garra volta para a tampa. A versão teria então 17 peças, 117,1~s e índice de 0,33. A M8 não altera o tempo estimado, porque a ligação da chave tem o mesmo tempo dentro ou fora da tampa. O ganho dela está em fechar a tampa com uma só mão (regra 11), o que as classes de tempo não captam.
+
+A Tabela~\ref{tab:dfma_beneficios} resume o efeito de cada mudança, no formato conceito e benefício. Os ganhos de tempo somam 93,2~s, que é a diferença entre as duas versões.
+
+\begin{table}[!htb]
+    \centering
+    \caption{Conceito e benefício de cada mudança}
+    \label{tab:dfma_beneficios}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{1.1cm}
+        >{\RaggedRight\arraybackslash}p{4.4cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\centering\arraybackslash}p{1.2cm}
+        >{\centering\arraybackslash}p{1.7cm}@{}}
+        \toprule
+        \textbf{Código} & \textbf{Conceito} & \textbf{Benefício} & \textbf{Peças} & \textbf{Tempo (s)} \\
+        \midrule
+        M1 & Ímã único & Três ímãs viram um, e o manuseio de peças que grudam ocorre uma vez só & −2 & −11,0 \\
+        M2 & Garra fundida com o pino e o revestimento & Elimina o subconjunto da garra e o manuseio do pino de $\varnothing$~1,2 mm & −2 & −17,7 \\
+        M3 & Braço montado por pressão & Elimina o parafuso do braço e a chave de fenda nesse ponto & −1 & −6,0 \\
+        M4 & Tampa com abas de encaixe & Os parafusos da tampa caem de quatro para dois, e as abas posicionam a tampa & −2 & −17,0 \\
+        M5 & Recarga detectada pela placa & Elimina a chave da base e uma ligação & −1 & −7,9 \\
+        M6 & LED na placa com guia de luz & Três LEDs e sua vedação viram uma guia de luz, e uma ligação deixa de existir & −2 & −22,6 \\
+        M7 & Articulação na própria garra & Elimina o eixo, e a mola deixa de ser segurada durante a inserção & −1 & −11,0 \\
+        M8 & Chave da garra no suporte & A tampa fecha sem fios e com uma só mão & 0 & 0,0 \\
+        \midrule
+        \multicolumn{3}{@{}l}{\textbf{Total}} & \textbf{−11} & \textbf{−93,2} \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+A Tabela~\ref{tab:dfma_comparacao} compara as duas versões.
+
+\begin{table}[!htb]
+    \centering
+    \caption{Comparação entre a versão atual e a versão aprimorada}
+    \label{tab:dfma_comparacao}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}X
+        >{\centering\arraybackslash}p{2.4cm}
+        >{\centering\arraybackslash}p{2.4cm}
+        >{\centering\arraybackslash}p{2.0cm}@{}}
+        \toprule
+        \textbf{Indicador} & \textbf{Versão atual} & \textbf{Versão aprimorada} & \textbf{Variação} \\
+        \midrule
+        Peças por dispositivo & 27 & 16 & −41\% \\
+        Componentes distintos na montagem final & 20 & 15 & −25\% \\
+        Parafusos & 5 & 2 & −3 \\
+        Ligações na placa durante a montagem & 6 & 4 & −2 \\
+        Subconjuntos & 3 & 2 & −1 \\
+        Número teórico mínimo de peças ($N_{\min}$) & 14 & 13 & −1 \\
+        Tempo estimado de montagem ($T_m$) & 199,3 s & 106,1 s & −47\% \\
+        Índice DFA & 0,21 & 0,37 & +0,16 \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+A versão aprimorada tem 41\% menos peças e leva cerca de metade do tempo de montagem. Os maiores ganhos vêm de três mudanças: a M6, que tira os LEDs da tampa, a M2, que faz da garra uma única peça, e a M4, que elimina dois parafusos. Elas respondem por 57,3~s, ou 61\% do ganho total. O índice DFA sobe de 0,21 para 0,37. Ele segue abaixo de 1 porque a versão aprimorada mantém peças não essenciais por decisão de projeto, como os dois parafusos, porque o ímã continua colado no braço e porque peças como o ímã e a mola continuam difíceis de manusear.
+
+\subsection{Estrutura revisada}
+\label{subsec:dfma_estrutura}
+
+% TODO (equipe): combinar com os autores das Seções de conjunto e de estrutura se esta lista substitui a Tabela tab:estrut_lista
+%   e quando o desenho de conjunto (gerar_conjunto.py) será atualizado com as mudanças.
+
+A Tabela~\ref{tab:dfma_estrutura} aplica as mudanças M1 a M8 à estrutura do produto (Tabela~\ref{tab:estrut_lista}), com os mesmos códigos e níveis. Os itens eliminados permanecem na tabela com quantidade zero, para que a comparação apareça item a item. O único item novo, a guia de luz, recebeu o código TG-412.
+
+\begingroup
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}c l >{\RaggedRight\arraybackslash}p{4.2cm} c c c >{\RaggedRight\arraybackslash}p{4.2cm}@{}}
+    \caption{Estrutura revisada do Tag\&Go após o DFMA}\label{tab:dfma_estrutura}\\
+    \toprule
+    \textbf{Nível} & \textbf{Código} & \textbf{Item} & \textbf{Antes} & \textbf{Depois} & \textbf{Origem} & \textbf{Mudança} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Nível} & \textbf{Código} & \textbf{Item} & \textbf{Antes} & \textbf{Depois} & \textbf{Origem} & \textbf{Mudança} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    0 & TG-000 & \textbf{Tag\&Go} & 1 & 1 & F & \\
+    \midrule
+    1 & TG-100 & \textbf{Estrutura e fechamento} & 1 & 1 & F & \\
+    2 & TG-110 & \hspace{0.3cm}Carcaça & 1 & 1 & F & \\
+    3 & TG-111 & \hspace{0.6cm}Base da carcaça & 1 & 1 & F & Sem a chave da base (M5) \\
+    3 & TG-112 & \hspace{0.6cm}Tampa & 1 & 1 & F & Abas de encaixe (M4), janela da guia de luz (M6) e mancais da garra (M7). Sem os furos dos LEDs \\
+    3 & TG-113 & \hspace{0.6cm}Suporte do mecanismo & 1 & 1 & F & Apoio da chave da garra (M8) \\
+    2 & TG-120 & \hspace{0.3cm}Fixação & 1 & 1 & C & \\
+    3 & TG-121 & \hspace{0.6cm}Parafuso da tampa & 4 & 2 & C & No lado do mecanismo (M4) \\
+    \midrule
+    1 & TG-200 & \textbf{Retenção} & 1 & 1 & F & \\
+    2 & TG-210 & \hspace{0.3cm}Garra & 1 & 1 & F & \\
+    3 & TG-211 & \hspace{0.6cm}Corpo da garra & 1 & 1 & F & Fundido em liga de alumínio de fundição, com o pino como inserto e o revestimento sobreinjetado (M2), e com munhões (M7) \\
+    3 & TG-212 & \hspace{0.6cm}Eixo da articulação & 1 & 0 & -- & Eliminado (M7) \\
+    3 & TG-213 & \hspace{0.6cm}Mola de abertura & 1 & 1 & C & Colocada no alojamento da garra (M7) \\
+    3 & TG-214 & \hspace{0.6cm}Revestimento de elastômero & 1 & 0 & -- & Integrado ao corpo da garra (M2) \\
+    2 & TG-220 & \hspace{0.3cm}Pino e embreagem & 1 & 1 & C & \\
+    3 & TG-221 & \hspace{0.6cm}Pino & 1 & 1 & C & Entra na fundição do corpo da garra (M2) e não na montagem final \\
+    3 & TG-222 & \hspace{0.6cm}Embreagem de esferas & 1 & 1 & C & \\
+    \midrule
+    1 & TG-300 & \textbf{Liberação} & 1 & 1 & F & \\
+    2 & TG-310 & \hspace{0.3cm}Acionamento magnético & 1 & 1 & F & \\
+    3 & TG-311 & \hspace{0.6cm}Microatuador rotativo & 1 & 1 & C & \\
+    3 & TG-312 & \hspace{0.6cm}Braço dos ímãs & 1 & 1 & F & Furo no perfil do eixo, montado por pressão (M3) \\
+    3 & TG-313 & \hspace{0.6cm}Ímã de neodímio & 3 & 1 & C & Ímã único de $\varnothing$~10~$\times$~12 mm (M1) \\
+    3 & TG-314 & \hspace{0.6cm}Parafuso do braço & 1 & 0 & -- & Eliminado (M3) \\
+    \midrule
+    1 & TG-400 & \textbf{Indicação} & 1 & 1 & F & Passa a ser fabricada (M6) \\
+    2 & TG-410 & \hspace{0.3cm}Sinalização luminosa & 1 & 1 & F & \\
+    3 & TG-411 & \hspace{0.6cm}LED & 3 & 0 & -- & Passa para a placa de controle (M6) \\
+    3 & TG-412 & \hspace{0.6cm}Guia de luz & 0 & 1 & F & Item novo, encaixado na tampa (M6) \\
+    \midrule
+    1 & TG-500 & \textbf{Controle e energia} & 1 & 1 & C & \\
+    2 & TG-510 & \hspace{0.3cm}Controle e sensores & 1 & 1 & C & \\
+    3 & TG-511 & \hspace{0.6cm}Placa de controle montada & 1 & 1 & C & Inclui o LED de três cores (M6) e detecta a recarga pela bobina (M5) \\
+    3 & TG-512 & \hspace{0.6cm}Chave da garra & 1 & 1 & C & Fixada no suporte (M8) \\
+    3 & TG-513 & \hspace{0.6cm}Chave da base & 1 & 0 & -- & Eliminada (M5) \\
+    2 & TG-520 & \hspace{0.3cm}Energia & 1 & 1 & C & \\
+    3 & TG-521 & \hspace{0.6cm}Célula recarregável & 1 & 1 & C & \\
+    3 & TG-522 & \hspace{0.6cm}Bobina de indução & 1 & 1 & C & \\
+    \midrule
+    \multicolumn{3}{@{}l}{\textbf{Peças no nível 3}} & \textbf{27} & \textbf{17} & & 16 na montagem final \\
+\end{longtable}
+\endgroup
+\begin{center}
+    \vspace{-0.4cm}
+    \footnotesize Fonte: Elaborado pelos autores (2026). F: fabricado sob desenho do projeto. C: comprado.
+\end{center}
+
+A estrutura passa de 20 componentes distintos e 27 peças para 16 componentes e 17 peças. Das 17 peças, 16 entram na montagem final: o pino continua a ser um item comprado, mas é colocado no molde de fundição da garra e não passa pela linha de montagem. Os itens fabricados passam de cinco para seis, com a entrada da guia de luz, e os comprados caem de 15 para dez.
+
+A troca tem um custo. A garra passa a exigir um molde de fundição com o pino como inserto, uma liga de fundição no lugar da 6061-T6 e uma segunda etapa para sobreinjetar o revestimento, e a tampa ganha abas e mancais que tornam o molde mais complexo. O DFMA desloca parte do trabalho da montagem para a fabricação das peças: cada dispositivo fica mais rápido de montar, mas o investimento em moldes cresce. Essa troca favorece o produto à medida que a frota cresce, e o volume da primeira implantação, em uma única loja, deve ser considerado na decisão de adotar a M2 e a M7.
+
+A estrutura da Tabela~\ref{tab:estrut_lista} e o desenho de conjunto (Figura~\ref{fig:conj_desenho}) foram mantidos como registro da versão anterior ao DFMA, assim como a constituição do produto, que ainda descreve os LEDs, a chave da base e o parafuso do braço. Eles serão atualizados depois que as mudanças M7 e M8 forem verificadas.
+
+\subsection{Limitações}
+\label{subsec:dfma_limitacoes}
+
+A análise tem quatro limitações.
+
+\textbf{Tempos estimados.} Os tempos de manuseio e de inserção foram atribuídos por classe de dificuldade, e nenhum foi cronometrado. Os tempos de ligação de um conector e de aplicação do adesivo são estimativas da equipe. O protótipo usa componentes de mercado sem solda e é maior que o produto, e por isso sua montagem serve para conferir a ordem e a dificuldade relativa das operações, mas não os valores absolutos. O índice DFA deve ser lido sobretudo como comparação entre as duas versões, calculadas com os mesmos critérios.
+
+\textbf{Mudanças a verificar.} Seis mudanças dependem de verificação antes de entrarem no projeto detalhado:
+
+\begin{itemize}
+    \item a M7, quanto à resistência do encaixe dos munhões à força de arrancamento da especificação E12 e ao desgaste dos mancais de PC/ABS sob a garra metálica;
+    \item a M8, quanto à altura do apoio que leva a chave do suporte até a garra;
+    \item a M2, quanto à liga de fundição da garra, que precisa repetir o ensaio de arrancamento previsto para a 6061-T6;
+    \item a M3, quanto à retenção do braço no eixo em quedas e vibração, já que a atração do ímã só age quando ele está sob a embreagem e o alumínio absorve menos interferência que um plástico;
+    \item a M1, quanto ao campo do ímã único, que deve ser equivalente ao da pilha e será confirmado no ensaio já previsto (Subseção~\ref{subsec:conj_criticos});
+    \item a M5, quanto à capacidade da placa de detectar a recarga pela tensão na saída da bobina.
+\end{itemize}
+
+\textbf{Conflitos entre regras.} Quatro conflitos foram resolvidos por compromisso e ficam registrados. O primeiro opõe a redução de fixadores (regras 1 e 12) à proteção do mecanismo e ao recondicionamento: a tampa manteve dois parafusos, no lado do mecanismo. O segundo opõe a espessura mínima de moldagem (regra 5) ao campo dos ímãs: a prateleira mantém 0,8 mm, e o preenchimento do molde precisa ser confirmado. O terceiro opõe a eliminação de ajustes (regra 10) à margem do campo: aumentar a folga de 0,2 mm entre o ímã e a prateleira facilita a montagem, mas reduz o campo sob a embreagem, e a tolerância só poderá ser fixada depois do ensaio. O quarto é a posição da célula sob a placa (regra 4): a troca da célula exige soltar a placa, o que alonga o recondicionamento. O arranjo deve ser revisto no projeto detalhado, por exemplo com a célula acessível assim que a tampa é aberta.
+
+\textbf{Decisões em aberto.} A análise parte de duas decisões que a equipe ainda não fechou. Se o adesivo NFC entrar no produto, a versão aprimorada ganha uma peça e cerca de 4,4~s de montagem, e o índice DFA cai de 0,37 para cerca de 0,35. Se o pino passar a ficar ao lado do tecido, a contagem de peças não muda, mas a análise da retenção, e com ela a verificação da M7 frente à E12, precisa ser refeita.
+
+Em síntese, a aplicação do DFMA reduziu o Tag\&Go de 27 para 16 peças na montagem, cortou o tempo estimado de montagem quase pela metade e elevou o índice DFA de 0,21 para 0,37, sem alterar o princípio de funcionamento definido no conjunto do produto (Seção~\ref{sec:conjunto_produto}). Os materiais da constituição do produto foram mantidos, com uma exceção: se a garra for fundida na série, a liga 6061-T6 deve dar lugar a uma liga de fundição. Os próximos passos são verificar as mudanças M1, M2, M3, M5, M7 e M8, cronometrar a montagem no protótipo, fixar as tolerâncias do mecanismo e atualizar o desenho de conjunto e a estrutura do produto. A sequência de operações da Tabela~\ref{tab:dfma_tempos_aprimorado} é o ponto de partida do plano macro do processo de montagem.
