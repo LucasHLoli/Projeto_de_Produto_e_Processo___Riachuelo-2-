@@ -1,0 +1,270 @@
+\section{CONSTITUIÇÃO DO PRODUTO (ENTREGA 3)}\label{sec:constituicao_produto}
+
+
+
+Este capítulo trata da definição dos componentes do Tag\&Go. O conjunto da Seção~\ref{sec:conjunto_produto} já fixou a posição, as dimensões principais e as interfaces de cada sistema. Falta definir, para cada componente, o que ele deve cumprir, com que propriedades e de que material será feito. A seleção de materiais é uma etapa importante do desenvolvimento, porque um material mal escolhido pode causar a falha do componente e gerar custos desnecessários. Ela também não pode ser feita sem considerar o processo de manufatura, que depende da geometria, do tamanho e da quantidade a produzir \cite{rozenfeld2006gestao}.
+
+A análise segue a sistemática descrita por \citeonline{rozenfeld2006gestao}. Os aspectos críticos e as condições de serviço determinam os requisitos do material. Os candidatos que atendem a esses requisitos são comparados quanto a desempenho, custo, fabricabilidade e disponibilidade. Como a estrutura do produto adotou uma proporção alta de itens comprados, para esses itens a decisão recai sobre a especificação do que se compra e sobre os materiais que o fornecedor deve usar. As dimensões e demais valores seguem a classificação do conjunto, ou seja, modelo digital, estimativa de catálogo ou estimativa da equipe. Nenhum deles foi verificado em ensaio, e os valores aqui citados são metas de projeto. O campo magnético condiciona boa parte das escolhas: os ímãs agem através de uma prateleira, e a bobina de recarga é afetada por materiais ferromagnéticos e condutores próximos.
+
+\subsection{Base da carcaça (TG-111)}
+\label{subsec:comp_tg111}
+
+\textbf{Identificação das necessidades.} A base abriga e posiciona a eletrônica e o suporte do mecanismo, e impede o acesso ao interior. Ela deve resistir a quedas e a tentativas de arrombamento na loja. Deve também deixar passar o campo da bobina de indução, pois o fundo de 1,5~mm fica diretamente sobre ela. Por fim, precisa permitir a retirada da célula no descarte, o que exige fechamento por parafusos.
+
+\textbf{Especificação de desempenho dos componentes.} Do ponto de vista funcional, a base deve manter a distância de projeto entre a bobina e a célula e receber a chave da base, sem deformar com o aperto dos quatro parafusos da tampa. No plano operacional, deve suportar uso repetido em ambiente de varejo, com manuseio por funcionários e clientes. Tecnicamente, o fundo e a parede devem manter a rigidez e não atenuar a transferência de energia. O volume de cerca de 216~cm$^3$ da carcaça limita o acréscimo de massa.
+
+\textbf{Identificação das propriedades.} Para a recarga, a propriedade decisiva é o material ser eletricamente isolante e não magnético, de modo que o campo de indução o atravesse sem perdas nem aquecimento. A tenacidade ao impacto responde à queda e à tentativa de arrombamento, e a rigidez, à preservação das cotas do arranjo. A moldabilidade em paredes finas e a estabilidade dimensional respondem à fabricação em série. A resistência a suor, a produtos de limpeza e à luz fecha a lista, por se tratar de peça de uso externo.
+
+\textbf{Lista de propriedades.} A condutividade elétrica e a permeabilidade magnética devem ser nulas e unitárias, respectivamente, o que elimina os metais ferrosos e os condutores. A tenacidade ao impacto deve ser alta, sem fratura frágil em baixa espessura. O módulo de elasticidade deve ser suficiente para que a parede não flexione sob a carga da tampa. A temperatura de deflexão deve cobrir o aquecimento da recarga e do armazenamento, e o encolhimento de moldagem deve ser baixo e uniforme. O custo por quilograma e a disponibilidade em grades comerciais completam o conjunto de critérios.
+
+\textbf{Geração de alternativas.} Uma alternativa seria uma carcaça metálica, de melhor resistência ao arrombamento. Ela foi descartada porque o metal blinda e aquece com o campo da bobina. A segunda alternativa é uma base em termoplástico injetado, com nervuras e colunas para os parafusos. A terceira é uma base de resina curada, de maior resistência química, que exige processo mais lento. A injeção de termoplástico atende ao fundo fino sobre a bobina e à produção em volume.
+
+\textbf{Lista de materiais candidatos.} Foram considerados o PC/ABS, o PETG e o PLA, devido à sua aplicação na fabricação de componentes plásticos. O alumínio também foi avaliado como referência de rigidez, mas descartado pelos motivos apresentados anteriormente. Entre os polímeros, foram priorizados aqueles disponíveis em filamentos para impressão 3D, de modo a viabilizar tanto a prototipagem quanto a fabricação da peça.
+
+\textbf{Seleção de material.} Adotou-se a blenda PC/ABS. Ela combina a tenacidade do policarbonato com a moldabilidade do ABS, é isolante e não magnética, e pode ser moldada em parede fina. O polipropileno tem menor rigidez e menor resistência a parafusos, e a poliamida com fibra tem custo maior e absorve umidade. No protótipo, a base poderá ser impressa em ABS ou PETG, mantendo as cotas.
+
+
+\subsection{Tampa (TG-112)}
+\label{subsec:comp_tg112}
+
+\textbf{Identificação das necessidades.} A tampa fecha a carcaça, leva o código 2D gravado, o furo do pino, os furos dos LEDs e o furo da chave da garra, e serve de apoio à garra. O código 2D deve ser legível pelo celular ao longo da vida do dispositivo, pois é o endereço pelo qual o servidor identifica o estado do equipamento. A tampa deve ainda proteger o mecanismo e suportar a reação da garra quando a peça é puxada.
+
+\textbf{Especificação de desempenho dos componentes.} A tampa deve manter planicidade sob o aperto dos quatro parafusos e resistir à carga de arrancamento transmitida pelo furo do pino. O código 2D deve ter contraste suficiente para leitura por câmera de celular em iluminação de loja, sem desgaste por atrito de roupas e mãos. Os furos devem ser vedados contra poeira e suor, e a tampa não deve interferir na recarga nem no rádio, que ficam sob ela.
+
+\textbf{Identificação das propriedades.} A legibilidade do código depende de o material aceitar marcação permanente a laser com contraste, e não apenas de impressão superficial. A rigidez e a tenacidade respondem à carga da garra e ao impacto. A transparência ao campo e às ondas de rádio exige material isolante e não metálico. A resistência a riscos e à radiação ultravioleta da iluminação mantém a marcação legível, e a estabilidade dimensional garante o ajuste com a base.
+
+\textbf{Lista de propriedades.} A resposta ao laser é a propriedade que mais restringe a escolha, pois grades coloridos de forma adequada permitem marcas escuras de alto contraste. A dureza superficial deve ser alta o bastante para que o código resista à abrasão. A tenacidade e o módulo de elasticidade devem ser compatíveis com a espessura. A permissividade elétrica baixa e a permeabilidade magnética unitária preservam o rádio e a recarga. A estabilidade a luz e a produtos de limpeza completa a lista.
+
+\textbf{Geração de alternativas.} Considerou-se imprimir o código em etiqueta adesiva, descartada porque pode ser destacada ou trocada, o que quebraria a identificação do dispositivo. Também se considerou moldar o código em relevo na própria peça, de leitura difícil por câmera. A alternativa adotada é a gravação a laser na face da tampa, permanente e sem peça adicional, coerente com a decisão da estrutura de tratar o código como característica da tampa.
+
+\textbf{Lista de materiais candidatos.} Foram considerados o policarbonato (PC), a blenda PC/ABS, o ABS, o PMMA e o PLA. Os materiais foram avaliados considerando suas propriedades físicas, a adequação à aplicação e a facilidade de fabricação. O PMMA apresenta rigidez e brilho, mas possui maior fragilidade ao impacto, enquanto os demais polímeros apresentam características distintas de resistência e processamento.
+
+\textbf{Seleção de material.} Adotou-se PC/ABS de grade para marcação a laser, o mesmo material da base. Isso uniformiza matéria-prima, encolhimento e acabamento, e a gravação a laser entrega contraste duradouro. O policarbonato puro teria maior transparência ao laser e melhor resistência térmica, mas custa mais e é mais sensível a riscos e a fissuras por solventes, o que pesa em uma peça manuseada e limpa com frequência.
+
+
+\subsection{Suporte do mecanismo (TG-113)}
+\label{subsec:comp_tg113}
+
+\textbf{Identificação das necessidades.} O suporte mantém a embreagem e o microatuador a uma distância fixa, independente do fechamento da tampa, que foi o aspecto crítico identificado para a estrutura. Sua prateleira fica entre a embreagem e os ímãs e, por isso, o campo magnético deve atravessá-la. Ele recebe também a carga transmitida pela embreagem quando alguém tenta arrancar a peça.
+
+\textbf{Especificação de desempenho dos componentes.} A prateleira deve manter a folga até os ímãs, sem flexão apreciável quando a embreagem é puxada e quando os ímãs são atraídos. O suporte deve conservar as cotas entre o eixo do microatuador e o do pino, estimadas em modelo digital, durante a vida útil e em variações de temperatura de loja. Deve também ser montado antes do fechamento, com o conjunto do mecanismo pré-ajustado.
+
+\textbf{Identificação das propriedades.} A propriedade essencial é a permeabilidade magnética relativa próxima de um, pois uma prateleira ferromagnética desviaria o fluxo e reduziria a força sobre o carretel. Em segundo lugar vêm a resistência à fluência sob carga permanente e a estabilidade dimensional. A condutividade elétrica baixa evita correntes parasitas quando o ímã se desloca sob a prateleira. A usinabilidade ou a moldabilidade em espessuras finas completa a lista.
+
+\textbf{Lista de propriedades.} A permeabilidade magnética deve ser unitária, e a condutividade, baixa. O módulo de elasticidade e a resistência à fluência devem manter a prateleira plana sob a força de arrancamento da peça (E12). A absorção de umidade deve ser pequena, para não alterar a folga. O coeficiente de atrito deve ser baixo nas superfícies em contato com a embreagem e com o braço. O custo importa menos, pela baixa massa da peça.
+
+\textbf{Geração de alternativas.} Uma alternativa é um suporte metálico de alumínio ou latão, rígido, que apresentaria correntes parasitas na prateleira e custo maior. Outra é uma peça única injetada em termoplástico de engenharia, com a prateleira integrada. A terceira é uma peça em duas partes, com a prateleira em chapa fina colada. A peça única evita folgas entre partes e preserva a distância entre os eixos, e foi a adotada.
+
+\textbf{Lista de materiais candidatos.} Foram considerados o poliacetal copolímero (POM-C), a poliamida 6.6 com fibra de vidro, o PLA, o PBT com fibra de vidro, o policarbonato e, como referência, o alumínio e o latão. Todos os polímeros são não magnéticos. As ligas metálicas são também não ferromagnéticas, mas condutoras.
+
+\textbf{Seleção de material.} Adotou-se o poliacetal copolímero. Ele tem alta rigidez, boa resistência à fluência, baixo atrito e baixa absorção de umidade, e pode ser usinado no protótipo e injetado na série. A poliamida absorve umidade e varia de dimensão, o que ameaça a folga,  e o PBT com fibra tem maior empenamento. A prateleira é uma região de risco, a ser verificada no projeto detalhado.
+
+
+
+
+\subsection{Corpo da garra (TG-211)}
+\label{subsec:comp_tg211}
+
+\textbf{Identificação das necessidades.} O corpo da garra fecha sobre a borda da roupa e carrega o pino. Suas faces seguram o tecido e, junto com o revestimento, determinam o atrito que somado à embreagem define a força de arrancamento (E12). Ele fica exposto, e é alvo de tentativas de rompimento ou de corte.
+
+\textbf{Especificação de desempenho dos componentes.} A garra deve suportar a tração aplicada ao pino sem romper, sem deformar o furo do pino e sem perder a retenção do tecido. Os dentes devem prender sem rasgar a peça, e a articulação deve permitir a abertura de cerca de 30$^\circ$ sob a mola, o que mostra a liberação ao comprador. A peça deve acomodar o revestimento e o eixo de articulação e fechar a chave da garra pelo furo da tampa.
+
+\textbf{Identificação das propriedades.} A resistência mecânica e a dureza respondem à tração no pino e à tentativa de arrombamento. A usinabilidade e a conformabilidade de dentes pequenos respondem à fabricação. A massa baixa evita que a garra pesada danifique a peça de roupa. Como a garra fica perto dos ímãs e do rádio, o material deve ser não ferromagnético. A resistência à corrosão e a possibilidade de acabamento fecham a lista.
+
+\textbf{Lista de propriedades.} A resistência ao escoamento deve ser alta, para que a garra não se abra sob carga. A densidade deve ser baixa, pois um corpo maciço de 52~$\times$~32~$\times$~6~mm pesaria no máximo na ordem de 27~g em alumínio, segundo estimativa geométrica. A permeabilidade magnética deve ser unitária. A condutividade térmica e elétrica não interessa ao desempenho. A usinabilidade, a resistência à fadiga da articulação e o acabamento anodizado ou pintado completam o conjunto.
+
+\textbf{Geração de alternativas.} Uma alternativa é uma garra injetada em poliamida com fibra de vidro, leve e de baixo custo, porém menos resistente a uma tentativa de arrombamento. Outra é uma garra metálica usinada ou fundida, mais resistente e mais cara por unidade. A terceira é um corpo híbrido, com dentes de metal em suporte de polímero. A garra é a peça que deve resistir ao furto, e por isso o metal foi preferido.
+
+\textbf{Lista de materiais candidatos.} Foram considerados as ligas de alumínio 6061-T6 e 7075, o zinco injetado (Zamak), o aço inoxidável austenítico, a poliamida 6.6 com fibra de vidro e o policarbonato. As ligas de alumínio, o zinco e o inox austenítico são não magnéticos, e o alumínio é o de menor massa. A poliamida com fibra e o policarbonato são as alternativas de menor custo e de menor resistência.
+
+\textbf{Seleção de material.} Adotou-se a liga de alumínio 6061-T6, usinada no protótipo e passível de fundição ou usinagem na série, com anodização. Ela combina resistência, baixa massa e ausência de magnetismo, e permite usinar os dentes. A liga 7075 é mais resistente, porém de maior custo e menos soldável, e o Zamak é mais pesado. A confirmação dependerá do ensaio de arrancamento, que ainda não foi feito.
+
+
+\subsection{Pino (TG-221)}
+\label{subsec:comp_tg221}
+
+\textbf{Identificação das necessidades.} O pino de $\varnothing$~1,2~$\times$~16~mm (modelo digital), fixado ao corpo da garra, atravessa o tecido e o furo da tampa e entra na embreagem. Ele é o elo mecânico entre a peça e o dispositivo e transmite à embreagem toda a força de arrancamento.
+
+\textbf{Especificação de desempenho dos componentes.} O pino deve resistir à tração e à flexão de uma tentativa de arrancamento sem romper nem se curvar. Sua superfície de engate deve ser compatível com as esferas da embreagem, que o seguram por contato, e sua ponta deve atravessar o tecido sem desfiá-lo. Deve ser fixado ao corpo da garra de forma permanente, sem folga.
+
+\textbf{Identificação das propriedades.} A resistência à tração e à flexão de uma seção de 1,2~mm exige material de alta resistência. A dureza superficial responde às marcas deixadas pelas esferas, e a rugosidade controlada preserva o engate. A resistência à corrosão mantém essas superfícies limpas. Como o pino fica na região de campo, a permeabilidade magnética importa, embora esteja retido pela embreagem.
+
+\textbf{Lista de propriedades.} A resistência à tração deve ser alta, na faixa dos aços temperados, por causa do diâmetro pequeno. A dureza deve ser superior à das esferas na zona de engate, para evitar entalhes. A rugosidade da zona de engate deve ser baixa e constante. A resistência à corrosão deve dispensar revestimento. A permeabilidade pode ser ferromagnética, desde que o efeito sobre a liberação seja verificado.
+
+\textbf{Geração de alternativas.} O pino pode ser liso, de seção constante, ou com ranhura para as esferas. O pino liso é mais simples de fabricar, e o ranhurado oferece engate mais definido. Considerou-se também um pino de seção maior, descartado por deixar furo maior no tecido. As medidas de modelo digital, a confirmar em etiquetas comerciais, serviram de ponto de partida.
+
+\textbf{Lista de materiais candidatos.} Foram considerados o aço carbono temperado, o aço inoxidável martensítico AISI 420 temperado, o AISI 440C, o aço inoxidável austenítico 304 encruado e o titânio. Os martensíticos unem dureza e resistência à corrosão. O austenítico é menos duro, e o titânio, de custo muito elevado, não se justifica.
+
+\textbf{Seleção de material.} Adotou-se o aço inoxidável martensítico AISI 420 temperado e retificado. Ele fornece a dureza necessária ao engate com as esferas e resiste à corrosão por suor. O comportamento magnético do pino será verificado no ensaio de liberação, e o AISI 304 encruado é a alternativa se houver efeito indesejado, ao custo de menor dureza.
+
+\subsection{Embreagem de esferas (TG-222)}
+\label{subsec:comp_tg222}
+
+\textbf{Identificação das necessidades.} A embreagem retém o pino sem consumir energia e só se abre quando o ímã é posicionado sob ela. É o componente do qual depende a segurança da retenção, e por isso foi adotado um item de mercado, produzido em grande volume para as etiquetas rígidas. Ela deve resistir ao arrancamento e abrir-se com o campo dos ímãs.
+
+\textbf{Especificação de desempenho dos componentes.} A embreagem de $\varnothing$~13~$\times$~11~mm (modelo digital) deve sustentar a força de arrancamento da peça (E12) com o pino engatado. Ao receber o campo de cerca de 5.200~G a 1~mm (estimativa de cálculo), o carretel deve recuar através da prateleira de 0,8~mm e liberar as esferas. Sem o campo, a mola deve devolver o carretel e travar o pino. A margem sobre os 4.500~G dos destacadores de loja é pequena.
+
+\textbf{Identificação das propriedades.} Como a embreagem é comprada montada, as propriedades se referem aos materiais de cada parte. O carretel deve ser ferromagnético para responder ao ímã, e as esferas devem ser duras. A mola deve manter a força ao longo da vida. O copo deve resistir à tração e, no ponto sob o ímã, deixar passar o campo, o que favorece um material não ferromagnético.
+
+\textbf{Lista de propriedades.} O carretel deve ter alta permeabilidade magnética e baixa coercividade, de modo a responder ao campo e a soltar-se ao ser retirado. As esferas devem ter dureza e acabamento elevados. A mola deve ter limite de fadiga adequado e rigidez compatível com o curso do carretel. O copo deve ter resistência à tração e permeabilidade baixa na região do fundo. Todos devem resistir à corrosão por suor.
+
+\textbf{Geração de alternativas.} As alternativas são a embreagem de esferas de mercado, o mecanismo de lingueta de plástico puxada pelo microatuador, descartado por travar em posição única e por exigir peça própria sujeita a desgaste, e uma embreagem de projeto próprio. A de mercado preserva a confiabilidade conhecida e foi mantida. Permanece em avaliação a substituição do carretel por uma peça não ferromagnética, que tornaria o dispositivo imune ao destravador comercial.
+
+\textbf{Lista de materiais candidatos.} Para o carretel, foram considerados o aço de baixo carbono, o aço-silício, o ferro puro e os aços inoxidáveis ferríticos. Para as esferas, o aço cromo AISI 52100 e o inox AISI 440C. Para o copo, o latão, o aço zincado e o zinco injetado. Para a mola, o aço inoxidável 302 e o arame musical.
+
+\textbf{Seleção de material.} A embreagem será comprada montada e especificada ao fornecedor com os seguintes materiais: carretel de aço de baixo carbono ou inox ferrítico, esferas de aço inoxidável 440C, mola de aço inoxidável 302 e copo de latão. O latão não é ferromagnético e deixa o campo chegar ao carretel, e o aço inoxidável protege contra corrosão. A composição real das etiquetas comerciais será medida no projeto detalhado.
+
+\subsection{Microatuador rotativo (TG-311)}
+\label{subsec:comp_tg311}
+
+\textbf{Identificação das necessidades.} O microatuador gira o braço em 90$^\circ$ e leva os ímãs da posição de repouso até a posição sob a embreagem, e depois os traz de volta. É comprado como item único, e sua escolha foi o que permitiu eliminar a mola armada e o gatilho. Deve operar com a energia da célula e ser comandado pela placa de controle.
+
+\textbf{Especificação de desempenho dos componentes.} O microatuador deve cumprir o curso de 90$^\circ$ de forma repetida e sob a carga da atração entre os ímãs e a embreagem. Seu torque deve vencer essa atração e ainda deslocar o braço de 16~mm, e esse valor só será fixado após ensaio. O consumo deve caber na autonomia da célula, sem atenuar o campo da recarga. Suas dimensões estimadas de catálogo definem a zona do mecanismo.
+
+\textbf{Identificação das propriedades.} O torque de saída e o curso angular são as propriedades principais. O consumo de corrente em movimento e em repouso determina a autonomia. A tensão de operação deve ser compatível com a célula. Os materiais da caixa de engrenagens e da carcaça interessam pela resistência e pela interferência com o campo dos ímãs, pois um motor de ímã permanente e engrenagens de aço ficam próximos da pilha de ímãs.
+
+\textbf{Lista de propriedades.} O torque deve exceder a atração magnética na posição de soltar, com margem. O curso deve ser de 90$^\circ$ com retorno. O consumo em repouso deve ser nulo ou desprezível. A tensão deve ser a da célula. A caixa de engrenagens deve resistir ao torque sem falha por desgaste. A imunidade ao campo dos ímãs e a baixa emissão de ruído elétrico para o rádio completam o conjunto.
+
+\textbf{Geração de alternativas.} Foram consideradas o micro servo, o motor de passo com redução, o solenoide rotativo e o atuador de liga com memória de forma. O solenoide rotativo é simples e de torque alto em curso curto, mas consome muito. A liga com memória de forma consome em pulsos e responde devagar. O micro servo com redução oferece o curso de 90$^\circ$ e o retorno comandados, e foi adotado provisoriamente.
+
+\textbf{Lista de materiais candidatos.} A caixa de engrenagens pode ser de poliacetal, de poliamida, de latão ou de aço sinterizado. A carcaça pode ser de ABS ou de PC. O motor pode ser de escovas ou sem escovas. Engrenagens plásticas são silenciosas e leves, e as metálicas têm vida e torque maiores.
+
+\textbf{Seleção de material.} Para o torque a definir, especificou-se um micro servo com engrenagens de latão ou aço sinterizado e carcaça de termoplástico, que resistem melhor a esforços repetidos e a tentativas de força externa. A decisão final depende do torque medido em ensaio e da verificação da interferência dos ímãs sobre o motor.
+
+\subsection{Braço dos ímãs (TG-312)}
+\label{subsec:comp_tg312}
+
+\textbf{Identificação das necessidades.} O braço, de raio de 16~mm e cerca de 2~mm de espessura, prende os três ímãs ao eixo do microatuador e os leva até a posição sob a embreagem. Ele é uma das cinco peças fabricadas sob desenho, pois concentra a geometria que posiciona o ímã em relação à embreagem.
+
+\textbf{Especificação de desempenho dos componentes.} O braço deve manter a posição dos ímãs em relação à embreagem com tolerância pequena, pois a folga de 0,2~mm até a prateleira é crítica. Deve resistir à força de atração entre os ímãs e a embreagem sem flexionar, e ter baixa inércia para não exigir mais torque do microatuador. Deve ser fixado ao eixo pelo parafuso do braço, sem folga, e girar 90$^\circ$ sem interferir com a prateleira.
+
+\textbf{Identificação das propriedades.} A rigidez em espessura de 2~mm define a precisão de posicionamento. A massa e a densidade baixas reduzem a inércia. A permeabilidade magnética baixa evita desviar o fluxo dos ímãs ou ser atraído por eles. A usinabilidade e a possibilidade de colar os ímãs completam a lista.
+
+\textbf{Lista de propriedades.} O módulo de elasticidade deve ser alto, para limitar a flecha sob a atração magnética. A densidade deve ser baixa. A permeabilidade magnética deve ser unitária. A resistência ao esforço de cisalhamento do furo do parafuso deve ser adequada. A estabilidade dimensional ao longo do tempo preserva a folga de 0,2~mm, e a compatibilidade com adesivo estrutural fixa os ímãs.
+
+\textbf{Geração de alternativas.} O braço pode ser uma chapa cortada e dobrada, uma peça usinada de bloco ou uma peça injetada em polímero reforçado. A chapa é a mais barata e a menos precisa, e a injeção, de baixo custo por unidade, só se justifica em volume. A peça usinada oferece a precisão necessária no protótipo e foi adotada.
+
+\textbf{Lista de materiais candidatos.} Foram considerados as ligas de alumínio 6061-T6 e 5052, o latão, o aço inoxidável austenítico 304 recozido, a poliamida 6.6 com fibra de vidro e o poliacetal. O latão e o aço inoxidável são mais pesados. Os polímeros são leves, mas de menor rigidez em 2~mm.
+
+\textbf{Seleção de material.} Adotou-se a liga de alumínio 6061-T6, que combina rigidez, baixa densidade e permeabilidade unitária e é fácil de usinar e de colar. O alumínio é condutor, mas gira junto com os ímãs, de modo que as correntes parasitas por movimento relativo não são relevantes. O poliacetal é a alternativa se a inércia ou o custo se mostrarem críticos.
+
+\subsection{Ímã de neodímio (TG-313)}
+\label{subsec:comp_tg313}
+
+\textbf{Identificação das necessidades.} Os três ímãs de $\varnothing$~10~$\times$~4~mm, empilhados, geram o campo que recolhe o carretel através da prateleira e libera o pino. Devem produzir campo superior ao dos destacadores de loja e, ao mesmo tempo, ficar longe da bobina e da embreagem enquanto o dispositivo está travado.
+
+\textbf{Especificação de desempenho dos componentes.} A pilha deve fornecer cerca de 6.500~G na face e cerca de 5.200~G a 1~mm, distância somada da folga e da prateleira, segundo o cálculo da equipe. O valor, ainda não verificado em ensaio, deve superar os cerca de 4.500~G dos destacadores comerciais, com margem pequena. O campo deve ser estável ao longo da vida útil e não pode ser degradado pela temperatura de loja nem pelo campo da bobina.
+
+\textbf{Identificação das propriedades.} A remanência e a coercividade intrínseca definem a intensidade e a estabilidade do campo. A temperatura máxima de operação e o coeficiente de temperatura determinam o comportamento em condições reais. A resistência à corrosão e o revestimento protegem a liga, que oxida. A resistência mecânica à fratura importa, pois o material é frágil e as peças se atraem com força. O custo fecha a lista.
+
+\textbf{Lista de propriedades.} A remanência deve ser a maior possível, dentro da faixa comercial, para maximizar a margem sobre 4.500~G. A coercividade deve evitar a desmagnetização pelo campo da bobina e por temperaturas moderadas. A temperatura máxima deve cobrir o uso interno. O revestimento deve resistir ao suor e à abrasão do uso. A tolerância dimensional deve manter a folga de 0,2~mm.
+
+\textbf{Geração de alternativas.} As alternativas são a pilha de três ímãs cilíndricos, adotada no modelo digital, o ímã único de maior grau, que reduz a altura da pilha, e a troca por ímãs de samário-cobalto. O ímã único é um dos caminhos de redução de altura da Seção~\ref{sec:conjunto_produto}. Foi mantida a pilha de três até que o campo seja medido.
+
+\textbf{Lista de materiais candidatos.} Foram considerados o neodímio-ferro-boro (NdFeB) em graus N42 a N52, o samário-cobalto, a ferrite e o alnico. A ferrite e o alnico geram campo muito inferior ao necessário. O samário-cobalto tolera melhor a temperatura, a custo maior e com remanência menor.
+
+\textbf{Seleção de material.} Adotou-se o NdFeB axialmente magnetizado, em grau de alta energia (N48 a N52, a fixar com o fornecedor), revestido com níquel-cobre-níquel. É o único material que atinge o campo exigido nesse volume, e a limitação de temperatura (da ordem de 60 a 80$^\circ$C) é aceitável em uso interno. O grau final será confirmado pelo ensaio de campo, dado que a margem é pequena.
+
+
+
+\subsection{LED (TG-411)}
+\label{subsec:comp_tg411}
+
+\textbf{Identificação das necessidades.} Os três LEDs, vermelho, amarelo e verde, informam ao funcionário e ao comprador o estado do dispositivo: travado, em recarga e liberado. O estado deve ser visível no salão de vendas, e os LEDs atravessam a tampa, o que pede vedação.
+
+\textbf{Especificação de desempenho dos componentes.} Os LEDs de $\varnothing$~3~mm, afastados de 12~mm entre si (estimativa), devem ser distinguíveis pela cor em iluminação de loja e a distância de uso. O consumo deve ser pequeno, para não reduzir a autonomia, e cada LED deve acender apenas com o estado correspondente. Devem ser fixados na placa ou na tampa e vedados contra poeira e suor.
+
+\textbf{Identificação das propriedades.} A cor e o comprimento de onda dominante definem a distinção entre estados. A intensidade luminosa e o ângulo de visão definem a visibilidade. A tensão direta e a corrente de operação definem o consumo. O material da lente e do encapsulamento define a resistência a suor e a radiação, e a vida útil longa evita a manutenção.
+
+\textbf{Lista de propriedades.} A intensidade deve ser suficiente para leitura em iluminação de loja, com ângulo de visão amplo. A tensão direta deve ser compatível com a alimentação da placa. A corrente deve ser baixa. O encapsulamento deve resistir à umidade, e a lente difusa evita ofuscamento. A vida útil deve ser muito superior à do dispositivo.
+
+\textbf{Geração de alternativas.} A alternativa da Entrega~2 era um anel de LEDs, substituído por um LED por estado. Considerou-se também um LED bicolor ou RGB único, que reduziria furos na tampa e exigiria distinguir estados apenas por cor. Preferiu-se três LEDs independentes, pela leitura imediata de cada estado e pelo menor risco.
+
+\textbf{Lista de materiais candidatos.} Os semicondutores são o fosfeto de alumínio-gálio-índio (AlGaInP) para vermelho e amarelo e o nitreto de gálio-índio (InGaN) para o verde. O encapsulamento pode ser de resina epóxi ou de silicone, com lente difusa ou transparente, e os terminais, de cobre estanhado ou prateado.
+
+\textbf{Seleção de material.} Adotaram-se LEDs de $\varnothing$~3~mm em AlGaInP (vermelho e amarelo) e InGaN (verde), com lente de epóxi difusa e terminais estanhados. São o padrão comercial de menor custo e atendem à visibilidade necessária. Como a luz precisa atravessar a tampa por furos, a vedação dos furos é a questão de montagem a resolver.
+
+\subsection{Placa de controle montada (TG-511)}
+\label{subsec:comp_tg511}
+
+\textbf{Identificação das necessidades.} A placa de controle, comprada montada sob especificação do projeto, inclui o rádio. Ela comunica o dispositivo ao servidor, recebe a ordem de liberação após o pagamento, comanda o microatuador e os LEDs, lê as duas chaves e distribui a energia da célula. Fios e conectores fazem parte da placa montada.
+
+\textbf{Especificação de desempenho dos componentes.} A placa de 30~$\times$~30~$\times$~1,6~mm (estimativa) deve informar o estado das chaves ao servidor e receber a ordem de liberação sem depender da rede da loja no momento da saída. Deve consumir pouco em espera, acionar o microatuador sob carga e acender o LED do estado atual. O rádio deve funcionar com a antena afastada de metais e da bobina.
+
+\textbf{Identificação das propriedades.} O substrato deve ser um laminado de boa resistência mecânica e baixa perda dielétrica na frequência do rádio. O acabamento das trilhas deve resistir à oxidação. A estabilidade térmica deve cobrir o aquecimento da recarga. A permeabilidade magnética dos componentes deve ser baixa, pela proximidade da bobina, e a compatibilidade com a soldagem sem chumbo completa a lista.
+
+\textbf{Lista de propriedades.} O laminado deve ter temperatura de transição vítrea acima das temperaturas de soldagem e de uso. A perda dielétrica deve ser baixa na frequência do rádio. A espessura de 1,6~mm é o padrão de catálogo. O acabamento deve garantir a soldabilidade e a vida em estoque. A conformidade com restrição de substâncias perigosas é exigência de uso.
+
+\textbf{Geração de alternativas.} A placa pode ser um módulo comercial de desenvolvimento, usado no protótipo, ou uma placa dedicada fabricada sob especificação, na série. Uma alternativa de laminado flexível permitiria dobrar a placa, mas encarece a peça. A placa rígida dedicada foi adotada para a série, com módulos de mercado no protótipo.
+
+\textbf{Lista de materiais candidatos.} Os laminados considerados foram o FR-4, o CEM-1, o poli-imida flexível e laminados de alta frequência. O acabamento pode ser HASL sem chumbo, ENIG ou OSP. A antena pode ser impressa na placa ou ser cerâmica externa.
+
+\textbf{Seleção de material.} Adotou-se o laminado FR-4 de espessura 1,6~mm, com acabamento ENIG e antena integrada à placa, afastada da bobina e dos ímãs. O FR-4 é o padrão de mercado para esse tipo de circuito, com custo baixo e desempenho suficiente. O ENIG dá soldabilidade e vida em estoque. Laminados de alta frequência e flexíveis não se justificam para esse rádio.
+
+\subsection{Chave da garra (TG-512)}
+\label{subsec:comp_tg512}
+
+\textbf{Identificação das necessidades.} A chave da garra informa à placa se a garra está fechada. É pressionada pelo corpo da garra através de um furo na tampa, e sua informação permite ao servidor distinguir os estados do dispositivo. Fica próxima do mecanismo e, portanto, dos ímãs.
+
+\textbf{Especificação de desempenho dos componentes.} A chave deve acionar de forma confiável quando a garra fecha e liberar quando ela abre, ao longo de milhares de ciclos. A força de acionamento deve ser baixa, para não interferir com a abertura, e o curso deve caber na distância entre a tampa e a garra. Não pode ser acionada pelo campo dos ímãs nem pela recarga.
+
+\textbf{Identificação das propriedades.} O princípio de acionamento é a propriedade crítica, e o mecânico evita a sensibilidade magnética. A vida em ciclos e a resistência de contato respondem à confiabilidade. O material do contato responde ao uso em corrente muito baixa. O invólucro deve resistir a suor e poeira, e a baixa altura é necessária pelo espaço sob a tampa.
+
+\textbf{Lista de propriedades.} A vida mecânica deve ser da ordem de centenas de milhares de ciclos. A resistência de contato deve permanecer estável em tensão e corrente baixas. A força de acionamento deve ser pequena. A altura deve caber sob a tampa de 2,0~mm e o espaço até a garra. A selagem do invólucro deve resistir a suor e a poeira.
+
+\textbf{Geração de alternativas.} Consideraram-se a microchave mecânica, o sensor de efeito Hall, a chave de lâmina (\textit{reed}) e o sensor óptico. Os dois sensores magnéticos seriam perturbados pelos ímãs próximos, e o óptico exigiria janela e consumo contínuo. A microchave mecânica evita esses problemas e foi adotada.
+
+\textbf{Lista de materiais candidatos.} O invólucro pode ser de poliamida, PBT ou LCP. Os contatos podem ser de liga de prata ou banhados a ouro, e a mola, de bronze fosforoso ou aço inoxidável. O atuador pode ser de polímero ou de metal.
+
+\textbf{Seleção de material.} Adotou-se a microchave com invólucro de PBT ou poliamida, contatos banhados a ouro, adequados a sinais de baixa corrente, e mola de bronze fosforoso, não magnética. A escolha prioriza a imunidade ao campo e a estabilidade do contato, e a força de acionamento será ajustada na montagem com a garra.
+
+\subsection{Chave da base (TG-513)}
+\label{subsec:comp_tg513}
+
+\textbf{Identificação das necessidades.} A chave da base informa à placa se o dispositivo está na base de recarga. Isso permite ao servidor saber que o dispositivo está em recarga e, portanto, indisponível, o que corresponde ao LED amarelo. Fica no fundo da carcaça, longe dos ímãs.
+
+\textbf{Especificação de desempenho dos componentes.} A chave deve acionar toda vez que o dispositivo é posicionado na base e liberar quando é retirado, sem falsos acionamentos por vibração ou por manuseio na loja. O consumo deve ser nulo em repouso. Sua posição no fundo exige perfil baixo, e a forma de acionamento pela base de recarga será definida no projeto detalhado.
+
+\textbf{Identificação das propriedades.} Valem as propriedades da chave da garra, com maior peso na confiabilidade em ciclos de uso diários e na baixa altura. O princípio de acionamento deve ser insensível ao campo da bobina de indução, que fica perto do fundo. A resistência do invólucro a poeira completa a lista.
+
+\textbf{Lista de propriedades.} A vida mecânica deve exceder o número de ciclos de recarga previstos. O perfil deve ser baixo. A força de acionamento deve ser pequena. A insensibilidade ao campo da bobina é exigida. A resistência de contato deve ser estável em baixa corrente.
+
+\textbf{Geração de alternativas.} Podem ser usados uma microchave mecânica acionada por saliência da base, um sensor magnético acionado por ímã na base, e a detecção pela própria bobina. O sensor magnético seria perturbado pelo campo da recarga, e a detecção pela bobina exigiria eletrônica adicional. Adotou-se a microchave mecânica, a mesma família da chave da garra, o que uniformiza o fornecimento.
+
+\textbf{Lista de materiais candidatos.} São os da chave da garra: invólucro de PBT, poliamida ou LCP, contatos de liga de prata ou banhados a ouro e mola de bronze fosforoso ou aço inoxidável.
+
+\textbf{Seleção de material.} Adotou-se a mesma especificação da chave da garra: invólucro de PBT ou poliamida, contatos banhados a ouro e mola não magnética. Isso reduz o número de itens distintos e a complexidade da compra. O formato de acionamento depende do projeto da base de recarga, que está fora desta decomposição.
+
+\subsection{Célula recarregável (TG-521)}
+\label{subsec:comp_tg521}
+
+\textbf{Identificação das necessidades.} A célula de 50~$\times$~34~$\times$~6~mm (estimativa de catálogo) alimenta a placa, o rádio, os LEDs e o microatuador, e é recarregada pela bobina de indução. Deve permitir a retirada no descarte, sem destruir a carcaça. Como o dispositivo fica em loja, a segurança em caso de queda ou esmagamento é determinante.
+
+\textbf{Especificação de desempenho dos componentes.} A célula deve fornecer a corrente de pico do microatuador sem queda de tensão que reinicie a placa, e manter o rádio em espera durante o período de uso entre recargas. A capacidade será definida no projeto detalhado, e a retirada da tela reduziu o consumo previsto, o que permite uma célula mais curta.
+
+\textbf{Identificação das propriedades.} A densidade de energia define o volume, e a corrente de descarga máxima atende ao pico do microatuador. A vida em ciclos define a durabilidade. A segurança contra sobrecarga, curto-circuito e esmagamento é crítica. A temperatura de operação e a autodescarga baixa completam a lista, bem como a possibilidade de reciclagem no descarte.
+
+\textbf{Lista de propriedades.} A capacidade deve ser a mínima que cubra a autonomia, para reduzir o comprimento, que não atende à especificação E10. A corrente de descarga deve ser compatível com o pico do microatuador. A vida em ciclos deve cobrir a vida do dispositivo. A célula deve ter circuito de proteção integrado. A tensão nominal deve ser compatível com a placa e com o carregador.
+
+\textbf{Geração de alternativas.} Consideraram-se a célula de íon de lítio cilíndrica, mais robusta e alta demais para a altura do conjunto, a célula de lítio-polímero em bolsa, a de fosfato de ferro e lítio, mais segura e de menor densidade, e a de níquel-hidreto metálico. A bolsa de lítio-polímero oferece o perfil fino de 6~mm exigido pelo arranjo.
+
+\textbf{Lista de materiais candidatos.} Foram considerados o lítio-polímero (LiPo), o íon de lítio, o fosfato de ferro e lítio (LiFePO$_4$) e o NiMH. Nos três primeiros, o eletrodo positivo é de óxido de lítio ou de fosfato, o negativo é de grafite, e a bolsa é de laminado de alumínio e polímero.
+
+\textbf{Seleção de material.} Adotou-se a célula de lítio-polímero em bolsa, com circuito de proteção. É a que atende ao perfil de 6~mm com maior densidade de energia e corrente de pico. O LiFePO$_4$ seria mais seguro, mas não é oferecido nesse formato fino. O risco de esmagamento será tratado pela posição na carcaça, longe da garra, e a capacidade será dimensionada no projeto detalhado.
+
+\subsection{Bobina de indução (TG-522)}
+\label{subsec:comp_tg522}
+
+\textbf{Identificação das necessidades.} A bobina receptora de $\varnothing$~40~mm recebe a energia da base de recarga através do fundo de 1,5~mm da carcaça e recarrega a célula, o que dispensa conectores expostos. Deve funcionar com os ímãs e a embreagem afastados, o que levou ao afastamento mínimo de 30~mm entre ímã e bobina.
+
+\textbf{Especificação de desempenho dos componentes.} A bobina deve receber potência suficiente para recarregar a célula em tempo compatível com a rotina da loja, com acoplamento adequado ao fundo de 1,5~mm. Deve operar sem aquecimento excessivo e sem ser perturbada pelos ímãs. O afastamento de 30~mm é uma estimativa a ser medida no projeto detalhado, pois define o comprimento do dispositivo.
+
+\textbf{Identificação das propriedades.} A indutância e a resistência série definem a eficiência da transferência. O material do condutor define as perdas em alta frequência. A presença de uma camada de ferrite sobre a bobina protege a eletrônica e a célula do campo, mas é suscetível a saturar sob campo magnético de ímãs. A espessura de cerca de 1~mm importa pela altura do conjunto.
+
+\textbf{Lista de propriedades.} A indutância deve ser compatível com a base de recarga. A resistência série e as perdas devem ser baixas. A permeabilidade da ferrite deve ser alta e sua saturação, distante do campo residual dos ímãs. A espessura deve ser a menor possível. A temperatura de operação deve cobrir o aquecimento da recarga.
+
+\textbf{Geração de alternativas.} A bobina pode ser enrolada em fio, impressa em placa de circuito, ou de fio multifilar (\textit{Litz}). A impressa tem perfil mínimo e perdas maiores, e a enrolada em fio tem melhor eficiência. A bobina plana enrolada, com folha de ferrite, é a de mercado para esse tipo de recarga, e foi mantida. A distância dos ímãs foi tratada na geometria do conjunto.
+
+\textbf{Lista de materiais candidatos.} O condutor pode ser fio de cobre esmaltado, fio \textit{Litz} ou trilha de cobre. A blindagem pode ser de ferrite flexível de níquel-zinco ou de manganês-zinco, ou de folha de material nanocristalino. O suporte pode ser de filme de poli-imida ou de PET.
+
+\textbf{Seleção de material.} Adotou-se bobina de fio de cobre esmaltado (ou \textit{Litz}) com folha de ferrite flexível de níquel-zinco, sobre filme de poli-imida, formato padronizado para receptores de indução. O cobre garante a menor perda, e a ferrite concentra o campo e protege a célula e a placa. A saturação da ferrite pelos ímãs é a razão para o afastamento mínimo adotado, a medir em ensaio.
