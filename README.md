@@ -41,6 +41,26 @@ Arquivo principal: `relatorio2.tex`; seções em `r2/`. Para compilar no Overlea
 | F. Comercialização e distribuição | 8 | `r2/10-comercializacao.tex` |
 | Considerações finais | 9 | `r2/11-consideracoes.tex` |
 
+### Relatório 4 (projeto detalhado, entrega 23/11)
+
+Segue os seis itens pedidos na Aula 23 e no formulário de avaliação do Relatório 4. As seções entram no `documento.tex`, depois do plano macro de montagem.
+
+| Item do roteiro (Aula 23) | Seção no PDF | Arquivo |
+|---|---|---|
+| A. Desenhos de execução | 19 | `2-conteudo/21-desenhos_de_execucao.tex` |
+| B. Lista de componentes externos | 20 | `2-conteudo/22-lista_de_componentes_externos.tex` |
+| C. Planos de processo de fabricação (3 itens críticos) | 21 | `2-conteudo/23-planos_de_processo.tex` |
+| D. Projeto de uma ferramenta ou dispositivo | 22 | `2-conteudo/24-projeto_do_dispositivo.tex` |
+| E. FMEA de produto e de processo | 23 | `2-conteudo/25-fmea.tex` |
+| F. Meios de controle da qualidade (1 item crítico) | 24 | `2-conteudo/26-meios_de_controle_da_qualidade.tex` |
+
+Dois scripts geram parte do conteúdo. Para mudar uma medida, uma tolerância ou um índice, altere o script e rode de novo, em vez de editar o resultado à mão:
+
+- `imagens/desenhos_execucao/gerar_desenhos.py` gera as oito folhas de desenho (DE-01 a DE-07 e o gabarito FD-01);
+- `scripts/gerar_fmea.py` gera `25-fmea.tex`, com os NPR calculados a partir de S, O e D.
+
+**Pendências abertas do R4:** as tolerâncias, os parâmetros de processo e os índices do FMEA são propostas da equipe, sem ensaio; os componentes ainda não foram cotados; a configuração adota as mudanças M1 a M8 do DFMA, e a M2, a M7 e a M8 dependem de ensaio. Os `% TODO (equipe)` no início de cada arquivo listam o que rever.
+
 ## Índice
 1. [O que é o Overleaf](#1-o-que-é-o-overleaf)
 2. [Primeiros passos](#2-primeiros-passos)

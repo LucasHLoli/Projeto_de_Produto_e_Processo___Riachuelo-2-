@@ -1,0 +1,159 @@
+\section[PLANOS DE PROCESSO DE FABRICAÇÃO (ENTREGA 4)]{PLANOS DE PROCESSO DE FABRICAÇÃO\\(ENTREGA~4)}\label{sec:planos_processo}
+
+% TODO (equipe): os parâmetros de processo são valores iniciais de catálogo. Ajustar no try-out com cada fornecedor.
+% TODO (equipe): os tempos de ciclo são estimativas e não foram cronometrados.
+
+Esta seção apresenta as fichas de processo de três itens críticos do Tag\&Go. A Entrega~3 definiu o processo de cada peça fabricada (Tabela~\ref{tab:plano_processos}) e o plano macro da montagem (Tabela~\ref{tab:plano_macro}). No projeto detalhado, o planejamento define e sequencia as operações de cada peça e especifica as máquinas, a fixação, o ferramental, os parâmetros de trabalho e a inspeção \cite{rozenfeld2006gestao}.
+
+\subsection{Itens escolhidos e formato das fichas}
+\label{subsec:proc_itens}
+
+A equipe escolheu os três itens fabricados dos quais dependem a retenção e a liberação da peça. Cada um usa uma família de processo diferente, e juntos cobrem os processos de todas as peças fabricadas.
+
+\begin{itemize}
+    \item \textbf{Suporte do mecanismo (TG-113).} Reúne cinco características críticas e é moldado por injeção, como a base, a tampa e a guia de luz.
+    \item \textbf{Corpo da garra (TG-211).} É a peça atacada numa tentativa de furto. Combina fundição sob pressão com inserto, usinagem e sobreinjeção.
+    \item \textbf{Braço dos ímãs (TG-312).} Leva o ímã até a embreagem. É usinado, e a distância entre o furo e o alojamento entra na geometria da liberação.
+\end{itemize}
+
+Cada ficha tem um cabeçalho, com a peça, o material e o componente em bruto, e uma linha por operação, com a máquina, o ferramental e a fixação, os parâmetros e o controle. Os parâmetros são valores iniciais, típicos de catálogo para cada material, e serão ajustados no \textit{try-out} com o fornecedor. Os tempos são estimativas da equipe.
+
+\subsection{Suporte do mecanismo}
+\label{subsec:proc_suporte}
+
+A Tabela~\ref{tab:proc_suporte} traz a ficha do suporte. A peça pesa cerca de 4~g, pelo volume do desenho, e o molde tem duas cavidades. A força de fechamento estimada é de cerca de 11~t, para uma área projetada de cerca de 9~cm$^2$ por cavidade e 0,6~t/cm$^2$, regra prática para o poliacetal. Uma injetora de 50~t atende com folga.
+
+\begingroup
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}
+    c
+    >{\RaggedRight\arraybackslash}p{2.9cm}
+    >{\RaggedRight\arraybackslash}p{2.4cm}
+    >{\RaggedRight\arraybackslash}p{2.9cm}
+    >{\RaggedRight\arraybackslash}p{3.2cm}
+    >{\RaggedRight\arraybackslash}p{2.3cm}@{}}
+    \caption{Ficha de processo do suporte do mecanismo (TG-113)}\label{tab:proc_suporte}\\
+    \toprule
+    \multicolumn{6}{@{}p{15.4cm}@{}}{\textbf{Peça:} suporte do mecanismo \quad \textbf{Código:} TG-113 \quad \textbf{Desenho:} DE-03 \quad \textbf{Material:} POM copolímero, natural \quad \textbf{Bruto:} grânulos, secos a 80~$^\circ$C por 2~h \quad \textbf{Lote:} 500 peças} \\
+    \midrule
+    \textbf{Op.} & \textbf{Operação} & \textbf{Máquina} & \textbf{Ferramental e fixação} & \textbf{Parâmetros iniciais} & \textbf{Controle} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Op.} & \textbf{Operação} & \textbf{Máquina} & \textbf{Ferramental e fixação} & \textbf{Parâmetros iniciais} & \textbf{Controle} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    10 & Secar e alimentar o material & Estufa com funil secador & -- & 80~$^\circ$C por 2~h & Registro de lote e de tempo de secagem \\
+    20 & Injetar, com duas peças por ciclo & Injetora horizontal de 50~t & Molde de duas placas e duas cavidades, com entrada na borda da prateleira. Extratores nos pés e no alojamento, fora da prateleira & Massa a 190--210~$^\circ$C. Molde a 80--100~$^\circ$C. Recalque de 60 a 80~MPa por 8~s. Ciclo estimado de 25~s & Peso da peça a cada hora. Visual em todas: falha de preenchimento e rebarba \\
+    30 & Separar o canal e as peças & Manual, na saída da injetora & Alicate de corte rente & -- & Vestígio da entrada menor que 0,2~mm \\
+    40 & Estabilizar as dimensões & Estante & Bandejas com as peças apoiadas pelos pés & 24~h a 23~$^\circ$C & Registro de data e hora \\
+    50 & Inspecionar as características críticas & Bancada de metrologia & Instrumentos do plano de controle (Tabela~\ref{tab:ctrl_plano}) & Amostragem do plano de controle & Espessura, planicidade e altura da prateleira, distância entre os eixos e furo do alojamento \\
+    60 & Embalar & Manual & Bandejas com divisórias, sem empilhar sobre a prateleira & 100 peças por caixa & Etiqueta de lote \\
+\end{longtable}
+\endgroup
+\begin{center}
+    \footnotesize Fonte: Elaborado pelos autores (2026). Parâmetros típicos de catálogo para o POM copolímero \cite{matweb}, a ajustar no \textit{try-out}.
+\end{center}
+
+A operação 40 existe por causa do material. O poliacetal continua a contrair depois da moldagem, e a medição logo após a injeção aprovaria peças que sairiam da tolerância dias depois. A temperatura alta do molde reduz essa contração posterior, ao custo de um ciclo mais longo.
+
+\subsection{Corpo da garra}
+\label{subsec:proc_garra}
+
+A Tabela~\ref{tab:proc_garra} traz a ficha da garra na versão fundida (mudança M2). O pino é comprado, entra no molde como inserto e passa a fazer parte da peça. A liga é da classe AlSi9Cu3, comum na fundição sob pressão, e a escolha final cabe ao fundidor.
+
+\begingroup
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}
+    c
+    >{\RaggedRight\arraybackslash}p{2.9cm}
+    >{\RaggedRight\arraybackslash}p{2.4cm}
+    >{\RaggedRight\arraybackslash}p{2.9cm}
+    >{\RaggedRight\arraybackslash}p{3.2cm}
+    >{\RaggedRight\arraybackslash}p{2.3cm}@{}}
+    \caption{Ficha de processo do corpo da garra (TG-211)}\label{tab:proc_garra}\\
+    \toprule
+    \multicolumn{6}{@{}p{15.4cm}@{}}{\textbf{Peça:} corpo da garra, com o pino e o revestimento \quad \textbf{Código:} TG-211 \quad \textbf{Desenho:} DE-04 \quad \textbf{Material:} liga de alumínio da classe AlSi9Cu3, pino de AISI 420 (TG-221) e TPE (SEBS) de 65~Shore~A \quad \textbf{Lote:} 500 peças} \\
+    \midrule
+    \textbf{Op.} & \textbf{Operação} & \textbf{Máquina} & \textbf{Ferramental e fixação} & \textbf{Parâmetros iniciais} & \textbf{Controle} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Op.} & \textbf{Operação} & \textbf{Máquina} & \textbf{Ferramental e fixação} & \textbf{Parâmetros iniciais} & \textbf{Controle} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    10 & Colocar o pino no molde & Manual, com pinça & Bucha de posição do pino na parte móvel do molde & Um pino por cavidade & Presença do pino, visual \\
+    20 & Fundir sob pressão & Máquina de câmara fria. Porte a definir com o fundidor & Molde de aço para trabalho a quente, com uma cavidade e gavetas para os munhões & Metal a 660--700~$^\circ$C. Molde a 180--220~$^\circ$C. Ciclo estimado de 40~s & Visual em todas: junta fria e porosidade aparente \\
+    30 & Rebarbar e quebrar o canal & Prensa de rebarbar & Estampo de rebarbação com o contorno da garra & -- & Visual \\
+    40 & Usinar os munhões e o alojamento da mola & Centro de usinagem CNC & Dispositivo que apoia a face do tecido (referência B) e localiza pelo pino. Fresa de topo de metal duro de $\varnothing$~6~mm & 10.000~rpm e avanço de 600~mm/min. Tempo estimado de 60~s & Munhões com calibre de boca passa-não-passa. Cota de 30,00 em uma peça a cada 25 \\
+    50 & Dar acabamento à superfície & Vibroacabadora e linha de conversão química & Cestos. Pino protegido por capa & Conforme o prestador do serviço & Visual. Aderência do revestimento por lote \\
+    60 & Sobreinjetar o revestimento & Injetora vertical de 30~t & Molde com assento para a garra como inserto & TPE a 190--220~$^\circ$C. Molde a 40~$^\circ$C. Ciclo estimado de 30~s & Espessura de 1,0~mm e altura dos dentes. Aderência por arrancamento manual \\
+    70 & Inspecionar & Bancada de metrologia e durômetro & Dispositivo de perpendicularidade com relógio comparador. Dinamômetro com garra para o pino & Uma peça a cada 50. Dureza em corpo de prova do lote & Dureza do pino de no mínimo 48~HRC. Perpendicularidade de 0,10~mm. Extração do pino acima de 180~N \\
+    80 & Embalar & Manual & Bandejas com alojamento, pino para cima & 50 peças por caixa & Etiqueta de lote \\
+\end{longtable}
+\endgroup
+\begin{center}
+    \footnotesize Fonte: Elaborado pelos autores (2026). Parâmetros a confirmar com o fundidor.
+\end{center}
+
+Duas decisões da ficha merecem registro. A primeira é o limite de 180~N para a extração do pino, 1,5 vez a meta de retenção de 120~N (E12): o pino não pode sair da garra antes de a embreagem ceder. A segunda é a operação 70. Se a dureza do pino cair abaixo de 48~HRC depois da fundição, a operação 10 sai da ficha, o pino passa a ser prensado depois da operação 50, e o desenho DE-04 é revisto.
+
+Nos lotes pequenos da primeira implantação, a garra é usinada em alumínio 6061-T6, como previsto na Tabela~\ref{tab:plano_processos}. Nesse caso as operações 10 a 30 dão lugar à usinagem do contorno e dos dentes a partir de barra chata, e o pino é prensado.
+
+\subsection{Braço dos ímãs}
+\label{subsec:proc_braco}
+
+A Tabela~\ref{tab:proc_braco} traz a ficha do braço. A peça é pequena e plana, e por isso é usinada em painel: uma placa recebe vinte braços, presos por pontes que são cortadas no fim. A fixação única atende à diretriz da Tabela~\ref{tab:plano_processos} e garante a distância de 16,00~mm entre o furo e o alojamento, porque os dois são feitos sem soltar a peça.
+
+\begingroup
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\setlength{\tabcolsep}{4pt}
+\begin{longtable}{@{}
+    c
+    >{\RaggedRight\arraybackslash}p{2.9cm}
+    >{\RaggedRight\arraybackslash}p{2.4cm}
+    >{\RaggedRight\arraybackslash}p{2.9cm}
+    >{\RaggedRight\arraybackslash}p{3.2cm}
+    >{\RaggedRight\arraybackslash}p{2.3cm}@{}}
+    \caption{Ficha de processo do braço dos ímãs (TG-312)}\label{tab:proc_braco}\\
+    \toprule
+    \multicolumn{6}{@{}p{15.4cm}@{}}{\textbf{Peça:} braço dos ímãs \quad \textbf{Código:} TG-312 \quad \textbf{Desenho:} DE-05 \quad \textbf{Material:} alumínio 6061-T6 \quad \textbf{Bruto:} chapa de 2,5~mm, cortada em placas de 150~$\times$~100~mm \quad \textbf{Lote:} 500 peças, em 25 placas} \\
+    \midrule
+    \textbf{Op.} & \textbf{Operação} & \textbf{Máquina} & \textbf{Ferramental e fixação} & \textbf{Parâmetros iniciais} & \textbf{Controle} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Op.} & \textbf{Operação} & \textbf{Máquina} & \textbf{Ferramental e fixação} & \textbf{Parâmetros iniciais} & \textbf{Controle} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    10 & Cortar a chapa em placas & Guilhotina & -- & 150~$\times$~100~mm & Trena \\
+    20 & Facear a placa até 2,00~mm & Centro de usinagem CNC & Placa de vácuo. Fresa de facear de $\varnothing$~40~mm & 4.000~rpm, avanço de 1.000~mm/min e passe de 0,5~mm & Espessura com micrômetro, em quatro pontos \\
+    30 & Fresar os alojamentos de $\varnothing$~10,10~$\times$~0,50~mm & O mesmo centro, sem soltar a placa & Fresa de topo de metal duro de $\varnothing$~6~mm, em interpolação circular & 12.000~rpm e avanço de 600~mm/min & Profundidade com relógio apalpador, na primeira peça de cada placa \\
+    40 & Fresar os furos de perfil duplo~D & O mesmo centro, sem soltar a placa & Fresa de topo de metal duro de $\varnothing$~1,5~mm & 18.000~rpm e avanço de 150~mm/min & Calibre tampão com o perfil do eixo, na primeira peça de cada placa \\
+    50 & Fresar o contorno, deixando duas pontes por braço & O mesmo centro, sem soltar a placa & Fresa de topo de metal duro de $\varnothing$~3~mm & 15.000~rpm e avanço de 500~mm/min & Visual \\
+    60 & Destacar os braços e rebarbar & Manual & Alicate e lima. Tambor rotativo para as rebarbas & 10~min de tambor & Visual. Vestígio da ponte menor que 0,1~mm \\
+    70 & Anodizar & Serviço contratado & Gancheiras pelo furo & Anodização natural, camada de 5 a 10~$\mu$m & Certificado do serviço \\
+    80 & Inspecionar & Bancada de metrologia & Projetor de perfil. Calibre de profundidade & Uma peça a cada 50 & Distância de 16,00~mm, profundidade de 0,50~mm e planicidade \\
+\end{longtable}
+\endgroup
+\begin{center}
+    \footnotesize Fonte: Elaborado pelos autores (2026). Parâmetros iniciais para fresas de metal duro em alumínio, a ajustar na máquina.
+\end{center}
+
+O tempo estimado de máquina é de cerca de 12~min por placa, ou 36~s por braço. A anodização vem depois da usinagem e acrescenta até 0,01~mm por face. No alojamento, essa camada é absorvida pela linha de adesivo. No furo, ela aumenta a interferência com o eixo do microatuador e deve ser considerada quando o perfil for confirmado.
+
+\subsection{Demais peças fabricadas}
+\label{subsec:proc_demais}
+
+A base, a tampa e a guia de luz seguem a sequência do suporte: secagem, injeção, separação do canal, estabilização, inspeção e embalagem. Três diferenças ficam registradas. A base e a tampa usam o mesmo PC/ABS e podem dividir um molde-família, o que reduz o investimento na primeira implantação. A tampa recebe depois a gravação do código 2D, no Posto~0 da montagem. A guia de luz exige cavidade polida nas duas faces ópticas e material de grau óptico, sem reaproveitamento de canal moído.

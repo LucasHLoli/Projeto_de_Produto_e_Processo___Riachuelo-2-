@@ -1,0 +1,120 @@
+\section{LISTA DE COMPONENTES EXTERNOS (ENTREGA 4)}\label{sec:componentes_externos}
+
+% TODO (equipe): cotar os itens com pelo menos dois fornecedores e preencher preço e prazo.
+% TODO (equipe): o torque do microatuador e o grau do ímã dependem do ensaio do campo.
+% TODO (equipe): escolher o adesivo estrutural do ímã (define o tempo de cura do Posto 0).
+
+Esta seção lista os componentes comprados do Tag\&Go, com a especificação que acompanha o pedido de cotação. No ciclo de aquisição do projeto detalhado, a equipe decide o que fazer e o que comprar e, para os itens comprados, seleciona e homologa os fornecedores \cite{rozenfeld2006gestao}. A lista parte da estrutura revisada (Tabela~\ref{tab:dfma_estrutura}) e da seleção de materiais (Tabela~\ref{tab:const_selecao}).
+
+\subsection{Decisão de fazer ou comprar}
+\label{subsec:ext_decisao}
+
+\citeonline{rozenfeld2006gestao} separam os itens em três classes para essa decisão: os estratégicos, que dão o diferencial do produto e ficam com a empresa ou com um parceiro definido cedo; as \textit{commodities}, compradas por catálogo; e os comuns, para os quais se compara o custo interno com as cotações. A Tabela~\ref{tab:ext_decisao} aplica as classes aos 16 componentes da configuração de referência.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Decisão de fazer ou comprar por classe de item}
+    \label{tab:ext_decisao}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{2.3cm}
+        >{\RaggedRight\arraybackslash}p{4.6cm}
+        >{\RaggedRight\arraybackslash}p{2.7cm}
+        >{\RaggedRight\arraybackslash}X@{}}
+        \toprule
+        \textbf{Classe} & \textbf{Itens} & \textbf{Decisão} & \textbf{Motivo} \\
+        \midrule
+        Estratégicos & Suporte (TG-113), garra (TG-211), braço (TG-312), tampa (TG-112) e base (TG-111) & Projeto próprio, fabricação contratada sob desenho & Guardam a geometria que posiciona o ímã em relação à embreagem e a forma que prende a roupa. A equipe não tem injetora nem fundição, e o volume não justifica tê-las \\
+        Estratégicos comprados & Embreagem de esferas (TG-222) e placa de controle (TG-511) & Compra sob especificação do projeto & A embreagem aproveita um item fabricado em grande volume para as etiquetas rígidas. A placa é montada por um fornecedor de eletrônica, com o esquema e o \textit{firmware} da equipe \\
+        Comuns & Guia de luz (TG-412), pino (TG-221), mola (TG-213), ímã (TG-313) e bobina (TG-522) & Compra sob medida ou por catálogo, com cotação & Itens simples, com vários fornecedores. A guia é a única fabricada sob desenho \\
+        \textit{Commodities} & Parafusos (TG-121), microatuador (TG-311), chave (TG-512) e célula (TG-521) & Compra por catálogo & Componentes padronizados, selecionados por norma ou por ficha técnica \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+A equipe não levantou cotações, e por isso a comparação de custos entre fazer e comprar ainda não foi feita para os itens comuns. A decisão registrada na tabela segue a capacidade de fabricação, e não o custo. O custo-alvo do dispositivo decorre do valor mercadológico de R\$~5 a R\$~8 por etiqueta e do fornecimento sob locação (Subseção~\ref{subsec:comerc_condicoes}), e será confrontado com as cotações na revisão da viabilidade econômica.
+
+\subsection{Especificação dos componentes}
+\label{subsec:ext_lista}
+
+A Tabela~\ref{tab:ext_lista} traz os dez componentes comprados e o adesivo do ímã, que é material de consumo. As quantidades são por dispositivo. Os valores marcados como a definir dependem de ensaio e estão explicados depois da tabela.
+
+\begin{landscape}
+\begingroup
+\footnotesize
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{@{}
+    >{\RaggedRight\arraybackslash}p{1.3cm}
+    >{\RaggedRight\arraybackslash}p{2.6cm}
+    c
+    >{\RaggedRight\arraybackslash}p{8.4cm}
+    >{\RaggedRight\arraybackslash}p{3.4cm}
+    >{\RaggedRight\arraybackslash}p{5.2cm}@{}}
+    \caption{Lista de componentes externos e especificações}\label{tab:ext_lista}\\
+    \toprule
+    \textbf{Código} & \textbf{Componente} & \textbf{Qtd.} & \textbf{Especificação} & \textbf{Fornecimento} & \textbf{Critério de recebimento} \\
+    \midrule
+    \endfirsthead
+    \toprule
+    \textbf{Código} & \textbf{Componente} & \textbf{Qtd.} & \textbf{Especificação} & \textbf{Fornecimento} & \textbf{Critério de recebimento} \\
+    \midrule
+    \endhead
+    \bottomrule
+    \endfoot
+    TG-121 & Parafuso da tampa & 2 & Parafuso autoatarraxante de cabeça escareada, rosca ST2,2, comprimento de 8~mm, fenda hexalobular, conforme a ISO 14586 \cite{iso14586}. Aço inox A2 & Catálogo & Certificado do lote. Inspeção visual por amostragem \\
+    TG-213 & Mola de abertura & 1 & Mola de torção de arame de inox 302 de $\varnothing$~0,5~mm, com três espiras e pernas de 8~mm. Torque mínimo de 15~N$\cdot$mm com a garra fechada. Vida mínima de 10.000 aberturas & Sob medida & Torque em dispositivo com dinamômetro, por amostragem \\
+    TG-221 & Pino & 1 & $\varnothing$~1,2~h9~$\times$~16~mm, AISI 420 temperado, 48 a 52~HRC. Ponta arredondada com raio de 0,3~mm. Recartilhado nos 5~mm embutidos na garra & Sob medida, entregue ao fundidor da garra & Diâmetro com micrômetro e dureza, por amostragem \\
+    TG-222 & Embreagem de esferas & 1 & $\varnothing$~13~$\times$~11~mm, para pino de $\varnothing$~1,2~mm. Copo de latão, carretel de aço de baixo carbono, três esferas de AISI 440C e mola de inox 302. Retenção axial mínima de 120~N (E12). Abertura com campo axial de 4.500~G na base & Sob especificação. Item das etiquetas rígidas & Diâmetro externo com calibre passa-não-passa. Retenção e abertura em bancada, por amostragem \\
+    TG-311 & Microatuador rotativo & 1 & Micro servo de 20~$\times$~8,5~$\times$~17~mm, com engrenagens metálicas e eixo de perfil duplo~D. Curso mínimo de 90$^\circ$. Alimentação de 3,0 a 4,2~V. Torque a definir depois do ensaio do campo & Catálogo & Giro de 90$^\circ$ com retorno e corrente de pico, por amostragem \\
+    TG-313 & Ímã & 1 & NdFeB sinterizado, grau N48 a N52, $\varnothing$~10~$\times$~12~mm, magnetização axial, revestimento de Ni-Cu-Ni. Temperatura de uso de até 80~$^\circ$C. Campo mínimo de 4.500~G a 1~mm da face, a confirmar no ensaio. Fornecido com separadores & Catálogo ou sob medida & Campo a 1~mm com gaussímetro e altura com micrômetro, por amostragem \\
+    TG-511 & Placa de controle montada & 1 & Placa de FR-4 de 1,6~mm, 45~$\times$~30~mm, acabamento ENIG. Microcontrolador com rádio, acionamento do microatuador com corte da alimentação em repouso, LED de três cores, entrada da chave da garra, carregador da célula com entrada da bobina e sensor de temperatura. Conectores polarizados e de tamanhos diferentes. \textit{Firmware} gravado pelo fornecedor & Sob especificação do projeto & Teste funcional em todas as placas, feito pelo fornecedor. Certificado de homologação do rádio (E17) \\
+    TG-512 & Chave da garra & 1 & Microchave subminiatura, normalmente aberta, com contatos banhados a ouro. Força de acionamento máxima de 0,5~N. Vida mínima de 100.000 ciclos & Catálogo & Continuidade com multímetro, por amostragem \\
+    TG-521 & Célula recarregável & 1 & Lítio-polímero em bolsa, 3,7~V, 50~$\times$~34~$\times$~6~mm, com circuito de proteção e cabo com conector. Capacidade a definir pela corrente de espera (E13). Certificada pela IEC 62133-2 \cite{iec62133} & Catálogo & Tensão em aberto e dimensões, por amostragem. Laudo de certificação do lote \\
+    TG-522 & Bobina de indução & 1 & Bobina receptora de $\varnothing$~40~$\times$~1~mm, de fio de cobre esmaltado, com folha de ferrite de NiZn e cabo com conector. Compatível com a base de recarga da loja & Catálogo ou sob medida & Indutância e resistência com medidor LCR, por amostragem \\
+    \midrule
+    -- & Adesivo do ímã & -- & Adesivo estrutural para metal, com resistência ao cisalhamento compatível com a força de atração entre o ímã e a embreagem. Tipo e cura a definir & Catálogo & Validade e lote. Ensaio de cisalhamento por lote de colagem \\
+\end{longtable}
+\endgroup
+\begin{center}
+    \footnotesize Fonte: Elaborado pelos autores (2026). As especificações de retenção, de campo e de vida são metas do projeto, ainda não verificadas em ensaio.
+\end{center}
+\end{landscape}
+
+Três especificações foram calculadas ou adotadas pela equipe e precisam de justificativa.
+
+\textbf{Torque da mola.} A garra fundida pesa no máximo 27~g, valor da garra maciça de alumínio (Subseção~\ref{subsec:const_criticos}), e seu centro fica a cerca de 26~mm do eixo da articulação. Com o dispositivo de cabeça para baixo, o peso da garra exige cerca de 7~N$\cdot$mm para abrir. A especificação de 15~N$\cdot$mm dá um fator de cerca de dois sobre esse valor. O atrito dos munhões e a resistência do tecido não entraram no cálculo, e o torque será ajustado no protótipo.
+
+\textbf{Retenção da embreagem.} O valor de 120~N repete a meta preliminar da especificação E12. A especificação pede o maior valor entre 120~N e a força medida na etiqueta comercial de referência, e essa medição ainda não foi feita.
+
+\textbf{Capacidade da célula.} A especificação E13 pede 168 dias em estado travado sem recarga. A capacidade que atende a esse prazo depende da corrente de espera da placa, que só será medida no protótipo. O envelope de 50~$\times$~34~$\times$~6~mm está fixado pelo conjunto, e a capacidade será a maior disponível nesse formato.
+
+\subsection{Relacionamento com os fornecedores}
+\label{subsec:ext_fornecedores}
+
+Os fornecedores entram no projeto em momentos diferentes, conforme o tipo de item \cite{rozenfeld2006gestao}. A Tabela~\ref{tab:ext_fornecedores} resume o envolvimento previsto e o que cada um recebe da equipe.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Tipos de fornecedor e documentação enviada}
+    \label{tab:ext_fornecedores}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{3.0cm}
+        >{\RaggedRight\arraybackslash}p{3.6cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{3.4cm}@{}}
+        \toprule
+        \textbf{Tipo} & \textbf{Itens} & \textbf{Envolvimento} & \textbf{Documentação} \\
+        \midrule
+        Codesenvolvedor & Embreagem e placa de controle & Entra antes do congelamento do projeto. A embreagem define o campo de abertura, e a placa define o consumo e o rádio & Especificação, desenho de interface e plano de ensaio \\
+        Fornecedor de serviços & Injeção, fundição, usinagem e gravação a laser & Recebe os desenhos de execução e devolve o projeto do molde e as amostras do \textit{try-out} & Desenhos DE-01 a DE-06 e plano de controle \\
+        Fornecedor de peças-padrão & Parafusos, microatuador, chave, célula, ímã, mola, pino e bobina & Selecionado por catálogo e por cotação, no fim do projeto detalhado & Especificação da Tabela~\ref{tab:ext_lista} \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026), com base em \citeonline{rozenfeld2006gestao}.}
+\end{table}
+
+A homologação de cada fornecedor passa pela avaliação de amostras contra os critérios de recebimento da Tabela~\ref{tab:ext_lista}. Para a embreagem e o ímã, as amostras também alimentam o ensaio do campo, do qual dependem o grau do ímã, o torque do microatuador e a tolerância da folga. Esses dois itens devem ser os primeiros a ser comprados.
