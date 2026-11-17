@@ -1,58 +1,11 @@
 \section[PROJETO DE UM DISPOSITIVO (ENTREGA 4)]{PROJETO DE UM DISPOSITIVO: GABARITO DE COLAGEM DO ÍMÃ (ENTREGA~4)}\label{sec:projeto_dispositivo}
 
-% TODO (equipe): dimensionar a pastilha de aço e a força dos êmbolos depois de escolher o adesivo.
-% TODO (equipe): a cota de 11,80 do ninho muda se o ensaio do campo alterar a folga.
-
-Esta seção apresenta o projeto de um recurso de fabricação que não existe no mercado. O planejamento do processo identifica os dispositivos e as ferramentas especiais de que as operações precisam, e o projeto desses recursos é uma atividade do projeto detalhado \cite{rozenfeld2006gestao}. O plano macro de montagem listou os recursos específicos do Tag\&Go (Tabela~\ref{tab:plano_recursos}). A equipe projetou o gabarito de colagem do ímã no braço, usado no Posto~0.
-
-\subsection{Escolha do dispositivo}
-\label{subsec:disp_escolha}
-
-A Tabela~\ref{tab:disp_candidatos} compara os recursos específicos do produto. Os moldes de injeção e de fundição são projetados pelo fornecedor de cada peça, a partir dos desenhos de execução, e ficam fora da comparação.
-
-\begin{table}[htbp]
-    \centering
-    \caption{Recursos específicos do Tag\&Go e critério de escolha}
-    \label{tab:disp_candidatos}
-    \footnotesize
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabularx}{\textwidth}{@{}
-        >{\RaggedRight\arraybackslash}p{4.0cm}
-        >{\RaggedRight\arraybackslash}p{2.8cm}
-        >{\RaggedRight\arraybackslash}X@{}}
-        \toprule
-        \textbf{Recurso} & \textbf{Item crítico atendido} & \textbf{Efeito sobre o produto} \\
-        \midrule
-        Gabarito de colagem do ímã & Braço com o ímã (TG-312 e TG-313) & Fixa uma das três cotas da folga do ímã. Sem ele, a altura do ímã depende da mão do operador e da altura do ímã comprado \\
-        Batente da prensa do braço & Subconjunto do mecanismo & Fixa outra cota da mesma folga. É uma peça simples, montada em prensa de mercado \\
-        Dispositivos de fixação do suporte, da tampa e da base & Montagem & Posicionam a peça-base. Não definem cota funcional \\
-        Bancada de teste do mecanismo & Subconjunto do mecanismo & Detecta a falha, mas não a evita \\
-        Dispositivo de tração do ensaio de arrancamento & Garra e embreagem & Usado por amostragem, no controle \\
-        \bottomrule
-    \end{tabularx}
-    \source{Elaborado pelos autores (2026).}
-\end{table}
-
-O gabarito foi escolhido porque é o único recurso que define uma cota funcional do produto e que não pode ser substituído por um item de mercado. Ele também era uma pendência do plano macro, que não pôde dimensioná-lo antes da cadeia de tolerâncias (Subseção~\ref{subsec:plano_pendencias}).
-
-\subsection{Requisitos}
-\label{subsec:disp_requisitos}
-
-O gabarito atende a seis requisitos, derivados da cadeia de tolerâncias (Tabela~\ref{tab:des_cadeia}) e do plano macro.
-
-\begin{itemize}
-    \item \textbf{Cota funcional.} Fixar em 11,80~$\pm$0,03~mm a distância entre a face polar do ímã e a face do braço que recebe o alojamento, qualquer que seja a altura real do ímã.
-    \item \textbf{Posição.} Centrar o ímã no alojamento, a 16,00~mm do furo do braço.
-    \item \textbf{Materiais.} Não ter peça magnética em contato com o operador ou com as ferramentas, para que o ímã não seja desviado ao entrar no ninho.
-    \item \textbf{Lote.} Colar vários braços por vez, porque a cura do adesivo fica fora do fluxo unitário.
-    \item \textbf{Extração.} Soltar o braço colado sem alavanca no ímã nem no braço.
-    \item \textbf{Aferição.} Ter a cota funcional verificável com instrumento comum de oficina.
-\end{itemize}
+O planejamento do processo aponta os dispositivos e as ferramentas especiais de que as operações precisam, e o projeto desses recursos faz parte do projeto detalhado \cite{rozenfeld2006gestao}. Entre os recursos específicos do Tag\&Go listados no plano macro (Tabela~\ref{tab:plano_recursos}), a equipe escolheu projetar o gabarito de colagem do ímã no braço, usado no Posto~0. Ele atende ao braço, um item crítico, e é o único recurso que fixa uma cota funcional do produto sem ter equivalente no mercado: a altura de 11,80~mm entre a face polar do ímã e a face do braço, uma das três parcelas da folga (Tabela~\ref{tab:des_cadeia}).
 
 \subsection{Solução}
 \label{subsec:disp_solucao}
 
-A Figura~\ref{fig:fd01} mostra o gabarito. Ele é uma placa de alumínio com dez ninhos e uma tampa de pressão.
+O gabarito inverte a montagem (Figura~\ref{fig:fd01}). No produto, o ímã fica sobre o braço. No gabarito, ele entra primeiro, com a face polar para baixo, num ninho de 11,80~mm de profundidade, e o braço é colocado por cima, com o alojamento voltado para o ímã. O fundo do ninho e a face da placa viram as duas referências da cota. Como o ímã tem 12~mm, ele sobressai 0,20~mm e entra no alojamento de 0,50~mm do braço, e os 0,30~mm restantes ficam para o adesivo. Se o ímã vier um pouco mais alto ou mais baixo, a linha de adesivo absorve a diferença e a cota não muda.
 
 \begin{landscape}
 \begin{figure}[p]
@@ -64,23 +17,14 @@ A Figura~\ref{fig:fd01} mostra o gabarito. Ele é uma placa de alumínio com dez
 \end{figure}
 \end{landscape}
 
-O princípio é inverter a montagem. No produto, o ímã fica sobre o braço. No gabarito, o ímã entra primeiro, com a face polar para baixo, em um ninho de 11,80~mm de profundidade, e o braço é colocado por cima, com o alojamento voltado para o ímã. O fundo do ninho e a face superior da placa passam a ser as duas referências da cota funcional. Como o ímã tem 12~mm de altura, ele sobressai 0,2~mm da placa e entra no alojamento de 0,5~mm do braço. Os 0,3~mm restantes são a linha de adesivo. Se o ímã vier mais alto ou mais baixo, a linha de adesivo absorve a diferença, e a cota de 11,80~mm não muda.
+Faltava resolver como manter o ímã no fundo durante a cura sem um grampo, que impediria a entrada do braço. A saída foi embutir uma pastilha de aço de baixo carbono sob cada ninho: ela atrai o ímã através de 1,5~mm de alumínio, força suficiente para assentá-lo e pequena o bastante para soltá-lo depois. Um pino com o perfil duplo~D do furo do braço posiciona o braço a 16,00~mm do eixo do ninho e impede que ele gire. A tampa de pressão desce por quatro colunas, e dois êmbolos de mola de 5~N por braço o mantêm apoiado na placa. Depois da cura, a placa é virada sobre uma base com dez pinos de latão, que passam pelos furos de $\varnothing$~3~mm do fundo e empurram os dez conjuntos de uma vez.
 
-Quatro decisões de projeto completam a solução.
+O corpo e a tampa são de alumínio 6061-T6 anodizado, que não interfere no ímã e solta bem o adesivo curado. O ninho tem 10,10~mm de diâmetro, com tolerância de $+$0,03~mm, para guiar o ímã de 10~mm sem prendê-lo.
 
-\begin{itemize}
-    \item \textbf{Pastilha de aço sob o ninho.} O ímã precisa ficar assentado no fundo durante a cura, e um grampo sobre ele impediria a entrada do braço. Uma pastilha de aço de baixo carbono, embutida sob o fundo, atrai o ímã e o mantém assentado. A parede de alumínio de 1,5~mm entre os dois limita a força e permite a extração.
-    \item \textbf{Pino de posição.} Um pino com o perfil duplo~D do furo do braço posiciona o braço a 16,00~mm do eixo do ninho e impede que ele gire.
-    \item \textbf{Tampa de pressão.} Dois êmbolos de mola por braço mantêm o braço apoiado na placa durante a cura. A tampa desce por quatro colunas e serve de proteção contra poeira.
-    \item \textbf{Furo de extração.} Um furo de $\varnothing$~3~mm atravessa a pastilha e o fundo do ninho. Depois da cura, a placa é virada sobre um conjunto de pinos de latão, que empurram os dez ímãs de uma vez.
-\end{itemize}
-
-O corpo e a tampa são de alumínio 6061-T6 anodizado, não magnético e fácil de limpar do adesivo curado. O ninho tem diâmetro de 10,10~mm, com tolerância de $+$0,03~mm, para guiar o ímã de 10~mm sem prendê-lo.
-
-\subsection{Uso e aferição}
+\subsection{Uso e quantidade}
 \label{subsec:disp_uso}
 
-A Tabela~\ref{tab:disp_uso} descreve o uso do gabarito no Posto~0. A sequência detalha as operações 0.4 a 0.6 do plano macro (Tabela~\ref{tab:plano_macro}).
+A Tabela~\ref{tab:disp_uso} detalha as operações 0.4 a 0.6 do plano macro.
 
 \begin{table}[htbp]
     \centering
@@ -95,19 +39,16 @@ A Tabela~\ref{tab:disp_uso} descreve o uso do gabarito no Posto~0. A sequência 
         \toprule
         \textbf{Passo} & \textbf{Ação} & \textbf{Ferramenta} \\
         \midrule
-        1 & Limpar os ninhos e conferir se não há adesivo curado no fundo & Pano e haste de latão \\
-        2 & Colocar um ímã em cada ninho, com o separador para cima, e retirar o separador & Pinça não magnética \\
-        3 & Aplicar a dose de adesivo no alojamento de cada braço, já desengraxado & Dosador de adesivo \\
-        4 & Colocar cada braço no pino de posição, com o alojamento para baixo & Manual \\
-        5 & Descer a tampa de pressão e travá-la & Manual \\
-        6 & Levar o gabarito à estante e aguardar a cura & Estante de cura \\
-        7 & Abrir a tampa, virar a placa sobre os pinos de extração e retirar os braços & Base de extração com dez pinos de latão \\
-        8 & Conferir a altura de um braço por placa & Relógio comparador em desempeno \\
+        1 & Limpar os ninhos & Haste de latão \\
+        2 & Colocar um ímã em cada ninho e retirar o separador & Pinça não magnética \\
+        3 & Aplicar o epóxi no alojamento de cada braço desengraxado & Dosador volumétrico \\
+        4 & Encaixar os braços nos pinos, alojamento para baixo, e travar a tampa & Manual \\
+        5 & Curar em estufa por 30~min a 60~$^\circ$C & Estufa de bandejas \\
+        6 & Virar a placa sobre os pinos de extração e retirar os braços & Base de extração \\
+        7 & Medir a altura de um braço por placa: 13,80~$\pm$0,03~mm & Relógio comparador em desempeno \\
         \bottomrule
     \end{tabularx}
     \source{Elaborado pelos autores (2026).}
 \end{table}
 
-A aferição do gabarito usa um calibre de profundidade nos dez ninhos, a cada 500 ciclos, e a planicidade da face superior é conferida em desempeno, com limite de 0,02~mm. O passo 8 fecha o controle no produto: a altura do conjunto colado, medida da face de apoio do braço à face polar do ímã, deve ficar em 13,80~$\pm$0,03~mm, soma dos 2,00~mm do braço com os 11,80~mm do gabarito.
-
-O projeto tem três limites. A força da pastilha de aço sobre o ímã não foi calculada, e a espessura da parede entre os dois será ajustada no primeiro gabarito. O número de gabaritos depende do tempo de cura do adesivo, ainda não escolhido. E a cota de 11,80~mm muda se o ensaio do campo alterar a folga de projeto, caso em que basta refazer a profundidade dos ninhos.
+Cada gabarito leva cerca de 40~min por ciclo, contando carga, cura e extração, e produz 15 braços por hora. Para 20 mil braços por mês em 280~h úteis, o posto precisa de 72 por hora, ou cinco gabaritos em giro. A equipe previu seis, para que um fique sempre em aferição: a profundidade dos dez ninhos é conferida com calibre de profundidade a cada 500 ciclos, e a planicidade da face, em desempeno, com limite de 0,02~mm.
