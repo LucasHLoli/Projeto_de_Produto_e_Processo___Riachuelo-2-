@@ -20,11 +20,11 @@ A Tabela~\ref{tab:const_selecao} resume a seleção dos 20 componentes da estrut
     >{\RaggedRight\arraybackslash}p{3.8cm}@{}}
     \caption{Seleção de material por componente}\label{tab:const_selecao}\\
     \toprule
-    \textbf{Código} & \textbf{Componente} & \textbf{Exigência decisiva} & \textbf{Candidatos} & \textbf{Material especificado} \\
+    \textbf{Código} & \textbf{Componente} & \textbf{Requisito técnico} & \textbf{Candidatos} & \textbf{Material especificado} \\
     \midrule
     \endfirsthead
     \toprule
-    \textbf{Código} & \textbf{Componente} & \textbf{Exigência decisiva} & \textbf{Candidatos} & \textbf{Material especificado} \\
+    \textbf{Código} & \textbf{Componente} & \textbf{Requisito técnico} & \textbf{Candidatos} & \textbf{Material especificado} \\
     \midrule
     \endhead
     \bottomrule
@@ -61,6 +61,8 @@ A Tabela~\ref{tab:const_selecao} resume a seleção dos 20 componentes da estrut
 
 \subsection{Componentes críticos}
 \label{subsec:const_criticos}
+
+Para alguns componentes chave, optamos por detalhar mais aprofundadamente as decisões:
 
 \textbf{Base e tampa (TG-111 e TG-112).} A bobina fica sob o fundo de 1,5~mm, e o código 2D é gravado na tampa. Essas duas exigências descartam os metais e pedem um polímero de engenharia tenaz que aceite marcação a laser. O PC/ABS atende às duas e permite usar o mesmo material nas duas peças, com o mesmo encolhimento de moldagem. O polipropileno, mais barato, segura mal os parafusos e marca pior a laser. A poliamida com fibra absorve umidade e varia de dimensão.
 
@@ -111,4 +113,4 @@ O primeiro recurso de sustentabilidade do Tag\&Go está no modelo de negócio. O
 
 As peças fabricadas usam três famílias de material, todas recicláveis: PC/ABS, POM e alumínio. O alumínio tem cadeia de reciclagem consolidada e pode vir de sucata. Para a base e a tampa existem graus comerciais de PC/ABS com conteúdo reciclado pós-consumo. Eles podem ser adotados se mantiverem a tenacidade e a resposta ao laser, o que fica para o projeto detalhado. Cada peça plástica leva em relevo a sigla do material, conforme a ISO 11469 \cite{iso11469}, para facilitar a triagem no fim da vida.
 
-A célula, a placa e a bobina seguem a logística reversa de baterias e de eletroeletrônicos prevista na Política Nacional de Resíduos Sólidos \cite{brasil2010pnrs}. A tampa presa por parafusos permite retirar a célula sem quebrar a carcaça. Há um conflito com o DFMA: na garra fundida da mudança M2, com o pino como inserto e o revestimento sobreinjetado, os três materiais só se separam por moagem. Esse custo para a reciclagem entra na decisão sobre a M2.
+A célula, a placa e a bobina seguem a logística reversa de baterias e de eletroeletrônicos prevista na Política Nacional de Resíduos Sólidos \cite{brasil2010pnrs}. A tampa presa por parafusos permite retirar a célula sem quebrar a carcaça. Há um conflito com o DFMA, pois, na garra fundida da mudança M2, com o pino como inserto e o revestimento sobreinjetado, os três materiais só se separam por moagem. Esse custo para a reciclagem entra na decisão sobre a M2.
