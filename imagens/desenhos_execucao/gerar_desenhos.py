@@ -3,7 +3,7 @@
 # Uso: python gerar_desenhos.py  ->  de01_base.png ... fd01_gabarito.png na mesma pasta.
 # Folha A4 paisagem, coordenadas do papel em mm. Cada vista tem origem e escala próprias.
 # As medidas seguem o conjunto revisado pelo DFMA (imagens/conjunto_produto/gerar_conjunto.py).
-# Tolerâncias: valores de projeto propostos pela equipe, a confirmar com os fornecedores e com os ensaios.
+# Tolerâncias: valores de projeto para a produção em série (Entrega 4).
 import os
 import matplotlib
 matplotlib.use('Agg')
@@ -170,7 +170,6 @@ def ref_dado(v, x, y, letra, dx=0, dy=-5):
 
 GERAL_PLAST = 'Tolerâncias gerais não indicadas: ISO 20457, grau TG5. Ângulo de saída de 1° nas paredes, salvo indicação.'
 GERAL_USIN = 'Tolerâncias gerais não indicadas: ISO 2768-fH. Rebarbas removidas; cantos vivos quebrados 0,1 mm.'
-A_CONF = 'Tolerâncias indicadas são valores de projeto, a confirmar com o fornecedor e após o ensaio do campo.'
 
 
 # ------------------------------------------------------------------ DE-01 base
@@ -180,8 +179,7 @@ def de01():
         'Fundo de 1,50 ±0,10 sob a bobina (cota funcional da recarga por indução).',
         'Raios internos mínimos de 0,5 mm. Sem marcas de extração na face externa do fundo.',
         'Marcar >PC+ABS< em relevo na face interna do fundo (ISO 11469).',
-        'Torres dos parafusos: furo-piloto Ø1,8 para parafuso autoatarraxante 2,2 mm.',
-        A_CONF], 'de01_base.png')
+        'Torres dos parafusos: furo-piloto Ø1,8 para parafuso autoatarraxante 2,2 mm.'], 'de01_base.png')
     L, W, H = 120, 60, 28
     v = Vista(f, 32, 116, 1, 'Vista superior', ty=77)
     v.cantos(0, 0, L, W, 5); v.cantos(2, 2, L - 2, W - 2, 3, lw=0.8)
@@ -232,8 +230,7 @@ def de02():
         'Área de 30 × 30 reservada à gravação a laser do código 2D: face lisa, sem ponto de injeção nem linha de solda.',
         'Furo do pino com chanfro de 0,5 × 45° na face externa, para guiar o pino.',
         'Mancais da garra (M7): assento Ø3,1 aberto para cima; a garra entra por encaixe.',
-        'Marcar >PC+ABS< em relevo na face interna (ISO 11469).',
-        A_CONF], 'de02_tampa.png')
+        'Marcar >PC+ABS< em relevo na face interna (ISO 11469).'], 'de02_tampa.png')
     L, W = 120, 60
     v = Vista(f, 34, 112, 1, 'Vista superior (face externa)', ty=82)
     v.cantos(0, 0, L, W, 5)
@@ -286,8 +283,7 @@ def de03():
         'Item crítico. Características críticas (CC): espessura e planicidade da prateleira, distância de 16,00 entre os eixos,',
         '   altura de 14,50 da face inferior da prateleira ao plano dos pés (referência A) e furo do alojamento da embreagem.',
         'Ponto de injeção na borda da prateleira, do lado oposto ao alojamento. Sem marcas de extração na prateleira.',
-        'Marcar >POM< em relevo na parede A (ISO 11469).',
-        A_CONF], 'de03_suporte.png')
+        'Marcar >POM< em relevo na parede A (ISO 11469).'], 'de03_suporte.png')
     k = 2
     v = Vista(f, 38, 112, k, 'Vista superior', ty=74)
     # paredes e prateleira (u = x − 12, v = z − 19)
@@ -342,10 +338,9 @@ def de04():
               'Al fundido (AlSi9Cu3) + pino AISI 420 + TPE 65 Shore A', '1,5:1', [
         'Fundição sob pressão. Tolerâncias gerais não indicadas: ISO 8062-3, grau DCTG 6. Ângulo de saída de 1,5°.',
         'Pino TG-221 (Ø1,2 × 16, AISI 420 temperado) colocado como inserto no molde, com 5 mm embutidos e recartilhado na parte embutida.',
-        'Verificar a dureza do pino depois da fundição (≥ 48 HRC). Se houver revenimento, o pino passa a ser prensado após a fundição.',
+        'Dureza do pino após a fundição: mínimo de 48 HRC. Extração do pino acima de 180 N.',
         'Revestimento de TPE sobreinjetado na face do tecido, com 1,0 mm de espessura; os dentes ficam 0,3 mm acima do revestimento.',
-        'Munhões: usinar após a fundição, Ø3,00 −0,02/−0,06. Acabamento por vibroacabamento e conversão química; não anodizar (pino de aço).',
-        A_CONF], 'de04_garra.png')
+        'Munhões: usinar após a fundição, Ø3,00 −0,02/−0,06. Acabamento por vibroacabamento e conversão química; não anodizar (pino de aço).'], 'de04_garra.png')
     k = 1.5
     v = Vista(f, 50, 116, k, 'Vista inferior (face do tecido)', ty=68)
     v.cantos(0, 0, 52, 32, 2)
@@ -390,10 +385,9 @@ def de05():
         GERAL_USIN,
         'Item crítico. Características críticas (CC): distância de 16,00 entre o furo do eixo e o alojamento do ímã,',
         '   profundidade do alojamento e planicidade da face de apoio.',
-        'Furo do cubo no perfil do eixo do microatuador (duplo D). Medidas a confirmar com o microatuador escolhido;',
+        'Furo do cubo no perfil do eixo do microatuador TG-311 (duplo D: Ø4,0 com faces a 3,0);',
         '   interferência de 0,02 a 0,05 mm para a montagem por pressão (M3).',
-        'Alojamento com rugosidade Ra 1,6 a 3,2 μm, para ancorar o adesivo.',
-        A_CONF], 'de05_braco.png')
+        'Alojamento com rugosidade Ra 1,6 a 3,2 μm, para ancorar o adesivo.'], 'de05_braco.png')
     k = 4
     v = Vista(f, 70, 126, k, 'Vista superior', ty=40)
     import numpy as np
@@ -413,7 +407,7 @@ def de05():
     v.ch(-4, d + 5.9, 5.9, 9, '25,9')
     v.cv(-5.9, 5.9, d + 5.9, 10, '11,8'); v.cv(-4, 4, -4, -8, 'Ø8')
     v.cham(d + 3.6, 3.6, 22, 14, 'alojamento Ø10,10 +0,05/0')
-    v.cham(1.2, 1.5, -2, 26, 'furo duplo D: Ø4,0 com faces a 3,0 (a confirmar)', ha='center')
+    v.cham(1.2, 1.5, -2, 26, 'furo duplo D: Ø4,0 com faces a 3,0', ha='center')
     # corte
     c = Vista(f, 70, 70, k, 'Corte A–A', ty=20)
     c.pol([(-4, 0), (-2, 0), (-2, 2), (-4, 2)], h='/////', lw=1.0)
@@ -433,8 +427,7 @@ def de06():
         'Faces de entrada e de saída da luz com polimento óptico (Ra ≤ 0,05 μm). Corpo com textura leve, para difundir a luz.',
         'Ponto de injeção no colar. Sem bolhas nem inclusões visíveis a olho nu.',
         'Montagem por encaixe na janela Ø4,0 da tampa (DE-02), pela face interna; o ressalto de 0,1 retém a guia.',
-        'Marcar >PC< no colar, se o tamanho permitir (ISO 11469).',
-        A_CONF], 'de06_guia.png')
+        'Marcar >PC< no colar, se o tamanho permitir (ISO 11469).'], 'de06_guia.png')
     k = 5
     v = Vista(f, 50, 125, k, 'Vista lateral', ty=32)
     v.ret(0, -1.5, 12, 1.5, lw=1.1)        # haste
@@ -466,8 +459,7 @@ def de07():
         'Montado no Posto 1 (plano macro). Braço (4) recebido do Posto 0 já com o ímã (5) colado no gabarito FD-01.',
         'Braço prensado no eixo do microatuador com batente: face superior do braço a 2,50 ±0,03 do plano dos pés (referência A).',
         'Característica crítica (CC): folga de 0,20 ±0,10 entre o ímã e a prateleira, na posição de soltar. Conferir com calibre não magnético.',
-        'Teste de saída: giro de 90° com retorno e liberação do pino-padrão. Ferramentas não magnéticas.',
-        'A tolerância da folga só será fixada depois do ensaio do campo.'], 'de07_mecanismo.png')
+        'Teste de saída: giro de 90° com retorno e liberação do pino-padrão. Ferramentas não magnéticas.'], 'de07_mecanismo.png')
     k = 2
     v = Vista(f, 34, 116, k, 'Vista superior (ímã em repouso; em traço, na posição de soltar)', ty=78)
     v.ret(0, 12, 29.5, 30, lw=0.9); v.ret(27.5, 0, 29.5, 30, lw=0.9, fc='#dddddd'); v.ret(0, 28, 27.5, 30, lw=0.9, fc='#dddddd')

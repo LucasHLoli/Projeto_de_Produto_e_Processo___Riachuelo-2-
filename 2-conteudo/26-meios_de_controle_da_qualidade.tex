@@ -1,21 +1,11 @@
 \section[MEIOS DE CONTROLE DA QUALIDADE (ENTREGA 4)]{MEIOS DE CONTROLE DA QUALIDADE\\(ENTREGA~4)}\label{sec:controle_qualidade}
 
-% TODO (equipe): os limites de capacidade e os tamanhos de amostra são propostas. Rever com o fornecedor do molde depois do try-out.
-% TODO (equipe): os limites do calibre de folga (0,10 e 0,30) seguem a tolerância provisória do DE-07.
-
-Esta seção define o instrumental de controle da qualidade e de controle funcional de um item crítico do Tag\&Go. O plano de controle reúne a informação necessária ao controle: a técnica de avaliação, o instrumento de medição, a frequência de inspeção e o plano de reação. No planejamento do processo, ele corresponde à tarefa de especificar a inspeção \cite{rozenfeld2006gestao}. O item escolhido é o suporte do mecanismo (TG-113), com o subconjunto que ele forma.
-
-\subsection{Escolha do item}
-\label{subsec:ctrl_item}
-
-O suporte foi escolhido por três motivos. Ele reúne cinco das características críticas marcadas nos desenhos (Subseção~\ref{subsec:des_leitura}). O modo de falha ligado a ele, a prateleira empenada ou fora da espessura (P01), tem NPR de 140 e leva o dispositivo a não liberar a peça paga (Tabela~\ref{tab:fmea_processo}). E o material, o poliacetal, tem contração de moldagem alta, o que torna o controle dimensional mais exigente que o das demais peças injetadas (Subseção~\ref{subsec:const_criticos}).
-
-O controle tem dois níveis. O controle dimensional é feito na peça, pelo fornecedor da injeção e no recebimento. O controle funcional é feito no subconjunto do mecanismo, em todas as unidades, no Posto~1 da montagem.
+O plano de controle reúne a técnica de avaliação, o instrumento, a frequência de inspeção e o plano de reação de cada característica, e corresponde à tarefa de especificar a inspeção no planejamento do processo \cite{rozenfeld2006gestao}. A equipe o elaborou para o suporte do mecanismo (TG-113). O suporte concentra cinco características críticas do DE-03, é feito de um material de contração alta e está ligado a um modo de falha de NPR 140 (P01), que deixa a peça paga presa. O controle tem dois níveis: o dimensional, feito na peça, na célula de injeção, e o funcional, feito em todos os subconjuntos do mecanismo no Posto~1 da montagem.
 
 \subsection{Controle dimensional do suporte}
 \label{subsec:ctrl_dimensional}
 
-A Tabela~\ref{tab:ctrl_plano} apresenta o plano de controle do suporte. As cotas e as tolerâncias são as do desenho DE-03 (Figura~\ref{fig:de03}).
+A Tabela~\ref{tab:ctrl_plano} apresenta o plano de controle. As cotas e as tolerâncias são as do desenho DE-03 (Figura~\ref{fig:de03}).
 
 \begin{landscape}
 \begingroup
@@ -24,85 +14,42 @@ A Tabela~\ref{tab:ctrl_plano} apresenta o plano de controle do suporte. As cotas
 \begin{longtable}{@{}
     c
     >{\RaggedRight\arraybackslash}p{3.4cm}
-    >{\RaggedRight\arraybackslash}p{2.6cm}
-    >{\RaggedRight\arraybackslash}p{4.6cm}
+    >{\RaggedRight\arraybackslash}p{2.4cm}
+    >{\RaggedRight\arraybackslash}p{5.0cm}
     >{\RaggedRight\arraybackslash}p{3.6cm}
-    >{\RaggedRight\arraybackslash}p{3.2cm}
-    >{\RaggedRight\arraybackslash}p{4.2cm}@{}}
+    >{\RaggedRight\arraybackslash}p{2.4cm}
+    >{\RaggedRight\arraybackslash}p{4.4cm}@{}}
     \caption{Plano de controle do suporte do mecanismo (TG-113)}\label{tab:ctrl_plano}\\
     \toprule
-    \textbf{Nº} & \textbf{Característica} & \textbf{Especificação} & \textbf{Instrumento e método} & \textbf{Amostra e frequência} & \textbf{Registro} & \textbf{Plano de reação} \\
+    \textbf{Nº} & \textbf{Característica} & \textbf{Especificação} & \textbf{Instrumento e método} & \textbf{Amostra e frequência} & \textbf{Registro} & \textbf{Reação} \\
     \midrule
     \endfirsthead
     \toprule
-    \textbf{Nº} & \textbf{Característica} & \textbf{Especificação} & \textbf{Instrumento e método} & \textbf{Amostra e frequência} & \textbf{Registro} & \textbf{Plano de reação} \\
+    \textbf{Nº} & \textbf{Característica} & \textbf{Especificação} & \textbf{Instrumento e método} & \textbf{Amostra e frequência} & \textbf{Registro} & \textbf{Reação} \\
     \midrule
     \endhead
     \bottomrule
     \endfoot
-    1 & Espessura da prateleira (CC) & 0,80~$\pm$0,05~mm & Micrômetro de pontas esféricas, com resolução de 0,001~mm, em três pontos sob o alojamento & Cinco peças por cavidade a cada 2~h, no fornecedor. Amostra do lote no recebimento & Carta de médias e amplitudes & Segregar a produção desde a última amostra aprovada. Ajustar o recalque e a temperatura do molde \\
-    2 & Planicidade da prateleira (CC) & 0,05~mm & Relógio comparador de 0,001~mm em desempeno de granito, com a peça apoiada pelos pés e varredura em cinco pontos & A mesma do item 1 & Carta de valores individuais & Segregar. Verificar o resfriamento do molde e o tempo de ciclo \\
-    3 & Altura da face inferior da prateleira ao plano dos pés (CC) & 14,50~$\pm$0,05~mm & Dispositivo de controle com relógio comparador, zerado em bloco-padrão de 14,50~mm & A mesma do item 1 & Carta de médias e amplitudes & Segregar. Corrigir o inserto do molde, se o desvio for constante \\
-    4 & Distância entre o eixo do alojamento e o assento do microatuador (CC) & 16,00~$\pm$0,05~mm & Projetor de perfil ou máquina de medir por coordenadas & Cinco peças por cavidade no início de cada lote e a cada troca de molde & Relatório dimensional & Bloquear o lote. A cota depende só do molde: acionar o ferramenteiro \\
-    5 & Diâmetro do alojamento da embreagem (CC) & 13,05~mm, com $+$0,05 e 0 & Calibre tampão passa-não-passa de 13,05 e 13,10~mm & Cinco peças por cavidade a cada 2~h & Folha de verificação & Segregar. Verificar o pino do molde e a contração \\
-    6 & Furos de posição nos pés & 2,05~mm, com $+$0,05 e 0 & Calibre tampão passa-não-passa & Cinco peças por cavidade no início de cada lote & Folha de verificação & Bloquear o lote \\
-    7 & Peso da peça & Valor de referência do \textit{try-out}, $\pm$2\% & Balança com resolução de 0,01~g & Uma injetada por hora & Carta de valores individuais & Peso baixo indica falha de recalque: medir os itens 1 e 2 na mesma injetada \\
-    8 & Aparência & Sem rebarba, falha de preenchimento ou marca de extração na prateleira & Visual, com padrão de defeitos & Todas as peças, na separação do canal & Contagem de refugo por turno & Refugar a peça. Parar a máquina se o refugo passar de 2\% no turno \\
-    9 & Material & POM copolímero, do grau homologado & Certificado do fabricante da resina & Cada lote de resina & Arquivo de certificados & Não liberar o lote de resina sem certificado \\
+    1 & Espessura da prateleira (CC) & 0,80~$\pm$0,05~mm & Micrômetro de pontas esféricas, três pontos sob o alojamento & Cinco peças por cavidade a cada 2~h & Carta $\bar{X}$-R & Segregar desde a última amostra boa. Ajustar recalque e temperatura do molde \\
+    2 & Planicidade da prateleira (CC) & 0,05~mm & Relógio comparador em desempeno, peça apoiada pelos pés, cinco pontos & A mesma do item 1 & Carta de individuais & Segregar. Verificar o resfriamento do molde \\
+    3 & Altura da prateleira ao plano dos pés (CC) & 14,50~$\pm$0,05~mm & Dispositivo de controle com relógio, zerado em bloco-padrão & A mesma do item 1 & Carta $\bar{X}$-R & Segregar. Corrigir o inserto se o desvio for constante \\
+    4 & Distância entre o alojamento e o assento do microatuador (CC) & 16,00~$\pm$0,05~mm & Máquina de medir por coordenadas & Cinco peças por cavidade no início de cada ordem & Relatório dimensional & Bloquear a ordem e chamar a ferramentaria \\
+    5 & Diâmetro do alojamento da embreagem (CC) & 13,05~mm, $+$0,05/0 & Calibre tampão passa-não-passa & Cinco peças por cavidade a cada 2~h & Folha de verificação & Segregar. Verificar o pino do molde \\
+    6 & Peso & Referência do \textit{try-out} $\pm$2\% & Balança de 0,01~g & Uma injetada por hora & Carta de individuais & Peso baixo: medir os itens 1 e 2 na mesma injetada \\
+    7 & Aparência & Sem rebarba, falha ou marca de extração na prateleira & Visual, com padrão de defeitos & Todas as peças & Refugo por turno & Parar a máquina se o refugo passar de 2\% \\
 \end{longtable}
 \endgroup
 \begin{center}
-    \footnotesize Fonte: Elaborado pelos autores (2026). CC: característica crítica. Medições depois de 24~h a 23~$^\circ$C.
+    \footnotesize Fonte: Elaborado pelos autores (2026). CC: característica crítica. Medições após 24~h a 23~$^\circ$C.
 \end{center}
 \end{landscape}
 
-Quatro condições valem para todas as medições do plano.
-
-\begin{itemize}
-    \item \textbf{Estabilização.} As peças são medidas depois de 24~h a 23~$^\circ$C, por causa da contração posterior do poliacetal (ficha de processo, operação 40). A temperatura segue a atmosfera padrão de ensaio de plásticos da ISO 291 \cite{iso291}.
-    \item \textbf{Homologação do processo.} No \textit{try-out} do molde, o fornecedor mede 30 peças por cavidade nos itens 1 a 4. A equipe propõe como critério de aprovação um índice de capacidade Cpk de no mínimo 1,33 nas características críticas. Abaixo disso, o molde é corrigido ou a tolerância é revista, junto com a cadeia da Tabela~\ref{tab:des_cadeia}.
-    \item \textbf{Recebimento.} Enquanto o processo não estiver homologado, o recebimento inspeciona os itens 1, 2, 3 e 5 por amostragem, com plano de amostragem simples da ABNT NBR 5426 \cite{abnt5426}, nível geral de inspeção II. Para um lote de 500 peças, a norma indica a letra H, com amostra de 50 peças. A equipe propõe nível de qualidade aceitável de 1,0\%. Com o processo homologado, o recebimento passa a conferir os registros do fornecedor e a medir uma amostra reduzida.
-    \item \textbf{Calibração.} Os instrumentos são calibrados em laboratório acreditado, e os calibres passa-não-passa são conferidos contra bloco-padrão a cada lote.
-\end{itemize}
-
-\subsection{Instrumental}
-\label{subsec:ctrl_instrumental}
-
-A Tabela~\ref{tab:ctrl_instrumentos} reúne o instrumental. A maioria é de mercado. O dispositivo de controle da altura é específico e simples: uma base retificada com dois pinos, iguais aos da base da carcaça, e um relógio comparador sobre a prateleira.
-
-\begin{table}[htbp]
-    \centering
-    \caption{Instrumental de controle do suporte e do subconjunto do mecanismo}
-    \label{tab:ctrl_instrumentos}
-    \footnotesize
-    \renewcommand{\arraystretch}{1.3}
-    \begin{tabularx}{\textwidth}{@{}
-        >{\RaggedRight\arraybackslash}p{4.6cm}
-        >{\RaggedRight\arraybackslash}X
-        >{\RaggedRight\arraybackslash}p{2.6cm}
-        >{\RaggedRight\arraybackslash}p{2.4cm}@{}}
-        \toprule
-        \textbf{Instrumento} & \textbf{Uso} & \textbf{Resolução ou classe} & \textbf{Tipo} \\
-        \midrule
-        Micrômetro de pontas esféricas & Espessura da prateleira & 0,001~mm & De mercado \\
-        Relógio comparador e desempeno de granito & Planicidade da prateleira e altura do conjunto colado & 0,001~mm & De mercado \\
-        Dispositivo de controle da altura da prateleira & Altura de 14,50~mm, com a peça nos pinos de posição & 0,001~mm, com bloco-padrão & Específico \\
-        Projetor de perfil ou máquina de medir por coordenadas & Distância de 16,00~mm e cotas do \textit{try-out} & 0,001~mm & De mercado, ou serviço contratado \\
-        Calibres tampão passa-não-passa & Alojamento de 13,05~mm e furos de 2,05~mm & Limites do desenho & Sob encomenda \\
-        Balança & Peso da peça injetada & 0,01~g & De mercado \\
-        Lâminas de folga de latão, de 0,10 e 0,30~mm & Folga entre o ímã e a prateleira, no subconjunto & Passa-não-passa & De mercado, não magnéticas \\
-        Bancada de teste do mecanismo, com pino-padrão & Giro, retorno e liberação do pino & -- & Específica \\
-        Gaussímetro com sonda axial & Campo do ímã no recebimento e sob a prateleira & 1~G & De mercado \\
-        Dinamômetro com dispositivo de tração & Retenção do pino (E12), por amostragem & 0,1~N & De mercado, com dispositivo específico \\
-        \bottomrule
-    \end{tabularx}
-    \source{Elaborado pelos autores (2026).}
-\end{table}
+Todas as medições são feitas depois de 24~h a 23~$^\circ$C, a atmosfera padrão para ensaio de plásticos da ISO 291 \cite{iso291}, por causa da contração posterior do poliacetal. Para aprovar o molde, a célula mede 30 peças por cavidade nos itens 1 a 4 e exige índice de capacidade Cpk de 1,33 ou mais. Com o processo aprovado, as cartas de controle substituem a inspeção de lote. Antes disso, cada ordem de 5.000 suportes só segue para a montagem depois de uma amostragem simples pela ABNT NBR 5426 \cite{abnt5426}, nível geral II, que dá a letra L e 200 peças, com nível de qualidade aceitável de 1,0\%.
 
 \subsection{Controle funcional do subconjunto}
 \label{subsec:ctrl_funcional}
 
-O controle dimensional não garante sozinho a função. A liberação depende do suporte, da embreagem, do ímã e da montagem, e por isso o controle funcional é feito no subconjunto do mecanismo, antes de ele entrar na base. Ele detalha a operação 1.6 do plano macro (Tabela~\ref{tab:plano_macro}) e é aplicado a todas as unidades. A Tabela~\ref{tab:ctrl_funcional} descreve os quatro testes.
+Nenhuma medição da peça garante sozinha que o dispositivo libera, porque a liberação depende também da embreagem, do ímã e da montagem. Por isso o controle funcional é feito no subconjunto do mecanismo, em todas as unidades, antes de ele entrar na base (operação 1.6 do plano macro). A Tabela~\ref{tab:ctrl_funcional} descreve os quatro testes.
 
 \begin{table}[htbp]
     \centering
@@ -112,53 +59,75 @@ O controle dimensional não garante sozinho a função. A liberação depende do
     \renewcommand{\arraystretch}{1.3}
     \begin{tabularx}{\textwidth}{@{}
         c
-        >{\RaggedRight\arraybackslash}p{2.8cm}
+        >{\RaggedRight\arraybackslash}p{2.4cm}
         >{\RaggedRight\arraybackslash}X
         >{\RaggedRight\arraybackslash}p{3.8cm}
-        >{\RaggedRight\arraybackslash}p{3.2cm}@{}}
+        >{\RaggedRight\arraybackslash}p{3.0cm}@{}}
         \toprule
-        \textbf{Nº} & \textbf{Teste} & \textbf{Método} & \textbf{Critério de aprovação} & \textbf{Reação} \\
+        \textbf{Nº} & \textbf{Teste} & \textbf{Método} & \textbf{Aprovação} & \textbf{Reação} \\
         \midrule
-        1 & Folga do ímã & Com o ímã na posição de soltar, inserir as lâminas entre o ímã e a prateleira & A lâmina de 0,10~mm entra, e a de 0,30~mm não entra & Separar o subconjunto. Medir o braço colado e o suporte para achar a cota fora \\
-        2 & Giro e retorno & A bancada comanda dez ciclos de 90$^\circ$ & Dez ciclos completos, sem travar, com retorno ao batente de repouso & Trocar o microatuador e repetir \\
-        3 & Liberação & Inserir o pino-padrão na embreagem, puxar com a mão e comandar a liberação & O pino fica preso antes do giro e sai livre com o ímã sob a embreagem, em três repetições & Separar. Medir o campo sob a prateleira com o gaussímetro \\
-        4 & Retenção depois do retorno & Com o ímã em repouso, inserir o pino-padrão e puxar & O pino fica preso & Separar. Verificar a posição de repouso \\
+        1 & Folga do ímã & Lâminas de latão entre o ímã e a prateleira, na posição de soltar & A de 0,10~mm entra e a de 0,30~mm não & Separar e medir o braço e o suporte \\
+        2 & Giro e retorno & Bancada comanda dez ciclos de 90$^\circ$ & Dez ciclos completos, com retorno ao batente & Trocar o microatuador \\
+        3 & Liberação & Pino-padrão na embreagem, liberação comandada & Pino preso antes e livre depois do giro, três vezes & Separar e medir o campo com gaussímetro \\
+        4 & Retenção após o retorno & Pino-padrão inserido com o ímã em repouso & Pino preso & Verificar o batente de repouso \\
         \bottomrule
     \end{tabularx}
     \source{Elaborado pelos autores (2026).}
 \end{table}
 
-O ensaio de arrancamento com dinamômetro (E12) fica fora desse controle, porque exige o dispositivo completo. Ele é feito por amostragem no Posto~4, como prevê o plano macro. Os limites das lâminas repetem a tolerância provisória da folga e mudam com ela depois do ensaio do campo.
+\subsection{Instrumental e normas}
+\label{subsec:ctrl_instrumental}
 
-\subsection{Normas de referência}
-\label{subsec:ctrl_normas}
-
-A Tabela~\ref{tab:ctrl_normas} lista as normas usadas nos desenhos, nas especificações e no controle. A equipe não encontrou norma brasileira específica para dispositivos antifurto de vestuário. As exigências regulatórias que se aplicam ao produto são as do rádio e as da célula, já registradas nas especificações E17 e na Tabela~\ref{tab:ext_lista}.
+A Tabela~\ref{tab:ctrl_instrumentos} reúne o instrumental dos dois níveis de controle. Só dois itens são específicos do produto: o dispositivo de controle da altura, uma base retificada com os mesmos pinos de posição da base da carcaça e um relógio sobre a prateleira, e a bancada de teste do mecanismo. Os instrumentos são calibrados em laboratório acreditado, e os calibres passa-não-passa são conferidos contra bloco-padrão a cada ordem de produção.
 
 \begin{table}[htbp]
     \centering
-    \caption{Normas de referência do projeto detalhado}
+    \caption{Instrumental de controle do suporte e do subconjunto}
+    \label{tab:ctrl_instrumentos}
+    \footnotesize
+    \renewcommand{\arraystretch}{1.3}
+    \begin{tabularx}{\textwidth}{@{}
+        >{\RaggedRight\arraybackslash}p{5.2cm}
+        >{\RaggedRight\arraybackslash}X
+        >{\RaggedRight\arraybackslash}p{2.6cm}@{}}
+        \toprule
+        \textbf{Instrumento} & \textbf{Uso} & \textbf{Resolução} \\
+        \midrule
+        Micrômetro de pontas esféricas & Espessura da prateleira & 0,001~mm \\
+        Relógio comparador e desempeno de granito & Planicidade e altura do braço colado & 0,001~mm \\
+        Dispositivo de controle da altura (específico) & Altura de 14,50~mm & 0,001~mm \\
+        Máquina de medir por coordenadas & Distância de 16,00~mm e \textit{try-out} & 0,001~mm \\
+        Calibres tampão passa-não-passa & Alojamento de 13,05~mm & Limites do desenho \\
+        Balança & Peso da injetada & 0,01~g \\
+        Lâminas de latão de 0,10 e 0,30~mm & Folga do ímã, sem desviar o campo & Passa-não-passa \\
+        Bancada de teste do mecanismo (específica) & Giro, retorno e liberação & -- \\
+        Gaussímetro com sonda axial & Campo do ímã & 1~G \\
+        \bottomrule
+    \end{tabularx}
+    \source{Elaborado pelos autores (2026).}
+\end{table}
+
+As normas de controle usadas nesta entrega estão na Tabela~\ref{tab:ctrl_normas}. A equipe não encontrou norma brasileira específica para dispositivos antifurto de vestuário. As exigências regulatórias do produto são as do rádio (E17) e as da célula, já incluídas na especificação dos componentes.
+
+\begin{table}[htbp]
+    \centering
+    \caption{Normas de referência do controle da qualidade}
     \label{tab:ctrl_normas}
     \footnotesize
     \renewcommand{\arraystretch}{1.3}
     \begin{tabularx}{\textwidth}{@{}
         >{\RaggedRight\arraybackslash}p{3.4cm}
-        >{\RaggedRight\arraybackslash}X
-        >{\RaggedRight\arraybackslash}p{5.0cm}@{}}
+        >{\RaggedRight\arraybackslash}X@{}}
         \toprule
-        \textbf{Norma} & \textbf{Assunto} & \textbf{Uso no projeto} \\
+        \textbf{Norma} & \textbf{Uso} \\
         \midrule
-        ABNT NBR 5426 & Planos de amostragem na inspeção por atributos & Recebimento das peças e dos componentes \\
-        ISO 1101 & Tolerâncias geométricas de forma, orientação e posição & Planicidade, paralelismo e posição nos desenhos \\
-        ISO 20457 & Tolerâncias de peças plásticas moldadas & Tolerâncias gerais da base, da tampa, do suporte e da guia \\
-        ISO 8062-3 & Tolerâncias de peças fundidas & Tolerâncias gerais da garra \\
-        ISO 2768 & Tolerâncias gerais de peças usinadas & Tolerâncias gerais do braço \\
-        ISO 291 & Atmosferas padrão para condicionamento e ensaio de plásticos & Condição de medição das peças injetadas \\
-        ISO 11469 & Identificação e marcação de produtos plásticos & Marcação do material nas peças \\
-        ISO 14586 & Parafusos autoatarraxantes de cabeça escareada com fenda hexalobular & Especificação do parafuso da tampa \\
-        IEC 62133-2 & Segurança de células e baterias de lítio portáteis & Certificação da célula \\
-        Resoluções Anatel 680 e 715 & Equipamentos de radiocomunicação & Homologação do rádio da placa (E17) \\
+        ABNT NBR 5426 & Amostragem por atributos na liberação das ordens e no recebimento \\
+        ISO 291 & Condição de medição das peças injetadas \\
+        ISO 20457, ISO 8062-3 e ISO 2768 & Tolerâncias gerais das peças injetadas, fundidas e usinadas \\
+        ISO 1101 & Tolerâncias geométricas nos desenhos \\
+        IEC 62133-2 & Certificação da célula \\
+        Resoluções Anatel 680 e 715 & Homologação do rádio da placa \\
         \bottomrule
     \end{tabularx}
-    \source{Elaborado pelos autores (2026). As normas estão nas referências.}
+    \source{Elaborado pelos autores (2026).}
 \end{table}

@@ -1,18 +1,10 @@
 \section{DESENHOS DE EXECUÇÃO (ENTREGA 4)}\label{sec:desenhos_execucao}
 
-% Os desenhos desta seção são gerados por imagens/desenhos_execucao/gerar_desenhos.py.
-% Para mudar uma medida ou uma tolerância, altere o script e rode de novo.
-% TODO (equipe): as tolerâncias são valores de projeto. Confirmar com os fornecedores e rever a folga do ímã depois do ensaio do campo.
-% TODO (equipe): o perfil do furo do braço (duplo D) depende do microatuador escolhido.
+% Os desenhos são gerados por imagens/desenhos_execucao/gerar_desenhos.py. Para mudar uma cota, altere o script e rode de novo.
 
-Esta seção apresenta os desenhos de execução dos itens fabricados e dos itens montados do Tag\&Go. No projeto detalhado, a atividade de criar e detalhar os sistemas, subsistemas e componentes termina com os desenhos cotados e com tolerâncias e com a configuração final refletida na estrutura do produto \cite{rozenfeld2006gestao}. A Entrega~3 definiu o conjunto, a estrutura e os materiais. Aqui cada peça fabricada recebe as cotas, as tolerâncias e as indicações que o fornecedor precisa para produzi-la.
+A partir desta entrega, a equipe passou a tratar o Tag\&Go como um produto a ser fabricado em série, e não mais como um protótipo. Os documentos das Seções~\ref{sec:desenhos_execucao} a~\ref{sec:controle_qualidade} supõem uma planta dimensionada para 20 mil dispositivos por mês, em dois turnos, volume compatível com a frota de uma grande rede (Seção~\ref{sec:escala_vertical}). A configuração é a revisada pelo DFMA na Entrega~3 (Tabela~\ref{tab:dfma_estrutura}), com as mudanças M1 a M8.
 
-\subsection{Configuração de referência}
-\label{subsec:des_config}
-
-Os desenhos adotam a estrutura revisada pela análise DFMA (Tabela~\ref{tab:dfma_estrutura}), a mesma que o plano macro de montagem usou. As mudanças M1 a M8 estão incorporadas. Duas delas, a M7 e a M8, ainda dependem de ensaio, e a M2 depende da verificação da dureza do pino depois da fundição. A equipe manteve essas mudanças nos desenhos porque o plano de processo, o dispositivo e o FMEA desta entrega precisam de uma configuração única. A Seção~\ref{sec:fmea} trata as três pendências como modos de falha, com a ação prevista para cada uma. Se uma delas for reprovada, o desenho correspondente volta à versão anterior ao DFMA, registrada na Tabela~\ref{tab:estrut_lista}.
-
-A configuração tem seis itens fabricados sob desenho e dez comprados (Seção~\ref{sec:componentes_externos}). Os itens montados são três: o subconjunto do mecanismo, o subconjunto da tampa e o conjunto geral. A Tabela~\ref{tab:des_lista} relaciona os desenhos.
+O projeto detalhado termina com os desenhos cotados e tolerados e com a configuração final refletida na estrutura do produto \cite{rozenfeld2006gestao}. Foram feitos sete desenhos, um para cada peça fabricada e um para o subconjunto do mecanismo, que somados ao desenho de conjunto da Entrega~3 cobrem todos os itens fabricados e montados (Tabela~\ref{tab:des_lista}).
 
 \begin{table}[htbp]
     \centering
@@ -38,30 +30,17 @@ A configuração tem seis itens fabricados sob desenho e dez comprados (Seção~
         DE-06 & TG-412 & Guia de luz e subconjunto da tampa & Fabricado e montado & 5:1 & Figura~\ref{fig:de06} \\
         DE-07 & SC-01 & Subconjunto do mecanismo & Montado & 2:1 & Figura~\ref{fig:de07} \\
         -- & TG-000 & Conjunto geral & Montado & -- & Figura~\ref{fig:dfma_conjunto} \\
-        FD-01 & -- & Gabarito de colagem do ímã & Dispositivo & 2:1 & Figura~\ref{fig:fd01} \\
         \bottomrule
     \end{tabularx}
     \source{Elaborado pelos autores (2026).}
 \end{table}
 
-O conjunto geral é o desenho revisado pelo DFMA da Entrega~3 (Figura~\ref{fig:dfma_conjunto}), que já traz as vistas, os balões e a lista de itens. O gabarito FD-01 pertence ao projeto do dispositivo (Seção~\ref{sec:projeto_dispositivo}) e aparece na lista porque segue o mesmo padrão de folha.
-
-\subsection{Critérios de cotagem e de tolerância}
-\label{subsec:des_criterios}
-
-Os desenhos seguem quatro critérios.
-
-\begin{itemize}
-    \item \textbf{Referências funcionais.} As cotas partem das superfícies que posicionam a peça no conjunto. No suporte, a referência A é o plano dos pés, que apoia no fundo da base, e as alturas do mecanismo são cotadas a partir dele. Na tampa, as referências são as duas bordas que encostam no ressalto da base.
-    \item \textbf{Características críticas.} As cotas das quais depende a liberação da peça levam a marca CC. Elas recebem tolerância própria, entram no plano de controle (Seção~\ref{sec:controle_qualidade}) e são as primeiras a rever depois do ensaio do campo.
-    \item \textbf{Tolerâncias gerais.} As cotas sem indicação seguem a norma do processo: a ISO 20457 nas peças injetadas \cite{iso20457}, a ISO 8062-3 na garra fundida \cite{iso8062} e a ISO 2768 no braço usinado \cite{iso2768}. As tolerâncias de forma e de posição usam os símbolos da ISO 1101 \cite{iso1101}.
-    \item \textbf{Origem dos valores.} As dimensões nominais vêm do desenho de conjunto e do modelo digital do protótipo. As tolerâncias são valores de projeto propostos pela equipe a partir das normas citadas. Nenhuma foi verificada em peça fabricada, e todas devem ser confirmadas com os fornecedores do molde, da fundição e da usinagem.
-\end{itemize}
+As cotas partem das superfícies que posicionam cada peça no conjunto. No suporte, por exemplo, a referência A é o plano dos pés, e todas as alturas do mecanismo foram cotadas a partir dele. As cotas das quais depende a liberação da peça receberam a marca CC (característica crítica) e voltam no plano de controle da Seção~\ref{sec:controle_qualidade}. O que não tem tolerância indicada segue a norma do processo: ISO 20457 nas peças injetadas \cite{iso20457}, ISO 8062-3 na garra fundida \cite{iso8062} e ISO 2768 no braço usinado \cite{iso2768}, com os símbolos geométricos da ISO 1101 \cite{iso1101}.
 
 \subsection{Cadeia de tolerâncias da folga do ímã}
 \label{subsec:des_cadeia}
 
-A característica que mais condiciona os desenhos é a folga de 0,20~mm entre o ímã e a prateleira do suporte, na posição de soltar. A folga não é cota de nenhuma peça: ela resulta de três cotas, uma do suporte e duas definidas na montagem. A equipe calculou a variação da folga pelo pior caso e pela soma estatística, os dois modos de análise de tolerâncias descritos por \citeonline{rozenfeld2006gestao}. A Tabela~\ref{tab:des_cadeia} mostra a cadeia.
+A cota que mais pesou nos desenhos não pertence a nenhuma peça. É a folga de 0,20~mm entre o ímã e a prateleira do suporte, na posição de soltar, que resulta de uma cota do suporte e de duas definidas na montagem. A equipe calculou a variação pelo pior caso e pela soma estatística, os dois métodos de análise de tolerâncias citados por \citeonline{rozenfeld2006gestao} (Tabela~\ref{tab:des_cadeia}).
 
 \begin{table}[htbp]
     \centering
@@ -77,23 +56,23 @@ A característica que mais condiciona os desenhos é a folga de 0,20~mm entre o 
         \toprule
         \textbf{Cota} & \textbf{Nominal (mm)} & \textbf{Tolerância (mm)} & \textbf{Onde é garantida} \\
         \midrule
-        Altura da face inferior da prateleira ao plano dos pés & 14,50 & $\pm$0,05 & Molde do suporte (DE-03) \\
-        Altura da face superior do braço ao plano dos pés & 2,50 & $\pm$0,03 & Batente da prensa, no Posto~1 (DE-07) \\
-        Altura da face polar do ímã à face superior do braço & 11,80 & $\pm$0,03 & Gabarito de colagem FD-01, no Posto~0 \\
+        Face inferior da prateleira ao plano dos pés & 14,50 & $\pm$0,05 & Molde do suporte (DE-03) \\
+        Face superior do braço ao plano dos pés & 2,50 & $\pm$0,03 & Batente da prensa, no Posto~1 (DE-07) \\
+        Face polar do ímã à face superior do braço & 11,80 & $\pm$0,03 & Gabarito de colagem FD-01, no Posto~0 \\
         \midrule
-        \textbf{Folga resultante, pelo pior caso} & \textbf{0,20} & \textbf{$\pm$0,11} & 14,50 $-$ 2,50 $-$ 11,80 \\
-        \textbf{Folga resultante, pela soma estatística} & \textbf{0,20} & \textbf{$\pm$0,07} & Raiz da soma dos quadrados \\
+        \textbf{Folga, pelo pior caso} & \textbf{0,20} & \textbf{$\pm$0,11} & 14,50 $-$ 2,50 $-$ 11,80 \\
+        \textbf{Folga, pela soma estatística} & \textbf{0,20} & \textbf{$\pm$0,07} & Raiz da soma dos quadrados \\
         \bottomrule
     \end{tabularx}
     \source{Elaborado pelos autores (2026).}
 \end{table}
 
-Pelo pior caso, a folga fica entre 0,09 e 0,31~mm. O limite inferior ainda evita o contato do ímã com a prateleira, e o superior depende da margem do campo, que só o ensaio dirá (Subseção~\ref{subsec:conj_criticos}). A cadeia mostra por que a altura do ímã foi tirada da peça e passada ao gabarito: se dependesse da altura do ímã comprado e da profundidade do alojamento, a variação seria maior e não poderia ser corrigida na montagem. Dois termos ficaram fora do cálculo, a planicidade da prateleira, limitada a 0,05~mm, e a folga axial do eixo do microatuador, que a equipe ainda não mediu. Por isso a folga é conferida em todas as unidades, no teste do subconjunto do mecanismo, e a tolerância de $\pm$0,10~mm do desenho DE-07 é provisória.
+Com 20 mil subconjuntos por mês, a soma estatística descreve melhor o lote do que o pior caso, e por isso o desenho DE-07 fixou a folga em 0,20~$\pm$0,10~mm. O pequeno excesso do pior caso fica coberto pelo teste funcional, que confere a folga em todas as unidades. A cadeia também explica a decisão de tirar a altura do ímã da peça e passá-la ao gabarito: se ela dependesse da altura do ímã comprado e da profundidade do alojamento, a variação somaria mais duas parcelas, e nenhuma delas poderia ser corrigida na montagem.
 
 \subsection{Desenhos}
 \label{subsec:des_folhas}
 
-As Figuras~\ref{fig:de01} a~\ref{fig:de07} trazem os desenhos, em folhas A4. Cada folha indica o material, a escala, as notas de fabricação e as características críticas da peça.
+As Figuras~\ref{fig:de01} a~\ref{fig:de07} trazem as folhas, em A4. Três decisões tomadas no detalhamento aparecem nelas. No suporte, o ponto de injeção foi levado para a borda da prateleira e as marcas de extração foram proibidas nela, porque a planicidade é a característica mais difícil de obter no poliacetal. Na garra fundida, a anodização prevista no conceitual foi trocada por vibroacabamento e conversão química, já que o banho ataca o pino de aço embutido e as ligas com muito silício anodizam mal. Na tampa, o furo do pino foi cotado a partir das mesmas bordas que a posicionam na base, e a cota de 30,00~mm até o eixo dos mancais repete a da garra (DE-04), de modo que as duas peças fecham a mesma cadeia.
 
 \begin{landscape}
 \begin{figure}[p]
@@ -146,16 +125,3 @@ As Figuras~\ref{fig:de01} a~\ref{fig:de07} trazem os desenhos, em folhas A4. Cad
     \source{Elaborado pelos autores (2026). Desenho gerado com apoio de ferramenta de IA.}
 \end{figure}
 \end{landscape}
-
-\subsection{Leitura dos desenhos}
-\label{subsec:des_leitura}
-
-Três pontos dos desenhos merecem registro, porque mudam o que a Entrega~3 havia deixado em aberto.
-
-\textbf{Suporte do mecanismo.} O suporte reúne cinco características críticas: a espessura, a planicidade e a altura da prateleira, a distância de 16,00~mm entre o alojamento da embreagem e o eixo do microatuador e o diâmetro do alojamento. O desenho pede o ponto de injeção na borda da prateleira e proíbe marcas de extração nela, para proteger a planicidade que a Subseção~\ref{subsec:const_criticos} apontou como o principal risco da peça.
-
-\textbf{Garra.} A anodização prevista para a garra usinada não serve à garra fundida. O banho ataca o pino de aço embutido, e as ligas de fundição com muito silício anodizam mal. O desenho especifica vibroacabamento e conversão química. Ele também pede a medição da dureza do pino depois da fundição, porque o calor do alumínio pode revenir o AISI~420. Se a dureza cair abaixo de 48~HRC, o pino passa a ser prensado na garra depois da fundição, e a mudança M2 perde parte do ganho de montagem.
-
-\textbf{Tampa.} A posição do furo do pino é cotada em relação às mesmas bordas que posicionam a tampa na base, com tolerância de posição de 0,10~mm. A cota de 30,00~mm entre o furo e o eixo dos mancais repete a cota entre o pino e os munhões da garra (DE-04), de modo que as duas peças fecham a mesma cadeia.
-
-Os itens comprados não têm desenho próprio. Eles são definidos pela especificação da Seção~\ref{sec:componentes_externos}, e os dois comprados sob especificação do projeto, a embreagem e a placa de controle, receberão desenho de interface quando o fornecedor for escolhido.

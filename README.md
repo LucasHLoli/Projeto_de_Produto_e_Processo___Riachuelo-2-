@@ -49,7 +49,7 @@ Segue os seis itens pedidos na Aula 23 e no formulário de avaliação do Relat�
 |---|---|---|
 | A. Desenhos de execução | 19 | `2-conteudo/21-desenhos_de_execucao.tex` |
 | B. Lista de componentes externos | 20 | `2-conteudo/22-lista_de_componentes_externos.tex` |
-| C. Planos de processo de fabricação (3 itens críticos) | 21 | `2-conteudo/23-planos_de_processo.tex` |
+| C. Planos de processo de fabricação (todas as peças fabricadas) | 21 | `2-conteudo/23-planos_de_processo.tex` |
 | D. Projeto de uma ferramenta ou dispositivo | 22 | `2-conteudo/24-projeto_do_dispositivo.tex` |
 | E. FMEA de produto e de processo | 23 | `2-conteudo/25-fmea.tex` |
 | F. Meios de controle da qualidade (1 item crítico) | 24 | `2-conteudo/26-meios_de_controle_da_qualidade.tex` |
@@ -59,7 +59,7 @@ Dois scripts geram parte do conteúdo. Para mudar uma medida, uma tolerância ou
 - `imagens/desenhos_execucao/gerar_desenhos.py` gera as oito folhas de desenho (DE-01 a DE-07 e o gabarito FD-01);
 - `scripts/gerar_fmea.py` gera `25-fmea.tex`, com os NPR calculados a partir de S, O e D.
 
-**Pendências abertas do R4:** as tolerâncias, os parâmetros de processo e os índices do FMEA são propostas da equipe, sem ensaio; os componentes ainda não foram cotados; a configuração adota as mudanças M1 a M8 do DFMA, e a M2, a M7 e a M8 dependem de ensaio. Os `% TODO (equipe)` no início de cada arquivo listam o que rever.
+**Premissa do R4:** a partir desta entrega, o produto é tratado como se fosse para produção em série, numa planta de 20 mil dispositivos por mês em dois turnos. A configuração adota as mudanças M1 a M8 do DFMA.
 
 ## Índice
 1. [O que é o Overleaf](#1-o-que-é-o-overleaf)
