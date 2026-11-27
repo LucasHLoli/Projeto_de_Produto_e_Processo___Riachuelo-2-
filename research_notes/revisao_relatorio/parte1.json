@@ -1,0 +1,106 @@
+[
+  {
+    "arquivo": "2-conteudo/3-definicao_mercado.tex",
+    "linha": 17,
+    "trecho_exato": "No meedsmo ano",
+    "correcao": "No mesmo ano",
+    "motivo": "Erro de digitação.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "2-conteudo/3-definicao_mercado.tex",
+    "linha": 17,
+    "trecho_exato": "o equivalente a apenas 15\\%",
+    "correcao": "o equivalente a apenas 14\\%",
+    "motivo": "R$ 60,35 bi / R$ 427,1 bi = 14,1%, não 15%. Se o número da fonte for 15%, confirmar na fonte.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/3-definicao_mercado.tex",
+    "linha": 34,
+    "trecho_exato": "ganha relevancia apenas",
+    "correcao": "ganha relevância apenas",
+    "motivo": "Falta acento.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "2-conteudo/4-definicao_formal_problema.tex",
+    "linha": 5,
+    "trecho_exato": "\\emph{\"A Riachuelo coloca",
+    "correcao": "\\emph{``A Riachuelo coloca",
+    "motivo": "Aspas retas em LaTeX (com babel brazilian) saem como duas aspas de fechamento. A aspa de abertura deve ser `` e a de fechamento ''. Trocar também o fechamento: 'passar pelo caixa para levá-la embora\"}' por 'passar pelo caixa para levá-la embora''}'. O mesmo padrão aparece em 7-analise_clientes.tex (linhas 145 e 202).",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/4-definicao_formal_problema.tex",
+    "linha": 13,
+    "trecho_exato": "O produto proposto integra, portanto, as tags RFID presentes nas peças de vestuário, as bolachas de alarme e um sistema de informação.",
+    "correcao": "",
+    "motivo": "Contradiz a Entrega 3: no conjunto (16-conjunto_do_produto.tex, Tabela conj_revisao, l. 39) a identificação é pelo código 2D gravado, e a estrutura do produto (17) não tem nenhum item de RFID (o adesivo NFC ficou fora, l. 4). O texto pode continuar como histórico da Entrega 1, mas convém dizer que o RFID das peças não entrou no dispositivo detalhado, ou retirar a frase.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/6-pesquisa_clientes_usuarios.tex",
+    "linha": 23,
+    "trecho_exato": "critério de classificação, para seleção de amostra foram selecionadas pessoas próximas ao grupo, porém, ainda buscando criar certa heterogeneidade socioeconomica dos participantes",
+    "correcao": "critério de classificação. Para a seleção da amostra, foram escolhidas pessoas próximas ao grupo, ainda buscando criar certa heterogeneidade socioeconômica dos participantes",
+    "motivo": "Duas orações independentes unidas por vírgula (frase corrida), 'seleção ... selecionadas' repetido, artigo faltando ('a seleção da amostra') e falta acento em 'socioeconômica'.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "2-conteudo/6-pesquisa_clientes_usuarios.tex",
+    "linha": 23,
+    "trecho_exato": "segundo a  Seção",
+    "correcao": "segundo a Seção",
+    "motivo": "Espaço duplo (não aparece no PDF, só limpeza do fonte).",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "1-pre/3-resumo.tex",
+    "linha": 5,
+    "trecho_exato": "O desenho reformulado ainda não foi dimensionado, o que ficará para o projeto detalhado.",
+    "correcao": "",
+    "motivo": "Desatualizado e contraditório com a Entrega 3: o conjunto foi dimensionado (120 x 60 x 30 mm, 16-conjunto_do_produto.tex l. 108 e 197). O resumo também não cita nada da Entrega 3. Faltam: conjunto do produto (concepção revisada: retenção por embreagem de esferas, liberação por microatuador que leva três ímãs até sob a embreagem, autorização pelo servidor via rádio depois do pagamento, código 2D gravado na tampa, sem tela, três LEDs, recarga por indução; envelope 120 x 60 x 30 mm, acima do E10 de 98 x 82 x 26 mm); estrutura (códigos TG, 20 componentes, 27 peças); constituição (materiais, ex. carcaça PC/ABS); DFMA (27 para 16 peças, índice DFA de 0,21 para 0,37, tempo de 199,3 s para 106,1 s); plano macro de montagem (célula manual, seis postos, 106,1 s). Substituir a última frase por um trecho sobre a Entrega 3.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "1-pre/3-resumo.tex",
+    "linha": 5,
+    "trecho_exato": "adota liberação por mola com gatilho, autorização pelo toque do celular, indicação por anel de LEDs e recarga por indução",
+    "correcao": "",
+    "motivo": "Descreve a alternativa da Entrega 2, que a Entrega 3 revisou (16-conjunto_do_produto.tex, Tabela conj_revisao, l. 34-41): a mola com gatilho virou microatuador com três ímãs, o toque do celular virou autorização pelo servidor via rádio, o anel de LEDs virou três LEDs. Pode ficar como histórico, mas o resumo precisa dizer que a concepção foi revista na Entrega 3; do jeito que está, o leitor entende que esse é o produto final.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "1-pre/3-resumo.tex",
+    "linha": 8,
+    "trecho_exato": "projeto conceitual; matriz morfológica.",
+    "correcao": "",
+    "motivo": "Palavras-chave cobrem só as Entregas 1 e 2. Se o resumo passar a incluir a Entrega 3, considerar trocar ou acrescentar termos como DFMA ou projeto do produto (mesma mudança em 4-abstract.tex).",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "1-pre/4-abstract.tex",
+    "linha": 5,
+    "trecho_exato": "The redesigned device has not yet been dimensioned, which is left to the detailed design stage.",
+    "correcao": "",
+    "motivo": "Mesmo problema do resumo: contradiz a Entrega 3 (conjunto dimensionado em 120 x 60 x 30 mm) e o abstract não menciona conjunto, estrutura, materiais, DFMA nem plano de montagem. Atualizar junto com o resumo para que os dois digam a mesma coisa.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "1-pre/4-abstract.tex",
+    "linha": 5,
+    "trecho_exato": "adopts release by a spring with a trigger, authorization by tapping the phone, indication by an LED ring and inductive charging",
+    "correcao": "",
+    "motivo": "Mesma concepção da Entrega 2, revista na Entrega 3 (ímãs movidos por microatuador, autorização pelo servidor via rádio, três LEDs, código 2D gravado, sem tela). Atualizar junto com o resumo.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "1-pre/4-abstract.tex",
+    "linha": 5,
+    "trecho_exato": "and broke it down into 18 functions",
+    "correcao": "and broke it down into 18 secondary and auxiliary functions",
+    "motivo": "O resumo diz '18 funções secundárias e acessórias'; o abstract só diz '18 functions'. Alinhar os dois (10-analise_funcional.tex l. 69: treze secundárias e cinco acessórias).",
+    "confianca": "media"
+  }
+]

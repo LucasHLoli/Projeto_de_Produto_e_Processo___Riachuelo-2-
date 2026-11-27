@@ -1,0 +1,146 @@
+[
+ {
+  "arquivo": "2-conteudo/18-constituicao_do_produto.tex",
+  "linha": 10,
+  "trecho_exato": "resume a seleção dos 20 componentes da estrutura do produto",
+  "correcao": "",
+  "motivo": "A Tabela tab:const_selecao tem só 19 linhas: falta o parafuso do braço (TG-314), que está na estrutura (17-estrutura, l.132). Ele também não aparece na Tabela tab:const_especificacao (l.96 lista inox só para TG-121, TG-212, TG-213). Acrescentar a linha do TG-314 (ex.: aço inox A2) ou mudar o texto para 19.",
+  "confianca": "alta"
+ },
+ {
+  "arquivo": "2-conteudo/16-conjunto_do_produto.tex",
+  "linha": 234,
+  "trecho_exato": "LED de três cores com guia de luz",
+  "correcao": "Três LEDs de 3 mm na tampa",
+  "motivo": "Na coluna Produto final, a indicação é a da versão pós-DFMA (M6), mas o resto da Seção 16 e a estrutura descrevem três LEDs separados na tampa (16 l.40 e l.70; 17 l.136). As demais linhas da tabela (ex.: 'Microchaves', no plural) seguem a versão anterior ao DFMA.",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "2-conteudo/16-conjunto_do_produto.tex",
+  "linha": 94,
+  "trecho_exato": "a 16 mm do eixo da embreagem",
+  "correcao": "a cerca de 23 mm do eixo da embreagem",
+  "motivo": "Pelo desenho (gerar_conjunto.py: eixo do microatuador em x=24, z=24; embreagem em x=24, z=40; raio 16), em repouso o ímã fica em (8, 24), ou seja, a 16 mm do eixo do MICROATUADOR e a cerca de 22,6 mm (16√2) do eixo da embreagem.",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "2-conteudo/16-conjunto_do_produto.tex",
+  "linha": 242,
+  "trecho_exato": "a lingueta com mola citada",
+  "correcao": "a lingueta de plástico citada",
+  "motivo": "A Subseção conj_revisao (l.47) descreve a lingueta como 'de plástico puxada pelo microatuador'; não menciona mola.",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "2-conteudo/17-estrutura_do_produto.tex",
+  "linha": 15,
+  "trecho_exato": "O mesmo código identifica o item nos balões do desenho de conjunto.",
+  "correcao": "",
+  "motivo": "Os balões do desenho trazem números de 1 a 15, não o código TG; a ligação é feita pela coluna Balão da Tabela tab:estrut_lista e pela legenda da figura. Mesmo problema em 16 l.82 ('Os números dos balões correspondem aos códigos'), que é aceitável. Ajustar a frase para dizer que o balão leva um número associado ao código.",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "2-conteudo/18-constituicao_do_produto.tex",
+  "linha": 109,
+  "trecho_exato": "Eles podem ser adotados",
+  "correcao": "Elas podem ser adotadas",
+  "motivo": "Concordância: o sujeito é 'grades comerciais de PC/ABS' (grade, feminino). Alternativa: trocar 'grades' por 'graus', como em 19 l.95 ('grau de PC/ABS'), e manter 'Eles podem ser adotados'.",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "2-conteudo/19-analise_de_adequacao_do_projeto.tex",
+  "linha": 76,
+  "trecho_exato": "M1, M4, M6 e M8",
+  "correcao": "M1, M4, M6, M7 e M8",
+  "motivo": "Na Tabela tab:dfma_mudancas (l.121), a M7 cita as regras 1, 8 e 11, mas a ação da regra 8 não lista a M7.",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "2-conteudo/19-analise_de_adequacao_do_projeto.tex",
+  "linha": 73,
+  "trecho_exato": "Diretrizes de fabricação, listadas após esta tabela",
+  "correcao": "",
+  "motivo": "Na Tabela tab:dfma_mudancas (l.116), a M2 cita as regras 1, 5 e 9, mas a ação da regra 5 não menciona a M2. Ou acrescentar 'M2.' na ação da regra 5, ou tirar o 5 da coluna Regras da M2.",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "2-conteudo/19-analise_de_adequacao_do_projeto.tex",
+  "linha": 70,
+  "trecho_exato": "três LEDs de cores diferentes e duas chaves",
+  "correcao": "",
+  "motivo": "A regra 2 conta as duas chaves como variação de peças, mas a constituição especifica para a chave da base 'A mesma microchave da garra' (18 l.52); não há dois tipos de chave. Ajustar a regra 2 ou a especificação da TG-513.",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "2-conteudo/20-plano_macro_do_processo.tex",
+  "linha": 21,
+  "trecho_exato": "A gravação do código 2D na tampa é feita pela equipe",
+  "correcao": "",
+  "motivo": "Contradição interna: a mesma premissa diz que as peças fabricadas chegam prontas 'pelos processos da Subseção plano_processos', e a l.30 diz que as seis peças 'chegam prontas à célula'; a Tabela tab:plano_processos (l.47) põe a gravação a laser no processo de fabricação da tampa, mas o plano a faz no Posto 0 (op. 0.2). Tirar a gravação da Tabela tab:plano_processos ou ressalvar a tampa na l.30.",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "2-conteudo/20-plano_macro_do_processo.tex",
+  "linha": 235,
+  "trecho_exato": "e as operações de preparação, teste e embalagem ainda não têm tempo",
+  "correcao": "",
+  "motivo": "O Posto 0 (preparação) tem as operações 0.4 e 0.5 com tempo (6,0 s e 5,5 s; subtotal 11,5 s na l.128 e na Figura fig:plano_fluxo). Só gravação, verificação, inspeção e cura não têm tempo. O mesmo vale para a l.23 ('As operações de preparação, de teste e de embalagem não têm tempo de referência nessas tabelas').",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "3-pos/1-conclusao.tex",
+  "linha": 4,
+  "trecho_exato": "A equipe percorreu duas etapas do desenvolvimento.",
+  "correcao": "",
+  "motivo": "Desatualizada: a conclusão não cobre a Entrega 3 (Seções 16 a 20: conjunto, estrutura, constituição, DFMA e plano macro). Falta um parágrafo com os resultados: concepção revisada (microatuador com ímãs, ordem pelo servidor por rádio, três LEDs), conjunto de 120 × 60 × 30 mm que não atende E10 em comprimento e altura, estrutura de 20 componentes e 27 peças, DFMA de 27 para 16 peças e índice de 0,21 para 0,37, plano macro de 106,1 s em seis postos.",
+  "confianca": "alta"
+ },
+ {
+  "arquivo": "3-pos/1-conclusao.tex",
+  "linha": 14,
+  "trecho_exato": "A autorização passa a ocorrer pelo toque do celular",
+  "correcao": "",
+  "motivo": "Descreve a alternativa da Entrega 2 como se fosse a atual. A Entrega 3 trocou o toque do celular por placa com rádio que consulta o servidor, o anel de LEDs por três LEDs e a mola armada com gatilho por microatuador com ímãs (16 l.36 a l.40). Pode ficar como histórico, mas a conclusão precisa registrar a revisão.",
+  "confianca": "media"
+ },
+ {
+  "arquivo": "3-pos/1-conclusao.tex",
+  "linha": 18,
+  "trecho_exato": "e o desenho reformulado não foi dimensionado",
+  "correcao": "",
+  "motivo": "Desatualizado: na Entrega 3 o conjunto foi dimensionado (Tabela tab:conj_dimensoes, 120 × 60 × 30 mm). A limitação atual é outra: medidas do modelo digital e estimativas, sem ensaio em bancada (16 l.13).",
+  "confianca": "alta"
+ },
+ {
+  "arquivo": "3-pos/1-conclusao.tex",
+  "linha": 20,
+  "trecho_exato": "verificar se o mecanismo de mola e gatilho cabe no envelope especificado",
+  "correcao": "",
+  "motivo": "Contradiz a Entrega 3: a mola armada e o gatilho foram eliminados (16 l.37), e o envelope já foi confrontado, com E10 não atendida em comprimento e altura (16 l.197 e l.207). O próximo passo é avaliar os três caminhos de redução (16 l.201 a l.205).",
+  "confianca": "alta"
+ },
+ {
+  "arquivo": "3-pos/1-conclusao.tex",
+  "linha": 20,
+  "trecho_exato": "do conjunto de mola, came e gatilho",
+  "correcao": "",
+  "motivo": "O came foi dispensado e a mola e o gatilho foram eliminados na concepção revisada (16 l.36 e l.37). Os próximos passos atuais são o ensaio do campo dos ímãs, a verificação das mudanças M1, M2, M3, M5, M7 e M8 e a cronometragem da montagem (19 l.546).",
+  "confianca": "alta"
+ },
+ {
+  "arquivo": "3-pos/1-conclusao.tex",
+  "linha": 20,
+  "trecho_exato": "A substituição do carretel por uma peça não ferromagnética",
+  "correcao": "",
+  "motivo": "Contradiz a concepção da Entrega 3: a liberação depende de o ímã atrair o carretel, especificado como aço de baixo carbono 'que responde ao ímã' (18 l.70; 16 l.36 e l.137). Um carretel não ferromagnético impediria a própria liberação.",
+  "confianca": "alta"
+ },
+ {
+  "arquivo": "3-pos/1-conclusao.tex",
+  "linha": 20,
+  "trecho_exato": "No projeto detalhado, a equipe deverá modelar o dispositivo em CAD, com cotas, materiais e a lista de materiais inicial",
+  "correcao": "",
+  "motivo": "Em parte já feito na Entrega 3: desenho de conjunto com cotas (Fig. conj_desenho), estrutura do produto (Tab. estrut_lista) e materiais (Seção 18). Rever o que ainda falta.",
+  "confianca": "media"
+ }
+]

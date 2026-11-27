@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="610mm" height="200mm" viewBox="0 0 610 200">
+<!-- Vermelho = cortar. Preto = gravar. MDF 3 mm. Duas placas: cole a de cima (com o recorte) sobre a de baixo. -->
+<g id="placa_de_baixo">
+<rect x="0" y="0" width="300" height="200" rx="8" fill="none" stroke="#ff0000" stroke-width="0.1"/>
+<text x="150.0" y="40" font-family="Arial" font-size="22" text-anchor="middle" fill="#000000">Tag&amp;Go</text>
+<text x="150.0" y="185" font-family="Arial" font-size="7" text-anchor="middle" fill="#000000">PRO3474 · Grupo 4 · Poli-USP</text>
+</g>
+<g id="placa_de_cima" transform="translate(310,0)">
+<rect x="0" y="0" width="300" height="200" rx="8" fill="none" stroke="#ff0000" stroke-width="0.1"/>
+<rect x="42.0" y="70" width="216" height="92" rx="4" fill="none" stroke="#ff0000" stroke-width="0.1"/>
+<path d="M 228.0 162 L 228.0 200 M 240.0 162 L 240.0 200" fill="none" stroke="#ff0000" stroke-width="0.1"/>
+<text x="150.0" y="40" font-family="Arial" font-size="22" text-anchor="middle" fill="#000000">Tag&amp;Go</text>
+<text x="150.0" y="58" font-family="Arial" font-size="7" text-anchor="middle" fill="#000000">Apoie a etiqueta aqui para recarregar</text>
+</g>
+</svg>

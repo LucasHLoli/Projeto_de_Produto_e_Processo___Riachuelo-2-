@@ -1,0 +1,146 @@
+[
+  {
+    "arquivo": "2-conteudo/15-delineamento_da_comercializacao.tex",
+    "linha": 24,
+    "trecho_exato": "ponto de devolução dos dispositivos, próxima à saída",
+    "correcao": "ponto de devolução dos dispositivos, próximo à saída",
+    "motivo": "Concordância: o adjetivo se refere a 'ponto' (masculino).",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "2-conteudo/15-delineamento_da_comercializacao.tex",
+    "linha": 61,
+    "trecho_exato": "requisitos de manutenabilidade",
+    "correcao": "requisitos de manutenibilidade",
+    "motivo": "Grafia: a forma dicionarizada é 'manutenibilidade'.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "2-conteudo/12-escala_vertical_e_valor_mercadologico.tex",
+    "linha": 49,
+    "trecho_exato": "1,39 (Canal Automação); 1,73 (Hexport) & 1,40",
+    "correcao": "",
+    "motivo": "A mediana dos três preços exibidos (0,96; 1,39; 1,73) é 1,39, não 1,40. Se o valor real for 1,395 (preço PIX recalculado), trocar a célula para '1,40 (Canal Automação)'; se for 1,39, trocar a mediana para 1,39 também na linha 56 ('degrau 4 (R\\$~1,40)') e nas faixas das linhas 113 e 114. Os custos por uso da linha 130 (0,24 a 0,28) não mudam.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "2-conteudo/13-estudo_de_aproveitamento_tecnico.tex",
+    "linha": 204,
+    "trecho_exato": "informa força de arrancamento de 356 a 556\\,N",
+    "correcao": "",
+    "motivo": "Contradiz a Seção 8 (8-Definição...tex, linha 371, E12): 'a força das etiquetas comerciais não consta em fonte publicada', usada para justificar a meta preliminar de 120 N. Aqui há fonte publicada (356 a 556 N) e o texto diz que ela 'serve de dado' para E12. Ajustar a fundamentação de E12 ou explicar por que 120 N continua abaixo desse valor.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "2-conteudo/11-estudo_de_diferenciacao.tex",
+    "linha": 73,
+    "trecho_exato": "Sim; $\\geq$~120~N ou o valor da etiqueta comercial (E12)",
+    "correcao": "Sim; $\\geq$ o maior entre 120~N e o valor da etiqueta comercial (E12)",
+    "motivo": "E12 (8-Definição...tex, linha 370) exige o MAIOR entre 120 N e o valor medido na etiqueta comercial; 'ou' sugere que qualquer um dos dois basta.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/11-estudo_de_diferenciacao.tex",
+    "linha": 68,
+    "trecho_exato": "Desativação automática do alarme no pagamento & Não descrita nas fontes",
+    "correcao": "Desativação automática do alarme no pagamento & Não",
+    "motivo": "A célula diz que a retenção física de c) não é descrita, mas o texto afirma que ela não existe (linha 20: 'a proteção deixa de ter retenção física'; linha 81: 'c), d) e e) abrem mão da retenção física'; linha 116) e a Figura de posicionamento põe c) no quadrante 'sem trava'.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/11-estudo_de_diferenciacao.tex",
+    "linha": 122,
+    "trecho_exato": "N02, N08; R07; E08, E09 & a), b), c)",
+    "correcao": "N02, N08; R07; E08, E09 & a) a d)",
+    "motivo": "Na Tabela comparativa (linha 69), d) também tem alternativa humana ('Caixa atendido'), mas não aparece entre os concorrentes que atendem o critério.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/11-estudo_de_diferenciacao.tex",
+    "linha": 35,
+    "trecho_exato": "é o maior e o mais caro dispositivo do quadro",
+    "correcao": "",
+    "motivo": "A própria tabela (linha 73) diz 'custo a definir' para o produto, e o preço da Zliide não é público (12-escala..., linha 58). 'O mais caro' não é sustentado pelos dados; usar 'provavelmente o mais caro', como na linha 3.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/15-delineamento_da_comercializacao.tex",
+    "linha": 56,
+    "trecho_exato": "Ele é acumulado em caixas e retorna ao estoque.",
+    "correcao": "",
+    "motivo": "O fluxo descrito não tem centro de recondicionamento (o dispositivo 'retorna ao estoque' e depois 'volta ao estoque'), mas a linha 67 diz que o 'centro de recondicionamento, ligado ao fluxo de retorno descrito na Seção' de distribuição faz o diagnóstico. A clínica (12-escala..., linha 67) também cita 'retorno ao centro de distribuição'. Nomear na linha 56 para onde o dispositivo retorna (centro de recondicionamento/distribuição) e retirar a repetição 'retorna ao estoque' ... 'volta ao estoque'.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/13-estudo_de_aproveitamento_tecnico.tex",
+    "linha": 45,
+    "trecho_exato": "e a garra com came excêntrica, tirada",
+    "correcao": "e a garra com came excêntrico, tirada",
+    "motivo": "Gênero de 'came': o relatório usa o masculino ('o came de bloqueio', 'a mola gira o came', 14-reformulacao..., linha 112). Mesmo ajuste nas linhas 114, 226 e 250 deste arquivo e em 14-reformulacao..., linhas 42, 58 e 97.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/13-estudo_de_aproveitamento_tecnico.tex",
+    "linha": 114,
+    "trecho_exato": "Garra com came excêntrica & Travamento por cunha",
+    "correcao": "Garra com came excêntrico & Travamento por cunha",
+    "motivo": "Gênero de 'came' (ver linha 45).",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/13-estudo_de_aproveitamento_tecnico.tex",
+    "linha": 226,
+    "trecho_exato": "garra com came excêntrica como alternativa",
+    "correcao": "garra com came excêntrico como alternativa",
+    "motivo": "Gênero de 'came' (ver linha 45).",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/13-estudo_de_aproveitamento_tecnico.tex",
+    "linha": 250,
+    "trecho_exato": "e a garra com came excêntrica seguiu",
+    "correcao": "e a garra com came excêntrico seguiu",
+    "motivo": "Gênero de 'came' (ver linha 45).",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/14-reformulacao_dos_desenhos_iniciais.tex",
+    "linha": 42,
+    "trecho_exato": "& Garra com came excêntrica \\\\",
+    "correcao": "& Garra com came excêntrico \\\\",
+    "motivo": "Gênero de 'came': no mesmo arquivo, linha 112, 'o came de bloqueio' e 'a mola gira o came'.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/14-reformulacao_dos_desenhos_iniciais.tex",
+    "linha": 58,
+    "trecho_exato": "A garra com came excêntrica e os mordentes",
+    "correcao": "A garra com came excêntrico e os mordentes",
+    "motivo": "Gênero de 'came' (ver linha 42).",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/14-reformulacao_dos_desenhos_iniciais.tex",
+    "linha": 97,
+    "trecho_exato": "se a garra com came excêntrica alcançar",
+    "correcao": "se a garra com came excêntrico alcançar",
+    "motivo": "Gênero de 'came' (ver linha 42).",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/15-delineamento_da_comercializacao.tex",
+    "linha": 65,
+    "trecho_exato": "em até 60 s (E09)",
+    "correcao": "em até 60\\,s (E09)",
+    "motivo": "Unidade sem espaço fino, diferente do resto do relatório ('60\\,s' na Seção 8; '60~s' na 11), e pode quebrar a linha entre 60 e s.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/12-escala_vertical_e_valor_mercadologico.tex",
+    "linha": 29,
+    "trecho_exato": "com 5\\,\\% de desconto",
+    "correcao": "com 5\\% de desconto",
+    "motivo": "Só este arquivo põe espaço fino antes de % (também '80\\,\\% a 83\\,\\%', '50\\,\\%' e '99\\,\\%' na linha 130); as demais seções escrevem '41\\%', '33,1\\%'. Padronizar.",
+    "confianca": "media"
+  }
+]

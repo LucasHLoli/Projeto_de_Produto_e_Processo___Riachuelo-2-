@@ -1,0 +1,114 @@
+[
+  {
+    "arquivo": "2-conteudo/8-Definição dos Requisitos Técnicos e Especificações-Meta.tex",
+    "linha": 34,
+    "trecho_exato": "Ter pagamento rápido e atendimento adequado (DE05), sintetiza",
+    "correcao": "Ter pagamento rápido e atendimento adequado (DE05) sintetiza",
+    "motivo": "Vírgula separando sujeito e verbo.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "2-conteudo/8-Definição dos Requisitos Técnicos e Especificações-Meta.tex",
+    "linha": 34,
+    "trecho_exato": "Reduzir o tempo de espera no caixa (DE01) está associada",
+    "correcao": "Reduzir o tempo de espera no caixa (DE01) está associado",
+    "motivo": "Concordância: o sujeito é a oração infinitiva 'Reduzir o tempo...', que pede masculino singular.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/8-Definição dos Requisitos Técnicos e Especificações-Meta.tex",
+    "linha": 172,
+    "trecho_exato": "porque N03 e N05 se relacionam com um único requisito cada",
+    "correcao": "",
+    "motivo": "Contradiz a Tabela tab:qfd (linha 155): N03 tem relação 9 com R01 e relação 1 com R02, ou seja, dois requisitos. Só N05 se relaciona com um único requisito (R02). Ajustar a frase (por exemplo, 'porque N05 se relaciona com um único requisito, N03 com dois, e ambos têm peso relativo menor').",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "2-conteudo/8-Definição dos Requisitos Técnicos e Especificações-Meta.tex",
+    "linha": 329,
+    "trecho_exato": "As especificações E10 a E18 não vêm de vozes do cliente: nenhuma foi identificada nas entrevistas nem na pesquisa de mercado.",
+    "correcao": "",
+    "motivo": "Contradiz a própria Tabela tab:especificacoes_outros: E15 'Decorre de N06' (l. 386), E16 'Decorre de D03' (l. 391) e E18 cita a 'voz D07' (l. 401). Ou a frase admite que algumas se apoiam em vozes não selecionadas para o QFD, ou as fundamentações deixam de citar N06, D03 e D07.",
+    "confianca": "alta"
+  },
+  {
+    "arquivo": "2-conteudo/8-Definição dos Requisitos Técnicos e Especificações-Meta.tex",
+    "linha": 93,
+    "trecho_exato": "R07 é também o único requisito cuja meta a equipe fixou em cobertura total sem depender de medição, porque decorre de uma decisão de projeto.",
+    "correcao": "",
+    "motivo": "Tensão com a l. 234 ('R06 e R07 têm meta de 100\\% por decisão de projeto'): R06 também tem meta de 100% fixada por decisão de projeto. A diferença ('sem depender de medição') é sutil e o leitor tende a ver contradição; convém explicitar que R06 é verificado por ensaio e R07 por revisão do catálogo.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/8-Definição dos Requisitos Técnicos e Especificações-Meta.tex",
+    "linha": 300,
+    "trecho_exato": "preferem atendimento em compras mais complexas (E08)",
+    "correcao": "preferem atendimento em compras mais complexas (DE05)",
+    "motivo": "Código provavelmente trocado: a preferência por atendimento em compras complexas é a voz DE05 (Seção 7, l. 273; Seção 8, l. 34). E08 é o catálogo de cenários de falha com alternativa humana.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/8-Definição dos Requisitos Técnicos e Especificações-Meta.tex",
+    "linha": 361,
+    "trecho_exato": "de 7 a 13 vezes o volume das etiquetas comerciais",
+    "correcao": "",
+    "motivo": "O fator 13 confere com a pencil (208,9/16,2 = 12,9), mas o fator 7 depende do volume da mini tag, cuja espessura a mesma célula diz estar 'a medir'. Ou se informa a espessura assumida (cerca de 15 mm), ou se cita só a razão com a pencil.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/7-analise_clientes.tex",
+    "linha": 46,
+    "trecho_exato": "Achar tamanho que sumiu da araque",
+    "correcao": "Achar tamanho que sumiu da arara",
+    "motivo": "Provável erro de transcrição: 'araque' por 'arara' (o termo usado no restante do parágrafo). Está dentro de citação; conferir com a transcrição original.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/7-analise_clientes.tex",
+    "linha": 106,
+    "trecho_exato": "O grupo combinou baixa sensibilidade a fila",
+    "correcao": "O grupo combinou baixa sensibilidade à fila",
+    "motivo": "Crase: a dimensão é chamada 'sensibilidade à fila' na l. 57; uniformizar.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/7-analise_clientes.tex",
+    "linha": 126,
+    "trecho_exato": "Combinou baixa sensibilidade a fila",
+    "correcao": "Combinou baixa sensibilidade à fila",
+    "motivo": "Crase: mesmo caso da l. 106; a dimensão é 'sensibilidade à fila' (l. 57).",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/7-analise_clientes.tex",
+    "linha": 114,
+    "trecho_exato": "(76\\% com menos de 35 anos)",
+    "correcao": "",
+    "motivo": "Com 30 respondentes no Cluster 2, os percentuais possíveis são 73,3% (22/30) ou 76,7% (23/30), que arredonda para 77%. Os demais percentuais do grupo (97%, 3%, 17%) seguem arredondamento; conferir o valor na base (provavelmente 77%).",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/7-analise_clientes.tex",
+    "linha": 200,
+    "trecho_exato": "a ponto de a entrevistada nomear a pessoa",
+    "correcao": "a ponto de cada entrevistada nomear a pessoa",
+    "motivo": "Concordância: a frase fala de duas entrevistas (Débora e Renata), mas usa 'a entrevistada' no singular.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/7-analise_clientes.tex",
+    "linha": 21,
+    "trecho_exato": "os materiais disponíveis não documentam em detalhe como respondentes e entrevistados foram recrutados",
+    "correcao": "",
+    "motivo": "Contradiz a Seção 6 (6-pesquisa_clientes_usuarios.tex, l. 23), que documenta o recrutamento dos entrevistados: 'foram selecionadas pessoas próximas ao grupo', ou seja, amostra por conveniência. A frase vale para os respondentes do survey, não para os entrevistados.",
+    "confianca": "media"
+  },
+  {
+    "arquivo": "2-conteudo/10-analise_funcional.tex",
+    "linha": 69,
+    "trecho_exato": "ou seja, 18 funções de segundo nível e acessórias, agrupadas sob as três básicas",
+    "correcao": "ou seja, 18 funções secundárias necessárias e acessórias, além das três básicas",
+    "motivo": "Contagem: as funções de segundo nível são 12 (F1.1 a F1.3, F2.1 a F2.5, F3.1 a F3.4); o total 18 só fecha somando F0, que não é de segundo nível nem fica sob uma básica (é auxiliar). A Seção 13 (l. 33) usa '18 funções secundárias necessárias e acessórias'.",
+    "confianca": "media"
+  }
+]
