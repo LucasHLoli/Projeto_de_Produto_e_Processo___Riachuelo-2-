@@ -75,6 +75,8 @@ if __name__ == '__main__':
     caixa = caixa_pla()
     ce, cd = metades(caixa, None, None, por_fora=True)
     tampa = C.a_tampa()
+    # rebaixo de 0,6 mm onde a dobradiça (A5) encaixa e cola: marca o lugar certo, como a gravação do MDF
+    tampa = tampa - C.P(cubo(M.A_GX - 18.7, M.A_EIXO_Y - 8.2, M.A_TZ - 0.6, M.A_GX + 18.7, M.A_EIXO_Y + 6.2, M.A_TZ + 1))
     zt0, zt1 = C.H, C.H + M.CAMADAS_A * M.MDF
     te, td = metades(tampa, zt0, zt1, por_fora=False, esq_baixo=False)
     prat = C.prateleira()
