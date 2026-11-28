@@ -51,12 +51,15 @@ def garra():
     return gg + gancho
 
 
-def receptaculo():
-    """Colado por baixo da tampa: fecha os furos para o pano não tocar na eletrônica."""
-    x0, x1 = DENTES_X[0] - 8, DENTES_X[-1] + 8
-    b = cubo(x0, HY - FURO_Y / 2 - 3, FUNDO_FURO - 2, x1, HY + FURO_Y / 2 + 3, CZ)
+REF_X0, REF_X1 = DENTES_X[0] - 8, DENTES_X[-1] + 10   # reforço de MDF colado sob a tampa
+REF_Y0, REF_Y1 = HY - FURO_Y / 2 - 4, HY + FURO_Y / 2 + 4
+
+
+def reforco():
+    """Segunda chapa de MDF com os mesmos furos, colada por baixo da tampa: furo com 6 mm de parede."""
+    b = cubo(REF_X0, REF_Y0, CZ - MDF, REF_X1, REF_Y1, CZ)
     for x in DENTES_X:
-        b = b - cubo(x - FURO_L / 2, HY - FURO_Y / 2, FUNDO_FURO, x + FURO_L / 2 + FOLGA_ARCO, HY + FURO_Y / 2, CZ + 1)
+        b = b - cubo(x - FURO_L / 2, HY - FURO_Y / 2, CZ - MDF - 1, x + FURO_L / 2 + FOLGA_ARCO, HY + FURO_Y / 2, CZ + 1)
     return b
 
 
@@ -84,6 +87,9 @@ def svg():
     for x in DENTES_X:
         tampa.append(r(x - FURO_L / 2, HY - FURO_Y / 2, FURO_L + FOLGA_ARCO, FURO_Y, cut))
     pecas = [('Tampa', CX, CY, tampa),
+             ('Reforço da tampa', REF_X1 - REF_X0, REF_Y1 - REF_Y0,
+              [r(0, 0, REF_X1 - REF_X0, REF_Y1 - REF_Y0, cut)] +
+              [r(x - FURO_L / 2 - REF_X0, HY - FURO_Y / 2 - REF_Y0, FURO_L + FOLGA_ARCO, FURO_Y, cut) for x in DENTES_X]),
              ('Fundo', fx, fy, [r(0, 0, fx, fy, cut), r(175 - MDF, 61 - MDF, 20, 5, cut)]),
              ('Parede longa 1', CX, CZ, [r(0, 0, CX, CZ, cut)]), ('Parede longa 2', CX, CZ, [r(0, 0, CX, CZ, cut)]),
              ('Parede curta 1', fy, CZ, [r(0, 0, fy, CZ, cut), r(fy / 2 - 6, CZ - 22, 12, 10, cut)]),
@@ -118,7 +124,6 @@ if __name__ == '__main__':
     salvar(L.lingueta(), 'D2_lingueta')
     salvar(L.braco_servo(), 'D3_braco_servo')
     salvar(garra().rotate([90, 0, 0]), 'D4_garra_dentes')
-    salvar(receptaculo().rotate([180, 0, 0]), 'D5_receptaculo_furos')
     salvar(V.dobradica().translate([-24, 0, 0]), 'D6_dobradica')
     salvar(uniao([V.canto_tampa().translate([k * 9, 0, 0]) for k in range(2)]), 'D7_cantos_tampa')
     salvar(g.prateleira_esp32().rotate([180, 0, 0]), 'D8_prateleira_esp32')
@@ -130,7 +135,7 @@ if __name__ == '__main__':
         ('Caixa (MDF)', 'casca', '#c8a77a', V.caixa_3d(), None),
         ('Tampa (MDF)', 'casca', '#d9bc8c', tampa_3d(), None),
         ('Garra com dentes', 'impressa', '#db2777', garra(), 'garra'),
-        ('Receptáculo dos furos', 'impressa', '#7c3aed', receptaculo(), None),
+        ('Reforço da tampa (MDF)', 'casca', '#b08d5e', reforco(), None),
         ('Dobradiça', 'impressa', '#be185d', V.dobradica().translate([-24, 0, 0]), None),
         ('Lingueta', 'impressa', '#f59e0b', L.lingueta(), 'lingueta'),
         ('Trilho e berço do servo', 'impressa', '#ea580c', L.mecanismo_lingueta(), None),
@@ -148,7 +153,7 @@ if __name__ == '__main__':
     ]
     dados = {'pivo_braco': [L.SX, L.SY, L.Z_BRACO], 'pivo_garra': [DOB_X, HY, GZ0 + EIXO], 'garra_z0': GZ0,
              'pino_rabo': [0, 6.5, ESP + 7], 'poste': [72, 38, TZ + 7],
-             'dentes': DENTES_X, 'furo_l': FURO_L, 'fundo_furo': FUNDO_FURO + 0.8, 'tz': TZ, 'pano_y': [HY - 16, HY + 16],
+             'dentes': DENTES_X, 'furo_l': FURO_L, 'fundo_furo': GZ0 - DENTE_H + 2.8, 'tz': TZ, 'pano_y': [HY - 16, HY + 16],
              'partes': []}
     for nome, grupo, cor, m, mov in partes:
         d = {'nome': nome, 'grupo': grupo, 'cor': cor, 'mov': mov}
