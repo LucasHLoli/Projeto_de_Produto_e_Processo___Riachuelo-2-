@@ -38,8 +38,8 @@ def garra():
     """Coordenadas locais: eixo da dobradiça em x=0; fundo da garra fechada em z=0."""
     c = HX - DOB_X + 6                                          # vai até x=190
     barra = cubo(7, -15, 0, c, 15, ESP)
-    junta = cubo(-5, -10, 0, 7, 10, ESP) + cil_y(0, EIXO, -10, 10, 9)
-    rabo = cubo(-15, -4, 0, -2, 4, ESP) + cil(-12, 0, ESP, ESP + 6, 3.2)
+    junta = cubo(0, -10, 0, 7, 10, ESP) + cil_y(0, EIXO, -10, 10, 9)
+    rabo = cubo(-2, -4, 2, 2, 4, ESP + 9) + cil_y(0, ESP + 7, -7, 7, 3.2)   # haste do elástico, acima do eixo
     gg = uniao([barra, junta, rabo])
     gg = gg - cubo(-20, -20, -10, c + 5, 20, 0)                  # nada abaixo do fundo
     gg = gg - cil_y(0, EIXO, -12, 12, 3.4)                       # eixo: prego ou palito
@@ -56,11 +56,12 @@ def garra():
 def dobradica():
     """Peça colada na tampa: orelhas da dobradiça + pino do elástico de abertura."""
     z = TZ
-    base = cubo(90, 28, z, 128, 48, z + 2) + cubo(112, 20, z, 128, 56, z + 2)
+    base = cubo(90, 28, z, 126, 48, z + 2) + cubo(112, 20, z, 126, 56, z + 2)
     orelhas = uniao([cubo(114, y0, z, 126, y0 + 3.5, z + 5.5) + cil_y(DOB_X, GZ0 + EIXO, y0, y0 + 3.5, 12) for y0 in (22.0, 50.5)])
     d = base + orelhas
     d = d - cil_y(DOB_X, GZ0 + EIXO, 10, 66, 3.4)
     d = d + cil(96, 38, z + 2, z + 9, 3.2)                       # pino do elástico
+    d = d - cubo(DOB_X - 8, 27, z + 0.3, DOB_X + 10, 49, z + 3)   # alívio sob a junta da garra
     return d
 
 
@@ -183,7 +184,7 @@ if __name__ == '__main__':
         ('Elástico da lingueta', 'comprada', '#111827', cubo(155.5, 44.4, 58.6, 200, 45.6, 59.4), 'elastico'),
     ]
     dados = {'pivo_braco': [L.SX, L.SY, L.Z_BRACO], 'pivo_garra': [DOB_X, HY, GZ0 + EIXO], 'garra_z0': GZ0,
-             'pino_rabo': [-12, 0, ESP + 5], 'poste': [96, 38, TZ + 7], 'partes': []}
+             'pino_rabo': [0, 6.5, ESP + 7], 'poste': [96, 38, TZ + 7], 'partes': []}
     for nome, grupo, cor, m, mov in partes:
         d = {'nome': nome, 'grupo': grupo, 'cor': cor, 'mov': mov}
         d.update(pack(m))
