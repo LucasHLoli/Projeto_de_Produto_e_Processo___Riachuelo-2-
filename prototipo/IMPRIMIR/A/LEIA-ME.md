@@ -17,7 +17,26 @@ Cura: PLA, camada 0,2 mm, preenchimento 20%, 3 paredes, aderência "saia" (skirt
 
 Antes de imprimir a mesa 1, meça com o paquímetro a altura do topo do braço plástico do servo até a base da orelha. O desenho usa no máximo 17 mm. Se der mais, avise antes de imprimir.
 
-## Laser (MDF 3 mm)
+## Carcaça: escolha MDF ou PLA
+
+As duas têm as mesmas medidas (230 × 92 × 71,5 mm por fora, mais 9 mm de tampa). Por dentro muda nada.
+
+### Carcaça de PLA (pasta `carcaca_PLA/`)
+
+A caixa tem 230 mm e a mesa da Ender tem 220, então caixa, tampa e prateleira saem em 2 metades. As metades encaixam num degrau de 10 mm e você cola com cola de PLA (super bonder em gel ou epóxi).
+
+| Ordem | Arquivo | O que tem | Suporte |
+|---|---|---|---|
+| 4 | `mesa4_caixa_esquerda.stl` | metade esquerda da caixa (lado da garra), já com o canto do pino da tampa | não |
+| 5 | `mesa5_caixa_direita.stl` | metade direita da caixa | não |
+| 6 | `mesa6_tampa_e_prateleira_esquerda.stl` | metade esquerda da tampa (de cabeça para baixo) e da prateleira | não |
+| 7 | `mesa7_tampa_e_prateleira_direita.stl` | metade direita da tampa e da prateleira (de cabeça para baixo) | não |
+
+Paredes de 3 mm: no Cura, use 4 paredes (0,4 mm cada) e 20% de preenchimento. As 4 mesas somam ~430 cm³ de peça; com 20% de preenchimento gasta bem menos que isso de filamento (o Cura mostra os gramas).
+
+Com a carcaça de PLA não precisa dos cantos C3 da mesa 2 (eles já vêm na caixa). Pode imprimir assim mesmo e guardar.
+
+## Laser (MDF 3 mm), se a carcaça for de MDF
 
 Vermelho = cortar. Preto = gravar. Cada arquivo cabe numa chapa de cerca de 240 × 320 mm.
 
