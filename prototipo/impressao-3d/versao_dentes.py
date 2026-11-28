@@ -35,8 +35,7 @@ def garra():
     c = HX - DOB_X + 6
     barra = cubo(7, -15, 0, c, 15, ESP)
     junta = cubo(0, -10, 0, 7, 10, ESP) + cil_y(0, EIXO, -10, 10, 9)
-    rabo = cubo(-2, -4, 2, 2, 4, ESP + 9) + cil_y(0, ESP + 7, -7, 7, 3.2)   # haste do elástico, acima do eixo
-    gg = uniao([barra, junta, rabo])
+    gg = uniao([barra, junta])
     gg = gg - cubo(-20, -20, -10, c + 5, 20, 0)
     gg = gg - cil_y(0, EIXO, -12, 12, 3.4)
     for x in DENTES_X:
@@ -71,6 +70,18 @@ def tampa_3d():
     return t
 
 
+def dobradica():
+    """Orelhas da dobradiça coladas na tampa. Eixo: prego fino ou palito de churrasco."""
+    z = TZ
+    base = cubo(DOB_X - 8, HY - 18, z, DOB_X + 6, HY + 18, z + 2)
+    orelhas = uniao([cubo(DOB_X - 6, y0, z, DOB_X + 6, y0 + 3.5, z + 5.5) + cil_y(DOB_X, GZ0 + EIXO, y0, y0 + 3.5, 12)
+                     for y0 in (HY - 16.0, HY + 12.5)])
+    d = base + orelhas
+    d = d - cil_y(DOB_X, GZ0 + EIXO, HY - 30, HY + 30, 3.4)
+    d = d - cubo(DOB_X - 8, HY - 11, z + 0.3, DOB_X + 10, HY + 11, z + 3)
+    return d
+
+
 def svg():
     cut = 'fill="none" stroke="#ff0000" stroke-width="0.1"'
     eng = 'fill="none" stroke="#000000" stroke-width="0.3"'
@@ -82,14 +93,11 @@ def svg():
     tampa = [r(0, 0, CX, CY, cut), r(HX - 2.5, HY - 4, 6.5, 8, cut), r(18, 10, 52, 10, cut),
              f'<circle cx="6" cy="38" r="1.25" {cut}/>', f'<circle cx="{CX - 4.5}" cy="38" r="1.25" {cut}/>',
              r(30, 40, 30, 30, eng), f'<text x="45" y="38" font-size="4" text-anchor="middle" {txt}>cole o QR aqui</text>',
-             r(66, 28, 38, 20, eng), r(88, 20, 16, 36, eng), f'<text x="85" y="62" font-size="3.5" text-anchor="middle" {txt}>dobradiça</text>',
+             r(DOB_X - 8, HY - 18, 14, 36, eng), f'<text x="95" y="62" font-size="3.5" text-anchor="middle" {txt}>dobradiça</text>',
              f'<text x="44" y="27" font-size="4" text-anchor="middle" {txt}>Tag&amp;Go</text>']
     for x in DENTES_X:
         tampa.append(r(x - FURO_L / 2, HY - FURO_Y / 2, FURO_L + FOLGA_ARCO, FURO_Y, cut))
     pecas = [('Tampa', CX, CY, tampa),
-             ('Reforço da tampa', REF_X1 - REF_X0, REF_Y1 - REF_Y0,
-              [r(0, 0, REF_X1 - REF_X0, REF_Y1 - REF_Y0, cut)] +
-              [r(x - FURO_L / 2 - REF_X0, HY - FURO_Y / 2 - REF_Y0, FURO_L + FOLGA_ARCO, FURO_Y, cut) for x in DENTES_X]),
              ('Fundo', fx, fy, [r(0, 0, fx, fy, cut), r(175 - MDF, 61 - MDF, 20, 5, cut)]),
              ('Parede longa 1', CX, CZ, [r(0, 0, CX, CZ, cut)]), ('Parede longa 2', CX, CZ, [r(0, 0, CX, CZ, cut)]),
              ('Parede curta 1', fy, CZ, [r(0, 0, fy, CZ, cut), r(fy / 2 - 6, CZ - 22, 12, 10, cut)]),
@@ -124,7 +132,7 @@ if __name__ == '__main__':
     salvar(L.lingueta(), 'D2_lingueta')
     salvar(L.braco_servo(), 'D3_braco_servo')
     salvar(garra().rotate([90, 0, 0]), 'D4_garra_dentes')
-    salvar(V.dobradica().translate([-24, 0, 0]), 'D6_dobradica')
+    salvar(dobradica(), 'D6_dobradica')
     salvar(uniao([V.canto_tampa().translate([k * 9, 0, 0]) for k in range(2)]), 'D7_cantos_tampa')
     salvar(g.prateleira_esp32().rotate([180, 0, 0]), 'D8_prateleira_esp32')
     svg()
@@ -135,8 +143,7 @@ if __name__ == '__main__':
         ('Caixa (MDF)', 'casca', '#c8a77a', V.caixa_3d(), None),
         ('Tampa (MDF)', 'casca', '#d9bc8c', tampa_3d(), None),
         ('Garra com dentes', 'impressa', '#db2777', garra(), 'garra'),
-        ('Reforço da tampa (MDF)', 'casca', '#b08d5e', reforco(), None),
-        ('Dobradiça', 'impressa', '#be185d', V.dobradica().translate([-24, 0, 0]), None),
+        ('Dobradiça', 'impressa', '#be185d', dobradica(), None),
         ('Lingueta', 'impressa', '#f59e0b', L.lingueta(), 'lingueta'),
         ('Trilho e berço do servo', 'impressa', '#ea580c', L.mecanismo_lingueta(), None),
         ('Braço do servo', 'impressa', '#2563eb', L.braco_servo(), 'braco'),
@@ -152,7 +159,7 @@ if __name__ == '__main__':
         ('Elástico da lingueta', 'comprada', '#111827', cubo(155.5, 44.4, 58.6, 200, 45.6, 59.4), 'elastico'),
     ]
     dados = {'pivo_braco': [L.SX, L.SY, L.Z_BRACO], 'pivo_garra': [DOB_X, HY, GZ0 + EIXO], 'garra_z0': GZ0,
-             'pino_rabo': [0, 6.5, ESP + 7], 'poste': [72, 38, TZ + 7],
+             
              'dentes': DENTES_X, 'furo_l': FURO_L, 'fundo_furo': GZ0 - DENTE_H + 2.8, 'tz': TZ, 'pano_y': [HY - 16, HY + 16],
              'partes': []}
     for nome, grupo, cor, m, mov in partes:
