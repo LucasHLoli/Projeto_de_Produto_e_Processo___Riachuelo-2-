@@ -24,17 +24,18 @@ Gerado por `prototipo/impressao-3d/verificar.py`. Rodar de novo depois de qualqu
 
 ## ✅ Trava: lingueta no entalhe
 
-- Servo em 40°: a lingueta entra 2.0 mm no gancho (o entalhe tem 2,1 mm de fundo)
+- Servo em 40°: a lingueta entra 2.0 mm no gancho e fica 0.5 mm antes do fundo do entalhe (não empurra o gancho)
 - Servo em 90°: a lingueta fica 2.6 mm longe do gancho (a garra abre livre)
+- Puxando a garra travada: ela sobe 2.0 mm e o degrau de 3.6 × 5.5 mm do gancho bate embaixo da lingueta
 - Sem pano a garra desce 1.5 mm: a lingueta ainda entra (sobra 0.4 mm)
-- Pano grosso: trava com até 4.1 mm de pano embaixo da garra
-- Travada, a garra sobe no máximo 1.9 mm e para no topo do entalhe
+- Com pano mais grosso a garra fica mais alta: a lingueta cabe até 2.0 mm a mais de pano
 
 ## ✅ Chave fim de curso
 
-- Garra fechada com pano: o gancho aperta a alavanca 2.8 mm (a micro chave aciona com ~3 ± 1,2 mm)
-- Sem pano: 4.3 mm (a alavanca de metal flexiona; sem dano)
-- Garra aberta: a alavanca fica solta (checado na varredura abaixo)
+- Garra fechada com o pano previsto: o gancho aperta a alavanca 4.4 mm na ponta (aciona com ~3 mm numa haste de 12,8, ~4,4 na de 19)
+- Sem pano: 5.9 mm (a alavanca de metal flexiona)
+- Pano 1.4 mm mais grosso que o previsto ainda deixa 3 mm de aperto
+- A placa encaixa num pino (furo Ø3) e entre abas; colar com cola quente. Se não clicar, papelão embaixo da placa
 
 ## ✅ Movimento sem colisão (garra 0 a 60°, servo 40 a 90°, fios, peças compradas)
 
@@ -60,8 +61,8 @@ Gerado por `prototipo/impressao-3d/verificar.py`. Rodar de novo depois de qualqu
 
 ## ✅ Arquivos de impressão
 
-- Extra_calcos_so_se_precisar/extra_calcos_do_servo_so_se_precisar.stl: 38 × 48 × 3 mm, cabe na mesa, malha fechada
-- Lote1_teste_10min/mesa0_teste_de_folga.stl: 56 × 14 × 14 mm, cabe na mesa, malha fechada
+- Extra_calcos_so_se_precisar/extra_calcos_do_servo_so_se_precisar.stl: 14 × 92 × 4 mm, cabe na mesa, malha fechada
+- Lote1_teste_10min/mesa0_teste_de_folga.stl: 56 × 22 × 14 mm, cabe na mesa, malha fechada
 - Lote2_pecas_pequenas/mesa1_pecas_pequenas.stl: 195 × 30 × 12 mm, cabe na mesa, malha fechada
 - Lote3_garra_e_base_do_servo/mesa2_garra_e_base_do_servo.stl: 81 × 108 × 48 mm, cabe na mesa, malha fechada
 - Lote4_pes_batentes_suporte_pinos/mesa3_pes_batentes_e_suporte_do_esp32.stl: 134 × 74 × 18 mm, cabe na mesa, malha fechada

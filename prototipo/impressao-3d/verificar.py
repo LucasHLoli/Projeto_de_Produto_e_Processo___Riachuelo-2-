@@ -60,26 +60,30 @@ lista = [
 teste('Folgas dos encaixes', all(o for o, _ in lista), [l for _, l in lista], 'folgas')
 
 # ---------- 2. trava e chave ----------
-x_face = M.HOOK[0] - 2.0
-ponta_40 = M.HOOK[0] + M.ling_off(M.ANG_TRAVA)
-ponta_90 = M.HOOK[0] + M.ling_off(M.ANG_SOLTA)
+x_face = M.HOOK[0] - M.GANCHO_X                     # face do gancho do lado da lingueta
+ponta_40 = M.HOOK[0] - M.GANCHO_X + M.ENTALHE_FUNDO - 0.5 + M.ling_off(M.ANG_TRAVA)
+ponta_90 = M.HOOK[0] - M.GANCHO_X + M.ENTALHE_FUNDO - 0.5 + M.ling_off(M.ANG_SOLTA)
 entra = ponta_40 - x_face
+fundo = M.ENTALHE_FUNDO - entra
 sobra_90 = x_face - ponta_90
 zl, ze = M.Z_LING, M.Z_ENTALHE
-folga_baixo = zl[0] - ze[0]        # garra mais alta (pano grosso): a lingueta ainda cabe se folga_baixo >= excesso de pano
-folga_cima = ze[1] - zl[1]         # garra mais baixa (sem pano): cabe se folga_cima >= VAO; também = quanto a garra sobe travada
-ok = 1.5 <= entra <= 2.2 and sobra_90 >= 1.5 and folga_cima >= M.VAO + 0.3 and folga_baixo >= 1.5
+degrau = ze[0] - M.Z_GANCHO_BAIXO                 # parte do gancho embaixo do entalhe: é ela que segura o puxão
+sobe = zl[0] - ze[0]                              # quanto a garra sobe travada até o degrau bater na lingueta
+cima = ze[1] - zl[1]                              # sem pano a garra desce VAO; a lingueta ainda cabe se cima >= VAO
+largura = 2 * M.GANCHO_X - M.ENTALHE_FUNDO
+ok = 1.5 <= entra <= 2.2 and fundo >= 0.3 and sobra_90 >= 1.5 and cima >= M.VAO + 0.3 and degrau >= 3.0 and largura >= 5.0
 teste('Trava: lingueta no entalhe', ok, [
-    f'Servo em {M.ANG_TRAVA:.0f}°: a lingueta entra {entra:.1f} mm no gancho (o entalhe tem 2,1 mm de fundo)',
+    f'Servo em {M.ANG_TRAVA:.0f}°: a lingueta entra {entra:.1f} mm no gancho e fica {fundo:.1f} mm antes do fundo do entalhe (não empurra o gancho)',
     f'Servo em {M.ANG_SOLTA:.0f}°: a lingueta fica {sobra_90:.1f} mm longe do gancho (a garra abre livre)',
-    f'Sem pano a garra desce {M.VAO:.1f} mm: a lingueta ainda entra (sobra {folga_cima - M.VAO:.1f} mm)',
-    f'Pano grosso: trava com até {M.VAO + folga_baixo:.1f} mm de pano embaixo da garra',
-    f'Travada, a garra sobe no máximo {folga_cima:.1f} mm e para no topo do entalhe'], 'trava')
+    f'Puxando a garra travada: ela sobe {sobe:.1f} mm e o degrau de {degrau:.1f} × {largura:.1f} mm do gancho bate embaixo da lingueta',
+    f'Sem pano a garra desce {M.VAO:.1f} mm: a lingueta ainda entra (sobra {cima - M.VAO:.1f} mm)',
+    f'Com pano mais grosso a garra fica mais alta: a lingueta cabe até {sobe:.1f} mm a mais de pano'], 'trava')
 curso = K.CURSO_A
-teste('Chave fim de curso', 2.5 <= curso <= 3.5, [
-    f'Garra fechada com pano: o gancho aperta a alavanca {curso:.1f} mm (a micro chave aciona com ~3 ± 1,2 mm)',
-    f'Sem pano: {curso + M.VAO:.1f} mm (a alavanca de metal flexiona; sem dano)',
-    'Garra aberta: a alavanca fica solta (checado na varredura abaixo)'], 'chave')
+teste('Chave fim de curso', 3.8 <= curso <= 5.0, [
+    f'Garra fechada com o pano previsto: o gancho aperta a alavanca {curso:.1f} mm na ponta (aciona com ~3 mm numa haste de 12,8, ~4,4 na de 19)',
+    f'Sem pano: {curso + M.VAO:.1f} mm (a alavanca de metal flexiona)',
+    f'Pano {curso - 3.0:.1f} mm mais grosso que o previsto ainda deixa 3 mm de aperto',
+    'A placa encaixa num pino (furo Ø3) e entre abas; colar com cola quente. Se não clicar, papelão embaixo da placa'], 'chave')
 
 # ---------- 3. movimento (usa a checagem completa da maquete) ----------
 r = subprocess.run([sys.executable, os.path.join(AQUI, 'maquete_v3_detalhada.py')], capture_output=True, text=True, encoding='utf-8',
@@ -163,7 +167,7 @@ for f in sorted(glob.glob(os.path.join(AQUI, 'stl_v3', 'A*.stl')) + glob.glob(os
     t = trimesh.load(f)
     nb = len(t.split(only_watertight=False))
     n = os.path.splitext(os.path.basename(f))[0]
-    esperado = int(n.split('_x')[-1]) if '_x' in n else (5 if n == 'C1_calcos_servo' else 1)
+    esperado = int(n.split('_x')[-1]) if '_x' in n else (12 if n == 'C1_calcos_servo' else 1)
     if nb != esperado:
         ok_i = False
         lin.append(f'{n}: {nb} pedaços (esperado {esperado})')

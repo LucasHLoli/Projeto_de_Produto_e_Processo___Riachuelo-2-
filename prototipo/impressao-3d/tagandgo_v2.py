@@ -105,15 +105,17 @@ def berco_servo(x0, x1, y0, y1, z_or=None):
     return m
 
 
+CALCOS = [0.5, 1.0, 1.5, 2.0, 3.0, 4.0]
+
+
 def calcos():
-    """Calços sob as orelhas: 0,5 / 1 / 1,5 / 2 / 3 mm."""
+    """C1: pastilhas para baixo das orelhas do servo (2 de cada altura: 0,5 / 1 / 1,5 / 2 / 3 / 4 mm).
+    Cada uma cobre a orelha (4,7 x 12,4) com o furo do parafuso."""
     ps = []
-    for i, h in enumerate([0.5, 1.0, 1.5, 2.0, 3.0]):
-        c = cubo(0, i * 10, 0, 38, i * 10 + 8, h)
-        c = c - cubo(7, i * 10 + 1.5, -1, 31, i * 10 + 6.5, h + 1)
-        for x in (5.0 - 0.2, 33.0 + 0.2):
-            c = c - cil(x, i * 10 + 4, -1, h + 1, 2.4)
-        ps.append(c)
+    for i, h in enumerate(CALCOS):
+        for k in range(2):
+            x0, y0 = k * 9.0, i * 16.0
+            ps.append(cubo(x0, y0, 0, x0 + 4.7, y0 + 12.4, h) - cil(x0 + 2.6, y0 + 6.2, -1, h + 1, 2.4))
     return uniao(ps)
 
 
@@ -129,8 +131,10 @@ FOLGA_PANO = 1.75
 HOOK = (A_GX, SY + 16.0)                  # gancho (x, y)
 HOOK_U = HOOK[1] - A_EIXO_Y
 Z_LING = (45.3, 47.7)                     # altura da lingueta (1 mm acima: a alavanca da chave passa embaixo)
-Z_ENTALHE = (42.7, 49.6)                  # 6,9 mm: engata sem pano (garra 1,5 mais baixa) e com pano de até ~4 mm
-Z_GANCHO_BAIXO = 42.0
+Z_ENTALHE = (43.3, 49.6)                  # a lingueta (45,3 a 47,7) entra sem pano (garra 1,5 mais baixa) e com até 2 mm de pano a mais
+Z_GANCHO_BAIXO = 39.7                     # degrau de 3,6 mm embaixo do entalhe: é ele que segura quando puxam a garra
+GANCHO_X = 4.0                            # meia largura do gancho (8 mm)
+ENTALHE_FUNDO = 2.5
 R_BIELA, ANG_TRAVA, ANG_SOLTA = 6.0, 40.0, 90.0
 PINO_X_TRAVA = SX + R_BIELA * np.cos(np.radians(ANG_TRAVA))
 CURSO = PINO_X_TRAVA - (SX + R_BIELA * np.cos(np.radians(ANG_SOLTA)))
@@ -152,8 +156,8 @@ def a_garra():
         d = d + cil_x(u, -DENTE_H + 2, -DENTE_C / 2, DENTE_C / 2, DENTE_E)
         m = m + d
     gz = Z_GANCHO_BAIXO - A_GZ0
-    g = cubo(-2, HOOK_U - 3, gz, 2, HOOK_U + 3, 0.5)
-    g = g - cubo(-2.1, HOOK_U - 4, Z_ENTALHE[0] - A_GZ0, 0, HOOK_U + 4, Z_ENTALHE[1] - A_GZ0)   # entalhe no lado -x
+    g = cubo(-GANCHO_X, HOOK_U - 3, gz, GANCHO_X, HOOK_U + 3, 0.5)
+    g = g - cubo(-GANCHO_X - 0.1, HOOK_U - 4, Z_ENTALHE[0] - A_GZ0, -GANCHO_X + ENTALHE_FUNDO, HOOK_U + 4, Z_ENTALHE[1] - A_GZ0)   # entalhe no lado -x
     m = m + g
     return m.translate([A_GX, A_EIXO_Y, A_GZ0])
 
@@ -192,7 +196,7 @@ def a_tampa():
     t = uniao([cubo(-MDF, -MDF, H + k * MDF, LX + MDF, LY + MDF, H + (k + 1) * MDF) for k in range(CAMADAS_A)])
     for z0, z1, linha in a_furos_por_camada():
         for i, (y0, y1) in enumerate(linha):
-            w = DENTE_C / 2 + 1.5 if i < len(DENTES_U) else 2.6
+            w = DENTE_C / 2 + 1.5 if i < len(DENTES_U) else GANCHO_X + 0.6
             t = t - cubo(A_GX - w, y0, z0 - 0.01, A_GX + w, y1, z1 + 0.01)
     t = t - janela_leds() - furos_tampa()
     return t
@@ -222,7 +226,7 @@ def a_dobradica():
 def a_base_mecanismo():
     """Berço do servo + pilares + trilho da lingueta. Uma peça só, colada no fundo."""
     m = berco_servo(SX - 20, SX + 21, SY - 9, SY + 23)
-    lx0, lx1 = HOOK[0] - 2 - 32, HOOK[0] - 2                         # curso da lingueta
+    lx0, lx1 = HOOK[0] - GANCHO_X - 32, HOOK[0] - GANCHO_X - 0.5     # o trilho termina 0,5 antes da face do gancho
     ly0, ly1 = HOOK[1] - 3, HOOK[1] + 3
     p1 = cubo(SX - 18, SY + 10, 0, SX - 12, SY + 22, 43.0)
     p2 = cubo(SX - 2, SY + 19.5, 0, SX + 2, SY + 22, 43.0)
@@ -233,13 +237,13 @@ def a_base_mecanismo():
     ponte = cubo(xo - 6, SY + 22, 0, xo + 6, yo + 14, 2)                # liga a coluna da chave na base (uma peça só)
     chao = cubo(SX - 20, SY + 10, 43.0, lx1 - 0.5, SY + 22, 45.1)
     chao = chao - cubo(PINO_X_TRAVA - 2.6 - CURSO - 0.6, ly0 + 0.6, 42, PINO_X_TRAVA + 1.4 + 0.6, ly1 - 0.6, 46)
-    paredes = cubo(SX - 20, SY + 10, 45.1, lx1 - 0.5, ly0 - 0.4, 48.3) + cubo(SX - 20, ly1 + 0.4, 45.1, lx1 - 0.5, SY + 22, 48.3)
+    paredes = cubo(SX - 20, SY + 10, 45.1, lx1 - 0.5, ly0 - 0.4, 47.9) + cubo(SX - 20, ly1 + 0.4, 45.1, lx1 - 0.5, SY + 22, 47.9)
     return uniao([m, p1, p2, p3, chao, paredes, ponte, sup])
 
 
 def a_lingueta_corpo(off=0.0):
     """Barra que corre no trilho. A ponta entra 2 mm no entalhe do gancho. Furo quadrado para a haste do garfo."""
-    lx1 = HOOK[0]
+    lx1 = HOOK[0] - GANCHO_X + ENTALHE_FUNDO - 0.5          # ponta: entra 2,0 mm e fica 0,5 antes do fundo do entalhe
     cx = PINO_X_TRAVA
     corpo = cubo(lx1 - 32, HOOK[1] - 2.8, Z_LING[0], lx1, HOOK[1] + 2.8, Z_LING[1])
     corpo = corpo - cubo(cx - 2.6 - 0.15, HOOK[1] - 2.15, Z_LING[0] - 1, cx + 1.4 + 0.15, HOOK[1] + 2.15, Z_LING[1] + 1)
@@ -667,7 +671,7 @@ def checar():
         v = vol(li, a_garra())
         if v > 0.05 and ang > ANG_TRAVA + 1:
             erros.append(f'A servo {ang}°: lingueta x gancho = {v:.1f}')
-    trava = vol(a_lingueta(0), cubo(HOOK[0] - 2, HOOK[1] - 3, Z_ENTALHE[0], HOOK[0], HOOK[1] + 3, Z_ENTALHE[1]))
+    trava = vol(a_lingueta(0), cubo(HOOK[0] - GANCHO_X, HOOK[1] - 3, Z_ENTALHE[0], HOOK[0] - GANCHO_X + ENTALHE_FUNDO, HOOK[1] + 3, Z_ENTALHE[1]))
     if trava < 1:
         erros.append('A: a lingueta não entra no entalhe')
     if vol(a_lingueta(ling_off(ANG_SOLTA)), a_garra()) > 0.05:
@@ -688,9 +692,9 @@ if __name__ == '__main__':
     salvar(a_base_mecanismo(), 'A1_base_servo_e_trilho')
     salvar(a_lingueta_corpo(), 'A2a_lingueta_corpo')
     salvar(a_lingueta_garfo(), 'A2b_lingueta_garfo')
-    salvar(a_lingueta_haste(), 'A2c_lingueta_haste')
+    salvar(a_lingueta_haste().rotate([0, 90, 0]), 'A2c_lingueta_haste')     # deitada: camadas ao longo da haste
     salvar(a_braco_peca().rotate([180, 0, 0]), 'A3_braco_biela')       # canal para cima: topo reto na mesa
-    salvar(a_braco_pino(), 'A3b_pino_braco')
+    salvar(cil_x(0, 0, 0, 7.2, 3.0) - cubo(-1, -5, -5, 9, 5, -1.25), 'A3b_pino_braco')     # deitado, com face plana: mais forte
     salvar(a_garra().rotate([180, 0, 0]), 'A4_garra_dentes')
     salvar(a_dobradica(), 'A5_dobradica')
     salvar((cil_x(0, 0, 0, 44, 3.2) + cil_x(0, 0, -2, 0, 6.0)) - cubo(-5, -5, -5, 50, 5, -1.35), 'A7_eixo_garra')   # deitado, com face plana na mesa

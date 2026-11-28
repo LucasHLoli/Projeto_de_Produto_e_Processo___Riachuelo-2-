@@ -1,1 +1,1 @@
-ANTES: medir o servo (topo do braço plástico até a orelha; o desenho reserva 19 mm). Ligar suporte "tocando a mesa". Conferir: o servo entra no berço; a placa da chave entra entre as abas da coluna.
+ANTES: medir o servo (topo do braço plástico até a orelha; o desenho reserva 19 mm). Suporte: "em todo lugar" (o chão do trilho fica a 43 mm, sobre a base). Conferir: o servo entra no berço; a placa da chave entra entre as abas e no pino da coluna.

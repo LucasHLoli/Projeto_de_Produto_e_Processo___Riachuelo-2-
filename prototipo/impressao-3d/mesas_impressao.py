@@ -27,10 +27,10 @@ LOTES = {
                              'o pino de 3,0 entra justo no furo de 3,0 (pinos da tampa). Se não encaixar, NÃO imprimir o resto: avisar.'),
     'mesa1_pecas_pequenas': ('Lote2_pecas_pequenas', 'Conferir: a haste quadrada (4 x 4) passa no furo do corpo da lingueta; o eixo passa nos furos da dobradiça e gira.'),
     'mesa2_garra_e_base_do_servo': ('Lote3_garra_e_base_do_servo', 'ANTES: medir o servo (topo do braço plástico até a orelha; o desenho reserva 19 mm). '
-                                    'Ligar suporte "tocando a mesa". Conferir: o servo entra no berço; a placa da chave entra entre as abas da coluna.'),
+                                    'Suporte: "em todo lugar" (o chão do trilho fica a 43 mm, sobre a base). Conferir: o servo entra no berço; a placa da chave entra entre as abas e no pino da coluna.'),
     'mesa3_pes_batentes_e_suporte_do_esp32': ('Lote4_pes_batentes_suporte_pinos', 'Conferir: o expansor do ESP32 assenta no suporte; os 4 pés têm a mesma altura (17 mm).'),
     'mesa8_reposicao_pecas_frageis': ('Lote6_reposicao_100porcento', 'Peças de reserva. Imprimir com 100% de preenchimento. Guardar num saquinho.'),
-    'extra_calcos_do_servo_so_se_precisar': ('Extra_calcos_so_se_precisar', 'Só se o servo medir menos de 19 mm do topo do braço plástico até a orelha.'),
+    'extra_calcos_do_servo_so_se_precisar': ('Extra_calcos_so_se_precisar', 'Pastilhas de 0,5 / 1 / 1,5 / 2 / 3 / 4 mm (2 de cada), uma embaixo de cada orelha do servo. Empilhar até o topo do braço plástico ficar a 35 mm da prateleira. Com mais de 2 mm, pingar cola além do parafuso.'),
 }
 
 

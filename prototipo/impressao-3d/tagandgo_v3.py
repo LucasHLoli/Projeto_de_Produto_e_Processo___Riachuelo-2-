@@ -46,11 +46,14 @@ def P_pt(x, y, z):
 
 # ======================= peças =======================
 FURO_USB = (43.0, 57.0, 3.5, 13.5)          # parede curta esquerda: acesso ao USB-C do power bank (carregar / ligar o cabo)
+FURO_BOTAO = (POS_PB[0] + 29.0, POS_PB[0] + 39.5, 5.0, 12.0)   # parede longa de trás: botão do power bank (apertar com uma caneta)
 
 
 def caixa():
     u = FURO_USB
-    return cubo(-MDF, -MDF, -MDF, LX + MDF, LY + MDF, H) - cubo(0, 0, 0, LX, LY, H + 1) - cubo(-MDF - 1, u[0], u[2], 0.5, u[1], u[3])
+    b = FURO_BOTAO
+    return (cubo(-MDF, -MDF, -MDF, LX + MDF, LY + MDF, H) - cubo(0, 0, 0, LX, LY, H + 1) - cubo(-MDF - 1, u[0], u[2], 0.5, u[1], u[3])
+            - cubo(b[0], LY - 0.5, b[2], b[1], LY + MDF + 1, b[3]))
 
 
 def furo_servo_B():
@@ -132,7 +135,7 @@ def a_furos_global():
     for z0, z1, linha in M.a_furos_por_camada():
         rs = []
         for i, (y0, y1) in enumerate(linha):
-            w = M.DENTE_C / 2 + 1.5 if i < len(M.DENTES_U) else 2.6
+            w = M.DENTE_C / 2 + 1.5 if i < len(M.DENTES_U) else M.GANCHO_X + 0.6
             xa, ya, _ = P_pt(M.A_GX - w, y0, 0)
             xb, yb, _ = P_pt(M.A_GX + w, y1, 0)
             rs.append((min(xa, xb), min(ya, yb), max(xa, xb), max(ya, yb)))
@@ -256,7 +259,7 @@ def svgs():
     paredes = [('Prateleira (fica sobre os pés)', LX, LY, [r(0.3, 0.3, LX - 0.6, LY - 0.6, cut, 0), r(FURO_CABO[0], FURO_CABO[1], FURO_CABO[2] - FURO_CABO[0], FURO_CABO[3] - FURO_CABO[1], cut, 0), r(furo_servo_A()[0], furo_servo_A()[1], furo_servo_A()[2] - furo_servo_A()[0], furo_servo_A()[3] - furo_servo_A()[1], cut, 0)]),
                ('Fundo', LX, LY, [r(0.3, 0.3, LX - 0.6, LY - 0.6, cut, 0)]),
                ('Parede longa 1', EX, H + MDF, [r(0, 0, EX, H + MDF, cut, 0)]),
-               ('Parede longa 2', EX, H + MDF, [r(0, 0, EX, H + MDF, cut, 0)]),
+               ('Parede longa 2', EX, H + MDF, [r(0, 0, EX, H + MDF, cut, 0), r(FURO_BOTAO[0] + MDF, H - FURO_BOTAO[3], FURO_BOTAO[1] - FURO_BOTAO[0], FURO_BOTAO[3] - FURO_BOTAO[2], cut, 0)]),
                ('Parede curta 1', LY, H + MDF, [r(0, 0, LY, H + MDF, cut, 0), r(FURO_USB[0], H - FURO_USB[3], FURO_USB[1] - FURO_USB[0], FURO_USB[3] - FURO_USB[2], cut, 0)]),
                ('Parede curta 2', LY, H + MDF, [r(0, 0, LY, H + MDF, cut, 0)])]
 
@@ -331,7 +334,7 @@ if __name__ == '__main__':
     salvar(suporte_expansor(), 'C7_suporte_expansor')
     teste = cubo(0, 0, 0, 56, 14, 4) - cil(6, 7, -1, 6, 3.6) - cil(15, 7, -1, 6, 3.2) - cil(24, 7, -1, 6, 3.0) + cil(33, 7, 4, 14, 3.2) + cil(41, 7, 4, 14, 3.0)
     parede = cubo(46, 0, 0, 56, 14, 14) - cil_x(4.5, 9, 45, 57, 3.6) - cil_x(10.5, 9, 45, 57, 3.2)     # furos deitados, como na garra e na dobradiça
-    teste = teste + parede
+    teste = teste + parede + (cil_x(0, 1.35, 0, 12, 3.2) - cubo(-1, -5, -5, 13, 5, 0)).translate([2, 20, 0])     # pino de 3,2 deitado, como o eixo A7
     salvar(teste, 'T1_teste_de_folga')
     salvar(uniao([(cil(k * 10, 0, 0, 1.5, 6.0) + cil(k * 10, 0, 1.5, 1.5 + 3 * MDF + 8, 3.0)) for k in range(2)]), 'C5_pinos_tampa_x2')
     salvar(uniao([canto_tampa(4, 70).translate([-4 + k * 10, -64, -(H - 10)]) for k in range(2)]), 'C3_cantos_tampa_x2')

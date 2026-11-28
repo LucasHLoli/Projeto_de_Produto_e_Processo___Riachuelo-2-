@@ -1,7 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="240mm" height="315.0mm" viewBox="0 0 240 315.0">
 <!-- MDF 3 mm. Só linhas de corte. -->
 <g transform="translate(5,5.0)"><title>Parede longa 1</title><rect x="0.00" y="0.00" width="230.00" height="71.50" fill="none" stroke="#ff0000" stroke-width="0.1"/></g>
-<g transform="translate(5,82.5)"><title>Parede longa 2</title><rect x="0.00" y="0.00" width="230.00" height="71.50" fill="none" stroke="#ff0000" stroke-width="0.1"/></g>
+<g transform="translate(5,82.5)"><title>Parede longa 2</title><rect x="0.00" y="0.00" width="230.00" height="71.50" fill="none" stroke="#ff0000" stroke-width="0.1"/><rect x="72.00" y="56.50" width="10.50" height="7.00" fill="none" stroke="#ff0000" stroke-width="0.1"/></g>
 <g transform="translate(5,160.0)"><title>Parede curta 1</title><rect x="0.00" y="0.00" width="86.00" height="71.50" fill="none" stroke="#ff0000" stroke-width="0.1"/><rect x="43.00" y="55.00" width="14.00" height="10.00" fill="none" stroke="#ff0000" stroke-width="0.1"/></g>
 <g transform="translate(5,237.5)"><title>Parede curta 2</title><rect x="0.00" y="0.00" width="86.00" height="71.50" fill="none" stroke="#ff0000" stroke-width="0.1"/></g>
 </svg>

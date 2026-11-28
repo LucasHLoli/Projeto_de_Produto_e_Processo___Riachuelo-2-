@@ -2,7 +2,7 @@
 
 A caixa tem 230 mm e a mesa da Ender tem 220, então caixa, tampa e prateleira saem em 2 metades,
 cortadas em x = CORTE (depois do fim da garra). As metades encaixam com um degrau de 10 mm e são coladas.
-Os cantos que seguram os pinos da tampa (C3) já vêm na caixa.
+Os cantos que seguram os pinos da tampa (C3) são colados depois da prateleira.
 
 Rodar: python carcaca_pla.py  (gera ../IMPRIMIR/A/carcaca_PLA/)
 """
@@ -33,12 +33,14 @@ def metades(m, z0, z1, por_fora=True, esq_baixo=True):
     esq_inteira = cubo(-GRANDE, -GRANDE, -GRANDE, CORTE - DEG / 2, GRANDE, GRANDE)
     dir_inteira = cubo(CORTE + DEG / 2, -GRANDE, -GRANDE, GRANDE, GRANDE, GRANDE)
     zona = cubo(CORTE - DEG / 2, -GRANDE, -GRANDE, CORTE + DEG / 2, GRANDE, GRANDE)
+    zona_e = cubo(CORTE - DEG / 2, -GRANDE, -GRANDE, CORTE + DEG / 2 - FOLGA, GRANDE, GRANDE)   # folga também nas pontas do degrau
+    zona_d = cubo(CORTE - DEG / 2 + FOLGA, -GRANDE, -GRANDE, CORTE + DEG / 2, GRANDE, GRANDE)
     if por_fora:
         # parede: a esquerda fica com a metade de dentro, a direita com a de fora (e com todo o fundo no degrau)
         # a esquerda fica com o fundo e a metade de dentro da parede; a direita com a metade de fora (tudo nasce na mesa)
         dentro = cubo(-T / 2 + FOLGA, -T / 2 + FOLGA, -GRANDE, C.LX + T / 2 - FOLGA, C.LY + T / 2 - FOLGA, GRANDE)
-        esq = (m ^ esq_inteira) + (m ^ zona ^ dentro)
-        dir_ = (m ^ dir_inteira) + ((m ^ zona) - cubo(-T / 2, -T / 2, -GRANDE, C.LX + T / 2, C.LY + T / 2, GRANDE))
+        esq = (m ^ esq_inteira) + (m ^ zona_e ^ dentro)
+        dir_ = (m ^ dir_inteira) + ((m ^ zona_d) - cubo(-T / 2, -T / 2, -GRANDE, C.LX + T / 2, C.LY + T / 2, GRANDE))
     else:
         zm = (z0 + z1) / 2
         baixo = cubo(-GRANDE, -GRANDE, z0 - 1, GRANDE, GRANDE, zm - FOLGA / 2)
