@@ -54,6 +54,7 @@ if __name__ == '__main__':
     erros = []
     cantos = uniao([C.canto_tampa(x, y) for x, y in C.PARAF])
     est_comum = {'caixa': C.caixa(), 'prateleira': C.prateleira(), 'pés': C.pes(), 'cantos': cantos}
+    est_comum.update({'batentes PB': C.batentes_pb(), 'suporte expansor': C.suporte_expansor()})
     est_A = dict(est_comum, **{'tampa A': C.a_tampa(), 'base mecanismo': P(M.a_base_mecanismo()), 'dobradiça': P(M.a_dobradica()),
                                  'lingueta travada': P(M.a_lingueta(0)),
                                  'lingueta solta': P(M.a_lingueta(M.ling_off(M.ANG_SOLTA)))})
@@ -159,7 +160,8 @@ if __name__ == '__main__':
         return {'nome': nome, 'grupo': grupo, 'mov': mov, 'cor': pecas[0][0], 'pecas': [dict(cor=c, **pack(m)) for c, m in pecas]}
 
     comum = [parte('Caixa (MDF)', 'casca', [('#c8a77a', C.caixa())]),
-             parte('Pés da prateleira', 'impressa', [('#a16207', C.pes())])] + [parte(n, 'comprada', ps) for n, ps in comuns_det] + \
+             parte('Pés da prateleira', 'impressa', [('#a16207', C.pes())]), parte('Batentes do power bank (C2)', 'impressa', [('#a16207', C.batentes_pb())]),
+             parte('Suporte do expansor (C7)', 'impressa', [('#a16207', C.suporte_expansor())])] + [parte(n, 'comprada', ps) for n, ps in comuns_det] + \
             []
     pa, ea = CH.A_pivo()
     comum_A = comum + [parte('Braço plástico do servo', 'comprada', horn, 'braco')] + [parte(n, 'comprada', ps) for n, ps in so_A] + \

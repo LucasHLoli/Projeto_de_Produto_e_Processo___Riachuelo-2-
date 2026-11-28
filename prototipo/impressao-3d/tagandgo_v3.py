@@ -64,6 +64,31 @@ def prateleira(furo_b=False):
     return p
 
 
+BATENTES_PB = [(POS_PB[0] - 3.0, 16.5, 'x'), (POS_PB[0] - 3.0, 32.0, 'x'), (POS_PB[2] + 0.5, 22.0, 'x'), (POS_PB[2] + 0.5, 70.0, 'x'),
+               (125.0, POS_PB[1] - 3.0, 'y'), (165.0, POS_PB[1] - 3.0, 'y')]
+
+
+def batente_pb(x, y, eixo):
+    """C2: calço de 2,5 x 10 x 8 colado no fundo, encostado no power bank para ele não escorregar."""
+    return cubo(x, y, 0, x + 2.5, y + 10, 8) if eixo == 'x' else cubo(x, y, 0, x + 10, y + 2.5, 8)
+
+
+def batentes_pb():
+    return uniao([batente_pb(*b) for b in BATENTES_PB])
+
+
+def suporte_expansor():
+    """C7: moldura colada na prateleira. A placa do expansor apoia na borda (2 mm acima da prateleira, livre das soldas)
+    e fica presa pelas paredes baixas. O lado dos conectores fica aberto. Sem parafuso."""
+    x0, y0 = POS_ESP[0] + 0.5, POS_ESP[1] + 0.5
+    L, W = M.EXP
+    x1, y1 = x0 + L, y0 + W
+    f, p = 0.3, 1.2
+    anel = cubo(x0 + 1.5, y0 - f - p, ZS, x1 + f + p, y1 + f + p, ZS + 2.0) - cubo(x0 + 4.0, y0 + 3.0, ZS - 1, x1 - 3.0, y1 - 3.0, ZS + 3)
+    paredes = cubo(x0 + 1.5, y0 - f - p, ZS + 2.0, x1 + f + p, y1 + f + p, ZS + 4.5) - cubo(x0 - 5, y0 - f, ZS + 1, x1 + f, y1 + f, ZS + 6)
+    return anel + paredes
+
+
 def pes():
     return uniao([cubo(x, y, 0, x + 12, y + 12, Z_PRAT) for x, y in PES])
 
@@ -287,6 +312,10 @@ if __name__ == '__main__':
               'B4_garra_pino', 'B5_teste_encaixe_etiqueta', 'B6_suporte_chave', 'B7_tampinha_pino', 'C1_calcos_servo', 'C2_batentes_x6']:
         shutil.copy(os.path.join(AQUI, 'stl_v2', n + '.stl'), os.path.join(AQUI, 'stl_v3', n + '.stl'))
     salvar(uniao([pe_unico().translate([k * 15, 0, 0]) for k in range(4)]), 'C4_pes_prateleira_x4')
+    salvar(uniao([batente_pb(k * 14, 0, 'x') for k in range(6)]), 'C2_batentes_x6')
+    salvar(suporte_expansor(), 'C7_suporte_expansor')
+    teste = cubo(0, 0, 0, 40, 12, 5) - cil(6, 6, -1, 6, 3.6) - cil(16, 6, -1, 6, 3.2) - cil(26, 6, -1, 6, 3.4) + cil(34, 6, 5, 15, 3.2)
+    salvar(teste, 'T1_teste_de_folga')
     salvar(uniao([(cil(k * 10, 0, 0, 1.5, 6.0) + cil(k * 10, 0, 1.5, 1.5 + 3 * MDF + 8, 3.0)) for k in range(2)]), 'C5_pinos_tampa_x2')
     salvar(uniao([(cil(k * 10, 0, 0, 1.5, 5.5) + cil(k * 10, 0, 1.5, 1.5 + 1.6 + 3 * MDF + 1, 2.8)) for k in range(2)]), 'C6_pinos_semaforo_x2')
     salvar(uniao([canto_tampa(4, 70).translate([-4 + k * 10, -64, -(H - 10)]) for k in range(2)]), 'C3_cantos_tampa_x2')

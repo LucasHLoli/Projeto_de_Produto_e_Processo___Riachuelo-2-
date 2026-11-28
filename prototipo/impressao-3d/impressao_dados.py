@@ -12,9 +12,10 @@ IMP = os.path.join(AQUI, '..', 'IMPRIMIR', 'A')
 CORES = ['#db2777', '#ea580c', '#0284c7', '#16a34a', '#7c3aed', '#ca8a04', '#0d9488', '#be185d', '#2563eb', '#65a30d']
 
 MESAS = [
-    ('mesa2_pecas_pequenas', 'Mesa 1º · peças pequenas', 'Mecanismo (PLA)', 'não', ['A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A3_braco_biela', 'A5_dobradica', 'A7_eixo_garra', 'C3_cantos_tampa_x2', 'C5_pinos_tampa_x2', 'C6_pinos_semaforo_x2']),
-    ('mesa1_garra_e_base', 'Mesa 2º · garra e base do servo', 'Mecanismo (PLA)', 'sim, tocando a mesa', ['A4_garra_dentes', 'A1_base_servo_e_trilho']),
-    ('mesa3_pes_da_prateleira', 'Mesa 3º · pés da prateleira', 'Mecanismo (PLA)', 'não', ['C4_pes_prateleira_x4']),
+    ('mesa0_teste_de_folga', 'Mesa 0 · teste de folga (10 min, primeiro)', 'Mecanismo (PLA)', 'não', ['T1_teste_de_folga']),
+    ('mesa1_pecas_pequenas', 'Mesa 1 · peças pequenas', 'Mecanismo (PLA)', 'não', ['A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A3_braco_biela', 'A5_dobradica', 'A7_eixo_garra', 'C3_cantos_tampa_x2', 'C5_pinos_tampa_x2', 'C6_pinos_semaforo_x2']),
+    ('mesa2_garra_e_base_do_servo', 'Mesa 2 · garra e base do servo', 'Mecanismo (PLA)', 'sim, tocando a mesa', ['A4_garra_dentes', 'A1_base_servo_e_trilho']),
+    ('mesa3_pes_batentes_e_suporte_do_esp32', 'Mesa 3 · pés, batentes e suporte do ESP32', 'Mecanismo (PLA)', 'não', ['C7_suporte_expansor', 'C4_pes_prateleira_x4', 'C2_batentes_x6']),
     ('extra_calcos_do_servo_so_se_precisar', 'Extra · calços do servo (só se precisar)', 'Mecanismo (PLA)', 'não', ['C1_calcos_servo']),
     ('carcaca_PLA/mesa4_caixa_esquerda', 'Mesa 4 · caixa, metade esquerda', 'Carcaça (PLA)', 'não', None),
     ('carcaca_PLA/mesa5_caixa_direita', 'Mesa 5 · caixa, metade direita', 'Carcaça (PLA)', 'não', None),
@@ -24,7 +25,8 @@ MESAS = [
 NOMES_PECAS = {'A1_base_servo_e_trilho': 'Base do servo e trilho', 'A2a_lingueta_corpo': 'Lingueta (corpo)', 'A2b_lingueta_garfo': 'Lingueta (garfo)',
                'A3_braco_biela': 'Braço do servo', 'A4_garra_dentes': 'Garra com dentes', 'A5_dobradica': 'Dobradiça', 'A7_eixo_garra': 'Eixo da garra',
                'C1_calcos_servo': 'Calços do servo', 'C3_cantos_tampa_x2': 'Cantos da tampa (2)', 'C4_pes_prateleira_x4': 'Pés da prateleira (4)',
-               'C5_pinos_tampa_x2': 'Pinos da tampa (2)', 'C6_pinos_semaforo_x2': 'Pinos do semáforo (2)'}
+               'C5_pinos_tampa_x2': 'Pinos da tampa (2)', 'C6_pinos_semaforo_x2': 'Pinos do semáforo (2)',
+               'C2_batentes_x6': 'Batentes do power bank (6)', 'C7_suporte_expansor': 'Suporte do expansor do ESP32', 'T1_teste_de_folga': 'Teste de folga'}
 NOMES_CARCACA = {'mesa4': ['Caixa, metade esquerda'], 'mesa5': ['Caixa, metade direita'],
                  'mesa6': ['Tampa, metade esquerda (de cabeça para baixo)', 'Prateleira, metade esquerda'],
                  'mesa7': ['Tampa, metade direita', 'Prateleira, metade direita (de cabeça para baixo)']}
