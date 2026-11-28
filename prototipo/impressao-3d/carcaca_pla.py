@@ -14,7 +14,7 @@ import tagandgo_v3 as C
 from tagandgo_v2 import cubo, uniao
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-SAIDA = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'carcaca_PLA')
+SAIDA = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'PLA', 'carcaca_PLA')
 T = C.MDF                      # parede de 3 mm: mesma medida externa da caixa de MDF
 CORTE = 120.0                  # x do corte (a garra termina em x ~ 115)
 DEG = 10.0                     # comprimento do degrau de encaixe

@@ -6,7 +6,8 @@ import glob, io, os, re
 import trimesh
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-IMP = os.path.join(AQUI, '..', 'IMPRIMIR', 'A')
+IMP = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'PLA')
+LASER = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'MDF_laser')
 SRC = os.path.join(AQUI, 'stl_v3')
 MESAS = {
     'mesa0_teste_de_folga': ['T1_teste_de_folga'],
@@ -64,12 +65,13 @@ def laser():
             W = max(W, w + 10)
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}mm" height="{y}mm" viewBox="0 0 {W} {y}">\n'
                '<!-- MDF 3 mm. Só linhas de corte. -->\n' + '\n'.join(els) + '\n</svg>')
-        io.open(os.path.join(IMP, arq + '.svg'), 'w', encoding='utf-8').write(svg)
+        io.open(os.path.join(LASER, arq + '.svg'), 'w', encoding='utf-8').write(svg)
         print(f'  {arq:42s} {W:.0f} x {y:.0f} mm, {len(els)} peças, {svg.count("<rect") + svg.count("<circle")} cortes')
 
 
 if __name__ == '__main__':
     os.makedirs(IMP, exist_ok=True)
+    os.makedirs(LASER, exist_ok=True)
     for f in glob.glob(os.path.join(IMP, '*.stl')):
         os.remove(f)
     for n, p in MESAS.items():

@@ -1,10 +1,10 @@
 # Versão A: o que imprimir e cortar
 
-Tudo que não foi comprado é impresso em PLA. A carcaça tem duas opções: PLA (pasta `carcaca_PLA/`) ou MDF no laser. Para montar: cola e os 2 parafusos que vêm com o servo. Nenhum prego, nenhum parafuso extra.
+Tudo que não foi comprado é impresso em PLA. Duas pastas: **`PLA/`** (tudo da impressora 3D, inclusive a carcaça de PLA em `PLA/carcaca_PLA/`) e **`MDF_laser/`** (a carcaça de MDF, para o corte a laser). A carcaça é uma ou outra. Para montar: cola e os 2 parafusos que vêm com o servo. Nenhum prego, nenhum parafuso extra.
 
 A montagem passo a passo está animada na maquete (abas "Montar · carcaça PLA" e "Montar · carcaça MDF").
 
-## Impressora 3D (Ender, PLA)
+## Pasta `PLA/`: impressora 3D (Ender)
 
 Cada `mesa*.stl` já vem com as peças arrumadas e viradas: abra no Cura e fatie. Uma mesa por vez.
 
@@ -22,7 +22,7 @@ Cura: PLA, camada 0,2 mm, preenchimento 20%, 3 paredes, aderência "saia" (skirt
 
 Antes da mesa 2, meça com o paquímetro a altura do topo do braço plástico do servo até a base da orelha. O desenho usa no máximo 17 mm. Se der mais, avise antes de imprimir.
 
-### Carcaça de PLA (pasta `carcaca_PLA/`)
+### Carcaça de PLA (`PLA/carcaca_PLA/`)
 
 A caixa tem 230 mm e a mesa da Ender tem 220, então caixa, tampa e prateleira saem em 2 metades, que encaixam num degrau de 10 mm e são coladas (super bonder em gel ou epóxi).
 
@@ -35,7 +35,7 @@ A caixa tem 230 mm e a mesa da Ender tem 220, então caixa, tampa e prateleira s
 
 Paredes de 3 mm: no Cura, 4 paredes e 20% de preenchimento. Com a carcaça de PLA os cantos C3 da mesa 1 sobram (já vêm na caixa).
 
-## Laser (MDF 3 mm), se a carcaça for de MDF
+## Pasta `MDF_laser/`: corte a laser (MDF 3 mm), se a carcaça for de MDF
 
 Os arquivos têm só as linhas de corte. O QR é impresso em papel e colado por cima depois.
 

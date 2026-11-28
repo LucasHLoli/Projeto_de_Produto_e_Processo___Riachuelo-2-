@@ -8,7 +8,8 @@ import numpy as np
 import trimesh
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-IMP = os.path.join(AQUI, '..', 'IMPRIMIR', 'A')
+IMP = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'PLA')
+PASTA_LASER = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'MDF_laser')
 CORES = ['#db2777', '#ea580c', '#0284c7', '#16a34a', '#7c3aed', '#ca8a04', '#0d9488', '#be185d', '#2563eb', '#65a30d']
 
 MESAS = [
@@ -66,7 +67,7 @@ def main():
                       'tam': [round(x, 1) for x in t.extents], 'vol': round(t.volume / 1000, 1), 'partes': lista})
     laser = []
     for arq, titulo in LASER:
-        s = open(os.path.join(IMP, arq + '.svg'), encoding='utf-8').read()
+        s = open(os.path.join(PASTA_LASER, arq + '.svg'), encoding='utf-8').read()
         laser.append({'arquivo': arq + '.svg', 'titulo': titulo, 'grupo': 'Carcaça (MDF, laser)', 'svg': s})
     js = 'window.IMPRESSAO=' + json.dumps({'mesas': mesas, 'laser': laser}).replace('</', '<\\/') + ';'
     open(os.path.join(AQUI, 'impressao.js'), 'w', encoding='utf-8').write(js)

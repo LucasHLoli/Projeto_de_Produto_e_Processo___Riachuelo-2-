@@ -163,8 +163,8 @@ const b64=(s,T)=>{const b=atob(s),u=new Uint8Array(b.length);for(let i=0;i<b.len
 let V='A',D=null,root=null,items=[],G={},idx=0,tgt=null,cur={},playing=null,transp=true,shake=0;const reduz=matchMedia('(prefers-reduced-motion: reduce)').matches;
 function geo(p){const v=b64(p.v,Int16Array),f=b64(p.f,Uint32Array),pos=new Float32Array(v.length);for(let i=0;i<v.length;i++)pos[i]=v[i]/20;let g=new THREE.BufferGeometry();g.setAttribute('position',new THREE.BufferAttribute(pos,3));g.setIndex(new THREE.BufferAttribute(f,1));g=g.toNonIndexed();g.computeVertexNormals();return g}
 function modoUI(p){['play','prev','next','transp','zoom','corte','vista'].forEach(id=>document.getElementById(id).hidden=p);fone.hidden=p;cap.hidden=p;
- document.getElementById('folha').hidden=true;document.getElementById('mesainfo').hidden=!p;document.getElementById('h2steps').textContent=p?'Arquivos (pasta prototipo/IMPRIMIR/A)':'O ciclo';document.getElementById('play').textContent=rotuloPlay()}
-function buildP(modo){if(root)scene.remove(root);anims=[];if(G.luz)scene.remove(G.luz);V='P';D=null;items=[];G={};renderer.clippingPlanes=[];modoUI(true);
+ document.getElementById('folha').hidden=true;document.getElementById('mesainfo').hidden=!p;document.getElementById('h2steps').textContent=p?(modoAtual==='L'?'Arquivos (prototipo/IMPRIMIR/A/MDF_laser)':'Arquivos (prototipo/IMPRIMIR/A/PLA)'):'O ciclo';document.getElementById('play').textContent=rotuloPlay()}
+let modoAtual='P';function buildP(modo){modoAtual=modo;if(root)scene.remove(root);anims=[];if(G.luz)scene.remove(G.luz);V='P';D=null;items=[];G={};renderer.clippingPlanes=[];modoUI(true);
  const I=window.IMPRESSAO,todos=modo==='L'?I.laser.map((m,k)=>({...m,k,tipo:'mdf'})):I.mesas.map((m,k)=>({...m,k,tipo:'pla'}));
  ol.innerHTML='';let g0='';todos.forEach((m,i)=>{if(m.grupo!==g0){g0=m.grupo;const h=document.createElement('li');h.className='grp';h.textContent=m.grupo;ol.appendChild(h)}
   const li=document.createElement('li'),b=document.createElement('button');b.type='button';b.innerHTML=`<span class="num">${m.tipo==='pla'?'▦':'✂'}</span><span class="st"><b></b><span></span></span>`;
