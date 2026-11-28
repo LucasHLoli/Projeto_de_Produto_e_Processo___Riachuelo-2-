@@ -41,7 +41,7 @@ A revisão foi feita em duas frentes: um revisor independente leu o projeto do z
 
 ## Ainda depende de vocês (não dá para resolver só no desenho)
 
-1. **Medir o servo** antes da mesa 2: a altura do braço plástico até a orelha. O desenho reserva 19 mm; com menos que isso, usem os calços.
+1. **Medir o servo** antes do lote 3: a altura do braço plástico até a orelha. O desenho reserva 19 mm; com menos que isso, usem os calços.
 2. **Sentido do servo.** Antes de colocar o garfo, testem com o firmware: o comando `t` (40°) tem que levar o pino do braço na direção do gancho. Se for para o outro lado, troquem no firmware para `ANG_TRAVA = 140` e `ANG_SOLTA = 90`.
 3. **Chave fim de curso.** Com a garra fechada, ela tem que clicar. Se não clicar, ponham papelão embaixo da placa. Se a lingueta encostar no gancho ao travar, ajustem `ANG_TRAVA` no firmware: cada grau move a lingueta 0,07 mm.
 4. **Rabicho do receptor Qi:** precisa alcançar uns 25 a 30 mm até o micro-USB do power bank. Medir.
