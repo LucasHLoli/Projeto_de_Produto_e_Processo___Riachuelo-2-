@@ -28,10 +28,12 @@ QR = (122.0, 54.0, 30.0)                    # QR na tampa (x, y, lado)
 PARAF = [(4.0, 70.0), (LX - 4.0, 70.0)]
 PES = [(2, 2), (2, 72), (100, 1), (180, 1)]  # pés da prateleira (12 x 12), fora do power bank e do plugue
 FURO_CABO = (6.0, 24.0, 34.0, 58.0)
-# base HyperX (215 x 91) centrada embaixo da caixa; bobina 1 a 47 mm da ponta, no meio da largura
-BASE_QI = ((LX - 215.05) / 2, (LY - 90.91) / 2)
-BOBINA = (BASE_QI[0] + 47.0, LY / 2)
-QI_POS = (BOBINA[0] - 37.5, BOBINA[1] - 22.5)          # receptor centrado na bobina 1          # furo na prateleira para o cabo USB subir
+# Base HyperX ChargePlay: pílula de 215 x 91 com 2 áreas de carga e um ressalto no meio (por onde entra o cabo).
+# A caixa fica ATRAVESSADA sobre UMA área de carga, com o receptor Qi no centro do power bank em cima da bobina.
+# (Se a caixa ficasse ao comprido, apoiaria no ressalto e o receptor ficaria longe demais da bobina.)
+BOBINA = ((POS_PB[0] + POS_PB[2]) / 2, (POS_PB[1] + POS_PB[3]) / 2)
+QI_POS = (BOBINA[0] - 37.5, BOBINA[1] - 22.5)          # receptor centrado na bobina
+BASE_QI = (BOBINA[0], BOBINA[1] - 47.0)               # centro da base em x; ponta da base em y (bobina a 47 mm da ponta)          # furo na prateleira para o cabo USB subir
 
 
 def P(m):

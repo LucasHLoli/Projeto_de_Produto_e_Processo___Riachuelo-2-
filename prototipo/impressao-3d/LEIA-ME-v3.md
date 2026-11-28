@@ -14,7 +14,7 @@ O mecanismo é o mesmo da v2 (mesmas peças impressas); muda a caixa.
 - **Em cima da tampa:** semáforo preso por 2 pinos impressos (C6); os fios descem pelo rasgo.
 - **Chave fim de curso (A):** colada no suporte da peça A1, embaixo do gancho; a garra fechada aperta a alavanca.
 - **Tampa:** presa por 2 pinos impressos (C5) que entram nos cantos (C3). Sem parafusos.
-- **Base Qi HyperX:** a caixa fica em cima dela; o receptor Qi fica sobre a bobina da esquerda (a 47 mm da ponta da base).
+- **Base Qi HyperX:** ela tem 2 áreas de carga e um ressalto no meio. A caixa fica **atravessada sobre uma das áreas**, com o ressalto para fora. O receptor Qi fica embaixo do centro do power bank e precisa cair em cima da bobina daquela área. Se a caixa ficar ao comprido sobre a base, apoia no ressalto e não carrega.
 - Ligações pino a pino: `prototipo/LIGACOES.md`.
 - **Montagem:** o fundo e a prateleira ficam dentro das paredes, e as paredes curtas ficam entre as longas.
 

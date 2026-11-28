@@ -121,29 +121,43 @@ def power_bank():
 
 # ---------------- receptor Qi ----------------
 def receptor_qi():
-    """Folha Qi centrada na bobina 1 da base HyperX; rabicho até o micro-USB do power bank."""
+    """Folha Qi centrada embaixo do power bank, sobre a bobina; rabicho até o micro-USB do power bank."""
     x0, y0 = C.QI_POS
     folha = cubo(x0, y0, 0, x0 + 75, y0 + 45, 0.6)
     aneis = uniao([cil(x0 + 37.5, y0 + 22.5, 0.6, 0.9, d, 48) - cil(x0 + 37.5, y0 + 22.5, 0.5, 1.0, d - 1.2, 48) for d in range(12, 42, 4)])
     pb = C.POS_PB
-    xm = pb[0] + 16.0                                     # centro do micro-USB do power bank
-    rab = cubo(xm - 3, pb[1] - 6, 0, xm + 3, y0 + 2, 0.4)
+    xm = pb[0] + 16.0                                     # centro do micro-USB do power bank (lateral, perto da ponta do USB)
+    rab = cubo(xm - 3, pb[1] - 6, 0, xm + 3, y0 + 8, 0.4) + cubo(xm - 3, y0 + 2, 0, x0 + 1, y0 + 8, 0.4)
     plugue = cubo(xm - 3.5, pb[1] - 7, C.QI_E + 5.5, xm + 3.5, pb[1] + 0.4, C.QI_E + 9.5) + \
         cubo(xm - 2.5, pb[1] + 0.4, C.QI_E + 6.3, xm + 2.5, pb[1] + 4, C.QI_E + 8.7) + cubo(xm - 2, pb[1] - 7, 0, xm + 2, pb[1] - 5, C.QI_E + 5.5)
     return [('#334155', folha), ('#b45309', aneis), ('#f59e0b', rab), ('#111827', plugue)]
 
 
+def pilula_y(cx, y0, comp, larg, z0, z1, seg=48):
+    """Pílula (retângulo com pontas semicirculares) deitada ao longo de y."""
+    r = larg / 2
+    return Manifold.batch_hull([cil(cx, y0 + r, z0, z1, larg, seg), cil(cx, y0 + comp - r, z0, z1, larg, seg)])
+
+
 def base_qi():
-    """Base HyperX ChargePlay (215,05 x 90,91 x 17,36) embaixo da caixa."""
-    x0, y0 = C.BASE_QI
-    z1 = -3.0
-    z0 = z1 - 17.36
-    corpo = caixa_arred(x0, y0, z0, x0 + 215.05, y0 + 90.91, z1, 10.0)
-    tapete = caixa_arred(x0 + 4, y0 + 4, z1 - 0.6, x0 + 211, y0 + 87, z1 - 0.02, 8.0)
-    marcas = uniao([cil(x0 + 47.0 + k * 121.0, y0 + 90.91 / 2, z1 - 0.3, z1 - 0.02, 30, 48) - cil(x0 + 47.0 + k * 121.0, y0 + 90.91 / 2, z1 - 1, z1 + 1, 27, 48) for k in range(2)])
-    led = cubo(x0 + 100, y0 - 0.2, z0 + 4, x0 + 115, y0 + 1, z0 + 6)
-    cabo = tubo([(x0 + 215.05, y0 + 45, z0 + 6), (x0 + 235, y0 + 45, z0 + 4), (x0 + 260, y0 + 30, z0 + 2)], 3.5)
-    return [('#111827', corpo), ('#1f2937', tapete), ('#475569', marcas), ('#22d3ee', led), ('#111827', cabo)]
+    """HyperX ChargePlay Base (215,05 x 90,91 x 17,36): pílula preta com 2 áreas de carga ovais e um ressalto
+    no meio, onde entram o cabo USB-C e ficam os 2 LEDs. A caixa apoia atravessada sobre a área 1."""
+    cx, y0 = C.BASE_QI
+    L, W, Ht = 215.05, 90.91, 17.36
+    topo_area = -3.0                       # topo da borracha da área de carga = fundo da caixa
+    z_corpo = topo_area - 0.6              # topo do corpo
+    z0 = topo_area - 11.0                  # fundo (área de carga a ~11 mm da mesa; o ressalto chega a 17,36)
+    corpo = pilula_y(cx, y0, L, W, z0, z_corpo)
+    ym = y0 + L / 2
+    ressalto = Manifold.batch_hull([cil(cx - W / 2 + 12, ym, z_corpo - 0.1, z0 + Ht - 3, 22, 32), cil(cx + W / 2 - 12, ym, z_corpo - 0.1, z0 + Ht - 3, 22, 32),
+                                    cil(cx - W / 2 + 14, ym, z0 + Ht - 3, z0 + Ht, 16, 32), cil(cx + W / 2 - 14, ym, z0 + Ht - 3, z0 + Ht, 16, 32)])
+    areas = pilula_y(cx, y0 + 7, 85, 76, z_corpo - 0.01, topo_area) + pilula_y(cx, y0 + L - 7 - 85, 85, 76, z_corpo - 0.01, topo_area)
+    marcas = uniao([cil(cx, y0 + 47 + k * 121.0, topo_area - 0.2, topo_area + 0.0, 34, 48) - cil(cx, y0 + 47 + k * 121.0, topo_area - 1, topo_area + 1, 31, 48) for k in range(2)])
+    leds = uniao([cil(cx + sx * 20, ym + sy * 6.5, z0 + Ht - 0.4, z0 + Ht + 0.15, 3, 16) for sx, sy in ((-1, -1), (1, 1))])
+    logo = cubo(cx - 9, ym - 2.5, z0 + Ht - 0.05, cx + 9, ym + 2.5, z0 + Ht + 0.05)
+    plugue = cubo(cx + W / 2 - 4, ym - 5, z0 + 5, cx + W / 2 + 14, ym + 5, z0 + 12)
+    cabo = tubo([(cx + W / 2 + 14, ym, z0 + 8.5), (cx + W / 2 + 40, ym + 8, z0 + 4), (cx + W / 2 + 70, ym + 30, z0 + 2)], 3.5)
+    return [('#111827', corpo), ('#1f2937', ressalto), ('#262b33', areas), ('#3f4652', marcas), ('#38bdf8', leds), ('#9ca3af', logo), ('#111827', plugue + cabo)]
 
 
 # ---------------- semáforo ----------------
