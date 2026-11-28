@@ -11,11 +11,14 @@ LASER = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'MDF_laser')
 SRC = os.path.join(AQUI, 'stl_v3')
 MESAS = {
     'mesa0_teste_de_folga': ['T1_teste_de_folga'],
-    'mesa1_pecas_pequenas': ['A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A3_braco_biela', 'A5_dobradica', 'A7_eixo_garra',
-                             'C3_cantos_tampa_x2', 'C5_pinos_tampa_x2', 'C6_pinos_semaforo_x2'],
+    'mesa1_pecas_pequenas': ['A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A2c_lingueta_haste', 'A3_braco_biela', 'A3b_pino_braco',
+                             'A5_dobradica', 'A7_eixo_garra', 'C3_cantos_tampa_x2'],
     'mesa2_garra_e_base_do_servo': ['A4_garra_dentes', 'A1_base_servo_e_trilho'],
-    'mesa3_pes_batentes_e_suporte_do_esp32': ['C7_suporte_expansor', 'C4_pes_prateleira_x4', 'C2_batentes_x6'],
+    'mesa3_pes_batentes_e_suporte_do_esp32': ['C7_suporte_expansor', 'C4_pes_prateleira_x4', 'C2_batentes_x5', 'C5_pinos_tampa_x2'],
     'extra_calcos_do_servo_so_se_precisar': ['C1_calcos_servo'],
+    # reposição: as peças que fazem força ou são finas (quebram primeiro). Imprimir com 100% de preenchimento.
+    'mesa8_reposicao_pecas_frageis': ['A7_eixo_garra', 'A7_eixo_garra', 'C5_pinos_tampa_x2', 'A3_braco_biela', 'A3b_pino_braco', 'A3b_pino_braco',
+                                      'A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A2c_lingueta_haste', 'A5_dobradica'],
 }
 
 

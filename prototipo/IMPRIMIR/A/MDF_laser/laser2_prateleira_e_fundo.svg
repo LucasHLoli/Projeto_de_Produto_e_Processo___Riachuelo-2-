@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="234mm" height="189.0mm" viewBox="0 0 234 189.0">
 <!-- MDF 3 mm. Só linhas de corte. -->
-<g transform="translate(5,5.0)"><title>Prateleira (fica sobre os pés)</title><rect x="0.00" y="0.00" width="224.00" height="86.00" fill="none" stroke="#ff0000" stroke-width="0.1"/><rect x="6.00" y="24.00" width="28.00" height="34.00" fill="none" stroke="#ff0000" stroke-width="0.1"/></g>
-<g transform="translate(5,97.0)"><title>Fundo</title><rect x="0.00" y="0.00" width="224.00" height="86.00" fill="none" stroke="#ff0000" stroke-width="0.1"/></g>
+<g transform="translate(5,5.0)"><title>Prateleira (fica sobre os pés)</title><rect x="0.30" y="0.30" width="223.40" height="85.40" fill="none" stroke="#ff0000" stroke-width="0.1"/><rect x="6.00" y="24.00" width="28.00" height="34.00" fill="none" stroke="#ff0000" stroke-width="0.1"/></g>
+<g transform="translate(5,97.0)"><title>Fundo</title><rect x="0.30" y="0.30" width="223.40" height="85.40" fill="none" stroke="#ff0000" stroke-width="0.1"/></g>
 </svg>

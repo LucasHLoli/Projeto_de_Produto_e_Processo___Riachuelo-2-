@@ -28,7 +28,7 @@ SERVO = dict(corpo_c=22.7, corpo_l=12.4,          # SG90 22,2-22,7 x 11,8-12,4; 
              orelha_esp=2.5,                      # [C]
              eixo_ponta=5.2,                      # eixo a 5,1 (SG90) / 5,3 (MG90S) da ponta [C]
              furos=(27.94, 28.32),                # entre centros SG90 / MG90S [C] -> furo oblongo
-             braco_acima_orelha_max=17.0)         # topo do braço plástico acima da base da orelha (máx. estimado)
+             braco_acima_orelha_max=19.0)         # topo do braço plástico acima da base da orelha: reserva 19 [medidas.md]; calços C1 sobem o servo se for menos
 PB = (149.0, 69.0, 15.0)                          # power bank ELG PB102BK [L]
 EXP = (68.6, 53.4)                                # expansor ESP32 [L]
 QI = (75.0, 45.0, 1.0)                            # receptor Qi [E][MEDIR]
@@ -128,8 +128,8 @@ DENTE_H = CAMADAS_A * MDF + 3.0           # dente atravessa as 3 chapas
 FOLGA_PANO = 1.75
 HOOK = (A_GX, SY + 16.0)                  # gancho (x, y)
 HOOK_U = HOOK[1] - A_EIXO_Y
-Z_LING = (44.3, 46.7)                     # altura da lingueta
-Z_ENTALHE = (44.0, 47.0)
+Z_LING = (45.3, 47.7)                     # altura da lingueta (1 mm acima: a alavanca da chave passa embaixo)
+Z_ENTALHE = (42.7, 48.4)                  # 5,7 mm: engata com pano fino, grosso ou sem pano
 Z_GANCHO_BAIXO = 42.0
 R_BIELA, ANG_TRAVA, ANG_SOLTA = 6.0, 40.0, 90.0
 PINO_X_TRAVA = SX + R_BIELA * np.cos(np.radians(ANG_TRAVA))
@@ -144,9 +144,9 @@ def a_garra():
     Devolvida já em posição global (fechada)."""
     c = HOOK_U + 6
     m = cubo(-13, 7, 0, 13, c, 9)                                   # barra (9 mm: a junta fica dentro)
-    m = m + cubo(-10, 0, 0, 10, 7, 9) + cil_x(0, A_EIXO_DZ, -10, 10, 9)   # junta
+    m = m + cubo(-14.2, 0, 0, 14.2, 7, 9) + cil_x(0, A_EIXO_DZ, -14.2, 14.2, 9)   # junta: 0,3 mm de folga para as orelhas
     m = m - cubo(-20, -10, -10, 20, c + 5, 0)
-    m = m - cil_x(0, A_EIXO_DZ, -12, 12, 3.6)                       # eixo impresso de 3,2 mm (A7)
+    m = m - cil_x(0, A_EIXO_DZ, -16, 16, 3.6)                       # eixo impresso de 3,2 mm (A7)
     for u in DENTES_U:
         d = cubo(-DENTE_C / 2, u - DENTE_E / 2, -DENTE_H + 2, DENTE_C / 2, u + DENTE_E / 2, 0.01)
         d = d + cil_x(u, -DENTE_H + 2, -DENTE_C / 2, DENTE_C / 2, DENTE_E)
@@ -215,7 +215,7 @@ def a_dobradica():
     d = base + orelhas
     d = d - cil_x(A_EIXO_Y, ez, A_GX - 30, A_GX + 30, 3.6)
     d = d - cubo(A_GX - 30, A_EIXO_Y - 20, z - 10, A_GX + 30, A_EIXO_Y + 20, z)
-    d = d - cubo(A_GX - 11, A_EIXO_Y - 9, z + 0.3, A_GX + 11, A_EIXO_Y + 9, z + 3)
+    d = d - cubo(A_GX - 14.45, A_EIXO_Y - 9, z + 0.8, A_GX + 14.45, A_EIXO_Y + 9, z + 3)
     return d
 
 
@@ -224,16 +224,17 @@ def a_base_mecanismo():
     m = berco_servo(SX - 20, SX + 21, SY - 9, SY + 23)
     lx0, lx1 = HOOK[0] - 2 - 32, HOOK[0] - 2                         # curso da lingueta
     ly0, ly1 = HOOK[1] - 3, HOOK[1] + 3
-    p1 = cubo(SX - 18, SY + 10, 0, SX - 12, SY + 22, 42.0)
-    p2 = cubo(SX - 2, SY + 19.5, 0, SX + 2, SY + 22, 42.0)
-    p3 = cubo(lx1 - 8.0, SY + 19.5, 0, lx1 - 4.5, SY + 22, 42.0)
+    p1 = cubo(SX - 18, SY + 10, 0, SX - 12, SY + 22, 43.0)
+    p2 = cubo(SX - 2, SY + 19.5, 0, SX + 2, SY + 22, 43.0)
+    p3 = cubo(lx1 - 8.0, SY + 19.5, 0, lx1 - 4.5, SY + 22, 43.0)
     import chave as _ch
     sup = _ch.A_suporte_modulo()                                    # suporte da chave fim de curso
-    abas = cubo(SX - 20, ly0 - 0.4, Z_LING[1] + 0.2, lx1 - 0.5, ly0 + 0.4, Z_LING[1] + 1.1) + cubo(SX - 20, ly1 - 0.4, Z_LING[1] + 0.2, lx1 - 0.5, ly1 + 0.4, Z_LING[1] + 1.1)
-    chao = cubo(SX - 20, SY + 10, 42.0, lx1 - 0.5, SY + 22, 44.1)
-    chao = chao - cubo(PINO_X_TRAVA - 2.6 - CURSO - 0.6, ly0 + 0.6, 41, PINO_X_TRAVA + 1.4 + 0.6, ly1 - 0.6, 45)
-    paredes = cubo(SX - 20, SY + 10, 44.1, lx1 - 0.5, ly0 - 0.4, 47.4) + cubo(SX - 20, ly1 + 0.4, 44.1, lx1 - 0.5, SY + 22, 47.4)
-    return uniao([m, p1, p2, p3, chao, paredes, abas, sup])
+    xo, yo, _ = _ch.A_origem()
+    ponte = cubo(xo - 6, SY + 22, 0, xo + 6, yo + 14, 2)                # liga a coluna da chave na base (uma peça só)
+    chao = cubo(SX - 20, SY + 10, 43.0, lx1 - 0.5, SY + 22, 45.1)
+    chao = chao - cubo(PINO_X_TRAVA - 2.6 - CURSO - 0.6, ly0 + 0.6, 42, PINO_X_TRAVA + 1.4 + 0.6, ly1 - 0.6, 46)
+    paredes = cubo(SX - 20, SY + 10, 45.1, lx1 - 0.5, ly0 - 0.4, 48.3) + cubo(SX - 20, ly1 + 0.4, 45.1, lx1 - 0.5, SY + 22, 48.3)
+    return uniao([m, p1, p2, p3, chao, paredes, ponte, sup])
 
 
 def a_lingueta_corpo(off=0.0):
@@ -245,24 +246,41 @@ def a_lingueta_corpo(off=0.0):
     return corpo.translate([off, 0, 0])
 
 
-def a_lingueta_garfo(off=0.0):
-    """Garfo com o rasgo onde corre o pino do servo, e a haste que encaixa (e cola) no corpo."""
+def a_lingueta_haste(off=0.0):
+    """A2c: haste quadrada 4 x 4. Entra por cima, pelo corpo e pelo rasgo do chão, até o encaixe do garfo (colar)."""
     cx = PINO_X_TRAVA
-    haste = cubo(cx - 2.6, HOOK[1] - 2.0, 41.4, cx + 1.4, HOOK[1] + 2.0, Z_LING[1])
-    garfo = cubo(cx - 3.6, SY + 0.5, 38.5, cx + 3.6, HOOK[1] + 2.0, 41.5)
-    garfo = garfo - cubo(cx - 1.7, SY + 1.0, 38, cx + 1.7, SY + 9.0, 42)
-    return (haste + garfo).translate([off, 0, 0])
+    return cubo(cx - 2.6, HOOK[1] - 2.0, 40.5, cx + 1.4, HOOK[1] + 2.0, Z_LING[1]).translate([off, 0, 0])
+
+
+def a_lingueta_garfo(off=0.0):
+    """A2b: garfo. Entra de lado (pelo lado +x) no vão entre o braço e o chão do trilho. Rasgo aberto para o pino do braço."""
+    cx = PINO_X_TRAVA
+    garfo = cubo(cx - 3.6, SY + 0.5, 39.5, cx + 3.6, HOOK[1] + 2.0, 42.5)
+    garfo = garfo - cubo(cx - 1.7, SY - 1.0, 39, cx + 1.7, SY + 9.0, 43)
+    garfo = garfo - cubo(cx - 2.6 - 0.15, HOOK[1] - 2.15, 40.5, cx + 1.4 + 0.15, HOOK[1] + 2.15, 43)      # encaixe da haste, 2 mm
+    return garfo.translate([off, 0, 0])
 
 
 def a_lingueta(off=0.0):
-    return a_lingueta_corpo(off) + a_lingueta_garfo(off)
+    return a_lingueta_corpo(off) + a_lingueta_garfo(off) + a_lingueta_haste(off)
+
+
+def a_braco_peca():
+    """A3: encaixa por cima do braço plástico do servo (canal com o formato do braço, 1,6 mm) e prende com o
+    parafuso pequeno do servo (furo rebaixado) + cola. O pino é a peça A3b, colada no furo."""
+    b = cubo(-5, -5, -1.6, R_BIELA + 3.5, 5, 3) + cil(0, 0, -1.6, 3, 10) + cil(R_BIELA, 0, -1.6, 3, 7)
+    canal = Manifold.batch_hull([cil(0, 0, -2, 0.05, 6.4), cil(15.5, 0, -2, 0.05, 4.2)]) + cil(0, 0, -2, 0.05, 7.4)
+    b = b - canal - cil(0, 0, -2, 4, 2.2) - cil(0, 0, 0.8, 4, 4.6) - cil(R_BIELA, 0, -2, 4, 3.1)
+    return b
+
+
+def a_braco_pino():
+    """A3b: pino Ø3 do braço; entra por cima, pelo rasgo do garfo, no furo do A3 (colar)."""
+    return cil(R_BIELA, 0, 0, 7.2, 3.0)
 
 
 def a_braco(ang=ANG_TRAVA):
-    b = cubo(-4, -4, 0, R_BIELA + 3, 4, 3) + cil(0, 0, 0, 3, 8) + cil(R_BIELA, 0, 0, 3, 7)
-    b = b + cil(R_BIELA, 0, 3, 6.6, 3.0)
-    b = b - cil(0, 0, -1, 4, 2.2) - cubo(-3.5, -2.3, -1, 1.5, 2.3, 1.3)
-    return b.rotate([0, 0, ang]).translate([SX, SY, Z_BRACO])
+    return (a_braco_peca() + a_braco_pino()).rotate([0, 0, ang]).translate([SX, SY, Z_BRACO])
 
 
 def a_pino_chave():
@@ -670,10 +688,12 @@ if __name__ == '__main__':
     salvar(a_base_mecanismo(), 'A1_base_servo_e_trilho')
     salvar(a_lingueta_corpo(), 'A2a_lingueta_corpo')
     salvar(a_lingueta_garfo(), 'A2b_lingueta_garfo')
-    salvar(a_braco(0).translate([-SX, -SY, -Z_BRACO]), 'A3_braco_biela')
+    salvar(a_lingueta_haste(), 'A2c_lingueta_haste')
+    salvar(a_braco_peca().rotate([180, 0, 0]), 'A3_braco_biela')       # canal para cima: topo reto na mesa
+    salvar(a_braco_pino(), 'A3b_pino_braco')
     salvar(a_garra().rotate([180, 0, 0]), 'A4_garra_dentes')
     salvar(a_dobradica(), 'A5_dobradica')
-    salvar((cil_x(0, 0, 0, 44, 3.2) + cil_x(0, 0, -2, 0, 6.0)).rotate([0, -90, 0]), 'A7_eixo_garra')   # em pé, cabeça na mesa
+    salvar((cil_x(0, 0, 0, 44, 3.2) + cil_x(0, 0, -2, 0, 6.0)) - cubo(-5, -5, -5, 50, 5, -1.35), 'A7_eixo_garra')   # deitado, com face plana na mesa
     print('Versão B:')
     salvar(b_base(), 'B1_torre_servo')
     salvar(b_braco(0)[0], 'B2_braco_imas')

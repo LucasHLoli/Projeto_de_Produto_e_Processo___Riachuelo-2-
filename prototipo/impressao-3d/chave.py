@@ -22,7 +22,8 @@ def ang_para(curso, ponta):
     return -np.degrees(np.arcsin(curso / (HINGE[0] - ponta)))
 
 
-ANG_A = ang_para(1.3, PONTA)          # o gancho desce 1 mm na alavanca; 0,3 mm de folga
+CURSO_A = 2.8                          # o gancho empurra a alavanca 3 mm (micro chave: ~3 mm até acionar) [medidas.md]
+ANG_A = ang_para(CURSO_A + 0.6, PONTA)
 
 
 def partes_locais():
@@ -54,7 +55,7 @@ def alavanca_girada(alav_local, ang):
 def A_origem():
     """No referencial do módulo v2. A placa fica atrás do trilho (ao longo de +y); a alavanca vai até o gancho."""
     x, y = M.HOOK
-    z0 = 42.0 + 1.0 - PONTA_TOPO           # ponta solta 1 mm acima do fundo do gancho fechado
+    z0 = 42.0 + CURSO_A - PONTA_TOPO       # ponta solta 3 mm acima do fundo do gancho fechado (calço embaixo da placa acerta)
     return x, y - PONTA, z0
 
 
@@ -88,10 +89,8 @@ def A_pino(i):
 def A_suporte_modulo():
     """Coluna do suporte (vai junto com a peça A1), no referencial do módulo v2."""
     x, y, z0 = A_origem()
-    s = cubo(x - 6.0, y + 13.0, 0, x + 6.0, y + 22.0, z0)
-    for sx in (-1, 1):
-        a, b = x + sx * 6.95, x + sx * 7.85
-        s = s + cubo(min(a, b), y + 13.0, z0 - 2.0, max(a, b), y + 22.0, z0 + 1.2)
+    s = cubo(x - 8.25, y + 13.0, 0, x + 8.25, y + 22.0, z0)
+    s = s + cubo(x - 8.25, y + 13.0, z0, x + 8.25, y + 22.0, z0 + 1.2) - cubo(x - 7.15, y + 12.0, z0, x + 7.15, y + 23.0, z0 + 2)   # abas: placa de 13,7 com 0,3 de folga
     return s
 
 

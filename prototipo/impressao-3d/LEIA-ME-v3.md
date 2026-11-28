@@ -47,7 +47,7 @@ Ender (Cura): PLA, bico 0,4, camada 0,2, 20 %, 3 paredes, sem suporte.
 2. **Chave fim de curso:** altura da alavanca.
 3. **Receptor Qi:** tamanho da folha e comprimento do rabicho.
 4. **Versão B:** tamanho da etiqueta, distância do centro da embreagem até a ponta (o desenho usa 60 × 18 × 15 e 12 mm) e comprimento da haste do pino (o desenho usa 16 mm; com isso ele entra 8 mm na etiqueta). Imprimir o B5 primeiro e ver se a etiqueta encaixa.
-5. **Cabo USB:** do power bank ao ESP32 (USB-A para USB-C). Dá cerca de 25 cm, passando pelo furo da prateleira.
+5. **Cabo USB:** do power bank ao micro-USB do expansor (USB-A para micro-USB). Dá cerca de 25 cm, passando pelo furo da prateleira.
 
 ## Só o que foi comprado
 

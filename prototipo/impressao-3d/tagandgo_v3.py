@@ -9,7 +9,7 @@ import base64, json, os
 import numpy as np
 import trimesh
 import tagandgo_v2 as M
-from tagandgo_v2 import cubo, cil, uniao, MDF, FOLGA
+from tagandgo_v2 import cubo, cil, cil_x, uniao, MDF, FOLGA
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 
@@ -45,8 +45,12 @@ def P_pt(x, y, z):
 
 
 # ======================= peças =======================
+FURO_USB = (43.0, 57.0, 3.5, 13.5)          # parede curta esquerda: acesso ao USB-C do power bank (carregar / ligar o cabo)
+
+
 def caixa():
-    return cubo(-MDF, -MDF, -MDF, LX + MDF, LY + MDF, H) - cubo(0, 0, 0, LX, LY, H + 1)
+    u = FURO_USB
+    return cubo(-MDF, -MDF, -MDF, LX + MDF, LY + MDF, H) - cubo(0, 0, 0, LX, LY, H + 1) - cubo(-MDF - 1, u[0], u[2], 0.5, u[1], u[3])
 
 
 def furo_servo_B():
@@ -56,7 +60,7 @@ def furo_servo_B():
 
 
 def prateleira(furo_b=False):
-    p = cubo(0, 0, Z_PRAT, LX, LY, ZS)
+    p = cubo(0.3, 0.3, Z_PRAT, LX - 0.3, LY - 0.3, ZS)          # 0,3 mm de folga em cada lado
     p = p - cubo(FURO_CABO[0], FURO_CABO[1], Z_PRAT - 1, FURO_CABO[2], FURO_CABO[3], ZS + 1)
     if furo_b:
         f = furo_servo_B()
@@ -64,7 +68,7 @@ def prateleira(furo_b=False):
     return p
 
 
-BATENTES_PB = [(POS_PB[0] - 3.0, 16.5, 'x'), (POS_PB[0] - 3.0, 32.0, 'x'), (POS_PB[2] + 0.5, 22.0, 'x'), (POS_PB[2] + 0.5, 70.0, 'x'),
+BATENTES_PB = [(POS_PB[0] - 3.0, 16.5, 'x'), (POS_PB[2] + 0.5, 22.0, 'x'), (POS_PB[2] + 0.5, 70.0, 'x'),
                (125.0, POS_PB[1] - 3.0, 'y'), (165.0, POS_PB[1] - 3.0, 'y')]
 
 
@@ -104,7 +108,7 @@ SEM_RASGO = (POS_SEM[0] - 10, POS_SEM[1] + 4, POS_SEM[0] - 3, POS_SEM[1] + 17)
 def janela_leds(z0, z1):
     """Semáforo parafusado em cima da tampa (2 furos M3) + rasgo para os 4 fios descerem."""
     r = SEM_RASGO
-    return uniao([cil(x, y, z0, z1, 3.2) for x, y in SEM_FUROS]) + cubo(r[0], r[1], z0, r[2], r[3], z1)
+    return cubo(r[0], r[1], z0, r[2], r[3], z1)          # o semáforo é colado com cola quente; só o rasgo dos fios
 
 
 def furos_tampa(z0, z1):
@@ -140,7 +144,7 @@ def b_tampa():
 
 
 def canto_tampa(x, y):
-    return cubo(x - 4, y - 6, H - 10, x + 4, y + 6, H) - cil(x, y, H - 9, H + 1, 3.2)   # pino impresso da tampa (C5)
+    return cubo(x - 4, y - 6, H - 10, x + 4, y + 6, H) - cil(x, y, H - 9, H + 1, 3.0)   # pino impresso da tampa (C5): justo
 
 
 def comprados():
@@ -235,14 +239,14 @@ def svgs():
     def c(x, y, d, s):
         return f'<circle cx="{x + o:.2f}" cy="{y + o:.2f}" r="{d / 2:.2f}" {s}/>'
     sr = SEM_RASGO
-    base = [r(-o, -o, EX, EY, cut)] + [c(x, y, 3.2, cut) for x, y in PARAF + SEM_FUROS] + \
+    base = [r(-o, -o, EX, EY, cut)] + [c(x, y, 3.2, cut) for x, y in PARAF] + \
         [r(sr[0], sr[1], sr[2] - sr[0], sr[3] - sr[1], cut), r(POS_SEM[0], POS_SEM[1], M.SEMAFORO[0], M.SEMAFORO[1], eng)]
     qr = [r(QR[0], QR[1], QR[2], QR[2], eng), f'<text x="{QR[0] + QR[2] / 2 + o}" y="{QR[1] - 2 + o}" font-size="4" text-anchor="middle" {txt}>QR aqui</text>']
-    paredes = [('Prateleira (fica sobre os pés)', LX, LY, [r(0, 0, LX, LY, cut, 0), r(FURO_CABO[0], FURO_CABO[1], FURO_CABO[2] - FURO_CABO[0], FURO_CABO[3] - FURO_CABO[1], cut, 0)]),
-               ('Fundo', LX, LY, [r(0, 0, LX, LY, cut, 0)]),
+    paredes = [('Prateleira (fica sobre os pés)', LX, LY, [r(0.3, 0.3, LX - 0.6, LY - 0.6, cut, 0), r(FURO_CABO[0], FURO_CABO[1], FURO_CABO[2] - FURO_CABO[0], FURO_CABO[3] - FURO_CABO[1], cut, 0)]),
+               ('Fundo', LX, LY, [r(0.3, 0.3, LX - 0.6, LY - 0.6, cut, 0)]),
                ('Parede longa 1', EX, H + MDF, [r(0, 0, EX, H + MDF, cut, 0)]),
                ('Parede longa 2', EX, H + MDF, [r(0, 0, EX, H + MDF, cut, 0)]),
-               ('Parede curta 1', LY, H + MDF, [r(0, 0, LY, H + MDF, cut, 0)]),
+               ('Parede curta 1', LY, H + MDF, [r(0, 0, LY, H + MDF, cut, 0), r(FURO_USB[0], H - FURO_USB[3], FURO_USB[1] - FURO_USB[0], FURO_USB[3] - FURO_USB[2], cut, 0)]),
                ('Parede curta 2', LY, H + MDF, [r(0, 0, LY, H + MDF, cut, 0)])]
 
     def escreve(nome, tampas):
@@ -307,17 +311,18 @@ if __name__ == '__main__':
     import shutil
     os.makedirs(os.path.join(AQUI, 'stl_v3'), exist_ok=True)
     # peças do mecanismo: iguais às da v2
-    for n in ['A1_base_servo_e_trilho', 'A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A3_braco_biela', 'A4_garra_dentes',
+    for n in ['A1_base_servo_e_trilho', 'A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A2c_lingueta_haste', 'A3_braco_biela', 'A3b_pino_braco', 'A4_garra_dentes',
               'A5_dobradica', 'A7_eixo_garra', 'B1_torre_servo', 'B2_braco_imas', 'B3_berco_etiqueta',
-              'B4_garra_pino', 'B5_teste_encaixe_etiqueta', 'B6_suporte_chave', 'B7_tampinha_pino', 'C1_calcos_servo', 'C2_batentes_x6']:
+              'B4_garra_pino', 'B5_teste_encaixe_etiqueta', 'B6_suporte_chave', 'B7_tampinha_pino', 'C1_calcos_servo']:
         shutil.copy(os.path.join(AQUI, 'stl_v2', n + '.stl'), os.path.join(AQUI, 'stl_v3', n + '.stl'))
     salvar(uniao([pe_unico().translate([k * 15, 0, 0]) for k in range(4)]), 'C4_pes_prateleira_x4')
-    salvar(uniao([batente_pb(k * 14, 0, 'x') for k in range(6)]), 'C2_batentes_x6')
+    salvar(uniao([batente_pb(k * 14, 0, 'x') for k in range(5)]), 'C2_batentes_x5')
     salvar(suporte_expansor(), 'C7_suporte_expansor')
-    teste = cubo(0, 0, 0, 40, 12, 5) - cil(6, 6, -1, 6, 3.6) - cil(16, 6, -1, 6, 3.2) - cil(26, 6, -1, 6, 3.4) + cil(34, 6, 5, 15, 3.2)
+    teste = cubo(0, 0, 0, 56, 14, 4) - cil(6, 7, -1, 6, 3.6) - cil(15, 7, -1, 6, 3.2) - cil(24, 7, -1, 6, 3.0) + cil(33, 7, 4, 14, 3.2) + cil(41, 7, 4, 14, 3.0)
+    parede = cubo(46, 0, 0, 56, 14, 14) - cil_x(4.5, 9, 45, 57, 3.6) - cil_x(10.5, 9, 45, 57, 3.2)     # furos deitados, como na garra e na dobradiça
+    teste = teste + parede
     salvar(teste, 'T1_teste_de_folga')
     salvar(uniao([(cil(k * 10, 0, 0, 1.5, 6.0) + cil(k * 10, 0, 1.5, 1.5 + 3 * MDF + 8, 3.0)) for k in range(2)]), 'C5_pinos_tampa_x2')
-    salvar(uniao([(cil(k * 10, 0, 0, 1.5, 5.5) + cil(k * 10, 0, 1.5, 1.5 + 1.6 + 3 * MDF + 1, 2.8)) for k in range(2)]), 'C6_pinos_semaforo_x2')
     salvar(uniao([canto_tampa(4, 70).translate([-4 + k * 10, -64, -(H - 10)]) for k in range(2)]), 'C3_cantos_tampa_x2')
     svgs()
 

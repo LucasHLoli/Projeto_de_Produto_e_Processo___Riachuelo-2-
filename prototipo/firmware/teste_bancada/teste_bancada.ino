@@ -21,6 +21,7 @@ const int PINO_CHAVE = 27;
 const int LED_R = 26, LED_Y = 33, LED_G = 25;
 
 #if VERSAO_A
+// Antes de pôr o garfo: 't' tem que levar o pino do braço na direção do gancho. Se for ao contrário, use 140 e 90.
 const int ANG_TRAVA = 40;   // lingueta dentro do gancho
 const int ANG_SOLTA = 90;   // lingueta recuada 4,6 mm
 #else

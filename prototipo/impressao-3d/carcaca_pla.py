@@ -16,15 +16,14 @@ from tagandgo_v2 import cubo, uniao
 AQUI = os.path.dirname(os.path.abspath(__file__))
 SAIDA = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'PLA', 'carcaca_PLA')
 T = C.MDF                      # parede de 3 mm: mesma medida externa da caixa de MDF
-CORTE = 120.0                  # x do corte (a garra termina em x ~ 115)
+CORTE = 160.0                  # x do corte: depois da garra (x ~ 115) e do QR (x 122 a 152)
 DEG = 10.0                     # comprimento do degrau de encaixe
-FOLGA = 0.15
+FOLGA = 0.3
 GRANDE = 1000.0
 
 
 def caixa_pla():
-    c = C.caixa() + uniao([C.canto_tampa(x, y) for x, y in C.PARAF])
-    return c
+    return C.caixa()                # os cantos C3 colam depois da prateleira (como no MDF)
 
 
 def metades(m, z0, z1, por_fora=True, esq_baixo=True):
@@ -36,8 +35,10 @@ def metades(m, z0, z1, por_fora=True, esq_baixo=True):
     zona = cubo(CORTE - DEG / 2, -GRANDE, -GRANDE, CORTE + DEG / 2, GRANDE, GRANDE)
     if por_fora:
         # parede: a esquerda fica com a metade de dentro, a direita com a de fora (e com todo o fundo no degrau)
-        esq = (m ^ esq_inteira) + (m ^ zona ^ cubo(-T / 2 + FOLGA, -T / 2 + FOLGA, 0.0, C.LX + T / 2 - FOLGA, C.LY + T / 2 - FOLGA, GRANDE))
-        dir_ = (m ^ dir_inteira) + ((m ^ zona) - cubo(-T / 2, -T / 2, 0.0, C.LX + T / 2, C.LY + T / 2, GRANDE))
+        # a esquerda fica com o fundo e a metade de dentro da parede; a direita com a metade de fora (tudo nasce na mesa)
+        dentro = cubo(-T / 2 + FOLGA, -T / 2 + FOLGA, -GRANDE, C.LX + T / 2 - FOLGA, C.LY + T / 2 - FOLGA, GRANDE)
+        esq = (m ^ esq_inteira) + (m ^ zona ^ dentro)
+        dir_ = (m ^ dir_inteira) + ((m ^ zona) - cubo(-T / 2, -T / 2, -GRANDE, C.LX + T / 2, C.LY + T / 2, GRANDE))
     else:
         zm = (z0 + z1) / 2
         baixo = cubo(-GRANDE, -GRANDE, z0 - 1, GRANDE, GRANDE, zm - FOLGA / 2)
@@ -75,8 +76,6 @@ if __name__ == '__main__':
     caixa = caixa_pla()
     ce, cd = metades(caixa, None, None, por_fora=True)
     tampa = C.a_tampa()
-    # rebaixo de 0,6 mm onde a dobradiça (A5) encaixa e cola: marca o lugar certo, como a gravação do MDF
-    tampa = tampa - C.P(cubo(M.A_GX - 18.7, M.A_EIXO_Y - 8.2, M.A_TZ - 0.6, M.A_GX + 18.7, M.A_EIXO_Y + 6.2, M.A_TZ + 1))
     zt0, zt1 = C.H, C.H + M.CAMADAS_A * M.MDF
     te, td = metades(tampa, zt0, zt1, por_fora=False, esq_baixo=False)
     prat = C.prateleira()
