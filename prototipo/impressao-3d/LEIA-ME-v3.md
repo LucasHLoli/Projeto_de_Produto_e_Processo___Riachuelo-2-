@@ -5,13 +5,13 @@ O mecanismo é o mesmo da v2 (mesmas peças impressas); muda a caixa.
 
 ## Caixa
 
-- MDF 3 mm. Interna 194 × 86 × 68,5 mm. Externa 200 × 92 × 71,5 mm (+ 9 mm de tampa na versão A, + 3 mm na B).
+- MDF 3 mm. Interna 224 × 86 × 68,5 mm. Externa 230 × 92 × 71,5 mm (+ 9 mm de tampa na versão A, + 3 mm na B).
 - **Embaixo:** receptor Qi no fundo, power bank deitado por cima.
   - USB do power bank virado para o vão vazio de 40 mm na ponta esquerda (ali fica o plugue do cabo).
   - Micro-USB virado para a parede da frente, onde sobra uma faixa de 14 mm para o rabicho do receptor Qi.
 - **Prateleira:** chapa de MDF de 194 × 86 mm, apoiada nos 4 pés impressos (C4, 17 mm de altura), colados no fundo fora do power bank. O furo da prateleira deixa o cabo USB subir.
 - **Em cima da prateleira:** mecanismo (servo e trilho) no meio, ESP32 com expansor na ponta direita.
-- **Embaixo da tampa:** semáforo colado na janela dos LEDs. Na versão A, a chave fim de curso fica embaixo do pino da chave.
+- **Em cima da tampa:** semáforo parafusado (2 M3 com porca); os fios descem pelo rasgo. **Embaixo da tampa (A):** chave fim de curso sob o pino da chave. Ligações pino a pino: `prototipo/LIGACOES.md`.
 - **Montagem:** o fundo e a prateleira ficam dentro das paredes, e as paredes curtas ficam entre as longas.
 
 ## Arquivos
