@@ -274,51 +274,64 @@ def ling_off(ang):
     return SX + R_BIELA * np.cos(np.radians(ang)) - PINO_X_TRAVA
 
 
-# ======================= VERSÃO B: etiqueta de loja + ímãs =======================
+# ======================= VERSÃO B: etiqueta de loja inteira + ímãs =======================
+# A etiqueta de loja (tipo "pencil", 60 x 18 x 15 mm [L Hexport]) fica INTEIRA, deitada num ninho impresso
+# encaixado na tampa. O pino atravessa a roupa e entra na etiqueta, como em qualquer loja. Para soltar, o servo
+# gira 90° e leva 2 ímãs 15 x 5 até 0,2 mm embaixo do fundo do ninho, embaixo da embreagem: é o destacador do caixa.
 B_TZ = H + MDF
-R_IMA, ANG_REPOUSO, ANG_SOLTAR = 18.0, 0.0, 120.0
+R_IMA, ANG_REPOUSO, ANG_SOLTAR = 18.0, 0.0, 90.0
 N_IMAS = 2
-CAPS = (SX + R_IMA * np.cos(np.radians(ANG_SOLTAR)), SY + R_IMA * np.sin(np.radians(ANG_SOLTAR)))
-CAP_D = EMB[0] + 4.0
+ETQ = (60.0, 18.0, 15.0)              # etiqueta pencil: comprimento, largura, altura [L]
+DOMO_X = 12.0                         # centro da embreagem a 12 mm da ponta da etiqueta [MEDIR]
+CAPS = (SX, SY + R_IMA)               # centro da embreagem = onde os ímãs param (servo a 90°)
+NINHO_FUNDO = 0.8
+Z_NINHO = H                           # a etiqueta apoia aqui (topo do fundo do ninho = face de baixo da tampa)
+Z_BRACO_B = Z_NINHO - NINHO_FUNDO - 0.2 - N_IMAS * IMA[1] - 2.5   # = 35: mesma altura da versão A
+Z_ORELHA_B = Z_BRACO_B - SERVO['braco_acima_orelha_max']
+ZC0 = Z_NINHO + 1.5                   # fundo da embreagem dentro da etiqueta (parede de ~1,5 mm) [MEDIR]
+Z_ANEL_TOPO = Z_NINHO + ETQ[2]        # topo da etiqueta
+CAP_D = ETQ[1]                        # (compatibilidade)
+B_PONTA_PINO = Z_ANEL_TOPO + 0.6 - 16.0
+
+
+def _etq_planta(x0, y0, y1, larg, z0, z1):
+    r = larg / 2
+    return Manifold.batch_hull([cil(x0, y0 + r, z0, z1, larg), cil(x0, y1 - r, z0, z1, larg)])
+
+
+def b_ninho():
+    """Ninho impresso: encaixa no furo da tampa; a etiqueta deita dentro, com a embreagem em cima dos ímãs."""
+    x, yd = CAPS
+    y0, y1 = yd - DOMO_X, yd - DOMO_X + ETQ[0]
+    f = 0.3                                                   # folga da etiqueta
+    corpo = _etq_planta(x, y0 - f - 2.0, y1 + f + 2.0, ETQ[1] + 2 * f + 4.0, Z_NINHO - NINHO_FUNDO, B_TZ + 5.0)
+    aba = _etq_planta(x, y0 - f - 5.0, y1 + f + 5.0, ETQ[1] + 2 * f + 10.0, B_TZ, B_TZ + 1.5)
+    bolso = _etq_planta(x, y0 - f, y1 + f, ETQ[1] + 2 * f, Z_NINHO, B_TZ + 6.0)
+    dedo = cubo(x - 6, y1 - 4, B_TZ + 1.5, x + 6, y1 + f + 3, B_TZ + 6.0)      # rebaixo para tirar a etiqueta com o dedo
+    return corpo + aba - bolso - dedo
+
+
+def b_furo_tampa():
+    x, yd = CAPS
+    y0, y1 = yd - DOMO_X, yd - DOMO_X + ETQ[0]
+    return _etq_planta(x, y0 - 0.3 - 2.0 - 0.2, y1 + 0.3 + 2.0 + 0.2, ETQ[1] + 0.6 + 4.0 + 0.4, H - 1, B_TZ + 1)
 
 
 def b_tampa():
     t = cubo(-MDF, -MDF, H, LX + MDF, LY + MDF, B_TZ)
-    return t - cil(CAPS[0], CAPS[1], H - 1, B_TZ + 1, CAP_D + 0.4) - janela_leds() - furos_tampa()
-
-
-CAV = 5.0          # vão embaixo da embreagem para a ponta do pino (pino de 16 mm passa ~2,5 mm da embreagem)
-B_LOW = 5.0        # a cápsula desce 4 mm para dentro da caixa: o vão do pino fica abaixo da tampa (a chave alcança por dentro)
-ZC0 = H - B_LOW + CAV                       # fundo da embreagem
-Z_FUNDO_CAP = H - B_LOW - 0.8               # face de baixo do fundo da cápsula
-Z_ANEL_TOPO = ZC0 + EMB[1] + 0.3 + 1.6     # topo da cápsula
-B_PONTA_PINO = Z_ANEL_TOPO + 0.6 - 16.0    # onde chega a ponta do pino de 16 mm (cabeça sobre 0,6 mm de pano)
-Z_BRACO_B = Z_FUNDO_CAP - 0.2 - N_IMAS * IMA[1] - 2.5   # topo do braço plástico na B
-Z_ORELHA_B = Z_BRACO_B - SERVO['braco_acima_orelha_max']
+    return t - b_furo_tampa() - janela_leds() - furos_tampa()
 
 
 def b_capsula():
-    """Cápsula: fundo de 0,8 mm (os ímãs passam 0,2 mm embaixo); vão de 4 mm para a ponta do pino; a embreagem apoia
-    num degrau. Uma fenda lateral deixa a alavanca da chave entrar no vão (o pino aperta a alavanca)."""
-    x, y = CAPS
-    corpo = cil(x, y, Z_FUNDO_CAP, ZC0 + EMB[1] + 0.3, CAP_D)
-    aba = Manifold.cylinder(3.0, CAP_D / 2 + 4, CAP_D / 2, SEG).translate([x, y, B_TZ])     # aba em 45 graus
-    c = corpo + aba
-    c = c - cil(x, y, ZC0, ZC0 + EMB[1] + 1, EMB[0] + 0.3)                  # embreagem
-    c = c - cil(x, y, Z_FUNDO_CAP + 0.8, ZC0 + 0.01, EMB[0] - 3.0)            # vão da ponta do pino
-    fenda = cubo(0, -2.2, Z_FUNDO_CAP + 0.8, CAP_D, 2.2, ZC0 - 0.2).rotate([0, 0, ANG_SOLTAR]).translate([x, y, 0])
-    return c - fenda
+    return b_ninho()
 
 
 def b_anel():
-    """Tampa de cima da cápsula, colada depois de pôr a embreagem. Furo do pino no centro."""
-    x, y = CAPS
-    z = ZC0 + EMB[1] + 0.3
-    return cil(x, y, z, z + 1.6, CAP_D) - cil(x, y, z - 1, z + 3, PINO_ETQ + 0.6)
+    return Manifold()
 
 
 def b_braco(ang=ANG_REPOUSO):
-    esp = Z_FUNDO_CAP - 0.2 - N_IMAS * IMA[1] - Z_BRACO_B   # espessura do braço sob os ímãs (2,5 mm)
+    esp = Z_NINHO - NINHO_FUNDO - 0.2 - N_IMAS * IMA[1] - Z_BRACO_B   # 2,5 mm
     b = cubo(-4, -4, 0, R_IMA, 4, esp) + cil(0, 0, 0, esp, 8) + cil(R_IMA, 0, 0, esp, IMA[0] + 2)
     b = b - cil(0, 0, -1, esp + 1, 2.2) - cubo(-3.5, -2.3, -1, 1.5, 2.3, min(1.3, esp - 1.2))
     b = b + cil(R_IMA, 0, esp - 0.01, esp + N_IMAS * IMA[1] - 0.5, 2.9)      # pino impresso: os ímãs (furo 3 mm) encaixam e colam
@@ -336,12 +349,11 @@ def b_base():
 
 
 def teste_embreagem():
-    p = cubo(0, 0, 0, 80, 22, 6)
-    for i, d in enumerate([EMB[0] - 0.4, EMB[0], EMB[0] + 0.4, EMB[0] + 0.8]):
-        p = p - cil(11 + i * 19, 11, 1, 7, d)
-        for k in range(i + 1):
-            p = p - cubo(4 + i * 19 + k * 2.2, 0, 4.5, 5.2 + i * 19 + k * 2.2, 2, 7)
-    return p
+    """Teste rápido do encaixe da etiqueta: um anel de 4 mm de altura com o bolso do ninho."""
+    x, yd = CAPS
+    y0, y1 = yd - DOMO_X, yd - DOMO_X + ETQ[0]
+    a = _etq_planta(0, 0, ETQ[0] + 0.6 + 4.0, ETQ[1] + 0.6 + 4.0, 0, 4) - _etq_planta(0, 2.0, ETQ[0] + 0.6 + 2.0, ETQ[1] + 0.6, 0.8, 5)
+    return a
 
 
 # ======================= peças comuns =======================
@@ -545,9 +557,8 @@ if __name__ == '__main__':
     print('Versão B:')
     salvar(b_base(), 'B1_base_servo')
     salvar(b_braco(0)[0].translate([-SX, -SY, -Z_BRACO_B]), 'B2_braco_imas')
-    salvar(b_capsula(), 'B3_capsula_embreagem')
-    salvar(b_anel(), 'B4_anel_capsula')
-    salvar(teste_embreagem(), 'B5_teste_embreagem')
+    salvar(b_ninho(), 'B3_ninho_etiqueta')
+    salvar(teste_embreagem(), 'B5_teste_encaixe_etiqueta')
     print('Comuns:')
     salvar(calcos(), 'C1_calcos_servo')
     salvar(uniao([batente().translate([k * 13, 0, 0]) for k in range(6)]), 'C2_batentes_x6')
@@ -570,7 +581,6 @@ if __name__ == '__main__':
         ('Base do servo', 'impressa', '#ea580c', b_base(), None),
         ('Braço dos ímãs', 'impressa', '#2563eb', b_braco(0)[0].translate([-SX, -SY, -Z_BRACO_B]), 'braco'),
         ('Ímãs 15 × 5 (2)', 'comprada', '#d4d4d8', b_imas(0).translate([-SX, -SY, -Z_BRACO_B]), 'braco'),
-        ('Cápsula da embreagem', 'impressa', '#f59e0b', b_capsula() + b_anel(), None),
     ]
     dados = {
         'A': {'pivo_braco': [SX, SY, Z_BRACO], 'pivo_garra': [A_GX, A_EIXO_Y, A_GZ0 + A_EIXO_DZ], 'biela': [SX, R_BIELA, PINO_X_TRAVA],

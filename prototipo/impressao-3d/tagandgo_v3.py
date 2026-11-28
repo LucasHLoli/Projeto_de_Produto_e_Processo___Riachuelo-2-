@@ -61,7 +61,7 @@ def furo_servo_B():
 def prateleira(furo_b=False):
     p = cubo(0, 0, Z_PRAT, LX, LY, ZS)
     p = p - cubo(FURO_CABO[0], FURO_CABO[1], Z_PRAT - 1, FURO_CABO[2], FURO_CABO[3], ZS + 1)
-    if furo_b:
+    if furo_b and M.Z_ORELHA_B - 15.9 < 0:
         f = furo_servo_B()
         p = p - cubo(f[0], f[1], Z_PRAT - 1, f[2], f[3], ZS + 1)
     return p
@@ -115,7 +115,7 @@ def a_tampa():
 def b_tampa():
     cx, cy, _ = P_pt(*M.CAPS, 0)
     t = cubo(-MDF, -MDF, H, LX + MDF, LY + MDF, H + MDF)
-    return t - cil(cx, cy, H - 1, H + MDF + 1, M.CAP_D + 0.4) - janela_leds(H - 1, H + 20) - furos_tampa(H - 1, H + 20)
+    return t - P(M.b_furo_tampa()) - janela_leds(H - 1, H + 20) - furos_tampa(H - 1, H + 20)
 
 
 def canto_tampa(x, y):
@@ -236,9 +236,9 @@ def svgs():
         tA.append((['Tampa 1 (de cima)', 'Tampa 2 (meio)', 'Tampa 3 (de baixo)'][k], EX, EY, els))
     escreve('caixa_v3_A.svg', tA)
     cx, cy, _ = P_pt(*M.CAPS, 0)
-    fb = furo_servo_B()
-    paredes[0] = ('Prateleira (fica sobre os pés)', LX, LY, paredes[0][3] + [r(fb[0], fb[1], fb[2] - fb[0], fb[3] - fb[1], cut, 0)])
-    escreve('caixa_v3_B.svg', [('Tampa', EX, EY, base + qr + [c(cx, cy, M.CAP_D + 0.4, cut)])])
+    bb = P(M.b_furo_tampa()).bounding_box()
+    ninho = f'<rect x="{bb[0] + o:.2f}" y="{bb[1] + o:.2f}" width="{bb[3] - bb[0]:.2f}" height="{bb[4] - bb[1]:.2f}" rx="{(bb[3] - bb[0]) / 2:.2f}" {cut}/>'
+    escreve('caixa_v3_B.svg', [('Tampa', EX, EY, base + qr + [ninho])])
 
 
 def salvar(m, nome):
@@ -263,13 +263,10 @@ if __name__ == '__main__':
     os.makedirs(os.path.join(AQUI, 'stl_v3'), exist_ok=True)
     # peças do mecanismo: iguais às da v2
     for n in ['A1_base_servo_e_trilho', 'A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A3_braco_biela', 'A4_garra_dentes',
-              'A5_dobradica', 'A7_eixo_garra', 'B1_base_servo', 'B2_braco_imas', 'B3_capsula_embreagem', 'B4_anel_capsula',
-              'B5_teste_embreagem', 'C1_calcos_servo', 'C2_batentes_x6']:
+              'A5_dobradica', 'A7_eixo_garra', 'B1_base_servo', 'B2_braco_imas', 'B3_ninho_etiqueta',
+              'B5_teste_encaixe_etiqueta', 'C1_calcos_servo', 'C2_batentes_x6']:
         shutil.copy(os.path.join(AQUI, 'stl_v2', n + '.stl'), os.path.join(AQUI, 'stl_v3', n + '.stl'))
     salvar(uniao([pe_unico().translate([k * 15, 0, 0]) for k in range(4)]), 'C4_pes_prateleira_x4')
-    import chave as K
-    salvar(K.B_suporte(), 'B6_suporte_chave')
-    salvar(K.ponteira_local(), 'B7_ponteira_alavanca')
     salvar(uniao([(cil(k * 10, 0, 0, 1.5, 6.0) + cil(k * 10, 0, 1.5, 1.5 + 3 * MDF + 8, 3.0)) for k in range(2)]), 'C5_pinos_tampa_x2')
     salvar(uniao([(cil(k * 10, 0, 0, 1.5, 5.5) + cil(k * 10, 0, 1.5, 1.5 + 1.6 + 3 * MDF + 1, 2.8)) for k in range(2)]), 'C6_pinos_semaforo_x2')
     salvar(uniao([canto_tampa(4, 70).translate([-4 + k * 10, -64, -(H - 10)]) for k in range(2)]), 'C3_cantos_tampa_x2')

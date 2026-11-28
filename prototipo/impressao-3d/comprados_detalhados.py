@@ -220,10 +220,21 @@ def embreagem_partes():
     return (cx, cy, z0), [('#9ca3af', copo), ('#94a3b8', mola)], [('#cbd5e1', carretel)], [('#e5e7eb', esferas)]
 
 
+def etiqueta_loja():
+    """Etiqueta de loja tipo pencil, inteira, deitada no ninho: casca de plástico com a embreagem dentro."""
+    x, yd = M.CAPS
+    y0, y1 = yd - M.DOMO_X, yd - M.DOMO_X + M.ETQ[0]
+    z0, z1 = M.Z_NINHO, M.Z_NINHO + M.ETQ[2]
+    fora = M._etq_planta(x, y0, y1, M.ETQ[1], z0, z1)
+    dentro = M._etq_planta(x, y0 + 1.5, y1 - 1.5, M.ETQ[1] - 3.0, z0 + 1.5, z1 - 1.5)
+    casca = fora - dentro - cil(x, yd, z1 - 3, z1 + 1, 3.0)
+    return [('#e5e7eb', C.P(casca))]
+
+
 def pino_etiqueta():
     cx, cy, _ = C.P_pt(*M.CAPS, 0)
-    zc = C.ZS + M.Z_ANEL_TOPO + 0.6                      # cabeça apoiada no pano (0,6 mm) em cima da cápsula
-    haste = cil(cx, cy, zc - 16, zc, 1.2) + Manifold.cylinder(0.8, 0.1, 0.6, 12).translate([cx, cy, zc - 16.8])
+    zc = C.ZS + M.Z_ANEL_TOPO + 0.6                      # cabeça apoiada no pano (0,6 mm) em cima da etiqueta
+    haste = cil(cx, cy, zc - 13, zc, 1.2) + Manifold.cylinder(0.8, 0.1, 0.6, 12).translate([cx, cy, zc - 13.8])   # 13 mm [MEDIR]
     cabeca = cil(cx, cy, zc, zc + 1.5, 12.5) + (esfera(cx, cy, zc + 1.5, 12.5) ^ cubo(cx - 7, cy - 7, zc + 1.5, cx + 7, cy + 7, zc + 4))
     return [('#e5e7eb', haste), ('#94a3b8', cabeca)]
 

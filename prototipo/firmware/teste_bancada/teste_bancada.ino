@@ -25,7 +25,7 @@ const int ANG_TRAVA = 40;   // lingueta dentro do gancho
 const int ANG_SOLTA = 90;   // lingueta recuada 4,6 mm
 #else
 const int ANG_TRAVA = 0;    // ímãs longe da embreagem (repouso)
-const int ANG_SOLTA = 120;  // ímãs embaixo da embreagem
+const int ANG_SOLTA = 90;   // ímãs embaixo da embreagem (a B não usa a chave: o funcionário confirma no app)
 #endif
 
 // Medir no Monitor Serial e ajustar: com pull-up, a chave apertada costuma dar LOW.
