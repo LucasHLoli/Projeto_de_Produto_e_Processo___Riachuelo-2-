@@ -100,7 +100,7 @@ def berco_servo(x0, x1, y0, y1):
         m = m - (cil(a, SY, Z_ORELHA - 8, Z_ORELHA + 1, 2.0) + cil(b, SY, Z_ORELHA - 8, Z_ORELHA + 1, 2.0)
                  + cubo(min(a, b), SY - 1.0, Z_ORELHA - 8, max(a, b), SY + 1.0, Z_ORELHA + 1))
     # saída do fio nas duas pontas, embaixo
-    m = m - cubo(bx0 - 3, SY - 2.5, 0.6, bx1 + 3, SY + 2.5, 7)
+    m = m - cubo(cx - s['orelhas'] / 2 - 3, SY - 2.5, 0.6, cx + s['orelhas'] / 2 + 3, SY + 2.5, 7)   # fio sai pelas duas pontas
     return m
 
 
