@@ -149,6 +149,40 @@ def svg():
     open(os.path.join(AQUI, 'mdf', 'caixa_dentes.svg'), 'w', encoding='utf-8').write(s)
 
 
+# ---------------- biela: servo ligado à lingueta (sem mola, sem elástico) ----------------
+R_BIELA = 6.0                       # pino a 6 mm do eixo do servo
+ANG_TRAVA, ANG_SOLTA = 40.0, 90.0   # graus do servo
+PINO_X_TRAVA = L.SX + R_BIELA * np.cos(np.radians(ANG_TRAVA))
+
+
+def trilho():
+    m = L.mecanismo_lingueta()
+    m = m - cubo(164.0, 35.4, 52.0, 168.2, 40.6, 56.0)          # rasgo maior: a haste recua 4,6 mm
+    m = m + cubo(152.5, 41.3, 55.1, 159.0, 45.0, 58.4)          # fecha a passagem do elástico (não existe mais)
+    m = m - (cil(200, 45, g.Z_SERVO, 61, 5.4) + cubo(196, 42, g.Z_SERVO + 0.01, 204, 48, 8.2))   # tira o poste do elástico
+    return m
+
+
+def lingueta_biela():
+    corpo = cubo(152, 35, L.LZ0, HX, 41, L.LZ1)
+    from manifold3d import CrossSection, Manifold
+    cs = CrossSection([[[HX + 0.1, L.LZ0 + 0.6], [HX + 0.1, L.LZ1 + 0.1], [HX - 1.8, L.LZ1 + 0.1]]])
+    corpo = corpo - Manifold.extrude(cs, 8).rotate([90, 0, 0]).translate([0, 42, 0])
+    cx = PINO_X_TRAVA
+    haste = cubo(cx - 2.6, 36, 52.4, cx + 1.4, 40, L.LZ0 + 0.01)
+    garfo = cubo(cx - 3.6, 21.5, 49.5, cx + 3.6, 40, 52.5)
+    garfo = garfo - cubo(cx - 1.7, 23.0, 49, cx + 1.7, 31.0, 53)   # rasgo onde corre o pino do servo
+    return uniao([corpo, haste, garfo])
+
+
+def braco_biela():
+    b = cubo(-4, -4, 0, R_BIELA + 3, 4, 3) + cil(0, 0, 0, 3, 8) + cil(R_BIELA, 0, 0, 3, 7)
+    b = b + cil(R_BIELA, 0, 3, 6.8, 3.0)                           # pino que entra no rasgo
+    b = b - cil(0, 0, -1, 4, 2.2)
+    b = b - cubo(-3.5, -2.3, -1, 1.5, 2.3, 1.3)
+    return b
+
+
 def salvar(m, nome):
     k = m.to_mesh()
     t = trimesh.Trimesh(vertices=np.asarray(k.vert_properties)[:, :3], faces=np.asarray(k.tri_verts))
@@ -159,9 +193,9 @@ def salvar(m, nome):
 
 
 if __name__ == '__main__':
-    salvar(L.mecanismo_lingueta(), 'D1_trilho_e_servo')
-    salvar(L.lingueta(), 'D2_lingueta')
-    salvar(L.braco_servo(), 'D3_braco_servo')
+    salvar(trilho(), 'D1_trilho_e_servo')
+    salvar(lingueta_biela(), 'D2_lingueta_biela')
+    salvar(braco_biela(), 'D3_braco_biela')
     salvar(garra().rotate([90, 0, 0]), 'D4_garra_dentes')
     salvar(dobradica(), 'D6_dobradica')
     salvar(uniao([V.canto_tampa().translate([k * 9, 0, 0]) for k in range(2)]), 'D7_cantos_tampa')
@@ -175,9 +209,9 @@ if __name__ == '__main__':
         ('Tampa (MDF)', 'casca', '#d9bc8c', tampa_3d(), None),
         ('Garra com dentes', 'impressa', '#db2777', garra(), 'garra'),
         ('Dobradiça', 'impressa', '#be185d', dobradica(), None),
-        ('Lingueta', 'impressa', '#f59e0b', L.lingueta(), 'lingueta'),
-        ('Trilho e berço do servo', 'impressa', '#ea580c', L.mecanismo_lingueta(), None),
-        ('Braço do servo', 'impressa', '#2563eb', L.braco_servo(), 'braco'),
+        ('Lingueta', 'impressa', '#f59e0b', lingueta_biela(), 'lingueta'),
+        ('Trilho e berço do servo', 'impressa', '#ea580c', trilho(), None),
+        ('Braço do servo (biela)', 'impressa', '#2563eb', braco_biela(), 'braco'),
         ('Prateleira do ESP32', 'impressa', '#0d9488', g.prateleira_esp32().translate([0, 0, g.FUNDO]), None),
         ('Servo SG90', 'comprada', '#1d4ed8', cubo(sx0, L.SY - 6.1, g.Z_SERVO + 9, sx0 + 22.7, L.SY + 6.1, L.Z_ORELHA + 6)
          + cubo(sx0 - 4.8, L.SY - 6.1, L.Z_ORELHA, sx0 + 27.5, L.SY + 6.1, L.Z_ORELHA + 2.5)
@@ -187,9 +221,8 @@ if __name__ == '__main__':
         ('Semáforo LED', 'comprada', '#111827', cubo(17, 8, CZ - 6, 71, 22, CZ - 0.2)
          + uniao([cil(x, 15, CZ - 1, CZ + 1, 8, 24) for x in (30, 44, 58)]), None),
         ('QR code', 'comprada', '#f8fafc', cubo(15, 40, TZ, 45, 70, TZ + 0.4), None),
-        ('Elástico da lingueta', 'comprada', '#111827', cubo(155.5, 44.4, 58.6, 200, 45.6, 59.4), 'elastico'),
     ]
-    dados = {'pivo_braco': [L.SX, L.SY, L.Z_BRACO], 'pivo_garra': [DOB_X, HY, GZ0 + EIXO], 'garra_z0': GZ0,
+    dados = {'biela': [L.SX, R_BIELA, PINO_X_TRAVA, ANG_TRAVA, ANG_SOLTA], 'pivo_braco': [L.SX, L.SY, L.Z_BRACO], 'pivo_garra': [DOB_X, HY, GZ0 + EIXO], 'garra_z0': GZ0,
              
              'dentes': DENTES_X, 'furo_l': FURO_L, 'fundo_furo': GZ0 - DENTE_H + 2.8, 'tz': TZ, 'pano_y': [HY - 16, HY + 16],
              'partes': []}
