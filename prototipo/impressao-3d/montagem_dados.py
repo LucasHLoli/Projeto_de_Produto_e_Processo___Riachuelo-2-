@@ -52,7 +52,17 @@ def main():
     ez = M.A_GZ0 + M.A_EIXO_DZ
     eixo = C.P(cil_x(M.A_EIXO_Y, ez, M.A_GX - 22, M.A_GX + 22, 3.2) + cil_x(M.A_EIXO_Y, ez, M.A_GX - 24, M.A_GX - 22, 6.0))
     extras = [parte('Pinos da tampa (C5)', '#a16207', pinos_t), parte('Eixo da garra (A7)', '#be185d', eixo)]
-    js = 'window.MONTAGEM=' + json.dumps({'mdf': mdf, 'pla': pla, 'extras': extras}) + ';'
+    # teste de montagem da lingueta: peças soltas com o servo em 90° e o caminho de cada uma (no referencial da caixa)
+    ang = M.ANG_SOLTA
+    rot = lambda m: m.translate([-M.SX, -M.SY, 0]).rotate([0, 0, ang]).translate([M.SX, M.SY, 0])
+    off = M.ling_off(ang)
+    teste = [dict(parte('Teste: braço A3 (sem o pino)', '#0284c7', C.P(rot(M.a_braco_peca().translate([M.SX, M.SY, M.Z_BRACO])))), vec=None),
+             dict(parte('Teste: corpo A2a', '#f59e0b', C.P(M.a_lingueta_corpo(off))), vec=[0, 0, 40]),
+             dict(parte('Teste: garfo A2b', '#facc15', C.P(M.a_lingueta_garfo(off))), vec=[0, -40, 0]),
+             dict(parte('Teste: haste A2c', '#ea580c', C.P(M.a_lingueta_haste(off))), vec=[0, 0, 40]),
+             dict(parte('Teste: pino A3b', '#0ea5e9', C.P(rot(M.a_braco_pino().translate([M.SX, M.SY, M.Z_BRACO])))), vec=[0, 0, 40])]
+    js = 'window.MONTAGEM=' + json.dumps({'mdf': mdf, 'pla': pla, 'extras': extras, 'teste': teste}) + ';'
+    js += chr(10) + 'window.VERIF=' + open(os.path.join(AQUI, 'verificacao.json'), encoding='utf-8').read() + ';'
     open(os.path.join(AQUI, 'montagem.js'), 'w', encoding='utf-8').write(js)
     print('montagem.js', os.path.getsize(os.path.join(AQUI, 'montagem.js')) // 1024, 'KB')
 

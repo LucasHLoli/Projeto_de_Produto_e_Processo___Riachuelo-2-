@@ -1,0 +1,1 @@
+Conferir: o expansor do ESP32 assenta no suporte; os 4 pés têm a mesma altura (17 mm).

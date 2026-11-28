@@ -59,9 +59,20 @@ def furo_servo_B():
     return (bb[0] - 12, 0.0, bb[3] + 1, bb[4] + 1)
 
 
+def furo_servo_A():
+    """Furo na prateleira embaixo do servo da A: o corpo do servo pode ter até 17 mm abaixo da orelha [medidas.md]."""
+    s = M.SERVO
+    bx0 = M.SX - s['eixo_ponta']
+    a = P_pt(bx0 - 1, M.SY - s['corpo_l'] / 2 - 1, 0)
+    b = P_pt(bx0 + s['corpo_c'] + 1, M.SY + s['corpo_l'] / 2 + 1, 0)
+    return (min(a[0], b[0]), min(a[1], b[1]), max(a[0], b[0]), max(a[1], b[1]))
+
+
 def prateleira(furo_b=False):
     p = cubo(0.3, 0.3, Z_PRAT, LX - 0.3, LY - 0.3, ZS)          # 0,3 mm de folga em cada lado
     p = p - cubo(FURO_CABO[0], FURO_CABO[1], Z_PRAT - 1, FURO_CABO[2], FURO_CABO[3], ZS + 1)
+    fa = furo_servo_A()
+    p = p - cubo(fa[0], fa[1], Z_PRAT - 1, fa[2], fa[3], ZS + 1)
     if furo_b:
         f = furo_servo_B()
         p = p - cubo(f[0], f[1], Z_PRAT - 1, f[2], f[3], ZS + 1)
@@ -242,7 +253,7 @@ def svgs():
     base = [r(-o, -o, EX, EY, cut)] + [c(x, y, 3.2, cut) for x, y in PARAF] + \
         [r(sr[0], sr[1], sr[2] - sr[0], sr[3] - sr[1], cut), r(POS_SEM[0], POS_SEM[1], M.SEMAFORO[0], M.SEMAFORO[1], eng)]
     qr = [r(QR[0], QR[1], QR[2], QR[2], eng), f'<text x="{QR[0] + QR[2] / 2 + o}" y="{QR[1] - 2 + o}" font-size="4" text-anchor="middle" {txt}>QR aqui</text>']
-    paredes = [('Prateleira (fica sobre os pés)', LX, LY, [r(0.3, 0.3, LX - 0.6, LY - 0.6, cut, 0), r(FURO_CABO[0], FURO_CABO[1], FURO_CABO[2] - FURO_CABO[0], FURO_CABO[3] - FURO_CABO[1], cut, 0)]),
+    paredes = [('Prateleira (fica sobre os pés)', LX, LY, [r(0.3, 0.3, LX - 0.6, LY - 0.6, cut, 0), r(FURO_CABO[0], FURO_CABO[1], FURO_CABO[2] - FURO_CABO[0], FURO_CABO[3] - FURO_CABO[1], cut, 0), r(furo_servo_A()[0], furo_servo_A()[1], furo_servo_A()[2] - furo_servo_A()[0], furo_servo_A()[3] - furo_servo_A()[1], cut, 0)]),
                ('Fundo', LX, LY, [r(0.3, 0.3, LX - 0.6, LY - 0.6, cut, 0)]),
                ('Parede longa 1', EX, H + MDF, [r(0, 0, EX, H + MDF, cut, 0)]),
                ('Parede longa 2', EX, H + MDF, [r(0, 0, EX, H + MDF, cut, 0)]),

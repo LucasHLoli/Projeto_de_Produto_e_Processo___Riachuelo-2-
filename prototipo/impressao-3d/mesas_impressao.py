@@ -22,6 +22,18 @@ MESAS = {
 }
 
 
+LOTES = {
+    'mesa0_teste_de_folga': ('Lote1_teste_10min', 'Imprimir primeiro (10 min). Conferir: o pino de 3,2 gira solto no furo DEITADO de 3,6 (eixo da garra); '
+                             'o pino de 3,0 entra justo no furo de 3,0 (pinos da tampa). Se não encaixar, NÃO imprimir o resto: avisar.'),
+    'mesa1_pecas_pequenas': ('Lote2_pecas_pequenas', 'Conferir: a haste quadrada (4 x 4) passa no furo do corpo da lingueta; o eixo passa nos furos da dobradiça e gira.'),
+    'mesa2_garra_e_base_do_servo': ('Lote3_garra_e_base_do_servo', 'ANTES: medir o servo (topo do braço plástico até a orelha; o desenho reserva 19 mm). '
+                                    'Ligar suporte "tocando a mesa". Conferir: o servo entra no berço; a placa da chave entra entre as abas da coluna.'),
+    'mesa3_pes_batentes_e_suporte_do_esp32': ('Lote4_pes_batentes_suporte_pinos', 'Conferir: o expansor do ESP32 assenta no suporte; os 4 pés têm a mesma altura (17 mm).'),
+    'mesa8_reposicao_pecas_frageis': ('Lote6_reposicao_100porcento', 'Peças de reserva. Imprimir com 100% de preenchimento. Guardar num saquinho.'),
+    'extra_calcos_do_servo_so_se_precisar': ('Extra_calcos_so_se_precisar', 'Só se o servo medir menos de 19 mm do topo do braço plástico até a orelha.'),
+}
+
+
 def mesa(nome, pecas):
     ms = sorted([trimesh.load(os.path.join(SRC, p + '.stl')) for p in pecas], key=lambda m: -m.extents[1])
     x = y = linha = 0.0
@@ -38,7 +50,11 @@ def mesa(nome, pecas):
     t = trimesh.util.concatenate(out)
     t.apply_translation([110 - (t.bounds[0][0] + t.bounds[1][0]) / 2, 110 - (t.bounds[0][1] + t.bounds[1][1]) / 2, 0])
     assert t.bounds[0][0] >= 5 and t.bounds[0][1] >= 5 and t.bounds[1][0] <= 215 and t.bounds[1][1] <= 215, nome
-    t.export(os.path.join(IMP, nome + '.stl'))
+    pasta, nota = LOTES[nome]
+    d = os.path.join(IMP, pasta)
+    os.makedirs(d, exist_ok=True)
+    t.export(os.path.join(d, nome + '.stl'))
+    io.open(os.path.join(d, 'O_QUE_CONFERIR.txt'), 'w', encoding='utf-8').write(nota + chr(10))
     print(f'  {nome:42s} {t.extents[0]:6.1f} x {t.extents[1]:5.1f} x {t.extents[2]:5.1f} mm  {t.volume / 1000:5.1f} cm3')
 
 
@@ -68,15 +84,19 @@ def laser():
             W = max(W, w + 10)
         svg = (f'<svg xmlns="http://www.w3.org/2000/svg" width="{W}mm" height="{y}mm" viewBox="0 0 {W} {y}">\n'
                '<!-- MDF 3 mm. Só linhas de corte. -->\n' + '\n'.join(els) + '\n</svg>')
-        io.open(os.path.join(LASER, arq + '.svg'), 'w', encoding='utf-8').write(svg)
+        io.open(os.path.join(LASER, arq.replace('laser', '', 1) + '.svg'), 'w', encoding='utf-8').write(svg)
         print(f'  {arq:42s} {W:.0f} x {y:.0f} mm, {len(els)} peças, {svg.count("<rect") + svg.count("<circle")} cortes')
 
 
 if __name__ == '__main__':
     os.makedirs(IMP, exist_ok=True)
     os.makedirs(LASER, exist_ok=True)
-    for f in glob.glob(os.path.join(IMP, '*.stl')):
+    import shutil
+    for f in glob.glob(os.path.join(IMP, '*.stl')) + glob.glob(os.path.join(LASER, '*.svg')):
         os.remove(f)
+    for d in glob.glob(os.path.join(IMP, 'Lote*')) + glob.glob(os.path.join(IMP, 'Extra*')):
+        if 'carcaca' not in d:
+            shutil.rmtree(d)
     for n, p in MESAS.items():
         mesa(n, p)
     laser()

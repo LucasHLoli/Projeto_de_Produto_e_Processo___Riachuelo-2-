@@ -14,7 +14,7 @@ import tagandgo_v3 as C
 from tagandgo_v2 import cubo, uniao
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-SAIDA = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'PLA', 'carcaca_PLA')
+SAIDA = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'PLA', 'Lote5_carcaca_PLA_so_se_for_PLA')
 T = C.MDF                      # parede de 3 mm: mesma medida externa da caixa de MDF
 CORTE = 160.0                  # x do corte: depois da garra (x ~ 115) e do QR (x 122 a 152)
 DEG = 10.0                     # comprimento do degrau de encaixe
@@ -85,6 +85,10 @@ if __name__ == '__main__':
         sobra = (a ^ b).volume()
         falta = inteira.volume() - a.volume() - b.volume()
         print(f'{n}: metades se sobrepõem {sobra:.2f} mm3; folga do encaixe {falta:.0f} mm3')
+    os.makedirs(SAIDA, exist_ok=True)
+    open(os.path.join(SAIDA, 'O_QUE_CONFERIR.txt'), 'w', encoding='utf-8').write(
+        'Só se a carcaça for de PLA (se for MDF, pular este lote). 4 paredes, 20%. Conferir: as 2 metades encaixam no degrau sem forçar ANTES de colar. '
+        'A prateleira (metades coladas) desce até os pés sem raspar.' + chr(10))
     print('Mesas:')
     salvar_mesa('mesa4_caixa_esquerda', [ce])
     salvar_mesa('mesa5_caixa_direita', [cd])

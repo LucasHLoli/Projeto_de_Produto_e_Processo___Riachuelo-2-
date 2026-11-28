@@ -13,16 +13,16 @@ PASTA_LASER = os.path.join(AQUI, '..', 'IMPRIMIR', 'A', 'MDF_laser')
 CORES = ['#db2777', '#ea580c', '#0284c7', '#16a34a', '#7c3aed', '#ca8a04', '#0d9488', '#be185d', '#2563eb', '#65a30d']
 
 MESAS = [
-    ('mesa0_teste_de_folga', 'Mesa 0 · teste de folga (10 min, primeiro)', 'Mecanismo (PLA)', 'não', ['T1_teste_de_folga']),
-    ('mesa1_pecas_pequenas', 'Mesa 1 · peças pequenas', 'Mecanismo (PLA)', 'não', ['A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A2c_lingueta_haste', 'A3_braco_biela', 'A3b_pino_braco', 'A5_dobradica', 'A7_eixo_garra', 'C3_cantos_tampa_x2']),
-    ('mesa2_garra_e_base_do_servo', 'Mesa 2 · garra e base do servo', 'Mecanismo (PLA)', 'sim, tocando a mesa', ['A4_garra_dentes', 'A1_base_servo_e_trilho']),
-    ('mesa3_pes_batentes_e_suporte_do_esp32', 'Mesa 3 · pés, batentes, suporte do ESP32 e pinos da tampa', 'Mecanismo (PLA)', 'não', ['C7_suporte_expansor', 'C4_pes_prateleira_x4', 'C2_batentes_x5', 'C5_pinos_tampa_x2']),
-    ('extra_calcos_do_servo_so_se_precisar', 'Extra · calços do servo (só se precisar)', 'Mecanismo (PLA)', 'não', ['C1_calcos_servo']),
-    ('mesa8_reposicao_pecas_frageis', 'Mesa 8 · reposição das peças frágeis (100% preenchimento)', 'Reposição (PLA)', 'não', ['A7_eixo_garra', 'C5_pinos_tampa_x2', 'A3_braco_biela', 'A3b_pino_braco', 'A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A2c_lingueta_haste', 'A5_dobradica']),
-    ('carcaca_PLA/mesa4_caixa_esquerda', 'Mesa 4 · caixa, metade esquerda', 'Carcaça (PLA)', 'não', None),
-    ('carcaca_PLA/mesa5_caixa_direita', 'Mesa 5 · caixa, metade direita', 'Carcaça (PLA)', 'não', None),
-    ('carcaca_PLA/mesa6_tampa_e_prateleira_esquerda', 'Mesa 6 · tampa e prateleira, esquerda', 'Carcaça (PLA)', 'não', None),
-    ('carcaca_PLA/mesa7_tampa_e_prateleira_direita', 'Mesa 7 · tampa e prateleira, direita', 'Carcaça (PLA)', 'não', None),
+    ('Lote1_teste_10min/mesa0_teste_de_folga', 'Mesa 0 · teste de folga (10 min, primeiro)', 'Mecanismo (PLA)', 'não', ['T1_teste_de_folga']),
+    ('Lote2_pecas_pequenas/mesa1_pecas_pequenas', 'Mesa 1 · peças pequenas', 'Mecanismo (PLA)', 'não', ['A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A2c_lingueta_haste', 'A3_braco_biela', 'A3b_pino_braco', 'A5_dobradica', 'A7_eixo_garra', 'C3_cantos_tampa_x2']),
+    ('Lote3_garra_e_base_do_servo/mesa2_garra_e_base_do_servo', 'Mesa 2 · garra e base do servo', 'Mecanismo (PLA)', 'sim, tocando a mesa', ['A4_garra_dentes', 'A1_base_servo_e_trilho']),
+    ('Lote4_pes_batentes_suporte_pinos/mesa3_pes_batentes_e_suporte_do_esp32', 'Mesa 3 · pés, batentes, suporte do ESP32 e pinos da tampa', 'Mecanismo (PLA)', 'não', ['C7_suporte_expansor', 'C4_pes_prateleira_x4', 'C2_batentes_x5', 'C5_pinos_tampa_x2']),
+    ('Extra_calcos_so_se_precisar/extra_calcos_do_servo_so_se_precisar', 'Extra · calços do servo (só se precisar)', 'Mecanismo (PLA)', 'não', ['C1_calcos_servo']),
+    ('Lote6_reposicao_100porcento/mesa8_reposicao_pecas_frageis', 'Mesa 8 · reposição das peças frágeis (100% preenchimento)', 'Reposição (PLA)', 'não', ['A7_eixo_garra', 'C5_pinos_tampa_x2', 'A3_braco_biela', 'A3b_pino_braco', 'A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A2c_lingueta_haste', 'A5_dobradica']),
+    ('Lote5_carcaca_PLA_so_se_for_PLA/mesa4_caixa_esquerda', 'Mesa 4 · caixa, metade esquerda', 'Carcaça (PLA)', 'não', None),
+    ('Lote5_carcaca_PLA_so_se_for_PLA/mesa5_caixa_direita', 'Mesa 5 · caixa, metade direita', 'Carcaça (PLA)', 'não', None),
+    ('Lote5_carcaca_PLA_so_se_for_PLA/mesa6_tampa_e_prateleira_esquerda', 'Mesa 6 · tampa e prateleira, esquerda', 'Carcaça (PLA)', 'não', None),
+    ('Lote5_carcaca_PLA_so_se_for_PLA/mesa7_tampa_e_prateleira_direita', 'Mesa 7 · tampa e prateleira, direita', 'Carcaça (PLA)', 'não', None),
 ]
 NOMES_PECAS = {'A1_base_servo_e_trilho': 'Base do servo e trilho', 'A2a_lingueta_corpo': 'Lingueta (corpo)', 'A2b_lingueta_garfo': 'Lingueta (garfo)',
                'A3_braco_biela': 'Braço do servo', 'A4_garra_dentes': 'Garra com dentes', 'A5_dobradica': 'Dobradiça', 'A7_eixo_garra': 'Eixo da garra',
@@ -32,7 +32,7 @@ NOMES_PECAS = {'A1_base_servo_e_trilho': 'Base do servo e trilho', 'A2a_lingueta
 NOMES_CARCACA = {'mesa4': ['Caixa, metade esquerda'], 'mesa5': ['Caixa, metade direita'],
                  'mesa6': ['Tampa, metade esquerda (de cabeça para baixo)', 'Prateleira, metade esquerda'],
                  'mesa7': ['Tampa, metade direita', 'Prateleira, metade direita (de cabeça para baixo)']}
-LASER = [('laser1_tampas_3_chapas', 'Laser 1 · 3 chapas da tampa'), ('laser2_prateleira_e_fundo', 'Laser 2 · prateleira e fundo'), ('laser3_paredes', 'Laser 3 · 4 paredes')]
+LASER = [('1_tampas_3_chapas', 'Laser 1 · 3 chapas da tampa'), ('2_prateleira_e_fundo', 'Laser 2 · prateleira e fundo'), ('3_paredes', 'Laser 3 · 4 paredes')]
 
 
 def pack(t):

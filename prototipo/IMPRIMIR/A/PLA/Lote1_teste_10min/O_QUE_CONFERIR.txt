@@ -1,0 +1,1 @@
+Imprimir primeiro (10 min). Conferir: o pino de 3,2 gira solto no furo DEITADO de 3,6 (eixo da garra); o pino de 3,0 entra justo no furo de 3,0 (pinos da tampa). Se não encaixar, NÃO imprimir o resto: avisar.
