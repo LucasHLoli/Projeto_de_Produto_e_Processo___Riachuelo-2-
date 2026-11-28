@@ -283,21 +283,26 @@ def b_tampa():
     return t - cil(CAPS[0], CAPS[1], H - 1, B_TZ + 1, CAP_D + 0.4) - janela_leds() - furos_tampa()
 
 
+CAV = 4.0          # vão embaixo da embreagem para a ponta do pino (pino de 16 mm passa ~4 mm da embreagem)
+
+
 def b_capsula():
-    """Corpo da cápsula: fundo de 0,8 mm na altura da face de baixo da tampa; a embreagem fica dentro."""
+    """Corpo da cápsula: fundo de 0,8 mm na face de baixo da tampa. A embreagem apoia num degrau a 4 mm do fundo;
+    embaixo dela fica o vão da ponta do pino."""
     x, y = CAPS
     z_fundo = H - 0.8
-    corpo = cil(x, y, z_fundo, H + EMB[1] + 0.3, CAP_D)
+    corpo = cil(x, y, z_fundo, H + CAV + EMB[1] + 0.3, CAP_D)
     aba = Manifold.cylinder(3.0, CAP_D / 2 + 4, CAP_D / 2, SEG).translate([x, y, B_TZ])     # aba em 45 graus
     c = corpo + aba
-    c = c - cil(x, y, H, H + EMB[1] + 1, EMB[0] + 0.3)
+    c = c - cil(x, y, H + CAV, H + CAV + EMB[1] + 1, EMB[0] + 0.3)        # embreagem
+    c = c - cil(x, y, H, H + CAV + 0.01, EMB[0] - 3.0)                     # vão da ponta do pino (degrau de 1,5 mm)
     return c
 
 
 def b_anel():
     """Tampa de cima da cápsula, colada depois de pôr a embreagem. Furo do pino no centro."""
     x, y = CAPS
-    z = H + EMB[1] + 0.3
+    z = H + CAV + EMB[1] + 0.3
     return cil(x, y, z, z + 1.6, CAP_D) - cil(x, y, z - 1, z + 3, PINO_ETQ + 0.6)
 
 
@@ -557,8 +562,8 @@ if __name__ == '__main__':
         ('Braço dos ímãs', 'impressa', '#2563eb', b_braco(0)[0].translate([-SX, -SY, -Z_BRACO]), 'braco'),
         ('Ímãs 15 × 5 (2)', 'comprada', '#d4d4d8', b_imas(0).translate([-SX, -SY, -Z_BRACO]), 'braco'),
         ('Cápsula da embreagem', 'impressa', '#f59e0b', b_capsula() + b_anel(), None),
-        ('Embreagem da etiqueta', 'comprada', '#71717a', cil(CAPS[0], CAPS[1], H, H + EMB[1], EMB[0]), None),
-        ('Pino da etiqueta', 'comprada', '#e4e4e7', cil(CAPS[0], CAPS[1], H + 2, H + EMB[1] + 18, PINO_ETQ) + cil(CAPS[0], CAPS[1], H + EMB[1] + 17, H + EMB[1] + 19, 12), 'pino'),
+        ('Embreagem da etiqueta', 'comprada', '#71717a', cil(CAPS[0], CAPS[1], H + CAV, H + CAV + EMB[1], EMB[0]), None),
+        ('Pino da etiqueta', 'comprada', '#e4e4e7', cil(CAPS[0], CAPS[1], H + CAV + EMB[1] + 2.9 - 16, H + CAV + EMB[1] + 2.9, PINO_ETQ) + cil(CAPS[0], CAPS[1], H + CAV + EMB[1] + 2.9, H + CAV + EMB[1] + 4.4, 12), 'pino'),
     ]
     dados = {
         'A': {'pivo_braco': [SX, SY, Z_BRACO], 'pivo_garra': [A_GX, A_EIXO_Y, A_GZ0 + A_EIXO_DZ], 'biela': [SX, R_BIELA, PINO_X_TRAVA],

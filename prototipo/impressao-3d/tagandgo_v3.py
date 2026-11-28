@@ -14,7 +14,7 @@ from tagandgo_v2 import cubo, cil, uniao, MDF, FOLGA
 AQUI = os.path.dirname(os.path.abspath(__file__))
 
 # ======================= caixa compacta =======================
-LX, LY = 194.0, 86.0                        # interno
+LX, LY = 224.0, 86.0                        # interno (30 mm a mais: o plugue USB entra reto no expansor)
 QI_E, PB_C, PB_L, PB_A = 1.0, 149.0, 69.0, 15.0
 POS_PB = (40.0, 15.0, 40.0 + PB_C + 1, 15.0 + PB_L + 1)   # USB para x=40 (vão do plugue); micro-USB para y=15 (faixa de 14 mm)
 Z_PRAT = POS_PB and (QI_E + PB_A + 1.0)     # base da prateleira = 17
@@ -22,7 +22,7 @@ ZS = Z_PRAT + MDF                           # topo da prateleira = 20
 H = ZS + M.H                                # face de baixo da tampa = 68,5
 # módulo da v2 -> caixa: gira -90° em z e sobe até a prateleira
 DX, DY = -9.0, 194.0
-POS_ESP = (120.0, 16.0, 120.0 + M.EXP[0] + 1, 16.0 + M.EXP[1] + 1)
+POS_ESP = (150.0, 16.0, 150.0 + M.EXP[0] + 1, 16.0 + M.EXP[1] + 1)
 POS_SEM = (18.0, 60.0)                      # semáforo embaixo da tampa (canto)
 QR = (122.0, 54.0, 30.0)                    # QR na tampa (x, y, lado)
 PARAF = [(4.0, 70.0), (LX - 4.0, 70.0)]
@@ -56,8 +56,14 @@ def pe_unico():
     return cubo(0, 0, 0, 12, 12, Z_PRAT)
 
 
+SEM_FUROS = [(POS_SEM[0] + 3.5, POS_SEM[1] + 10.5), (POS_SEM[0] + 52.5, POS_SEM[1] + 10.5)]
+SEM_RASGO = (POS_SEM[0] - 10, POS_SEM[1] + 4, POS_SEM[0] - 3, POS_SEM[1] + 17)
+
+
 def janela_leds(z0, z1):
-    return cubo(POS_SEM[0] + 5, POS_SEM[1] + 5, z0, POS_SEM[0] + M.SEMAFORO[0] - 5, POS_SEM[1] + M.SEMAFORO[1] - 5, z1)
+    """Semáforo parafusado em cima da tampa (2 furos M3) + rasgo para os 4 fios descerem."""
+    r = SEM_RASGO
+    return uniao([cil(x, y, z0, z1, 3.2) for x, y in SEM_FUROS]) + cubo(r[0], r[1], z0, r[2], r[3], z1)
 
 
 def furos_tampa(z0, z1):
@@ -106,7 +112,6 @@ def comprados():
         ('Plugue USB (espaço)', 'comprada', '#64748b', cubo(8, 44, 3, 40, 56, 13)),
         ('Expansor + ESP32', 'comprada', '#15803d', cubo(e[0] + .5, e[1] + .5, ZS, e[2] - .5, e[3] - .5, ZS + 11) + cubo(e[0] + 9, e[1] + 12, ZS + 11, e[0] + 61, e[1] + 41, ZS + 17)),
         ('Fios do ESP32 (espaço)', 'comprada', '#86efac', cubo(e[0] + 2, e[1] + 2, ZS + 11, e[0] + 66, e[1] + 10, ZS + 38) + cubo(e[0] + 2, e[3] - 10, ZS + 11, e[0] + 66, e[3] - 2, ZS + 38)),
-        ('Semáforo LED', 'comprada', '#111827', cubo(POS_SEM[0], POS_SEM[1], H - M.SEMAFORO[2], POS_SEM[0] + M.SEMAFORO[0], POS_SEM[1] + M.SEMAFORO[1], H - 0.2)),
     ]
 
 
@@ -141,7 +146,7 @@ def checar():
                 erros.append(f'A parado: {ks[i]} x {ks[j]}')
     for ang in range(0, 61, 3):
         g = P(M.a_garra_ang(ang))
-        for n in ('tampa A', 'dobradiça', 'base mecanismo', 'Semáforo LED', 'caixa'):
+        for n in ('tampa A', 'dobradiça', 'base mecanismo', 'caixa'):
             if v(g, fa[n]) > 0.05:
                 erros.append(f'A garra {ang}° x {n}')
     for ang in range(int(M.ANG_TRAVA), int(M.ANG_SOLTA) + 1, 5):
@@ -177,8 +182,9 @@ def svgs():
 
     def c(x, y, d, s):
         return f'<circle cx="{x + o:.2f}" cy="{y + o:.2f}" r="{d / 2:.2f}" {s}/>'
-    base = [r(-o, -o, EX, EY, cut)] + [c(x, y, 3.2, cut) for x, y in PARAF] + \
-        [r(POS_SEM[0] + 5, POS_SEM[1] + 5, M.SEMAFORO[0] - 10, M.SEMAFORO[1] - 10, cut)]
+    sr = SEM_RASGO
+    base = [r(-o, -o, EX, EY, cut)] + [c(x, y, 3.2, cut) for x, y in PARAF + SEM_FUROS] + \
+        [r(sr[0], sr[1], sr[2] - sr[0], sr[3] - sr[1], cut), r(POS_SEM[0], POS_SEM[1], M.SEMAFORO[0], M.SEMAFORO[1], eng)]
     qr = [r(QR[0], QR[1], QR[2], QR[2], eng), f'<text x="{QR[0] + QR[2] / 2 + o}" y="{QR[1] - 2 + o}" font-size="4" text-anchor="middle" {txt}>QR aqui</text>']
     paredes = [('Prateleira (fica sobre os pés)', LX, LY, [r(0, 0, LX, LY, cut, 0), r(FURO_CABO[0], FURO_CABO[1], FURO_CABO[2] - FURO_CABO[0], FURO_CABO[3] - FURO_CABO[1], cut, 0)]),
                ('Fundo', LX, LY, [r(0, 0, LX, LY, cut, 0)]),

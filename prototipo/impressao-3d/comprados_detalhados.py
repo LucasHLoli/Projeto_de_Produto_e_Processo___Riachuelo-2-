@@ -179,16 +179,16 @@ def cabo_usb():
 # ---------------- versão B ----------------
 def embreagem_pino():
     cx, cy, _ = C.P_pt(*M.CAPS, 0)
-    z0 = C.H
+    z0 = C.H + M.CAV
     emb = cil(cx, cy, z0, z0 + M.EMB[1], M.EMB[0]) - uniao([cil(cx, cy, z0 + 2 + k * 3, z0 + 2.6 + k * 3, M.EMB[0] + 1) - cil(cx, cy, z0, z0 + 20, M.EMB[0] - 0.8) for k in range(3)])
     return [('#9ca3af', emb)]
 
 
 def pino_etiqueta():
     cx, cy, _ = C.P_pt(*M.CAPS, 0)
-    z0 = C.H + 2
-    haste = cil(cx, cy, z0, z0 + M.EMB[1] + 15, 1.2)
-    cabeca = cil(cx, cy, z0 + M.EMB[1] + 15, z0 + M.EMB[1] + 16.5, 12.5) + esfera(cx, cy, z0 + M.EMB[1] + 16.5, 12.5) ^ (cubo(cx - 7, cy - 7, z0 + M.EMB[1] + 16.5, cx + 7, cy + 7, z0 + M.EMB[1] + 19))
+    zc = C.H + M.CAV + M.EMB[1] + 0.3 + 1.6 + 1.0          # cabeça apoiada no pano, 1 mm acima da cápsula
+    haste = cil(cx, cy, zc - 16, zc, 1.2)
+    cabeca = cil(cx, cy, zc, zc + 1.5, 12.5) + (esfera(cx, cy, zc + 1.5, 12.5) ^ cubo(cx - 7, cy - 7, zc + 1.5, cx + 7, cy + 7, zc + 4))
     return [('#e5e7eb', haste), ('#94a3b8', cabeca)]
 
 
