@@ -19,16 +19,45 @@ import versao_mdf as V
 from gerar_pecas import cubo, cil, cil_y, uniao
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
-CX, CY, CZ, MDF, TZ, GZ0 = V.CX, V.CY, V.CZ, V.MDF, V.TZ, V.GZ0
-DOB_X, EIXO, ESP = V.DOB_X - 24, V.EIXO, V.ESP     # dobradiça mais para trás, longe do trilho
+CX, CY, CZ, MDF = V.CX, V.CY, V.CZ, V.MDF
+CAMADAS = 3                                # tampa = 3 chapas de MDF iguais, coladas
+TZ = CZ + CAMADAS * MDF
+GZ0 = TZ + V.VAO
+DOB_X, EIXO, ESP = 62.0, V.EIXO, V.ESP     # dobradiça longe dos dentes: o dente desce quase reto     # dobradiça mais para trás, longe do trilho
 HX, HY = V.HX, V.HY
 
-DENTES_X = [108.0, 117.0, 126.0, 135.0]   # centro de cada dente (abs)
-DENTE_L, DENTE_H, DENTE_Y = 4.0, 8.0, 26.0
+DENTES_X = [96.0, 110.0, 124.0, 138.0]   # 14 mm entre dentes: sobra uma filete de MDF de 3,5 mm entre os furos   # centro de cada dente (abs)
+DENTE_L, DENTE_Y = 4.0, 26.0
+DENTE_H = CAMADAS * MDF + 3.0             # atravessa as 3 chapas
 FURO_L = 7.5                               # dente + 2 camadas de pano + folga do arco
 FURO_Y = DENTE_Y + 3
 FUNDO_FURO = CZ - 9.0
-FOLGA_ARCO = 1.5                           # a garra gira: o dente sai inclinado                      # profundidade do encaixe
+FOLGA_PANO = 1.75                          # de cada lado do dente: 1 camada de pano + folga
+ANG_MAX = 60.0
+
+
+def furos_por_camada():
+    """Para cada chapa (de cima para baixo), o intervalo x de cada furo.
+    Varre a garra abrindo de 0 a ANG_MAX e pega por onde o dente passa naquela altura."""
+    eixo = np.array([DOB_X, GZ0 + EIXO])
+    res = []
+    for k in range(CAMADAS):
+        z1 = TZ - k * MDF
+        z0 = z1 - MDF
+        linha = []
+        for xc in DENTES_X:
+            xs = []
+            for zt in np.linspace(-DENTE_H, 0, 25):
+                for xt in (xc - DENTE_L / 2, xc + DENTE_L / 2):
+                    p = np.array([xt, GZ0 + zt]) - eixo
+                    for a in np.radians(np.linspace(0, ANG_MAX, 121)):
+                        x = p[0] * np.cos(a) - p[1] * np.sin(a)
+                        z = p[0] * np.sin(a) + p[1] * np.cos(a)
+                        if z0 - 0.5 <= z + eixo[1] <= z1 + 0.5:
+                            xs.append(x + eixo[0])
+            linha.append((min(xs) - FOLGA_PANO, max(xs) + FOLGA_PANO))
+        res.append((z0, z1, linha))
+    return res                      # profundidade do encaixe
 
 
 def garra():
@@ -65,8 +94,9 @@ def reforco():
 def tampa_3d():
     t = cubo(0, 0, CZ, CX, CY, TZ)
     t = t - cubo(HX - 2.5, HY - 4, CZ - 1, HX + 4, HY + 4, TZ + 1) - cubo(18, 10, CZ - 1, 70, 20, TZ + 1)
-    for x in DENTES_X:
-        t = t - cubo(x - FURO_L / 2, HY - FURO_Y / 2, CZ - 1, x + FURO_L / 2 + FOLGA_ARCO, HY + FURO_Y / 2, TZ + 1)
+    for z0, z1, linha in furos_por_camada():
+        for a, b in linha:
+            t = t - cubo(a, HY - FURO_Y / 2, z0 - 0.01, b, HY + FURO_Y / 2, z1 + 0.01)
     return t
 
 
@@ -92,13 +122,14 @@ def svg():
     fx, fy = CX - 2 * MDF, CY - 2 * MDF
     tampa = [r(0, 0, CX, CY, cut), r(HX - 2.5, HY - 4, 6.5, 8, cut), r(18, 10, 52, 10, cut),
              f'<circle cx="6" cy="38" r="1.25" {cut}/>', f'<circle cx="{CX - 4.5}" cy="38" r="1.25" {cut}/>',
-             r(30, 40, 30, 30, eng), f'<text x="45" y="38" font-size="4" text-anchor="middle" {txt}>cole o QR aqui</text>',
+             r(15, 40, 30, 30, eng), f'<text x="30" y="38" font-size="4" text-anchor="middle" {txt}>cole o QR aqui</text>',
              r(DOB_X - 8, HY - 18, 14, 36, eng), f'<text x="95" y="62" font-size="3.5" text-anchor="middle" {txt}>dobradiça</text>',
              f'<text x="44" y="27" font-size="4" text-anchor="middle" {txt}>Tag&amp;Go</text>']
-    for x in DENTES_X:
-        tampa.append(r(x - FURO_L / 2, HY - FURO_Y / 2, FURO_L + FOLGA_ARCO, FURO_Y, cut))
-    pecas = [('Tampa', CX, CY, tampa),
-             ('Fundo', fx, fy, [r(0, 0, fx, fy, cut), r(175 - MDF, 61 - MDF, 20, 5, cut)]),
+    pecas = []
+    nomes = ['Tampa 1 (de cima)', 'Tampa 2 (meio)', 'Tampa 3 (de baixo)']
+    for k, (z0, z1, linha) in enumerate(furos_por_camada()):
+        pecas.append((nomes[k], CX, CY, tampa + [r(a, HY - FURO_Y / 2, b - a, FURO_Y, cut) for a, b in linha]))
+    pecas += [('Fundo', fx, fy, [r(0, 0, fx, fy, cut), r(175 - MDF, 61 - MDF, 20, 5, cut)]),
              ('Parede longa 1', CX, CZ, [r(0, 0, CX, CZ, cut)]), ('Parede longa 2', CX, CZ, [r(0, 0, CX, CZ, cut)]),
              ('Parede curta 1', fy, CZ, [r(0, 0, fy, CZ, cut), r(fy / 2 - 6, CZ - 22, 12, 10, cut)]),
              ('Parede curta 2', fy, CZ, [r(0, 0, fy, CZ, cut)])]
@@ -155,7 +186,7 @@ if __name__ == '__main__':
         ('ESP32 + expansor', 'comprada', '#15803d', cubo(40, 11, 25, 109, 65, 41) + cubo(48, 24, 41, 101, 52, 45), None),
         ('Semáforo LED', 'comprada', '#111827', cubo(17, 8, CZ - 6, 71, 22, CZ - 0.2)
          + uniao([cil(x, 15, CZ - 1, CZ + 1, 8, 24) for x in (30, 44, 58)]), None),
-        ('QR code', 'comprada', '#f8fafc', cubo(30, 40, TZ, 60, 70, TZ + 0.4), None),
+        ('QR code', 'comprada', '#f8fafc', cubo(15, 40, TZ, 45, 70, TZ + 0.4), None),
         ('Elástico da lingueta', 'comprada', '#111827', cubo(155.5, 44.4, 58.6, 200, 45.6, 59.4), 'elastico'),
     ]
     dados = {'pivo_braco': [L.SX, L.SY, L.Z_BRACO], 'pivo_garra': [DOB_X, HY, GZ0 + EIXO], 'garra_z0': GZ0,
