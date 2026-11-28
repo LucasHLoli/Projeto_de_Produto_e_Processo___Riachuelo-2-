@@ -340,15 +340,17 @@ def etq_local_casca():
 
 
 def b_berco():
-    """B3: berço da etiqueta. Sobe para dentro do rebaixo da tampa e cola pela aba embaixo da tampa."""
+    """B3: berço da etiqueta. Em cima, um bloco que enche o rebaixo das 2 chapas de baixo e cola na chapa de cima;
+    embaixo, a caixinha inclinada onde a etiqueta entra. Imprime de cabeça para baixo, sem suporte."""
     x0, x1 = -(ETQ[0] - DOMO_X), DOMO_X
     f, p = FOLGA_ETQ, PAREDE_B3
     fora = etq_T(lapis(x0 - f - p, x1 + f + p, ETQ[1] + 2 * (f + p), _zf, 12))
     dentro = etq_T(lapis(x0 - f, x1 + f, ETQ[1] + 2 * f, -ETQ[2] - f, 14))
-    corpo = (fora - dentro) ^ cubo(0, 0, -100, 300, 300, H + 2 * MDF - 0.3)
-    bx = b_rebaixo_xy()
-    aba = lapis(bx[0] - 3, bx[1] + 3, bx[3] - bx[2] + 6, H - 1.6, H, (bx[2] + bx[3]) / 2) - dentro
-    return corpo + aba
+    topo = H + 2 * MDF - 0.1
+    rx0, rx1, ry0, ry1 = b_rebaixo_xy()
+    bloco = lapis(rx0 + 0.3, rx1 - 0.3, ry1 - ry0 - 0.6, H, topo, (ry0 + ry1) / 2)
+    corpo = fora ^ cubo(0, 0, -100, 300, 300, topo)
+    return corpo + bloco - dentro
 
 
 def b_rebaixo_xy():
@@ -671,15 +673,15 @@ if __name__ == '__main__':
     salvar(a_braco(0).translate([-SX, -SY, -Z_BRACO]), 'A3_braco_biela')
     salvar(a_garra().rotate([180, 0, 0]), 'A4_garra_dentes')
     salvar(a_dobradica(), 'A5_dobradica')
-    salvar(cil_x(0, 0, 0, 44, 3.2) + cil_x(0, 0, -2, 0, 6.0), 'A7_eixo_garra')
+    salvar((cil_x(0, 0, 0, 44, 3.2) + cil_x(0, 0, -2, 0, 6.0)).rotate([0, -90, 0]), 'A7_eixo_garra')   # em pé, cabeça na mesa
     print('Versão B:')
     salvar(b_base(), 'B1_torre_servo')
-    salvar(servo_T(b_braco(0)[0].translate([0, 0, 0])).translate([0, 0, 0]) if False else b_braco(0)[0], 'B2_braco_imas')
-    salvar(b_berco(), 'B3_berco_etiqueta')
+    salvar(b_braco(0)[0], 'B2_braco_imas')
+    salvar(b_berco().rotate([180, 0, 0]), 'B3_berco_etiqueta')          # de cabeça para baixo: a face de cima na mesa
     salvar(b_garra().rotate([180, 0, 0]), 'B4_garra_pino')
     salvar(teste_embreagem(), 'B5_teste_encaixe_etiqueta')
     salvar(b_suporte_chave(), 'B6_suporte_chave')
-    salvar(b_tampinha().rotate([180 - BETA, 0, 0]), 'B7_tampinha_pino')
+    salvar(b_tampinha().rotate([180, 0, 0]), 'B7_tampinha_pino')         # face reta na mesa
     print('Comuns:')
     salvar(calcos(), 'C1_calcos_servo')
     salvar(uniao([batente().translate([k * 13, 0, 0]) for k in range(6)]), 'C2_batentes_x6')

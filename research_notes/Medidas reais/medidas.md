@@ -258,3 +258,116 @@ Para encaixe impresso: furo Ø15,2 a 15,3 com 5,2 de fundo.
 - Power bank: confirmado 149 × 69 × 15 e a posição das portas pela imagem oficial.
 - HyperX: confirmado 215 × 91 × 17,4 pela imagem oficial, com bobinas a ~47 de cada ponta.
 - Receptor Qi: o 45 × 75 da planilha não foi reconfirmado; tratar como a medir.
+
+## Revisão 2 (28/11/2026)
+
+Segunda passada só nos pontos fracos. Mesmos tipos de fonte: F, L, C, E. O veredito compara com o valor que está no CAD.
+
+### 1. Etiqueta tipo lápis (pencil tag)
+
+Formato (fotos oficiais Intelbras e Vitag): corpo achatado com uma "cabeça" cilíndrica numa ponta, em L. A cabeça tem uma face plana com o furo do pino e, do lado oposto, uma cúpula. A "espessura" das fichas é a altura dessa cabeça, no eixo do pino.
+
+| Item | Valor | Fonte | Tipo |
+|---|---|---|---|
+| C × L × A | 46 × 13 × 18,5 (±0,5), AM 58 kHz, "força de travamento padrão" | Intelbras TAG 1002, https://backend.intelbras.com/sites/default/files/2024-09/datasheet-tag-1002-pt.pdf | F |
+| C × L × A | 56 × 16 × 18,5 (±0,5), "lock strength standard" | Dahua T069, https://www.dahuasecurity.com/ea/products/All-Products/Security-Screening/EAS/AM-Tags/ISC-ETA5-T069 | F |
+| C × L × A | 45,5 × 12,7 × 17,2 (±0,5) | Dahua T010C, https://www.dahuasecurity.com/products/All-Products/Security-Screening--ESL--EAS/EAS/AM-Tags/ISC-ETA5-T010C | F |
+| C × L | 53 × 15; 8,8 g; "exige detacher Superlock forte" | Vitag, https://www.vitag.com.au/wp-content/uploads/2017/05/Pencil-Tag-Brochure-v171122.pdf | F (marca própria) |
+| C × L | 61 × 15 (versão "Super Pencil") | https://www.vitag.com.au/wp-content/uploads/2017/06/Super-Pencil-Tag-Brochure-v0921.pdf | F |
+| Face do pino × face do ímã | o pino entra pela face plana da cabeça (furo visível); a cúpula fica no lado oposto. Que o ímã encosta na cúpula: não encontrado em fonte, só pelas fotos e pelo uso comum | fotos Intelbras e Vitag acima | E |
+| Centro da garra até a ponta | ~6,5 a 8 (metade da largura, porque a cabeça é um cilindro do diâmetro do corpo) | fotos acima | E |
+| Ø do furo da garra, parede, altura do corpo achatado | não encontrado | | medir |
+
+Veredito: **contradito**. 60 × 18 × 15 não bate com nenhuma ficha. Faixa real: 46 a 56 × 13 a 16 × 17,2 a 18,5. Garra a ~7 da ponta, não a 12.
+
+### 2. Pino
+
+| Item | Valor | Fonte | Tipo |
+|---|---|---|---|
+| Ø da haste | 1,2 ("padrão desde o início da indústria") | https://patents.google.com/patent/US9053623 | C (patente) |
+| Comprimento | 16 ou 19 | https://china.org.ru/product/62266773911 ; https://www.vitag.com.au/products/pin-19mm-grooved-metal-dome-head/ | L |
+| Comprimento 21 | não encontrado | | |
+| Cabeça | plana Ø12 (pino de 16); metal abaulada 15 (pino de 19); Ø13 | https://www.vitag.com.au/products/metal-pin-grooved/ ; Vitag 19 mm acima; china.org.ru acima | L |
+| Altura da cabeça | não encontrado (só "low-profile") | Vitag | |
+
+Veredito: haste Ø1,2 × 16 **confirmado**; cabeça Ø12,5 dentro da faixa 12 a 13; altura 3,5 **sem fonte**.
+
+### 3. Ímã contra detacher
+
+| Item | Valor | Fonte | Tipo |
+|---|---|---|---|
+| Detacher "Standard" | 4.500 GS | Dahua ISC-ED0006, https://www.dahuasecurity.com/products/security-screening-&-esl-&-eas/eas/detacher/isc-ed0006 | F |
+| Detachers comuns | 5.000 (ED0009); ≥5.500 (ED0008) | https://www.dahuasecurity.com/products/security-screening-&-esl-&-eas/eas/detacher/isc-ed0009 ; .../isc-ed0008 | F |
+| Detacher "Super" | 9.500 GS (ED0005); 11.000 (ED-0919) | https://www.dahuasecurity.com/tr/Products/All-Products/Security-Screening/EAS/Accessories/ISC-ED0005 | F |
+| Detacher "golf" de loja | 12.000 GS | https://www.newegg.com/p/2YG-06X4-00001 | L |
+| Br do N50 | 1,40 a 1,46 T | https://www.supermagnete.ch/eng/physical-magnet-data | F |
+| Fórmula no eixo | B(z) = Br/2 · [(z+L)/√((z+L)²+R²) − z/√(z²+R²)] | https://kjmagnetics.com/blog/surface-fields-101 ; https://www.kjmagnetics.com/fieldcalculator.asp | F |
+| 1 ímã 15 × 5 N50, no eixo | 0 mm: 3.900 a 4.000 G; 1 mm: 3.450 a 3.570; 3 mm: 2.500 a 2.600 | conta nossa com a fórmula | E |
+| 2 empilhados (15 × 10) | 0 mm: 5.600 a 5.800; 1 mm: 4.860 a 5.030; 3 mm: 3.460 a 3.590 | conta nossa | E |
+| 3 empilhados (15 × 15), Br 1,42 | 1 mm: ~5.500; 3 mm: ~3.900 | conta nossa | E |
+
+Conclusão: 2 × N50 15 × 5 com ~1 mm de folga dá ~4.900 G na face da etiqueta. Isso empata com um detacher "Standard" (4.500 a 5.500), mas a garra fica alguns mm para dentro da cúpula, e o campo do nosso ímã pequeno cai mais rápido que o de um detacher grande. Para etiqueta lápis que pede "Superlock" (9.500 a 12.000) **não basta**. Talvez abra uma etiqueta padrão; uma lápis "super", provavelmente não. Testar com a etiqueta real antes de fechar o CAD. Não achei teste publicado com ímãs empilhados.
+
+### 4. Chave fim de curso YL-99
+
+Não há desenho do YL-99. A micro chave preta segue o padrão 12,8 × 5,8; usei a ficha Würth desse padrão.
+
+| Item | Valor | Fonte | Tipo |
+|---|---|---|---|
+| Corpo da micro chave | 12,8 × 5,8 × 6,5 (±0,15) | Würth WS-MITV 463092691402, https://www.we-online.com/catalog/datasheet/463092691402.pdf | F (mesmo padrão, outra marca) |
+| Furos da micro chave | Ø2,0 a 2,2; 6,5 entre centros (leitura do desenho) | idem | F, conferir |
+| Haste dessa versão | ~12,8 (haste curta); a do YL-99 parece mais longa | idem; foto Curto Circuito | F / E |
+| Força | 80 g máx.; retorno 5 g mín. | idem | F |
+| Curso | posição livre ≤10, aciona em 6,8 ±1,2 (≈3 de curso), sobrecurso ≥0,55 | idem | F |
+| Haste de 19 e furo da placa | não encontrado | | medir |
+
+Veredito: placa 25 × 13,7 segue só com a loja; corpo 12,8 × 5,8 × 6,5 **confirmado** (mesmo padrão); haste ~19 **desconhecida**.
+
+### 5. Receptor Qi Comtac 9353
+
+| Item | Valor | Fonte | Tipo |
+|---|---|---|---|
+| Medidas | não traz (só "ultra fino", 5 V 1 A, 300 g com embalagem) | https://www.kabum.com.br/produto/177521/ | L |
+| Parecido (Exbom) | 70 × 45, 4 g | https://www.kabum.com.br/produto/526384/ | L, outra marca |
+| Rabicho (Adafruit 40 mm) | 40 | https://www.adafruit.com/products/2115 | L, outra marca |
+
+Veredito: **desconhecido**. 75 × 45 × ~1 continua sem fonte.
+
+### 6. Semáforo LED
+
+| Item | Valor | Fonte | Tipo |
+|---|---|---|---|
+| C × L × A | 56 × 21 × 11; furos Ø3 | https://www.berrybase.de/en/led-traffic-light-module-with-3x-8mm-led-red-yellow-green-5v | L |
+| PCB | 56 × 13 | https://protosupplies.com/product/traffic-light-led-module/ | L |
+| Outras lojas | 57 × 22 × 11 (EasyElec); 55 × 21 × 14 (Fluxworkshop) | https://easyelecmodule.com/product/led-traffic-light-module/ ; https://fluxworkshop.com/collections/modules-leds/products/3pcs-traffic-light-black-comp | L |
+| Furos | Ø3, 15 entre centros (placa 53 × 18 nessa loja) | Core Electronics, https://core-electronics.com.au/traffic-light-module.html (só no resumo da busca; a página bloqueou a leitura) | L, não lido |
+| Distância entre LEDs | não encontrado | | medir |
+
+Veredito: 56 × 21 × 11 e Ø3 **confirmados**; espaço entre furos (15?) e entre LEDs ainda a medir.
+
+### 7. SG90
+
+| Item | Valor | Fonte | Tipo |
+|---|---|---|---|
+| Tabela de loja | A 34,5; B 22,8; C 26,7; D 12,6; E 32,5; F 16 (sem legenda) | https://www.wiltronics.com.au/?p=9257 | L |
+| Altura | "22,2 × 11,8 × 31", 31 inclui o braço (segundo resumo de busca) | https://www.brain.rcast.u-tokyo.ac.jp/aad/wp-content/uploads/2024/12/SG90_a.pdf | L |
+| Braço simples | nada novo (seguem os dados kernelcad: chapa 2, cubo 5, furos até 17) | | |
+
+Conta: se A = 34,5 for a altura com braço e F = 16 a orelha, o topo do braço fica ~18,5 acima da base da orelha. Com o TowerPro (eixo 30,3; orelha 15,6 a 17), dá ~13 a 15 até o topo do eixo, mais ~1 a 2 do braço. Veredito: **17 é apertado**; reservar 19.
+
+### 8. Power bank ELG PB102BK
+
+| Item | Valor | Fonte | Tipo |
+|---|---|---|---|
+| Medidas | não trazem: KaBuM (PB102WH, 301 g com embalagem), Pichau | https://www.kabum.com.br/produto/992904/ ; https://www.pichau.com.br/power-bank-elg-com-display-indicador-10200mah-tipo-c-usb-a-preto-pb102bk | L |
+| Amazon | não abriu (erro 503) nesta passada | https://www.amazon.com.br/dp/B0DJ3LHDG4 | |
+
+Veredito: 149 × 69 × 15 segue com uma fonte só (Amazon, primeira passada). Portas: nada novo.
+
+### O que muda no CAD
+
+- Etiqueta: trocar 60 × 18 × 15 por ~56 × 16 × 18,5 (cobre Dahua e Intelbras) e pôr a garra a ~7 da ponta. A altura sobe 3,5.
+- Ímã: 2 × 15 × 5 está no limite. Deixar o ninho fundo para 3 ímãs ou baixar o PLA para 0,4 a 0,6, e testar com a etiqueta comprada.
+- Servo: reservar 19 acima da base da orelha, não 17.
+- Micro chave: corpo 12,8 × 5,8 × 6,5, furos Ø2 a 6,5; ~3 de curso até acionar.
+- Ainda medir: haste do YL-99, receptor Qi, LEDs e furos do semáforo, altura da cabeça do pino, furo da garra.
