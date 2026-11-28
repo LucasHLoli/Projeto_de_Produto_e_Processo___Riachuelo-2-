@@ -49,9 +49,22 @@ def caixa():
     return cubo(-MDF, -MDF, -MDF, LX + MDF, LY + MDF, H) - cubo(0, 0, 0, LX, LY, H + 1)
 
 
-def prateleira():
+def furo_servo_B():
+    """Na B o servo fica 4 mm mais baixo e passa pela prateleira: furo do tamanho do corpo + 1 mm."""
+    s = M.SERVO
+    bx0 = M.SX - s['eixo_ponta']
+    a = P_pt(bx0 - 1, M.SY - s['corpo_l'] / 2 - 1, 0)
+    b = P_pt(bx0 + s['corpo_c'] + 14, M.SY + s['corpo_l'] / 2 + 1, 0)
+    return (min(a[0], b[0]), min(a[1], b[1]), max(a[0], b[0]), max(a[1], b[1]))
+
+
+def prateleira(furo_b=False):
     p = cubo(0, 0, Z_PRAT, LX, LY, ZS)
-    return p - cubo(FURO_CABO[0], FURO_CABO[1], Z_PRAT - 1, FURO_CABO[2], FURO_CABO[3], ZS + 1)
+    p = p - cubo(FURO_CABO[0], FURO_CABO[1], Z_PRAT - 1, FURO_CABO[2], FURO_CABO[3], ZS + 1)
+    if furo_b:
+        f = furo_servo_B()
+        p = p - cubo(f[0], f[1], Z_PRAT - 1, f[2], f[3], ZS + 1)
+    return p
 
 
 def pes():
@@ -102,8 +115,7 @@ def a_tampa():
 def b_tampa():
     cx, cy, _ = P_pt(*M.CAPS, 0)
     t = cubo(-MDF, -MDF, H, LX + MDF, LY + MDF, H + MDF)
-    import chave as K
-    return t - cil(cx, cy, H - 1, H + MDF + 1, M.CAP_D + 0.4) - janela_leds(H - 1, H + 20) - furos_tampa(H - 1, H + 20) - K.B_rasgo_tampa()
+    return t - cil(cx, cy, H - 1, H + MDF + 1, M.CAP_D + 0.4) - janela_leds(H - 1, H + 20) - furos_tampa(H - 1, H + 20)
 
 
 def canto_tampa(x, y):
@@ -165,6 +177,7 @@ def checar():
                     erros.append(f'A servo {ang}°: {pn} x {n}')
     # ---- B
     fb = dict(comuns)
+    fb['prateleira'] = prateleira(True)
     fb.update({'tampa B': b_tampa(), 'base servo': P(M.b_base()), 'cápsula': P(M.b_capsula() + M.b_anel()),
                'cantos': uniao([canto_tampa(x, y) for x, y in PARAF])})
     for ang in range(0, 121, 5):
@@ -223,9 +236,9 @@ def svgs():
         tA.append((['Tampa 1 (de cima)', 'Tampa 2 (meio)', 'Tampa 3 (de baixo)'][k], EX, EY, els))
     escreve('caixa_v3_A.svg', tA)
     cx, cy, _ = P_pt(*M.CAPS, 0)
-    import chave as K
-    bx = K.B_rasgo_tampa().bounding_box()
-    escreve('caixa_v3_B.svg', [('Tampa', EX, EY, base + qr + [c(cx, cy, M.CAP_D + 0.4, cut), r(bx[0], bx[1], bx[3] - bx[0], bx[4] - bx[1], cut)])])
+    fb = furo_servo_B()
+    paredes[0] = ('Prateleira (fica sobre os pés)', LX, LY, paredes[0][3] + [r(fb[0], fb[1], fb[2] - fb[0], fb[3] - fb[1], cut, 0)])
+    escreve('caixa_v3_B.svg', [('Tampa', EX, EY, base + qr + [c(cx, cy, M.CAP_D + 0.4, cut)])])
 
 
 def salvar(m, nome):

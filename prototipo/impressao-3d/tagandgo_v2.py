@@ -83,8 +83,9 @@ def prisma_yz(pts, x0, x1):
 
 
 # ======================= SERVO (comum às duas versões) =======================
-def berco_servo(x0, x1, y0, y1):
-    """Placa de base + berço do servo. Orelhas apoiam em Z_ORELHA; furo oblongo serve SG90 e MG90S."""
+def berco_servo(x0, x1, y0, y1, z_or=None):
+    """Placa de base + berço do servo. Orelhas apoiam em z_or; furo oblongo serve SG90 e MG90S."""
+    Z_ORELHA = globals()['Z_ORELHA'] if z_or is None else z_or
     s = SERVO
     bx0 = SX - s['eixo_ponta']
     bx1 = bx0 + s['corpo_c']
@@ -92,7 +93,7 @@ def berco_servo(x0, x1, y0, y1):
     base = cubo(x0, y0, 0, x1, y1, 2)
     bloco = cubo(cx - s['orelhas'] / 2 - 2, SY - s['corpo_l'] / 2 - 2.5, 0, cx + s['orelhas'] / 2 + 2, SY + s['corpo_l'] / 2 + 2.5, Z_ORELHA)
     m = base + bloco
-    m = m - cubo(bx0 - 0.3, SY - s['corpo_l'] / 2 - 0.3, 0.6, bx1 + 0.3, SY + s['corpo_l'] / 2 + 0.3, Z_ORELHA + 1)
+    m = m - cubo(bx0 - 0.3, SY - s['corpo_l'] / 2 - 0.3, -1 if Z_ORELHA - 15.9 < 0.6 else 0.6, bx1 + 0.3, SY + s['corpo_l'] / 2 + 0.3, Z_ORELHA + 1)
     for sgn in (-1, 1):
         f0, f1 = s['furos']
         a = cx + sgn * f0 / 2
@@ -100,7 +101,7 @@ def berco_servo(x0, x1, y0, y1):
         m = m - (cil(a, SY, Z_ORELHA - 8, Z_ORELHA + 1, 2.0) + cil(b, SY, Z_ORELHA - 8, Z_ORELHA + 1, 2.0)
                  + cubo(min(a, b), SY - 1.0, Z_ORELHA - 8, max(a, b), SY + 1.0, Z_ORELHA + 1))
     # saída do fio nas duas pontas, embaixo
-    m = m - cubo(cx - s['orelhas'] / 2 - 3, SY - 2.5, 0.6, cx + s['orelhas'] / 2 + 3, SY + 2.5, 7)   # fio sai pelas duas pontas
+    m = m - cubo(cx - s['orelhas'] / 2 - 3, SY - 2.5, -1 if Z_ORELHA - 15.9 < 0.6 else 0.6, cx + s['orelhas'] / 2 + 3, SY + 2.5, 7)   # fio sai pelas duas pontas
     return m
 
 
@@ -226,11 +227,8 @@ def a_base_mecanismo():
     p1 = cubo(SX - 18, SY + 10, 0, SX - 12, SY + 22, 42.0)
     p2 = cubo(SX - 2, SY + 19.5, 0, SX + 2, SY + 22, 42.0)
     p3 = cubo(lx1 - 8.0, SY + 19.5, 0, lx1 - 4.5, SY + 22, 42.0)
-    # suporte da chave fim de curso (a placa da chave é colada em cima, com cola quente)
-    sup = cubo(180.0, CH['yc'] - 6.0, 0, 188.0, CH['yc'] + 6.0, CH['z_placa'])
-    for sy in (-1, 1):                                                  # abas laterais que encaixam a placa da chave
-        a, b = CH['yc'] + sy * 6.95, CH['yc'] + sy * 7.85
-        sup = sup + cubo(180.0, min(a, b), CH['z_placa'] - 2.0, 188.0, max(a, b), CH['z_placa'] + 1.2)
+    import chave as _ch
+    sup = _ch.A_suporte_modulo()                                    # suporte da chave fim de curso
     abas = cubo(SX - 20, ly0 - 0.4, Z_LING[1] + 0.2, lx1 - 0.5, ly0 + 0.4, Z_LING[1] + 1.1) + cubo(SX - 20, ly1 - 0.4, Z_LING[1] + 0.2, lx1 - 0.5, ly1 + 0.4, Z_LING[1] + 1.1)
     chao = cubo(SX - 20, SY + 10, 42.0, lx1 - 0.5, SY + 22, 44.1)
     chao = chao - cubo(PINO_X_TRAVA - 2.6 - CURSO - 0.6, ly0 + 0.6, 41, PINO_X_TRAVA + 1.4 + 0.6, ly1 - 0.6, 45)
@@ -289,45 +287,52 @@ def b_tampa():
     return t - cil(CAPS[0], CAPS[1], H - 1, B_TZ + 1, CAP_D + 0.4) - janela_leds() - furos_tampa()
 
 
-CAV = 4.0          # vão embaixo da embreagem para a ponta do pino (pino de 16 mm passa ~4 mm da embreagem)
+CAV = 5.0          # vão embaixo da embreagem para a ponta do pino (pino de 16 mm passa ~2,5 mm da embreagem)
+B_LOW = 5.0        # a cápsula desce 4 mm para dentro da caixa: o vão do pino fica abaixo da tampa (a chave alcança por dentro)
+ZC0 = H - B_LOW + CAV                       # fundo da embreagem
+Z_FUNDO_CAP = H - B_LOW - 0.8               # face de baixo do fundo da cápsula
+Z_ANEL_TOPO = ZC0 + EMB[1] + 0.3 + 1.6     # topo da cápsula
+B_PONTA_PINO = Z_ANEL_TOPO + 0.6 - 16.0    # onde chega a ponta do pino de 16 mm (cabeça sobre 0,6 mm de pano)
+Z_BRACO_B = Z_FUNDO_CAP - 0.2 - N_IMAS * IMA[1] - 2.5   # topo do braço plástico na B
+Z_ORELHA_B = Z_BRACO_B - SERVO['braco_acima_orelha_max']
 
 
 def b_capsula():
-    """Corpo da cápsula: fundo de 0,8 mm na face de baixo da tampa. A embreagem apoia num degrau a 4 mm do fundo;
-    embaixo dela fica o vão da ponta do pino."""
+    """Cápsula: fundo de 0,8 mm (os ímãs passam 0,2 mm embaixo); vão de 4 mm para a ponta do pino; a embreagem apoia
+    num degrau. Uma fenda lateral deixa a alavanca da chave entrar no vão (o pino aperta a alavanca)."""
     x, y = CAPS
-    z_fundo = H - 0.8
-    corpo = cil(x, y, z_fundo, H + CAV + EMB[1] + 0.3, CAP_D)
+    corpo = cil(x, y, Z_FUNDO_CAP, ZC0 + EMB[1] + 0.3, CAP_D)
     aba = Manifold.cylinder(3.0, CAP_D / 2 + 4, CAP_D / 2, SEG).translate([x, y, B_TZ])     # aba em 45 graus
     c = corpo + aba
-    c = c - cil(x, y, H + CAV, H + CAV + EMB[1] + 1, EMB[0] + 0.3)        # embreagem
-    c = c - cil(x, y, H, H + CAV + 0.01, EMB[0] - 3.0)                     # vão da ponta do pino (degrau de 1,5 mm)
-    return c
+    c = c - cil(x, y, ZC0, ZC0 + EMB[1] + 1, EMB[0] + 0.3)                  # embreagem
+    c = c - cil(x, y, Z_FUNDO_CAP + 0.8, ZC0 + 0.01, EMB[0] - 3.0)            # vão da ponta do pino
+    fenda = cubo(0, -2.2, Z_FUNDO_CAP + 0.8, CAP_D, 2.2, ZC0 - 0.2).rotate([0, 0, ANG_SOLTAR]).translate([x, y, 0])
+    return c - fenda
 
 
 def b_anel():
     """Tampa de cima da cápsula, colada depois de pôr a embreagem. Furo do pino no centro."""
     x, y = CAPS
-    z = H + CAV + EMB[1] + 0.3
+    z = ZC0 + EMB[1] + 0.3
     return cil(x, y, z, z + 1.6, CAP_D) - cil(x, y, z - 1, z + 3, PINO_ETQ + 0.6)
 
 
 def b_braco(ang=ANG_REPOUSO):
-    esp = H - 0.8 - 0.2 - N_IMAS * IMA[1] - Z_BRACO        # espessura do braço sob os ímãs
+    esp = Z_FUNDO_CAP - 0.2 - N_IMAS * IMA[1] - Z_BRACO_B   # espessura do braço sob os ímãs (2,5 mm)
     b = cubo(-4, -4, 0, R_IMA, 4, esp) + cil(0, 0, 0, esp, 8) + cil(R_IMA, 0, 0, esp, IMA[0] + 2)
     b = b - cil(0, 0, -1, esp + 1, 2.2) - cubo(-3.5, -2.3, -1, 1.5, 2.3, min(1.3, esp - 1.2))
     b = b + cil(R_IMA, 0, esp - 0.01, esp + N_IMAS * IMA[1] - 0.5, 2.9)      # pino impresso: os ímãs (furo 3 mm) encaixam e colam
-    return b.rotate([0, 0, ang]).translate([SX, SY, Z_BRACO]), esp
+    return b.rotate([0, 0, ang]).translate([SX, SY, Z_BRACO_B]), esp
 
 
 def b_imas(ang=ANG_REPOUSO):
     _, esp = b_braco()
     m = cil(R_IMA, 0, esp, esp + N_IMAS * IMA[1], IMA[0]) - cil(R_IMA, 0, esp - 1, esp + 20, IMA[2])
-    return m.rotate([0, 0, ang]).translate([SX, SY, Z_BRACO])
+    return m.rotate([0, 0, ang]).translate([SX, SY, Z_BRACO_B])
 
 
 def b_base():
-    return berco_servo(SX - 20, SX + 21, SY - 9, SY + 9)
+    return berco_servo(SX - 20, SX + 21, SY - 9, SY + 9, z_or=Z_ORELHA_B)
 
 
 def teste_embreagem():
@@ -364,13 +369,15 @@ def comprados_comuns():
     ]
 
 
-def servo_modelo(z_base):
+def servo_modelo(z_base, z_or=None, z_braco=None):
+    z_or = Z_ORELHA if z_or is None else z_or
+    z_braco = Z_BRACO if z_braco is None else z_braco
     s = SERVO
     bx0 = SX - s['eixo_ponta']
     cx = bx0 + s['corpo_c'] / 2
-    return (cubo(bx0, SY - s['corpo_l'] / 2, z_base, bx0 + s['corpo_c'], SY + s['corpo_l'] / 2, Z_ORELHA + 9)
-            + cubo(cx - s['orelhas'] / 2, SY - s['corpo_l'] / 2, Z_ORELHA, cx + s['orelhas'] / 2, SY + s['corpo_l'] / 2, Z_ORELHA + 2.5)
-            + cil(SX, SY, Z_ORELHA + 9, Z_BRACO, 7))
+    return (cubo(bx0, SY - s['corpo_l'] / 2, z_base, bx0 + s['corpo_c'], SY + s['corpo_l'] / 2, z_or + 9)
+            + cubo(cx - s['orelhas'] / 2, SY - s['corpo_l'] / 2, z_or, cx + s['orelhas'] / 2, SY + s['corpo_l'] / 2, z_or + 2.5)
+            + cil(SX, SY, z_or + 9, z_braco, 7))
 
 
 # ======================= SVG do MDF =======================
@@ -537,7 +544,7 @@ if __name__ == '__main__':
     salvar(cil_x(0, 0, 0, 44, 3.2) + cil_x(0, 0, -2, 0, 6.0), 'A7_eixo_garra')
     print('Versão B:')
     salvar(b_base(), 'B1_base_servo')
-    salvar(b_braco(0)[0].translate([-SX, -SY, -Z_BRACO]), 'B2_braco_imas')
+    salvar(b_braco(0)[0].translate([-SX, -SY, -Z_BRACO_B]), 'B2_braco_imas')
     salvar(b_capsula(), 'B3_capsula_embreagem')
     salvar(b_anel(), 'B4_anel_capsula')
     salvar(teste_embreagem(), 'B5_teste_embreagem')
@@ -561,11 +568,9 @@ if __name__ == '__main__':
     ]
     B = partes_comuns(b_tampa(), B_TZ) + [
         ('Base do servo', 'impressa', '#ea580c', b_base(), None),
-        ('Braço dos ímãs', 'impressa', '#2563eb', b_braco(0)[0].translate([-SX, -SY, -Z_BRACO]), 'braco'),
-        ('Ímãs 15 × 5 (2)', 'comprada', '#d4d4d8', b_imas(0).translate([-SX, -SY, -Z_BRACO]), 'braco'),
+        ('Braço dos ímãs', 'impressa', '#2563eb', b_braco(0)[0].translate([-SX, -SY, -Z_BRACO_B]), 'braco'),
+        ('Ímãs 15 × 5 (2)', 'comprada', '#d4d4d8', b_imas(0).translate([-SX, -SY, -Z_BRACO_B]), 'braco'),
         ('Cápsula da embreagem', 'impressa', '#f59e0b', b_capsula() + b_anel(), None),
-        ('Embreagem da etiqueta', 'comprada', '#71717a', cil(CAPS[0], CAPS[1], H + CAV, H + CAV + EMB[1], EMB[0]), None),
-        ('Pino da etiqueta', 'comprada', '#e4e4e7', cil(CAPS[0], CAPS[1], H + CAV + EMB[1] + 2.9 - 16, H + CAV + EMB[1] + 2.9, PINO_ETQ) + cil(CAPS[0], CAPS[1], H + CAV + EMB[1] + 2.9, H + CAV + EMB[1] + 4.4, 12), 'pino'),
     ]
     dados = {
         'A': {'pivo_braco': [SX, SY, Z_BRACO], 'pivo_garra': [A_GX, A_EIXO_Y, A_GZ0 + A_EIXO_DZ], 'biela': [SX, R_BIELA, PINO_X_TRAVA],

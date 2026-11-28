@@ -31,9 +31,9 @@ def caixa_arred(x0, y0, z0, x1, y1, z1, r):
 
 
 # ---------------- servo SG90 (no referencial do módulo v2; depois P()) ----------------
-def servo_sg90():
+def servo_sg90(z_or=None):
     s = M.SERVO
-    zb = M.Z_ORELHA - 15.9                      # fundo do servo
+    zb = (M.Z_ORELHA if z_or is None else z_or) - 15.9      # fundo do servo
     bx0 = M.SX - s['eixo_ponta']
     bx1 = bx0 + 22.7
     cx = (bx0 + bx1) / 2
@@ -206,17 +206,24 @@ def cabo_usb():
 
 
 # ---------------- versão B ----------------
-def embreagem_pino():
+def embreagem_partes():
+    """Embreagem de etiqueta de loja em corte simplificado: copo de aço, carretel (desce quando o ímã puxa)
+    e 3 esferas que prendem o pino (abrem quando o carretel desce). Medidas: modelo da equipe [MEDIR]."""
     cx, cy, _ = C.P_pt(*M.CAPS, 0)
-    z0 = C.H + M.CAV
-    emb = cil(cx, cy, z0, z0 + M.EMB[1], M.EMB[0]) - uniao([cil(cx, cy, z0 + 2 + k * 3, z0 + 2.6 + k * 3, M.EMB[0] + 1) - cil(cx, cy, z0, z0 + 20, M.EMB[0] - 0.8) for k in range(3)])
-    return [('#9ca3af', emb)]
+    z0 = C.ZS + M.ZC0
+    D, Hc = M.EMB
+    copo = cil(cx, cy, z0, z0 + Hc, D) - cil(cx, cy, z0 + 1.0, z0 + Hc + 1, D - 1.6) - cil(cx, cy, z0 - 1, z0 + 2, 3.0)
+    copo = copo + (Manifold.cylinder(2.5, D / 2 - 0.8, 1.6, 32).translate([cx, cy, z0 + Hc - 4.0]) - cil(cx, cy, z0, z0 + Hc + 1, 3.2))   # cone das esferas
+    carretel = cil(cx, cy, z0 + 1.2, z0 + 6.0, D - 2.2) - cil(cx, cy, z0, z0 + 7, 3.2)
+    mola = uniao([cil(cx, cy, z0 + 6.0 + k * 0.9, z0 + 6.4 + k * 0.9, D - 2.6, 24) - cil(cx, cy, z0, z0 + 20, D - 3.6, 24) for k in range(3)])
+    esferas = uniao([Manifold.sphere(1.2, 16).translate([cx + 1.85 * np.cos(np.radians(a)), cy + 1.85 * np.sin(np.radians(a)), z0 + Hc - 2.6]) for a in (0, 120, 240)])
+    return (cx, cy, z0), [('#9ca3af', copo), ('#94a3b8', mola)], [('#cbd5e1', carretel)], [('#e5e7eb', esferas)]
 
 
 def pino_etiqueta():
     cx, cy, _ = C.P_pt(*M.CAPS, 0)
-    zc = C.H + M.CAV + M.EMB[1] + 0.3 + 1.6 + 1.4          # cabeça em cima do pano e da alavanca
-    haste = cil(cx, cy, zc - 16, zc, 1.2)
+    zc = C.ZS + M.Z_ANEL_TOPO + 0.6                      # cabeça apoiada no pano (0,6 mm) em cima da cápsula
+    haste = cil(cx, cy, zc - 16, zc, 1.2) + Manifold.cylinder(0.8, 0.1, 0.6, 12).translate([cx, cy, zc - 16.8])
     cabeca = cil(cx, cy, zc, zc + 1.5, 12.5) + (esfera(cx, cy, zc + 1.5, 12.5) ^ cubo(cx - 7, cy - 7, zc + 1.5, cx + 7, cy + 7, zc + 4))
     return [('#e5e7eb', haste), ('#94a3b8', cabeca)]
 
@@ -228,5 +235,5 @@ def imas_local(pb):
         z0 = esp + k * M.IMA[1]
         m = cil(M.R_IMA, 0, z0, z0 + M.IMA[1] - 0.05, M.IMA[0]) - cil(M.R_IMA, 0, z0 - 1, z0 + 6, M.IMA[2])
         pecas.append(m)
-    m = uniao(pecas).translate([M.SX, M.SY, M.Z_BRACO])
+    m = uniao(pecas).translate([M.SX, M.SY, M.Z_BRACO_B])
     return [('#d4d4d8', C.P(m).translate([-pb[0], -pb[1], -pb[2]]))]

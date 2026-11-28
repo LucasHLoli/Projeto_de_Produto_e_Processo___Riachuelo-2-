@@ -98,19 +98,19 @@ def _fios_chave(pino_xyz, rota):
 
 def chave_a_fios():
     import chave as K
-    return _fios_chave(K.A_pino, lambda xs, ys, zs, i: [(xs, ys, zs - 12), (xs + 8, 2.6 + i * 0.9, zs - 13), (pino(27, 'S')[0] - 8, 2.6 + i * 0.9, C.ZS + 26)])
+    return _fios_chave(K.A_pino, lambda xs, ys, zs, i: [(xs + 4, ys, zs - 10), (xs + 6, 30 + i * 1.4, C.ZS + 28), (pino(27, 'S')[0] - 8, 30 + i * 1.4, C.ZS + 28)])
 
 
 def chave_b_fios():
     """Os pinos descem pelo rasgo da tampa; os fios correm encostados no lado de trás até o expansor."""
     import chave as K
-    return _fios_chave(K.B_pino, lambda xs, ys, zs, i: [(xs, ys, C.H - 12), (xs + 6, 78 + i * 1.4, C.H - 14), (pino(27, 'S')[0] - 6, 78 + i * 1.4, C.ZS + 30)])
+    return _fios_chave(K.B_pino, lambda xs, ys, zs, i: [(xs + 4, ys, zs - 10), (xs + 10, 78 + i * 1.4, C.ZS + 30), (pino(27, 'S')[0] - 6, 78 + i * 1.4, C.ZS + 30)])
 
 
-def servo_cabo():
+def servo_cabo(z_or=None):
     """Cabo do servo com o conector de 3 vias encaixado direto na coluna S/V/G do GPIO 13."""
     s = M.SERVO
-    zb = M.Z_ORELHA - 15.9
+    zb = (M.Z_ORELHA if z_or is None else z_or) - 15.9
     bx1 = M.SX - s['eixo_ponta'] + 22.7
     xs, ys, zs = pino(13, 'S')
     _, yv, _ = pino(13, 'V')
@@ -119,7 +119,7 @@ def servo_cabo():
     for cor, dy, yy in (('#7c2d12', -1.3, yg), ('#dc2626', 0.0, yv), ('#f97316', 1.3, ys)):
         a = C.P_pt(bx1, M.SY + dy, zb + 1.5)
         c = C.P_pt(bx1 + 11, M.SY + dy, zb + 1.5)
-        pts = [a, c, (c[0] + 6, 3.3 + dy, c[2] + 2), (xs - 14, 3.3 + dy, zs + 12), (xs, yy, zs - 6 + Z_CAPA + 6), (xs, yy, zs - 6 + Z_CAPA)]
+        pts = [a, c, (c[0] + 6, 3.3 + dy, c[2] + 4), (xs - 14, 3.3 + dy, zs + 12), (xs, yy, zs - 6 + Z_CAPA + 6), (xs, yy, zs - 6 + Z_CAPA)]
         out.append(fio(pts, cor, 1.2))
     return out
 

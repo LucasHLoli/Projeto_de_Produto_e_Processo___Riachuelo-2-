@@ -12,7 +12,8 @@ O mecanismo é o mesmo da v2 (mesmas peças impressas); muda a caixa.
 - **Prateleira:** chapa de MDF de 224 × 86 mm, apoiada nos 4 pés impressos (C4, 17 mm de altura), colados no fundo fora do power bank. O furo da prateleira deixa o cabo USB subir.
 - **Em cima da prateleira:** mecanismo (servo e trilho) no meio, ESP32 com expansor na ponta direita.
 - **Em cima da tampa:** semáforo preso por 2 pinos impressos (C6); os fios descem pelo rasgo.
-- **Chave fim de curso:** na A, colada no suporte da peça A1, embaixo do gancho (a garra fechada aperta a alavanca 1 mm). Na B, em cima da tampa, no suporte B6, com a ponteira B7 encaixada na alavanca; a cabeça do pino aperta a alavanca 1,2 mm. Nas duas, o ESP32 fica sabendo que a roupa foi presa.
+- **Chave fim de curso (módulo YL-99):** fica **dentro** da caixa nas duas versões. Na A, numa coluna da peça A1, com a alavanca embaixo do gancho: a garra fechada aperta 1,3 mm. Na B, na coluna B6 colada na prateleira, com a ponteira B7 na alavanca entrando pela fenda da cápsula: a ponta do pino aperta 2,1 mm. Medir o comprimento da alavanca que veio (o desenho usa 19 mm).
+- **Versão B:** a cápsula desce 5 mm para dentro da caixa (por fora fica só ~8 mm acima da tampa). O servo da B fica mais baixo e passa por um furo na prateleira (já no SVG da B).
 - **Tampa:** presa por 2 pinos impressos (C5) que entram nos cantos (C3). Sem parafusos.
 - **Base Qi HyperX:** ela tem 2 áreas de carga e um ressalto no meio. A caixa fica **atravessada sobre uma das áreas**, com o ressalto para fora. O receptor Qi fica embaixo do centro do power bank e precisa cair em cima da bobina daquela área. Se a caixa ficar ao comprido sobre a base, apoia no ressalto e não carrega.
 - Ligações pino a pino: `prototipo/LIGACOES.md`.
