@@ -20,7 +20,7 @@ def pack(m):
 
 P = C.P
 pb = C.P_pt(M.SX, M.SY, M.Z_BRACO)
-pbB = C.P_pt(M.SX, M.SY, M.Z_BRACO_B)
+pbB = C.P_pt(M.SXB, M.SYB, M.Z_BRACO_B)
 pg = C.P_pt(M.A_GX, M.A_EIXO_Y, M.A_GZ0 + M.A_EIXO_DZ)
 
 
@@ -33,22 +33,22 @@ def v(a, b):
 
 
 servo = [(c, P(m)) for c, m in K.servo_sg90()[:4]]
-servoB = [(c, P(m)) for c, m in K.servo_sg90(M.Z_ORELHA_B)[:4]]
+servoB = [(c, P(M.servo_T(m))) for c, m in K.servo_sg90(M.Z_ORELHA_B)[:4]]
 horn = [(c, loc(P(m.translate([M.SX, M.SY, M.Z_BRACO])), pb)) for c, m in K.braco_plastico()]
-hornB = [(c, loc(P(m.translate([M.SX, M.SY, M.Z_BRACO_B])), pbB)) for c, m in K.braco_plastico()]
-TZ_A, TZ_B = C.H + M.CAMADAS_A * M.MDF, C.H + M.MDF
+hornB = [(c, loc(P(M.servo_T(m.translate([M.SX, M.SY, M.Z_BRACO_B]))), pbB)) for c, m in K.braco_plastico()]
+TZ_A = TZ_B = C.H + M.CAMADAS_A * M.MDF                      # as duas versões têm a tampa de 3 chapas
 comuns_det = [('Base de carga Qi HyperX', K.base_qi()), ('Power bank ELG 149 × 69 × 15', K.power_bank()), ('Receptor Qi', K.receptor_qi()), ('ESP32 no expansor', K.esp32_expansor()),
               ('Cabo USB (power bank → micro-USB do expansor)', L.cabo_usb()), ('Capacitor 1000 µF (V/G do GPIO 12)', L.capacitor())]
 so_A = [('Servo SG90', servo), ('Cabo do servo (GPIO 13)', L.servo_cabo()), ('Semáforo LED (em cima da tampa)', L.semaforo(TZ_A)), ('Fios do semáforo (26, 33, 25, GND)', L.semaforo_fios(TZ_A)),
         ('Chave fim de curso', CH.A_estaticas()), ('Fios da chave (OUT 27, GND)', L.chave_a_fios())]
-so_B = [('Servo SG90', servoB), ('Cabo do servo (GPIO 13)', L.servo_cabo(M.Z_ORELHA_B)), ('Semáforo LED (em cima da tampa)', L.semaforo(TZ_B)), ('Fios do semáforo (26, 33, 25, GND)', L.semaforo_fios(TZ_B)),
-        ('Etiqueta de loja (casca)', K.etiqueta_loja())]
+so_B = [('Servo SG90', servoB), ('Cabo do servo (GPIO 13)', L.servo_cabo_B()), ('Semáforo LED (em cima da tampa)', L.semaforo(TZ_B)), ('Fios do semáforo (26, 33, 25, GND)', L.semaforo_fios(TZ_B)),
+        ('Etiqueta de loja (casca)', K.etiqueta_loja()), ('Chave fim de curso', CH.A_estaticas()), ('Fios da chave (OUT 27, GND)', L.chave_a_fios())]
 FIOS = ('Cabo', 'Fios', 'Capacitor')
 LIBERADO = {('Cabo USB (power bank → micro-USB do expansor)', 'prateleira'), ('Cabo USB (power bank → micro-USB do expansor)', 'ESP32 no expansor'),
             ('Cabo do servo (GPIO 13)', 'ESP32 no expansor'), ('Cabo do servo (GPIO 13)', 'Servo SG90'),
             ('Capacitor 1000 µF (V/G do GPIO 12)', 'ESP32 no expansor'), ('Fios do semáforo (26, 33, 25, GND)', 'ESP32 no expansor'),
             ('Fios do semáforo (26, 33, 25, GND)', 'Semáforo LED (em cima da tampa)'), ('Fios da chave (OUT 27, GND)', 'ESP32 no expansor'),
-            ('Fios da chave (OUT 27, GND)', 'Chave fim de curso'), ('Fios da chave (OUT 27, GND)', 'tampa B'), ('Cabo USB (power bank → micro-USB do expansor)', 'Power bank ELG 149 × 69 × 15')}
+            ('Fios da chave (OUT 27, GND)', 'Chave fim de curso'), ('Fios da chave (OUT 27, GND)', 'tampa B'), ('Cabo do servo (GPIO 13)', 'base servo'), ('Cabo USB (power bank → micro-USB do expansor)', 'Power bank ELG 149 × 69 × 15')}
 
 if __name__ == '__main__':
     erros = []
@@ -57,8 +57,9 @@ if __name__ == '__main__':
     est_A = dict(est_comum, **{'tampa A': C.a_tampa(), 'base mecanismo': P(M.a_base_mecanismo()), 'dobradiça': P(M.a_dobradica()),
                                  'lingueta travada': P(M.a_lingueta(0)),
                                  'lingueta solta': P(M.a_lingueta(M.ling_off(M.ANG_SOLTA)))})
-    est_B = dict(est_comum, **{'tampa B': C.b_tampa(), 'base servo': P(M.b_base()), 'ninho': P(M.b_ninho()),
-                                 'embreagem': uniao([m for _, m in K.embreagem_partes()[1]]), 'pino': uniao([m for _, m in K.pino_etiqueta()])})
+    est_B = dict(est_comum, **{'prateleira': C.prateleira(True), 'tampa B': C.b_tampa(), 'base servo': P(M.b_base()), 'berço': P(M.b_berco()),
+                                 'dobradiça B': P(M.a_dobradica()), 'suporte da chave B': P(M.b_suporte_chave()),
+                                 'embreagem': uniao([m for _, m in K.embreagem_partes()[1]])})
     det = {n: uniao([m for _, m in ps]) for n, ps in comuns_det}
     det_A = dict(det, **{n: uniao([m for _, m in ps]) for n, ps in so_A})
     det_B = dict(det, **{n: uniao([m for _, m in ps]) for n, ps in so_B})
@@ -99,17 +100,36 @@ if __name__ == '__main__':
         for e, me in est_A.items():
             if v(al, me) > 0.05:
                 erros.append(f'A: alavanca {nm} x {e}')
-    # B: ímãs a 90° têm que ficar embaixo da embreagem
-    cx, cy, _ = C.P_pt(*M.CAPS, 0)
+    # B: garra com o pino girando; o pino entra na embreagem; ímãs embaixo dela
+    pinoB = uniao([m for _, m in K.pino_etiqueta()])
+    eixoB = np.array(C.P_pt(0, M.A_EIXO_Y, M.A_GZ0 + M.A_EIXO_DZ))
+    for a in range(0, 61, 3):
+        g = P(M.b_garra_ang(a))
+        pa = pinoB.translate([0, -eixoB[1], -eixoB[2]]).rotate([0, 0, 0])
+        e = M.b_garra_ang(a).bounding_box()
+        pm = P(uniao([m for m in [M.pino_T(cil(0, 0, -M.PINO_L - 0.8, 3.5, 1.2))]]).translate([0, -M.A_EIXO_Y, -(M.A_GZ0 + M.A_EIXO_DZ)]).rotate([a, 0, 0]).translate([0, M.A_EIXO_Y, M.A_GZ0 + M.A_EIXO_DZ]))
+        for n, m in list(est_B.items()) + [('Etiqueta de loja (casca)', det_B['Etiqueta de loja (casca)']), ('Chave fim de curso', det_B['Chave fim de curso'])]:
+            if n == 'embreagem':
+                continue
+            for pn, pp in (('garra', g), ('pino', pm)):
+                x = v(pp, m)
+                if x > 0.05:
+                    erros.append(f'B {pn} {a}° x {n} = {x:.2f}')
+    if v(P(M.b_garra_ang(0)), al_A_apert) > 0.05:
+        erros.append('B: gancho fechado ainda encosta na alavanca apertada')
+    if v(P(M.b_garra_ang(0)), al_A_solta) < 0.05:
+        erros.append('B: o gancho fechado NÃO alcança a alavanca')
+    ec = C.P_pt(*M.E_ETQ)
     bb = P(M.b_imas(M.ANG_SOLTAR)).bounding_box()
-    if abs((bb[0] + bb[3]) / 2 - cx) > 0.5 or abs((bb[1] + bb[4]) / 2 - cy) > 0.5:
-        erros.append('B: ímãs a 90° fora do centro da embreagem')
-    print(f'B: topo dos ímãs {bb[5] - C.ZS:.2f}, fundo do ninho {M.Z_NINHO - M.NINHO_FUNDO:.2f}, fundo da etiqueta {M.Z_NINHO:.2f} (módulo)')
+    emb = uniao([m for _, m in K.embreagem_partes()[1]]).bounding_box()
+    print(f'B: ímãs a {M.ANG_SOLTAR:.0f}°: centro ({(bb[0] + bb[3]) / 2:.1f}, {(bb[1] + bb[4]) / 2:.1f}), embreagem ({(emb[0] + emb[3]) / 2:.1f}, {(emb[1] + emb[4]) / 2:.1f}); '
+          f'topo dos ímãs {bb[5] - C.ZS:.2f}, fundo do berço {P(M.b_berco()).bounding_box()[2] - C.ZS:.2f} (módulo)')
     hornm = uniao([m for _, m in K.braco_plastico()]).translate([M.SX, M.SY, M.Z_BRACO])
-    for ver, base, angs in (('A', P(M.a_base_mecanismo()), range(int(M.ANG_TRAVA), int(M.ANG_SOLTA) + 1, 5)), ('B', P(M.b_base()), range(0, int(M.ANG_SOLTAR) + 1, 5))):
+    for ver, base, angs in (('A', P(M.a_base_mecanismo()), range(int(M.ANG_TRAVA), int(M.ANG_SOLTA) + 1, 5)), ('B', P(M.b_base()), range(0, int(M.ANG_SOLTAR) - 1, -5))):
         for a in angs:
             hm = hornm if ver == 'A' else hornm.translate([0, 0, M.Z_BRACO_B - M.Z_BRACO])
-            h = P(hm.translate([-M.SX, -M.SY, 0]).rotate([0, 0, a]).translate([M.SX, M.SY, 0]))
+            h = hm.translate([-M.SX, -M.SY, 0]).rotate([0, 0, a]).translate([M.SX, M.SY, 0])
+            h = P(h if ver == 'A' else M.servo_T(h))
             for n, m in (('berço', base), ('servo', (det_A if ver == 'A' else det_B)['Servo SG90'])):
                 x = v(h, m)
                 if x > 0.05:
@@ -144,15 +164,12 @@ if __name__ == '__main__':
     pa, ea = CH.A_pivo()
     comum_A = comum + [parte('Braço plástico do servo', 'comprada', horn, 'braco')] + [parte(n, 'comprada', ps) for n, ps in so_A] + \
         [parte('Alavanca da chave', 'comprada', [(c, m.translate([-pa[0], -pa[1], -pa[2]])) for c, m in CH.A_alavanca(False)], 'alavanca')]
-    z_anel = C.ZS + M.Z_ANEL_TOPO
-    cxp, cyp, _ = C.P_pt(*M.CAPS, 0)
-    panoB = (cubo(cxp - 26, cyp - 20, z_anel + 0.05, cxp + 22, cyp + 20, z_anel + 0.5) - cil(cxp, cyp, z_anel - 1, z_anel + 2, 2.0)) + \
-        cubo(cxp - 26, cyp - 20, C.ZS + M.B_TZ + 0.3, cxp - 25.5, cyp + 20, z_anel + 0.5)
     ec, copo, carr, esf = K.embreagem_partes()
+    pgB = pg
     comum_B = comum + [parte('Braço plástico do servo', 'comprada', hornB, 'braco')] + [parte(n, 'comprada', ps) for n, ps in so_B] + \
         [parte('Embreagem: copo e mola', 'comprada', copo), parte('Embreagem: carretel', 'comprada', carr, 'carretel'),
          parte('Embreagem: esferas', 'comprada', [(c, m.translate([-ec[0], -ec[1], 0])) for c, m in esf], 'esferas')] + \
-        [parte('Pano (a roupa)', 'comprada', [('#3b82f6', panoB)], 'panoB')]
+        [parte('Alavanca da chave', 'comprada', [(c, m.translate([-pa[0], -pa[1], -pa[2]])) for c, m in CH.A_alavanca(False)], 'alavanca')]
     A = comum_A + [parte('Prateleira (MDF)', 'casca', [('#b08d5e', C.prateleira())]), parte('Tampa (3 chapas MDF)', 'casca', [('#d9bc8c', C.a_tampa())]),
                  parte('Garra com dentes', 'impressa', [('#db2777', loc(P(M.a_garra()), pg))], 'garra'),
                  parte('Dobradiça', 'impressa', [('#be185d', P(M.a_dobradica()))]),
@@ -160,17 +177,23 @@ if __name__ == '__main__':
                  parte('Lingueta', 'impressa', [('#f59e0b', P(M.a_lingueta()))], 'lingueta'),
                  parte('Braço do servo (biela)', 'impressa', [('#0284c7', loc(P(M.a_braco(0)), pb))], 'braco'),
                  ]
-    B = comum_B + [parte('Prateleira (MDF)', 'casca', [('#b08d5e', C.prateleira())]), parte('Tampa (MDF)', 'casca', [('#d9bc8c', C.b_tampa())]),
-                 parte('Base do servo', 'impressa', [('#ea580c', P(M.b_base()))]),
-                 parte('Braço dos ímãs', 'impressa', [('#0284c7', loc(P(M.b_braco(0)[0]), pbB))], 'braco'),
-                 parte('Ímãs 15 × 5 (2)', 'comprada', K.imas_local(pbB), 'braco'),
-                 parte('Ninho da etiqueta (B3)', 'impressa', [('#f59e0b', P(M.b_ninho()))]),
-                 parte('Pino da etiqueta', 'comprada', K.pino_etiqueta(), 'pino')]
+    B = comum_B + [parte('Prateleira (MDF, furo do servo)', 'casca', [('#b08d5e', C.prateleira(True))]), parte('Tampa (3 chapas MDF)', 'casca', [('#d9bc8c', C.b_tampa())]),
+                 parte('Garra com o pino (B4)', 'impressa', [('#db2777', loc(P(M.b_garra()), pg))], 'garra'),
+                 parte('Pino da etiqueta', 'comprada', [(c, loc(m, pg)) for c, m in K.pino_etiqueta()], 'garra'),
+                 parte('Tampinha do pino (B7)', 'impressa', [('#be185d', loc(P(M.b_tampinha()), pg))], 'garra'),
+                 parte('Dobradiça', 'impressa', [('#be185d', P(M.a_dobradica()))]),
+                 parte('Berço da etiqueta (B3)', 'impressa', [('#f59e0b', P(M.b_berco()))]),
+                 parte('Torre do servo (B1)', 'impressa', [('#ea580c', P(M.b_base()))]),
+                 parte('Suporte da chave (B6)', 'impressa', [('#a16207', P(M.b_suporte_chave()))]),
+                 parte('Braço dos ímãs (B2)', 'impressa', [('#0284c7', loc(P(M.b_braco(0)[0]), pbB))], 'braco'),
+                 parte('Ímãs 15 × 5 (2)', 'comprada', K.imas_local(pbB), 'braco')]
     furos0 = C.a_furos_global()[0][2][:4]
     dados = {'centro': [C.LX / 2, C.LY / 2, C.H / 2],
              'A': {'pivo_braco': list(pb), 'pivo_garra': list(pg), 'biela': [M.SX, M.R_BIELA, M.PINO_X_TRAVA],
                    'tz': C.H + M.CAMADAS_A * M.MDF, 'gy': C.P_pt(M.A_GX, 0, 0)[1], 'furos': [[x0, x1] for x0, y0, x1, y1 in furos0],
                    'fundo_furo': C.H - 1.5, 'corte': list(C.P_pt(*M.HOOK, 0)[:2]), 'partes': A, 'alavanca': {'pivo': list(pa), 'eixo': ea, 'ang': CH.ANG_A}},
-             'B': {'pivo_braco': list(pbB), 'emb_centro': list(ec), 'corte': [ec[0], ec[1]], 'partes': B}}
+             'B': {'pivo_braco': list(pbB), 'pivo_garra': list(pg), 'emb_centro': list(ec), 'corte': [ec[0], ec[1]], 'tz': C.H + M.CAMADAS_A * M.MDF,
+                   'gy': C.P_pt(M.A_GX, 0, 0)[1], 'furos': [], 'pano_x': [C.P_pt(0, M.A_EIXO_Y + 12, 0)[0], C.P_pt(0, M.HOOK[1] + 8, 0)[0]],
+                   'partes': B, 'alavanca': {'pivo': list(pa), 'eixo': ea, 'ang': CH.ANG_A}}}
     open(os.path.join(AQUI, 'maquete_v3.js'), 'w', encoding='utf-8').write('window.MAQ=' + json.dumps(dados) + ';')
     print('maquete_v3.js ok', os.path.getsize(os.path.join(AQUI, 'maquete_v3.js')) // 1024, 'KB')

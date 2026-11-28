@@ -26,7 +26,7 @@ POS_ESP = (150.0, 16.0, 150.0 + M.EXP[0] + 1, 16.0 + M.EXP[1] + 1)
 POS_SEM = (18.0, 60.0)                      # semáforo embaixo da tampa (canto)
 QR = (122.0, 54.0, 30.0)                    # QR na tampa (x, y, lado)
 PARAF = [(4.0, 70.0), (LX - 4.0, 70.0)]
-PES = [(2, 2), (2, 72), (100, 1), (180, 1)]  # pés da prateleira (12 x 12), fora do power bank e do plugue
+PES = [(2, 2), (2, 72), (106, 1), (180, 1)]  # pés da prateleira (12 x 12), fora do power bank e do plugue
 FURO_CABO = (6.0, 24.0, 34.0, 58.0)
 # Base HyperX ChargePlay: pílula de 215 x 91 com 2 áreas de carga e um ressalto no meio (por onde entra o cabo).
 # A caixa fica ATRAVESSADA sobre UMA área de carga, com o receptor Qi no centro do power bank em cima da bobina.
@@ -50,18 +50,15 @@ def caixa():
 
 
 def furo_servo_B():
-    """Na B o servo fica 4 mm mais baixo e passa pela prateleira: furo do tamanho do corpo + 1 mm."""
-    s = M.SERVO
-    bx0 = M.SX - s['eixo_ponta']
-    a = P_pt(bx0 - 1, M.SY - s['corpo_l'] / 2 - 1, 0)
-    b = P_pt(bx0 + s['corpo_c'] + 14, M.SY + s['corpo_l'] / 2 + 1, 0)
-    return (min(a[0], b[0]), min(a[1], b[1]), max(a[0], b[0]), max(a[1], b[1]))
+    """Na B a torre do servo fica em pé no fundo e passa pela prateleira, junto da parede da frente."""
+    bb = P(M.b_base()).bounding_box()
+    return (bb[0] - 12, 0.0, bb[3] + 1, bb[4] + 1)
 
 
 def prateleira(furo_b=False):
     p = cubo(0, 0, Z_PRAT, LX, LY, ZS)
     p = p - cubo(FURO_CABO[0], FURO_CABO[1], Z_PRAT - 1, FURO_CABO[2], FURO_CABO[3], ZS + 1)
-    if furo_b and M.Z_ORELHA_B - 15.9 < 0:
+    if furo_b:
         f = furo_servo_B()
         p = p - cubo(f[0], f[1], Z_PRAT - 1, f[2], f[3], ZS + 1)
     return p
@@ -113,9 +110,8 @@ def a_tampa():
 
 
 def b_tampa():
-    cx, cy, _ = P_pt(*M.CAPS, 0)
-    t = cubo(-MDF, -MDF, H, LX + MDF, LY + MDF, H + MDF)
-    return t - P(M.b_furo_tampa()) - janela_leds(H - 1, H + 20) - furos_tampa(H - 1, H + 20)
+    t = uniao([cubo(-MDF, -MDF, H + k * MDF, LX + MDF, LY + MDF, H + (k + 1) * MDF) for k in range(M.CAMADAS_A)])
+    return t - P(M.b_tampa_cortes()) - janela_leds(H - 1, H + 20) - furos_tampa(H - 1, H + 20)
 
 
 def canto_tampa(x, y):
@@ -178,14 +174,26 @@ def checar():
     # ---- B
     fb = dict(comuns)
     fb['prateleira'] = prateleira(True)
-    fb.update({'tampa B': b_tampa(), 'base servo': P(M.b_base()), 'cápsula': P(M.b_capsula() + M.b_anel()),
-               'cantos': uniao([canto_tampa(x, y) for x, y in PARAF])})
-    for ang in range(0, 121, 5):
+    fb.update({'tampa B': b_tampa(), 'dobradiça': P(M.a_dobradica()), 'torre do servo': P(M.b_base()), 'berço da etiqueta': P(M.b_berco()),
+               'suporte da chave': P(M.b_suporte_chave()), 'cantos': uniao([canto_tampa(x, y) for x, y in PARAF])})
+    ks = list(fb)
+    for i in range(len(ks)):
+        for j in range(i + 1, len(ks)):
+            if ks[i] in comuns and ks[j] in comuns:
+                continue
+            if v(fb[ks[i]], fb[ks[j]]) > 0.05:
+                erros.append(f'B parado: {ks[i]} x {ks[j]} = {v(fb[ks[i]], fb[ks[j]]):.1f}')
+    for ang in range(0, 61, 3):
+        g = P(M.b_garra_ang(ang))
+        for n in ('tampa B', 'dobradiça', 'berço da etiqueta', 'caixa'):
+            if v(g, fb[n]) > 0.05:
+                erros.append(f'B garra {ang}° x {n}')
+    for ang in range(0, int(M.ANG_SOLTAR) - 1, -5):
         br, _ = M.b_braco(ang)
         for pn, p in (('braço', P(br)), ('ímãs', P(M.b_imas(ang)))):
             for n, m in fb.items():
                 if v(p, m) > 0.05:
-                    erros.append(f'B servo {ang}°: {pn} x {n}')
+                    erros.append(f'B servo {ang}°: {pn} x {n} = {v(p, m):.1f}')
     return erros
 
 
@@ -235,10 +243,22 @@ def svgs():
             els += qr + [r(hx - 7, hy - 18.5, 14, 37, eng), f'<text x="{hx + o}" y="{hy - 20 + o}" font-size="3.5" text-anchor="middle" {txt}>dobradiça</text>']
         tA.append((['Tampa 1 (de cima)', 'Tampa 2 (meio)', 'Tampa 3 (de baixo)'][k], EX, EY, els))
     escreve('caixa_v3_A.svg', tA)
-    cx, cy, _ = P_pt(*M.CAPS, 0)
-    bb = P(M.b_furo_tampa()).bounding_box()
-    ninho = f'<rect x="{bb[0] + o:.2f}" y="{bb[1] + o:.2f}" width="{bb[3] - bb[0]:.2f}" height="{bb[4] - bb[1]:.2f}" rx="{(bb[3] - bb[0]) / 2:.2f}" {cut}/>'
-    escreve('caixa_v3_B.svg', [('Tampa', EX, EY, base + qr + [ninho])])
+    tB = []
+    for k, (z0, z1, cs) in enumerate(M.b_cortes_por_camada()):
+        els = list(base)
+        for tipo, x0, y0, x1, y1 in cs:
+            xa, ya, _ = P_pt(x0, y0, 0)
+            xb, yb, _ = P_pt(x1, y1, 0)
+            gx0, gy0, gx1, gy1 = min(xa, xb), min(ya, yb), max(xa, xb), max(ya, yb)
+            rx = f' rx="{(gx1 - gx0) / 2:.2f}"' if tipo == 'lapis' else ''
+            els.append(f'<rect x="{gx0 + o:.2f}" y="{gy0 + o:.2f}" width="{gx1 - gx0:.2f}" height="{gy1 - gy0:.2f}"{rx} {cut}/>')
+        if k == 0:
+            hx, hy, _ = P_pt(M.A_GX, M.A_EIXO_Y, 0)
+            els += qr + [r(hx - 7, hy - 18.5, 14, 37, eng), f'<text x="{hx + o}" y="{hy - 20 + o}" font-size="3.5" text-anchor="middle" {txt}>dobradiça</text>']
+        tB.append((['Tampa 1 (de cima)', 'Tampa 2 (meio)', 'Tampa 3 (de baixo)'][k], EX, EY, els))
+    fb_ = furo_servo_B()
+    paredes[0] = ('Prateleira (fica sobre os pés)', LX, LY, paredes[0][3] + [r(fb_[0], fb_[1], fb_[2] - fb_[0], fb_[3] - fb_[1], cut, 0)])
+    escreve('caixa_v3_B.svg', tB)
 
 
 def salvar(m, nome):
@@ -263,8 +283,8 @@ if __name__ == '__main__':
     os.makedirs(os.path.join(AQUI, 'stl_v3'), exist_ok=True)
     # peças do mecanismo: iguais às da v2
     for n in ['A1_base_servo_e_trilho', 'A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A3_braco_biela', 'A4_garra_dentes',
-              'A5_dobradica', 'A7_eixo_garra', 'B1_base_servo', 'B2_braco_imas', 'B3_ninho_etiqueta',
-              'B5_teste_encaixe_etiqueta', 'C1_calcos_servo', 'C2_batentes_x6']:
+              'A5_dobradica', 'A7_eixo_garra', 'B1_torre_servo', 'B2_braco_imas', 'B3_berco_etiqueta',
+              'B4_garra_pino', 'B5_teste_encaixe_etiqueta', 'B6_suporte_chave', 'B7_tampinha_pino', 'C1_calcos_servo', 'C2_batentes_x6']:
         shutil.copy(os.path.join(AQUI, 'stl_v2', n + '.stl'), os.path.join(AQUI, 'stl_v3', n + '.stl'))
     salvar(uniao([pe_unico().translate([k * 15, 0, 0]) for k in range(4)]), 'C4_pes_prateleira_x4')
     salvar(uniao([(cil(k * 10, 0, 0, 1.5, 6.0) + cil(k * 10, 0, 1.5, 1.5 + 3 * MDF + 8, 3.0)) for k in range(2)]), 'C5_pinos_tampa_x2')
@@ -290,13 +310,7 @@ if __name__ == '__main__':
                   ('Base do servo e trilho', 'impressa', '#ea580c', P(M.a_base_mecanismo()), None),
                   ('Lingueta', 'impressa', '#f59e0b', P(M.a_lingueta()), 'lingueta'),
                   ('Braço do servo (biela)', 'impressa', '#2563eb', loc(P(M.a_braco(0)), pb), 'braco'),]
-    B = comuns + [('Tampa (MDF)', 'casca', '#d9bc8c', b_tampa(), None),
-                  ('Base do servo', 'impressa', '#ea580c', P(M.b_base()), None),
-                  ('Braço dos ímãs', 'impressa', '#2563eb', loc(P(M.b_braco(0)[0]), pb), 'braco'),
-                  ('Ímãs 15 × 5 (2)', 'comprada', '#d4d4d8', loc(P(M.b_imas(0)), pb), 'braco'),
-                  ('Cápsula da embreagem', 'impressa', '#f59e0b', P(M.b_capsula() + M.b_anel()), None),
-                  ('Embreagem da etiqueta', 'comprada', '#71717a', P(cil(M.CAPS[0], M.CAPS[1], M.H, M.H + M.EMB[1], M.EMB[0])), None),
-                  ('Pino da etiqueta', 'comprada', '#e4e4e7', P(cil(M.CAPS[0], M.CAPS[1], M.H + 2, M.H + M.EMB[1] + 18, M.PINO_ETQ) + cil(M.CAPS[0], M.CAPS[1], M.H + M.EMB[1] + 17, M.H + M.EMB[1] + 19, 12)), 'pino')]
+    B = comuns + [('Tampa (3 chapas MDF)', 'casca', '#d9bc8c', b_tampa(), None)]
     furos0 = a_furos_global()[0][2][:4]
     gy = P_pt(M.A_GX, 0, 0)[1]
     dados = {'centro': [LX / 2, LY / 2, H / 2],

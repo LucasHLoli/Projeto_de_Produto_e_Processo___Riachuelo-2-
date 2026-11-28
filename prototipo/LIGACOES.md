@@ -33,7 +33,7 @@ Os pinos são os mesmos do plano de software (`prototipo/software/plano-desenvol
 ## Onde cada fio passa (maquete)
 
 - **Semáforo:** fica **em cima** da tampa, preso por 2 pinos impressos (C6) com uma gota de cola. Os 4 jumpers descem pelo rasgo ao lado dele e correm encostados na parede de trás.
-- **Versão B:** sem chave fim de curso. O funcionário confirma no app que a etiqueta está presa. O GPIO 27 fica livre.
+- **Chave (versão B):** igual à A: na coluna B6, com a alavanca embaixo do gancho da garra. OUT e GND no GPIO 27.
 - **Chave (versão A):** fica deitada no suporte da peça A1, com cola quente, e a alavanca embaixo do gancho da garra. Quando a garra fecha, o gancho desce e aperta a alavanca. Os 2 fios descem pela parede da frente.
 - **Cabo do servo:** sai pela ponta do berço e corre pela frente da prateleira até o GPIO 13.
 - **Capacitor:** fica deitado na prateleira, atrás do expansor.
@@ -47,6 +47,6 @@ Grave `prototipo/firmware/teste_bancada/teste_bancada.ino`, abra o Monitor Seria
 1. Os LEDs piscam vermelho, amarelo e verde.
 2. Ao apertar a chave, aparece "chave: apertada". Se aparecer ao contrário, troque `NIVEL_APERTADA`.
 3. **Versão A:** fechar a garra trava sozinho (40°, LED vermelho). Digitar `l` libera (90°, LED verde).
-4. **Versão B:** digitar `l` leva os ímãs para baixo da embreagem (90°) e `t` volta para o repouso.
+4. **Versão B:** prender o braço dos ímãs com o servo em 90° (repouso, ímãs longe). Digitar `l` gira para 0° e leva os ímãs para baixo da etiqueta. Se forem para o lado errado, trocar `ANG_SOLTA` para 180.
 
 **Atenção (versão A) para o Pedro:** depois de liberar, o servo deve **ficar** em 90° até a garra abrir e fechar de novo. Se ele voltar para 40° sozinho, ele trava a garra outra vez. Isso difere do passo 4 do plano de software, que manda voltar a 0°.

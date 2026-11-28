@@ -124,6 +124,27 @@ def servo_cabo(z_or=None):
     return out
 
 
+def servo_cabo_B():
+    """B: o cabo sai embaixo da torre, sobe pelo furo da prateleira e corre até a coluna do GPIO 13."""
+    s = M.SERVO
+    zb = M.Z_ORELHA_B - 15.9
+    bx1 = M.SX - s['eixo_ponta'] + 22.7
+    xs, ys, zs = pino(13, 'S')
+    _, yv, _ = pino(13, 'V')
+    _, yg, _ = pino(13, 'G')
+    out = [('#111827', cubo(xs - 1.4, min(ys, yg) - 1.4, zs - 6, xs + 1.4, max(ys, yg) + 1.4, zs - 6 + Z_CAPA))]
+
+    def g(x, y, z):
+        q = M.servo_T(cubo(x - 0.01, y - 0.01, z - 0.01, x + 0.01, y + 0.01, z + 0.01)).bounding_box()
+        return C.P_pt((q[0] + q[3]) / 2, (q[1] + q[4]) / 2, z)
+    for cor, dy, yy in (('#7c2d12', -1.3, yg), ('#dc2626', 0.0, yv), ('#f97316', 1.3, ys)):
+        a = g(bx1, M.SY + dy, zb + 1.5)
+        c = g(bx1 + 13, M.SY + dy, zb + 1.5)
+        pts = [a, c, (c[0], c[1], C.ZS + 4), (c[0] + 4, 30 + dy, C.ZS + 4), (xs - 14, 30 + dy, zs + 12), (xs, yy, zs - 6 + Z_CAPA + 6), (xs, yy, zs - 6 + Z_CAPA)]
+        out.append(fio(pts, cor, 1.2))
+    return out
+
+
 def capacitor():
     """1000 µF 16 V deitado na prateleira, com 2 jumpers fêmea no V e no G da coluna do GPIO 12."""
     e = layout_esp()

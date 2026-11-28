@@ -14,7 +14,7 @@
 #include <ESP32Servo.h>
 
 // ----- escolha a versão -----
-#define VERSAO_A 1          // 1 = garra com dentes (lingueta), 0 = etiqueta de loja + ímãs
+#define VERSAO_A 1          // 1 = garra com dentes (lingueta), 0 = garra com o pino da etiqueta de loja + ímãs
 
 const int PINO_SERVO = 13;
 const int PINO_CHAVE = 27;
@@ -24,8 +24,8 @@ const int LED_R = 26, LED_Y = 33, LED_G = 25;
 const int ANG_TRAVA = 40;   // lingueta dentro do gancho
 const int ANG_SOLTA = 90;   // lingueta recuada 4,6 mm
 #else
-const int ANG_TRAVA = 0;    // ímãs longe da embreagem (repouso)
-const int ANG_SOLTA = 90;   // ímãs embaixo da embreagem (a B não usa a chave: o funcionário confirma no app)
+const int ANG_TRAVA = 90;   // repouso: ímãs longe da etiqueta (prender o braço com o servo em 90°)
+const int ANG_SOLTA = 0;    // ímãs embaixo da embreagem. Se girar para o lado errado, use 180
 #endif
 
 // Medir no Monitor Serial e ajustar: com pull-up, a chave apertada costuma dar LOW.
@@ -60,7 +60,11 @@ void setup() {
   pinMode(PINO_CHAVE, INPUT_PULLUP);
   // teste dos LEDs
   leds(1, 0, 0); delay(400); leds(0, 1, 0); delay(400); leds(0, 0, 1); delay(400);
+#if VERSAO_A
   moverServo(ANG_SOLTA);     // começa destravada
+#else
+  moverServo(ANG_TRAVA);     // B: ímãs longe; quem trava é a embreagem da etiqueta
+#endif
   leds(0, 1, 0);
   Serial.println("Pronto. t = travar, l = liberar, s = estado");
 }
@@ -73,6 +77,10 @@ void loop() {
   // A: a garra fechou -> trava sozinha. Abriu depois de liberar -> volta ao amarelo.
   if (fechada && !fechadaAntes && !travada) travar();
   if (!fechada && fechadaAntes && !travada) leds(0, 1, 0);
+#else
+  // B: o pino entrou e o gancho apertou a chave -> vermelho. Abriu depois de pagar -> ímãs voltam e amarelo.
+  if (fechada && !fechadaAntes && !travada) { travada = true; leds(1, 0, 0); Serial.println("PRESA"); }
+  if (!fechada && fechadaAntes && !travada) { moverServo(ANG_TRAVA); leds(0, 1, 0); }
 #endif
   if (fechada != fechadaAntes) { Serial.print("chave: "); Serial.println(fechada ? "apertada" : "solta"); }
   fechadaAntes = fechada;

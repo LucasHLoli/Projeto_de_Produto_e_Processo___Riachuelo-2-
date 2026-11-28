@@ -207,44 +207,37 @@ def cabo_usb():
 
 # ---------------- versão B ----------------
 def embreagem_partes():
-    """Embreagem de etiqueta de loja em corte simplificado: copo de aço, carretel (desce quando o ímã puxa)
-    e 3 esferas que prendem o pino (abrem quando o carretel desce). Medidas: modelo da equipe [MEDIR]."""
-    cx, cy, _ = C.P_pt(*M.CAPS, 0)
-    z0 = C.ZS + M.ZC0
+    """Embreagem da etiqueta em corte simplificado: copo de aço, carretel (desce quando o ímã puxa)
+    e 3 esferas que prendem o pino (abrem quando o carretel desce). Medidas: estimativa [MEDIR]."""
+    T = lambda m: C.P(M.etq_T(m))
+    z0 = -M.ETQ[2] + 1.5
     D, Hc = M.EMB
-    copo = cil(cx, cy, z0, z0 + Hc, D) - cil(cx, cy, z0 + 1.0, z0 + Hc + 1, D - 1.6) - cil(cx, cy, z0 - 1, z0 + 2, 3.0)
-    copo = copo + (Manifold.cylinder(2.5, D / 2 - 0.8, 1.6, 32).translate([cx, cy, z0 + Hc - 4.0]) - cil(cx, cy, z0, z0 + Hc + 1, 3.2))   # cone das esferas
-    carretel = cil(cx, cy, z0 + 1.2, z0 + 6.0, D - 2.2) - cil(cx, cy, z0, z0 + 7, 3.2)
-    mola = uniao([cil(cx, cy, z0 + 6.0 + k * 0.9, z0 + 6.4 + k * 0.9, D - 2.6, 24) - cil(cx, cy, z0, z0 + 20, D - 3.6, 24) for k in range(3)])
-    esferas = uniao([Manifold.sphere(1.2, 16).translate([cx + 1.85 * np.cos(np.radians(a)), cy + 1.85 * np.sin(np.radians(a)), z0 + Hc - 2.6]) for a in (0, 120, 240)])
-    return (cx, cy, z0), [('#9ca3af', copo), ('#94a3b8', mola)], [('#cbd5e1', carretel)], [('#e5e7eb', esferas)]
+    copo = cil(0, 0, z0, z0 + Hc, D) - cil(0, 0, z0 + 1.0, z0 + Hc + 1, D - 1.6) - cil(0, 0, z0 - 1, z0 + 2, 3.0)
+    copo = copo + (Manifold.cylinder(2.5, D / 2 - 0.8, 1.6, 32).translate([0, 0, z0 + Hc - 4.0]) - cil(0, 0, z0, z0 + Hc + 1, 3.2))
+    carretel = cil(0, 0, z0 + 1.2, z0 + 6.0, D - 2.2) - cil(0, 0, z0, z0 + 7, 3.2)
+    mola = uniao([cil(0, 0, z0 + 6.0 + k * 0.9, z0 + 6.4 + k * 0.9, D - 2.6, 24) - cil(0, 0, z0, z0 + 20, D - 3.6, 24) for k in range(3)])
+    esferas = uniao([Manifold.sphere(1.2, 16).translate([1.85 * np.cos(np.radians(a)), 1.85 * np.sin(np.radians(a)), z0 + Hc - 2.6]) for a in (0, 120, 240)])
+    ec = C.P_pt(*M.E_ETQ)
+    return ec, [('#9ca3af', T(copo)), ('#94a3b8', T(mola))], [('#cbd5e1', T(carretel))], [('#e5e7eb', T(esferas))]
 
 
 def etiqueta_loja():
-    """Etiqueta de loja tipo pencil, inteira, deitada no ninho: casca de plástico com a embreagem dentro."""
-    x, yd = M.CAPS
-    y0, y1 = yd - M.DOMO_X, yd - M.DOMO_X + M.ETQ[0]
-    z0, z1 = M.Z_NINHO, M.Z_NINHO + M.ETQ[2]
-    fora = M._etq_planta(x, y0, y1, M.ETQ[1], z0, z1)
-    dentro = M._etq_planta(x, y0 + 1.5, y1 - 1.5, M.ETQ[1] - 3.0, z0 + 1.5, z1 - 1.5)
-    casca = fora - dentro - cil(x, yd, z1 - 3, z1 + 1, 3.0)
-    return [('#e5e7eb', C.P(casca))]
+    """Etiqueta de loja tipo pencil, inteira, no berço embaixo da tampa (escondida)."""
+    return [('#6b7280', C.P(M.etq_T(M.etq_local_casca())))]
 
 
 def pino_etiqueta():
-    cx, cy, _ = C.P_pt(*M.CAPS, 0)
-    zc = C.ZS + M.Z_ANEL_TOPO + 0.6                      # cabeça apoiada no pano (0,6 mm) em cima da etiqueta
-    haste = cil(cx, cy, zc - 13, zc, 1.2) + Manifold.cylinder(0.8, 0.1, 0.6, 12).translate([cx, cy, zc - 13.8])   # 13 mm [MEDIR]
-    cabeca = cil(cx, cy, zc, zc + 1.5, 12.5) + (esfera(cx, cy, zc + 1.5, 12.5) ^ cubo(cx - 7, cy - 7, zc + 1.5, cx + 7, cy + 7, zc + 4))
-    return [('#e5e7eb', haste), ('#94a3b8', cabeca)]
+    """Pino da etiqueta preso na garra (fechada): cabeça no bolso, haste inclinada como a embreagem."""
+    L = M.PINO_L
+    haste = cil(0, 0, -L, 0, 1.2) + Manifold.cylinder(0.8, 0.1, 0.6, 12).translate([0, 0, -L - 0.8])
+    cabeca = cil(0, 0, 0, 1.5, 12.5) + (esfera(0, 0, 1.5, 12.5) ^ cubo(-7, -7, 1.5, 7, 7, 3.5))
+    return [('#e5e7eb', C.P(M.pino_T(haste))), ('#94a3b8', C.P(M.pino_T(cabeca)))]
 
 
 def imas_local(pb):
-    _, esp = M.b_braco()
     pecas = []
     for k in range(M.N_IMAS):
-        z0 = esp + k * M.IMA[1]
-        m = cil(M.R_IMA, 0, z0, z0 + M.IMA[1] - 0.05, M.IMA[0]) - cil(M.R_IMA, 0, z0 - 1, z0 + 6, M.IMA[2])
-        pecas.append(m)
-    m = uniao(pecas).translate([M.SX, M.SY, M.Z_BRACO_B])
+        z0 = M.ESP_B + k * M.IMA[1]
+        pecas.append(cil(M.R_IMA, 0, z0, z0 + M.IMA[1] - 0.05, M.IMA[0]) - cil(M.R_IMA, 0, z0 - 1, z0 + 6, M.IMA[2]))
+    m = M.servo_T(uniao(pecas).translate([M.SX, M.SY, M.Z_BRACO_B]))
     return [('#d4d4d8', C.P(m).translate([-pb[0], -pb[1], -pb[2]]))]
