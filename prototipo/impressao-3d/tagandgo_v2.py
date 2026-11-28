@@ -133,7 +133,9 @@ Z_GANCHO_BAIXO = 42.0
 R_BIELA, ANG_TRAVA, ANG_SOLTA = 6.0, 40.0, 90.0
 PINO_X_TRAVA = SX + R_BIELA * np.cos(np.radians(ANG_TRAVA))
 CURSO = PINO_X_TRAVA - (SX + R_BIELA * np.cos(np.radians(ANG_SOLTA)))
-PLUNGER = (182.0, 92.0)                   # pino que aciona a chave da garra
+PLUNGER = (182.0, 92.0)                   # (não usado mais)
+# chave fim de curso: placa deitada embaixo do gancho; o fundo do gancho aperta a alavanca quando a garra fecha
+CH = dict(x0=168.0, x1=193.0, yc=118.0, z_placa=35.3)   # acima do braço plástico do servo
 
 
 def a_garra():
@@ -143,7 +145,7 @@ def a_garra():
     m = cubo(-13, 7, 0, 13, c, 9)                                   # barra (9 mm: a junta fica dentro)
     m = m + cubo(-10, 0, 0, 10, 7, 9) + cil_x(0, A_EIXO_DZ, -10, 10, 9)   # junta
     m = m - cubo(-20, -10, -10, 20, c + 5, 0)
-    m = m - cil_x(0, A_EIXO_DZ, -12, 12, 3.4)                       # eixo: prego ou palito
+    m = m - cil_x(0, A_EIXO_DZ, -12, 12, 3.6)                       # eixo impresso de 3,2 mm (A7)
     for u in DENTES_U:
         d = cubo(-DENTE_C / 2, u - DENTE_E / 2, -DENTE_H + 2, DENTE_C / 2, u + DENTE_E / 2, 0.01)
         d = d + cil_x(u, -DENTE_H + 2, -DENTE_C / 2, DENTE_C / 2, DENTE_E)
@@ -192,7 +194,6 @@ def a_tampa():
             w = DENTE_C / 2 + 1.5 if i < len(DENTES_U) else 2.6
             t = t - cubo(A_GX - w, y0, z0 - 0.01, A_GX + w, y1, z1 + 0.01)
     t = t - janela_leds() - furos_tampa()
-    t = t - cil(PLUNGER[0], PLUNGER[1], H - 1, A_TZ + 1, 4.6)
     return t
 
 
@@ -211,7 +212,7 @@ def a_dobradica():
     orelhas = uniao([cubo(x0, A_EIXO_Y - 6, z, x0 + 3.5, A_EIXO_Y + 6, z + 5.5) + cil_x(A_EIXO_Y, ez, x0, x0 + 3.5, 12)
                      for x0 in (A_GX - 18.0, A_GX + 14.5)])
     d = base + orelhas
-    d = d - cil_x(A_EIXO_Y, ez, A_GX - 30, A_GX + 30, 3.4)
+    d = d - cil_x(A_EIXO_Y, ez, A_GX - 30, A_GX + 30, 3.6)
     d = d - cubo(A_GX - 30, A_EIXO_Y - 20, z - 10, A_GX + 30, A_EIXO_Y + 20, z)
     d = d - cubo(A_GX - 11, A_EIXO_Y - 9, z + 0.3, A_GX + 11, A_EIXO_Y + 9, z + 3)
     return d
@@ -224,12 +225,17 @@ def a_base_mecanismo():
     ly0, ly1 = HOOK[1] - 3, HOOK[1] + 3
     p1 = cubo(SX - 18, SY + 10, 0, SX - 12, SY + 22, 42.0)
     p2 = cubo(SX - 2, SY + 19.5, 0, SX + 2, SY + 22, 42.0)
-    p3 = cubo(lx1 - 4.0, SY + 19.5, 0, lx1 - 0.5, SY + 22, 42.0)
+    p3 = cubo(lx1 - 8.0, SY + 19.5, 0, lx1 - 4.5, SY + 22, 42.0)
+    # suporte da chave fim de curso (a placa da chave é colada em cima, com cola quente)
+    sup = cubo(180.0, CH['yc'] - 6.0, 0, 188.0, CH['yc'] + 6.0, CH['z_placa'])
+    for sy in (-1, 1):                                                  # abas laterais que encaixam a placa da chave
+        a, b = CH['yc'] + sy * 6.95, CH['yc'] + sy * 7.85
+        sup = sup + cubo(180.0, min(a, b), CH['z_placa'] - 2.0, 188.0, max(a, b), CH['z_placa'] + 1.2)
     abas = cubo(SX - 20, ly0 - 0.4, Z_LING[1] + 0.2, lx1 - 0.5, ly0 + 0.4, Z_LING[1] + 1.1) + cubo(SX - 20, ly1 - 0.4, Z_LING[1] + 0.2, lx1 - 0.5, ly1 + 0.4, Z_LING[1] + 1.1)
     chao = cubo(SX - 20, SY + 10, 42.0, lx1 - 0.5, SY + 22, 44.1)
     chao = chao - cubo(PINO_X_TRAVA - 2.6 - CURSO - 0.6, ly0 + 0.6, 41, PINO_X_TRAVA + 1.4 + 0.6, ly1 - 0.6, 45)
     paredes = cubo(SX - 20, SY + 10, 44.1, lx1 - 0.5, ly0 - 0.4, 47.4) + cubo(SX - 20, ly1 + 0.4, 44.1, lx1 - 0.5, SY + 22, 47.4)
-    return uniao([m, p1, p2, p3, chao, paredes, abas])
+    return uniao([m, p1, p2, p3, chao, paredes, abas, sup])
 
 
 def a_lingueta_corpo(off=0.0):
@@ -310,8 +316,7 @@ def b_braco(ang=ANG_REPOUSO):
     esp = H - 0.8 - 0.2 - N_IMAS * IMA[1] - Z_BRACO        # espessura do braço sob os ímãs
     b = cubo(-4, -4, 0, R_IMA, 4, esp) + cil(0, 0, 0, esp, 8) + cil(R_IMA, 0, 0, esp, IMA[0] + 2)
     b = b - cil(0, 0, -1, esp + 1, 2.2) - cubo(-3.5, -2.3, -1, 1.5, 2.3, min(1.3, esp - 1.2))
-    b = b - cil(R_IMA, 0, -1, esp + 1, 3.3)                                 # parafuso M3 dos ímãs
-    b = b - cil(R_IMA, 0, -1, 1.2, 6.4, 6)                                   # porca M3 por baixo
+    b = b + cil(R_IMA, 0, esp - 0.01, esp + N_IMAS * IMA[1] - 0.5, 2.9)      # pino impresso: os ímãs (furo 3 mm) encaixam e colam
     return b.rotate([0, 0, ang]).translate([SX, SY, Z_BRACO]), esp
 
 
@@ -424,7 +429,6 @@ def svgs():
         for i, (y0, y1) in enumerate(linha):
             w = DENTE_C / 2 + 1.5 if i < len(DENTES_U) else 2.6
             ex.append(r(A_GX - w, y0, 2 * w, y1 - y0, cut))
-        ex.append(f'<circle cx="{PLUNGER[0] + o}" cy="{PLUNGER[1] + o}" r="2.3" {cut}/>')
         if k == 0:
             ex += qr + [r(A_GX - 18.5, A_EIXO_Y - 8, 37, 14, eng),
                         f'<text x="{A_GX + o}" y="{A_EIXO_Y - 10 + o}" font-size="3.5" text-anchor="middle" {txt}>dobradiça</text>']
@@ -530,7 +534,7 @@ if __name__ == '__main__':
     salvar(a_braco(0).translate([-SX, -SY, -Z_BRACO]), 'A3_braco_biela')
     salvar(a_garra().rotate([180, 0, 0]), 'A4_garra_dentes')
     salvar(a_dobradica(), 'A5_dobradica')
-    salvar(a_pino_chave().rotate([180, 0, 0]), 'A6_pino_da_chave')
+    salvar(cil_x(0, 0, 0, 44, 3.2) + cil_x(0, 0, -2, 0, 6.0), 'A7_eixo_garra')
     print('Versão B:')
     salvar(b_base(), 'B1_base_servo')
     salvar(b_braco(0)[0].translate([-SX, -SY, -Z_BRACO]), 'B2_braco_imas')
@@ -554,8 +558,6 @@ if __name__ == '__main__':
         ('Base do servo e trilho', 'impressa', '#ea580c', a_base_mecanismo(), None),
         ('Lingueta', 'impressa', '#f59e0b', a_lingueta(), 'lingueta'),
         ('Braço do servo (biela)', 'impressa', '#2563eb', a_braco(0).translate([-SX, -SY, -Z_BRACO]), 'braco'),
-        ('Pino da chave', 'impressa', '#9d174d', a_pino_chave(), 'pino_chave'),
-        ('Chave fim de curso', 'comprada', '#334155', cubo(PLUNGER[0] - 4, PLUNGER[1] - 12, H - 9, PLUNGER[0] + 9.7, PLUNGER[1] + 13, H - 3.2), None),
     ]
     B = partes_comuns(b_tampa(), B_TZ) + [
         ('Base do servo', 'impressa', '#ea580c', b_base(), None),

@@ -27,7 +27,11 @@ POS_SEM = (18.0, 60.0)                      # semáforo embaixo da tampa (canto)
 QR = (122.0, 54.0, 30.0)                    # QR na tampa (x, y, lado)
 PARAF = [(4.0, 70.0), (LX - 4.0, 70.0)]
 PES = [(2, 2), (2, 72), (100, 1), (180, 1)]  # pés da prateleira (12 x 12), fora do power bank e do plugue
-FURO_CABO = (6.0, 24.0, 34.0, 58.0)          # furo na prateleira para o cabo USB subir
+FURO_CABO = (6.0, 24.0, 34.0, 58.0)
+# base HyperX (215 x 91) centrada embaixo da caixa; bobina 1 a 47 mm da ponta, no meio da largura
+BASE_QI = ((LX - 215.05) / 2, (LY - 90.91) / 2)
+BOBINA = (BASE_QI[0] + 47.0, LY / 2)
+QI_POS = (BOBINA[0] - 37.5, BOBINA[1] - 22.5)          # receptor centrado na bobina 1          # furo na prateleira para o cabo USB subir
 
 
 def P(m):
@@ -90,7 +94,6 @@ def a_tampa():
     for z0, z1, rs, (px, py) in a_furos_global():
         for x0, y0, x1, y1 in rs:
             t = t - cubo(x0, y0, z0 - 0.01, x1, y1, z1 + 0.01)
-        t = t - cil(px, py, z0 - 0.01, z1 + 0.01, 4.6)
     return t - janela_leds(H - 1, H + 20) - furos_tampa(H - 1, H + 20)
 
 
@@ -101,14 +104,14 @@ def b_tampa():
 
 
 def canto_tampa(x, y):
-    return cubo(x - 4, y - 6, H - 10, x + 4, y + 6, H) - cil(x, y, H - 9, H + 1, 2.2)
+    return cubo(x - 4, y - 6, H - 10, x + 4, y + 6, H) - cil(x, y, H - 9, H + 1, 3.2)   # pino impresso da tampa (C5)
 
 
 def comprados():
     pb, e = POS_PB, POS_ESP
     return [
         ('Power bank 149 × 69 × 15', 'comprada', '#1f2937', cubo(pb[0] + .5, pb[1] + .5, QI_E, pb[2] - .5, pb[3] - .5, QI_E + PB_A)),
-        ('Receptor Qi', 'comprada', '#475569', cubo(78, 27, 0, 78 + 75, 27 + 45, QI_E)),
+        ('Receptor Qi', 'comprada', '#475569', cubo(QI_POS[0], QI_POS[1], 0, QI_POS[0] + 75, QI_POS[1] + 45, QI_E)),
         ('Plugue USB (espaço)', 'comprada', '#64748b', cubo(8, 44, 3, 40, 56, 13)),
         ('Expansor + ESP32', 'comprada', '#15803d', cubo(e[0] + .5, e[1] + .5, ZS, e[2] - .5, e[3] - .5, ZS + 11) + cubo(e[0] + 9, e[1] + 12, ZS + 11, e[0] + 61, e[1] + 41, ZS + 17)),
         ('Fios do ESP32 (espaço)', 'comprada', '#86efac', cubo(e[0] + 2, e[1] + 2, ZS + 11, e[0] + 66, e[1] + 10, ZS + 38) + cubo(e[0] + 2, e[3] - 10, ZS + 11, e[0] + 66, e[3] - 2, ZS + 38)),
@@ -210,7 +213,7 @@ def svgs():
         open(os.path.join(AQUI, 'mdf', nome), 'w', encoding='utf-8').write(s)
     tA = []
     for k, (z0, z1, rs, (px, py)) in enumerate(a_furos_global()):
-        els = base + [r(x0, y0, x1 - x0, y1 - y0, cut) for x0, y0, x1, y1 in rs] + [c(px, py, 4.6, cut)]
+        els = base + [r(x0, y0, x1 - x0, y1 - y0, cut) for x0, y0, x1, y1 in rs]
         if k == 0:
             hx, hy, _ = P_pt(M.A_GX, M.A_EIXO_Y, 0)
             els += qr + [r(hx - 7, hy - 18.5, 14, 37, eng), f'<text x="{hx + o}" y="{hy - 20 + o}" font-size="3.5" text-anchor="middle" {txt}>dobradiça</text>']
@@ -242,10 +245,12 @@ if __name__ == '__main__':
     os.makedirs(os.path.join(AQUI, 'stl_v3'), exist_ok=True)
     # peças do mecanismo: iguais às da v2
     for n in ['A1_base_servo_e_trilho', 'A2a_lingueta_corpo', 'A2b_lingueta_garfo', 'A3_braco_biela', 'A4_garra_dentes',
-              'A5_dobradica', 'A6_pino_da_chave', 'B1_base_servo', 'B2_braco_imas', 'B3_capsula_embreagem', 'B4_anel_capsula',
+              'A5_dobradica', 'A7_eixo_garra', 'B1_base_servo', 'B2_braco_imas', 'B3_capsula_embreagem', 'B4_anel_capsula',
               'B5_teste_embreagem', 'C1_calcos_servo', 'C2_batentes_x6']:
         shutil.copy(os.path.join(AQUI, 'stl_v2', n + '.stl'), os.path.join(AQUI, 'stl_v3', n + '.stl'))
     salvar(uniao([pe_unico().translate([k * 15, 0, 0]) for k in range(4)]), 'C4_pes_prateleira_x4')
+    salvar(uniao([(cil(k * 10, 0, 0, 1.5, 6.0) + cil(k * 10, 0, 1.5, 1.5 + 3 * MDF + 8, 3.0)) for k in range(2)]), 'C5_pinos_tampa_x2')
+    salvar(uniao([(cil(k * 10, 0, 0, 1.5, 5.5) + cil(k * 10, 0, 1.5, 1.5 + 1.6 + 3 * MDF + 1, 2.8)) for k in range(2)]), 'C6_pinos_semaforo_x2')
     salvar(uniao([canto_tampa(4, 70).translate([-4 + k * 10, -64, -(H - 10)]) for k in range(2)]), 'C3_cantos_tampa_x2')
     svgs()
 
@@ -266,9 +271,7 @@ if __name__ == '__main__':
                   ('Dobradiça', 'impressa', '#be185d', P(M.a_dobradica()), None),
                   ('Base do servo e trilho', 'impressa', '#ea580c', P(M.a_base_mecanismo()), None),
                   ('Lingueta', 'impressa', '#f59e0b', P(M.a_lingueta()), 'lingueta'),
-                  ('Braço do servo (biela)', 'impressa', '#2563eb', loc(P(M.a_braco(0)), pb), 'braco'),
-                  ('Pino da chave', 'impressa', '#9d174d', P(M.a_pino_chave()), 'pino_chave'),
-                  ('Chave fim de curso', 'comprada', '#334155', P(cubo(M.PLUNGER[0] - 4, M.PLUNGER[1] - 12, M.H - 9, M.PLUNGER[0] + 9.7, M.PLUNGER[1] + 13, M.H - 3.2)), None)]
+                  ('Braço do servo (biela)', 'impressa', '#2563eb', loc(P(M.a_braco(0)), pb), 'braco'),]
     B = comuns + [('Tampa (MDF)', 'casca', '#d9bc8c', b_tampa(), None),
                   ('Base do servo', 'impressa', '#ea580c', P(M.b_base()), None),
                   ('Braço dos ímãs', 'impressa', '#2563eb', loc(P(M.b_braco(0)[0]), pb), 'braco'),

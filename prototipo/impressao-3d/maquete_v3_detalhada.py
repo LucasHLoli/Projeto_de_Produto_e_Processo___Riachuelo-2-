@@ -32,25 +32,25 @@ def v(a, b):
 servo = [(c, P(m)) for c, m in K.servo_sg90()[:4]]
 horn = [(c, loc(P(m.translate([M.SX, M.SY, M.Z_BRACO])), pb)) for c, m in K.braco_plastico()]
 TZ_A, TZ_B = C.H + M.CAMADAS_A * M.MDF, C.H + M.MDF
-comuns_det = [('Power bank ELG 149 × 69 × 15', K.power_bank()), ('Receptor Qi', K.receptor_qi()), ('ESP32 no expansor', K.esp32_expansor()),
-              ('Cabo USB (power bank → expansor)', L.cabo_usb()), ('Servo SG90', servo), ('Cabo do servo (GPIO 13)', L.servo_cabo()),
+comuns_det = [('Base de carga Qi HyperX', K.base_qi()), ('Power bank ELG 149 × 69 × 15', K.power_bank()), ('Receptor Qi', K.receptor_qi()), ('ESP32 no expansor', K.esp32_expansor()),
+              ('Cabo USB (power bank → micro-USB do expansor)', L.cabo_usb()), ('Servo SG90', servo), ('Cabo do servo (GPIO 13)', L.servo_cabo()),
               ('Capacitor 1000 µF (V/G do GPIO 12)', L.capacitor())]
 so_A = [('Semáforo LED (em cima da tampa)', L.semaforo(TZ_A)), ('Fios do semáforo (26, 33, 25, GND)', L.semaforo_fios(TZ_A)),
         ('Chave fim de curso', L.chave_a()), ('Fios da chave (OUT 27, GND)', L.chave_a_fios())]
 so_B = [('Semáforo LED (em cima da tampa)', L.semaforo(TZ_B)), ('Fios do semáforo (26, 33, 25, GND)', L.semaforo_fios(TZ_B))]
 FIOS = ('Cabo', 'Fios', 'Capacitor')
-LIBERADO = {('Cabo USB (power bank → expansor)', 'prateleira'), ('Cabo USB (power bank → expansor)', 'ESP32 no expansor'),
+LIBERADO = {('Cabo USB (power bank → micro-USB do expansor)', 'prateleira'), ('Cabo USB (power bank → micro-USB do expansor)', 'ESP32 no expansor'),
             ('Cabo do servo (GPIO 13)', 'ESP32 no expansor'), ('Cabo do servo (GPIO 13)', 'Servo SG90'),
             ('Capacitor 1000 µF (V/G do GPIO 12)', 'ESP32 no expansor'), ('Fios do semáforo (26, 33, 25, GND)', 'ESP32 no expansor'),
             ('Fios do semáforo (26, 33, 25, GND)', 'Semáforo LED (em cima da tampa)'), ('Fios da chave (OUT 27, GND)', 'ESP32 no expansor'),
-            ('Fios da chave (OUT 27, GND)', 'Chave fim de curso'), ('Cabo USB (power bank → expansor)', 'Power bank ELG 149 × 69 × 15')}
+            ('Fios da chave (OUT 27, GND)', 'Chave fim de curso'), ('Cabo USB (power bank → micro-USB do expansor)', 'Power bank ELG 149 × 69 × 15')}
 
 if __name__ == '__main__':
     erros = []
     cantos = uniao([C.canto_tampa(x, y) for x, y in C.PARAF])
     est_comum = {'caixa': C.caixa(), 'prateleira': C.prateleira(), 'pés': C.pes(), 'cantos': cantos}
     est_A = dict(est_comum, **{'tampa A': C.a_tampa(), 'base mecanismo': P(M.a_base_mecanismo()), 'dobradiça': P(M.a_dobradica()),
-                                 'pino da chave': P(M.a_pino_chave()), 'lingueta travada': P(M.a_lingueta(0)),
+                                 'lingueta travada': P(M.a_lingueta(0)),
                                  'lingueta solta': P(M.a_lingueta(M.ling_off(M.ANG_SOLTA)))})
     est_B = dict(est_comum, **{'tampa B': C.b_tampa(), 'base servo': P(M.b_base()), 'cápsula': P(M.b_capsula() + M.b_anel())})
     det = {n: uniao([m for _, m in ps]) for n, ps in comuns_det}
@@ -123,7 +123,7 @@ if __name__ == '__main__':
                  parte('Base do servo e trilho', 'impressa', [('#ea580c', P(M.a_base_mecanismo()))]),
                  parte('Lingueta', 'impressa', [('#f59e0b', P(M.a_lingueta()))], 'lingueta'),
                  parte('Braço do servo (biela)', 'impressa', [('#0284c7', loc(P(M.a_braco(0)), pb))], 'braco'),
-                 parte('Pino da chave', 'impressa', [('#9d174d', P(M.a_pino_chave()))], 'pino_chave')]
+                 ]
     B = comum_B + [parte('Tampa (MDF)', 'casca', [('#d9bc8c', C.b_tampa())]),
                  parte('Base do servo', 'impressa', [('#ea580c', P(M.b_base()))]),
                  parte('Braço dos ímãs', 'impressa', [('#0284c7', loc(P(M.b_braco(0)[0]), pb))], 'braco'),

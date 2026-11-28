@@ -84,30 +84,31 @@ def semaforo_fios(tz):
 
 
 def chave_a():
-    px, py, _ = C.P_pt(*M.PLUNGER, 0)
-    z1 = C.H - 4.5
-    x0, y0 = px - 18.5, py - 6.85
-    pcb = cubo(x0, y0, z1 - 7.6, x0 + 25, y0 + 13.7, z1 - 6.0)
-    sw = cubo(x0 + 6, y0 + 3.5, z1 - 6.0, x0 + 19, y0 + 10.2, z1 - 0.8)
-    alav = Manifold.batch_hull([cubo(x0 + 7, y0 + 5.5, z1 - 1.0, x0 + 8, y0 + 8.2, z1 - 0.6), cubo(px - 0.5, y0 + 5.5, z1 - 0.2, px + 1.5, y0 + 8.2, z1 + 0.2)])
-    pinos = uniao([cubo(x0 + 1.2, y0 + 4.3 + j * 2.54 - 0.32, z1 - 7.6 - 6, x0 + 1.84, y0 + 4.3 + j * 2.54 + 0.32, z1 - 7.6) for j in range(3)])
-    base_pin = cubo(x0 + 0.27, y0 + 3.0, z1 - 7.6 - 2.5, x0 + 2.77, y0 + 10.9, z1 - 7.6)
-    return [('#1d4ed8', pcb), ('#111827', sw + base_pin), ('#cbd5e1', alav), ('#d4a017', pinos)]
+    """Chave fim de curso deitada no suporte do mecanismo. O fundo do gancho aperta a alavanca quando a garra fecha."""
+    ch = M.CH
+    yc, zp = ch['yc'], ch['z_placa']
+    pcb = cubo(ch['x0'], yc - 6.85, zp, ch['x1'], yc + 6.85, zp + 1.6) - cil(ch['x0'] + 4, yc, zp - 1, zp + 3, 3.0)
+    corpo = cubo(176.5, yc - 3.35, zp + 1.6, 189.5, yc + 3.35, zp + 6.8)
+    botao = cubo(179.0, yc - 1.0, zp + 6.8, 180.6, yc + 1.0, zp + 7.4)
+    alav = Manifold.batch_hull([cubo(186.0, yc - 1.4, zp + 6.8, 187.0, yc + 1.4, zp + 7.2), cubo(173.0, yc - 1.4, 41.6, 174.0, yc + 1.4, 42.0)])
+    base_pin = cubo(189.6, yc - 3.8, zp - 2.5, 192.1, yc + 3.8, zp)
+    pinos = uniao([cubo(190.53, yc - 2.54 + j * 2.54 - 0.32, zp - 8.5, 191.17, yc - 2.54 + j * 2.54 + 0.32, zp - 2.5) for j in range(3)])
+    led = cubo(170.0, yc + 3.5, zp + 1.6, 172.0, yc + 5.0, zp + 2.4)
+    return [(c, C.P(m)) for c, m in (('#1d4ed8', pcb), ('#111827', corpo + base_pin), ('#ef4444', botao), ('#cbd5e1', alav), ('#d4a017', pinos), ('#f87171', led))]
 
 
 def chave_a_fios():
-    """Só OUT e GND: o ESP32 usa o pull-up interno, o pino nunca recebe 5 V."""
-    px0, py0, _ = C.P_pt(*M.PLUNGER, 0)
-    z1 = C.H - 4.5
-    x0, y0 = px0 - 18.5, py0 - 6.85
+    """Só OUT e GND: o ESP32 usa o pull-up interno, o pino nunca recebe 5 V. Pinos da chave: VCC, GND, OUT."""
+    ch = M.CH
+    yc, zp = ch['yc'], ch['z_placa']
     out = []
-    for j, cor, fl in ((1, '#111827', 'G'), (2, '#38bdf8', 'S')):     # pinos da chave: VCC(0, livre), GND(1), OUT(2)
-        xs, ys, zs = x0 + 1.52, y0 + 4.3 + j * 2.54, z1 - 7.6 - 6
+    for j, cor, fl in ((1, '#111827', 'G'), (2, '#38bdf8', 'S')):
+        xs, ys, zs = C.P_pt(190.85, yc - 2.54 + j * 2.54, zp - 8.5)
         out.append(('#111827', cubo(xs - 1.25, ys - 1.25, zs - 8, xs + 1.25, ys + 1.25, zs + 6)))
         px, py, pz = pino(27, fl)
         zc = pz - 6 + Z_CAPA
         out.append(('#111827', capa(px, py, pz)))
-        pts = [(xs, ys, zs - 8), (xs, ys, zs - 12), (xs + 6, 4 + j, zs - 13), (px - 6, 4 + j, zc + 12), (px, py, zc + 6), (px, py, zc)]
+        pts = [(xs, ys, zs - 8), (xs, ys, zs - 12), (xs + 8, 2.6 + j * 0.9, zs - 13), (px - 8, 2.6 + j * 0.9, zc + 12), (px, py, zc + 6), (px, py, zc)]
         out.append(fio(pts, cor))
     return out
 
@@ -124,7 +125,7 @@ def servo_cabo():
     for cor, dy, yy in (('#7c2d12', -1.3, yg), ('#dc2626', 0.0, yv), ('#f97316', 1.3, ys)):
         a = C.P_pt(bx1, M.SY + dy, zb + 1.5)
         c = C.P_pt(bx1 + 11, M.SY + dy, zb + 1.5)
-        pts = [a, c, (c[0] + 8, 5.5 + dy, c[2] + 2), (xs - 14, 5.5 + dy, zs + 12), (xs, yy, zs - 6 + Z_CAPA + 6), (xs, yy, zs - 6 + Z_CAPA)]
+        pts = [a, c, (c[0] + 6, 3.3 + dy, c[2] + 2), (xs - 14, 3.3 + dy, zs + 12), (xs, yy, zs - 6 + Z_CAPA + 6), (xs, yy, zs - 6 + Z_CAPA)]
         out.append(fio(pts, cor, 1.2))
     return out
 
@@ -149,14 +150,15 @@ def capacitor():
 
 
 def cabo_usb():
-    """Power bank (USB-A) até o USB-C do expansor. O expansor alimenta o ESP32 e o 5 V do servo."""
+    """Cabo de celular USB-A -> micro-USB (o que vem com o power bank serve): power bank -> micro-USB do expansor.
+    O expansor alimenta o ESP32 e o 5 V do servo."""
     pb = C.POS_PB
     yc = (pb[1] + pb[3]) / 2 + 18
     plugue = cubo(pb[0] - 26, yc - 8, C.QI_E + 3.5, pb[0] + 0.5, yc + 8, C.QI_E + 11.5)
     e = layout_esp()
-    xu, yu, zu = e['x0'] - 1.0, e['y0'] + 37.5, e['zt'] + 1.6
-    usbc = cubo(xu - 22, yu - 4.2, zu - 3.2, xu, yu + 4.2, zu + 3.2)
+    xu, yu, zu = e['x0'] - 1.0, e['y0'] + 24.0, e['zt'] + 1.5
+    micro = cubo(xu - 18, yu - 5.0, zu - 3.2, xu, yu + 5.0, zu + 3.2)
     fc = C.FURO_CABO
     pts = [(pb[0] - 26, yc, C.QI_E + 7.5), (pb[0] - 33, yc, 12), (fc[0] + 12, fc[3] - 6, C.Z_PRAT - 2), (fc[0] + 12, fc[3] - 6, C.ZS + 5),
-           (fc[0] + 20, 80, C.ZS + 5), (118, 80, C.ZS + 5), (xu - 30, 78, zu), (xu - 30, yu, zu), (xu - 22, yu, zu)]
-    return [('#111827', plugue + usbc), ('#1f2937', tubo(pts, 3.6))]
+           (fc[0] + 20, 80, C.ZS + 5), (118, 80, C.ZS + 5), (xu - 30, 78, zu), (xu - 30, yu, zu), (xu - 18, yu, zu)]
+    return [('#111827', plugue + micro), ('#1f2937', tubo(pts, 3.6))]

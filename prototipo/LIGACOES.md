@@ -6,7 +6,7 @@ O expansor tem, para cada GPIO, uma coluna de 3 pinos: **S** (sinal), **V** (ten
 ## Antes de ligar
 
 1. **Jumper de tensão do expansor em 5 V.** É o V que alimenta o servo.
-2. **O power bank liga no USB-C do expansor**, e não no do ESP32. O expansor alimenta o ESP32 e o 5 V do servo.
+2. **O power bank liga na entrada do expansor (micro-USB)**, e não no ESP32. O expansor alimenta o ESP32 e o 5 V do servo.
 3. **A fileira de cada pino:** confira na serigrafia do expansor qual é S, V e G. Em geral a ordem, de dentro para fora, é S, V, G.
 
 ## Tabela
@@ -25,15 +25,15 @@ O expansor tem, para cada GPIO, uma coluna de 3 pinos: **S** (sinal), **V** (ten
 | Semáforo | GND | G do GPIO 26 | |
 | Capacitor 1000 µF | + (perna longa) | V do GPIO 12 | Segura o pico de corrente do servo. A faixa branca é o −. |
 | Capacitor 1000 µF | − (lado da faixa) | G do GPIO 12 | |
-| Power bank | USB-A | USB-C do expansor | Cabo USB-A para USB-C de uns 30 cm, passando pelo furo da prateleira. |
+| Power bank | USB-A | micro-USB do expansor | Cabo de celular USB-A para micro-USB, uns 30 cm. Use o que vem com o power bank. Se não vier, qualquer cabo de celular Android antigo. |
 | Receptor Qi | micro-USB | entrada micro-USB do power bank | Folha embaixo do power bank. |
 
 Os pinos são os mesmos do plano de software (`prototipo/software/plano-desenvolvimento.md`).
 
 ## Onde cada fio passa (maquete)
 
-- **Semáforo:** fica parafusado **em cima** da tampa, com 2 parafusos M3 e porca. Os 4 jumpers descem pelo rasgo ao lado dele e correm encostados na parede de trás.
-- **Chave (versão A):** fica colada embaixo da tampa, com a alavanca embaixo do pino da chave. Os 2 fios correm pela frente da prateleira.
+- **Semáforo:** fica **em cima** da tampa, preso por 2 pinos impressos (C6) com uma gota de cola. Os 4 jumpers descem pelo rasgo ao lado dele e correm encostados na parede de trás.
+- **Chave (versão A):** fica deitada no suporte da peça A1, com cola quente, e a alavanca embaixo do gancho da garra. Quando a garra fecha, o gancho desce e aperta a alavanca. Os 2 fios descem pela parede da frente.
 - **Cabo do servo:** sai pela ponta do berço e corre pela frente da prateleira até o GPIO 13.
 - **Capacitor:** fica deitado na prateleira, atrás do expansor.
 

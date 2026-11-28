@@ -11,7 +11,11 @@ O mecanismo é o mesmo da v2 (mesmas peças impressas); muda a caixa.
   - Micro-USB virado para a parede da frente, onde sobra uma faixa de 14 mm para o rabicho do receptor Qi.
 - **Prateleira:** chapa de MDF de 224 × 86 mm, apoiada nos 4 pés impressos (C4, 17 mm de altura), colados no fundo fora do power bank. O furo da prateleira deixa o cabo USB subir.
 - **Em cima da prateleira:** mecanismo (servo e trilho) no meio, ESP32 com expansor na ponta direita.
-- **Em cima da tampa:** semáforo parafusado (2 M3 com porca); os fios descem pelo rasgo. **Embaixo da tampa (A):** chave fim de curso sob o pino da chave. Ligações pino a pino: `prototipo/LIGACOES.md`.
+- **Em cima da tampa:** semáforo preso por 2 pinos impressos (C6); os fios descem pelo rasgo.
+- **Chave fim de curso (A):** colada no suporte da peça A1, embaixo do gancho; a garra fechada aperta a alavanca.
+- **Tampa:** presa por 2 pinos impressos (C5) que entram nos cantos (C3). Sem parafusos.
+- **Base Qi HyperX:** a caixa fica em cima dela; o receptor Qi fica sobre a bobina da esquerda (a 47 mm da ponta da base).
+- Ligações pino a pino: `prototipo/LIGACOES.md`.
 - **Montagem:** o fundo e a prateleira ficam dentro das paredes, e as paredes curtas ficam entre as longas.
 
 ## Arquivos
@@ -19,8 +23,8 @@ O mecanismo é o mesmo da v2 (mesmas peças impressas); muda a caixa.
 | | Versão A (garra com dentes) | Versão B (etiqueta de loja + ímãs) |
 |---|---|---|
 | MDF | `mdf/caixa_v3_A.svg`: 3 tampas (colar na ordem 3, 2, 1 de baixo para cima), prateleira, fundo, 4 paredes | `mdf/caixa_v3_B.svg`: 1 tampa, prateleira, fundo, 4 paredes |
-| PLA (`stl_v3/`) | A1 base do servo e trilho · A2a + A2b lingueta (colar) · A3 braço · A4 garra · A5 dobradiça · A6 pino da chave | B5 teste da embreagem (primeiro) · B1 base do servo · B2 braço dos ímãs · B3 cápsula · B4 anel |
-| Comuns | C1 calços do servo · C3 cantos da tampa · C4 pés da prateleira | igual |
+| PLA (`stl_v3/`) | A1 base do servo, trilho e suporte da chave · A2a + A2b lingueta (colar) · A3 braço · A4 garra · A5 dobradiça · A7 eixo da garra | B5 teste da embreagem (primeiro) · B1 base do servo · B2 braço dos ímãs · B3 cápsula · B4 anel |
+| Comuns | C1 calços do servo · C3 cantos da tampa · C4 pés da prateleira · C5 pinos da tampa · C6 pinos do semáforo | igual |
 
 Ender (Cura): PLA, bico 0,4, camada 0,2, 20 %, 3 paredes, sem suporte.
 
@@ -42,3 +46,22 @@ Ender (Cura): PLA, bico 0,4, camada 0,2, 20 %, 3 paredes, sem suporte.
 3. **Receptor Qi:** tamanho da folha e comprimento do rabicho.
 4. **Versão B:** tamanho da embreagem (imprimir o B5 primeiro).
 5. **Cabo USB:** do power bank ao ESP32 (USB-A para USB-C). Dá cerca de 25 cm, passando pelo furo da prateleira.
+
+## Só o que foi comprado
+
+| Comprado | Onde entra |
+|---|---|
+| ESP32 DevKit (2) | 1 no expansor; 1 de reserva |
+| Expansor ESP32 | na prateleira; recebe todos os fios |
+| SG90 (3) e MG90S (1) | 1 SG90 no berço; os outros de reserva (o MG90S encaixa no mesmo berço) |
+| Chave fim de curso (3) | 1 no suporte da A1 (versão A); 2 de reserva |
+| Semáforo LED (2) | 1 em cima da tampa; 1 de reserva |
+| Jumpers fêmea-fêmea | semáforo (4), chave (2), capacitor (2) |
+| Jumpers macho-fêmea | reserva (não precisa) |
+| Capacitor 1000 µF (2) | 1 no V/G do GPIO 12; 1 de reserva |
+| Power bank ELG | embaixo da prateleira |
+| Receptor Qi | embaixo do power bank, sobre a bobina da base |
+| Base Qi HyperX | embaixo da caixa |
+
+Fora da compra, só consumíveis: cola branca, cola quente, PLA e MDF do laboratório e o cabo de celular para ligar o power bank no expansor.
+A versão B precisa de compra extra: etiquetas de loja e ímãs 15 × 5 N50.
