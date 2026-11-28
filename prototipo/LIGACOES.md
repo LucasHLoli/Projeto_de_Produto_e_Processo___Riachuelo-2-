@@ -33,6 +33,7 @@ Os pinos são os mesmos do plano de software (`prototipo/software/plano-desenvol
 ## Onde cada fio passa (maquete)
 
 - **Semáforo:** fica **em cima** da tampa, preso por 2 pinos impressos (C6) com uma gota de cola. Os 4 jumpers descem pelo rasgo ao lado dele e correm encostados na parede de trás.
+- **Chave (versão B):** em cima da tampa, no suporte B6, ao lado da cápsula. Os 3 pinos descem pelo rasgo da tampa; OUT e GND vão para o GPIO 27 como na A.
 - **Chave (versão A):** fica deitada no suporte da peça A1, com cola quente, e a alavanca embaixo do gancho da garra. Quando a garra fecha, o gancho desce e aperta a alavanca. Os 2 fios descem pela parede da frente.
 - **Cabo do servo:** sai pela ponta do berço e corre pela frente da prateleira até o GPIO 13.
 - **Capacitor:** fica deitado na prateleira, atrás do expansor.

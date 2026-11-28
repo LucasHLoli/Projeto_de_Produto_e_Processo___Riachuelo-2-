@@ -215,7 +215,7 @@ def embreagem_pino():
 
 def pino_etiqueta():
     cx, cy, _ = C.P_pt(*M.CAPS, 0)
-    zc = C.H + M.CAV + M.EMB[1] + 0.3 + 1.6 + 1.0          # cabeça apoiada no pano, 1 mm acima da cápsula
+    zc = C.H + M.CAV + M.EMB[1] + 0.3 + 1.6 + 1.4          # cabeça em cima do pano e da alavanca
     haste = cil(cx, cy, zc - 16, zc, 1.2)
     cabeca = cil(cx, cy, zc, zc + 1.5, 12.5) + (esfera(cx, cy, zc + 1.5, 12.5) ^ cubo(cx - 7, cy - 7, zc + 1.5, cx + 7, cy + 7, zc + 4))
     return [('#e5e7eb', haste), ('#94a3b8', cabeca)]

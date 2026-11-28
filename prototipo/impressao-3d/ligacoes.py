@@ -83,34 +83,28 @@ def semaforo_fios(tz):
     return out
 
 
-def chave_a():
-    """Chave fim de curso deitada no suporte do mecanismo. O fundo do gancho aperta a alavanca quando a garra fecha."""
-    ch = M.CH
-    yc, zp = ch['yc'], ch['z_placa']
-    pcb = cubo(ch['x0'], yc - 6.85, zp, ch['x1'], yc + 6.85, zp + 1.6) - cil(ch['x0'] + 4, yc, zp - 1, zp + 3, 3.0)
-    corpo = cubo(176.5, yc - 3.35, zp + 1.6, 189.5, yc + 3.35, zp + 6.8)
-    botao = cubo(179.0, yc - 1.0, zp + 6.8, 180.6, yc + 1.0, zp + 7.4)
-    alav = Manifold.batch_hull([cubo(186.0, yc - 1.4, zp + 6.8, 187.0, yc + 1.4, zp + 7.2), cubo(173.0, yc - 1.4, 41.6, 174.0, yc + 1.4, 42.0)])
-    base_pin = cubo(189.6, yc - 3.8, zp - 2.5, 192.1, yc + 3.8, zp)
-    pinos = uniao([cubo(190.53, yc - 2.54 + j * 2.54 - 0.32, zp - 8.5, 191.17, yc - 2.54 + j * 2.54 + 0.32, zp - 2.5) for j in range(3)])
-    led = cubo(170.0, yc + 3.5, zp + 1.6, 172.0, yc + 5.0, zp + 2.4)
-    return [(c, C.P(m)) for c, m in (('#1d4ed8', pcb), ('#111827', corpo + base_pin), ('#ef4444', botao), ('#cbd5e1', alav), ('#d4a017', pinos), ('#f87171', led))]
-
-
-def chave_a_fios():
-    """Só OUT e GND: o ESP32 usa o pull-up interno, o pino nunca recebe 5 V. Pinos da chave: VCC, GND, OUT."""
-    ch = M.CH
-    yc, zp = ch['yc'], ch['z_placa']
+def _fios_chave(pino_xyz, rota):
+    """OUT -> S27 e GND -> G27. VCC não liga: o ESP32 usa o pull-up interno, o pino nunca recebe 5 V."""
     out = []
-    for j, cor, fl in ((1, '#111827', 'G'), (2, '#38bdf8', 'S')):
-        xs, ys, zs = C.P_pt(190.85, yc - 2.54 + j * 2.54, zp - 8.5)
+    for i_pino, cor, fl in ((1, '#111827', 'G'), (2, '#38bdf8', 'S')):
+        xs, ys, zs = pino_xyz(i_pino)
         out.append(('#111827', cubo(xs - 1.25, ys - 1.25, zs - 8, xs + 1.25, ys + 1.25, zs + 6)))
         px, py, pz = pino(27, fl)
         zc = pz - 6 + Z_CAPA
         out.append(('#111827', capa(px, py, pz)))
-        pts = [(xs, ys, zs - 8), (xs, ys, zs - 12), (xs + 8, 2.6 + j * 0.9, zs - 13), (px - 8, 2.6 + j * 0.9, zc + 12), (px, py, zc + 6), (px, py, zc)]
-        out.append(fio(pts, cor))
+        out.append(fio([(xs, ys, zs - 8)] + rota(xs, ys, zs, i_pino) + [(px, py, zc + 8), (px, py, zc)], cor))
     return out
+
+
+def chave_a_fios():
+    import chave as K
+    return _fios_chave(K.A_pino, lambda xs, ys, zs, i: [(xs, ys, zs - 12), (xs + 8, 2.6 + i * 0.9, zs - 13), (pino(27, 'S')[0] - 8, 2.6 + i * 0.9, C.ZS + 26)])
+
+
+def chave_b_fios():
+    """Os pinos descem pelo rasgo da tampa; os fios correm encostados no lado de trás até o expansor."""
+    import chave as K
+    return _fios_chave(K.B_pino, lambda xs, ys, zs, i: [(xs, ys, C.H - 12), (xs + 6, 78 + i * 1.4, C.H - 14), (pino(27, 'S')[0] - 6, 78 + i * 1.4, C.ZS + 30)])
 
 
 def servo_cabo():

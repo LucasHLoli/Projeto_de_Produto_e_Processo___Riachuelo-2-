@@ -12,7 +12,7 @@ O mecanismo é o mesmo da v2 (mesmas peças impressas); muda a caixa.
 - **Prateleira:** chapa de MDF de 224 × 86 mm, apoiada nos 4 pés impressos (C4, 17 mm de altura), colados no fundo fora do power bank. O furo da prateleira deixa o cabo USB subir.
 - **Em cima da prateleira:** mecanismo (servo e trilho) no meio, ESP32 com expansor na ponta direita.
 - **Em cima da tampa:** semáforo preso por 2 pinos impressos (C6); os fios descem pelo rasgo.
-- **Chave fim de curso (A):** colada no suporte da peça A1, embaixo do gancho; a garra fechada aperta a alavanca.
+- **Chave fim de curso:** na A, colada no suporte da peça A1, embaixo do gancho (a garra fechada aperta a alavanca 1 mm). Na B, em cima da tampa, no suporte B6, com a ponteira B7 encaixada na alavanca; a cabeça do pino aperta a alavanca 1,2 mm. Nas duas, o ESP32 fica sabendo que a roupa foi presa.
 - **Tampa:** presa por 2 pinos impressos (C5) que entram nos cantos (C3). Sem parafusos.
 - **Base Qi HyperX:** ela tem 2 áreas de carga e um ressalto no meio. A caixa fica **atravessada sobre uma das áreas**, com o ressalto para fora. O receptor Qi fica embaixo do centro do power bank e precisa cair em cima da bobina daquela área. Se a caixa ficar ao comprido sobre a base, apoia no ressalto e não carrega.
 - Ligações pino a pino: `prototipo/LIGACOES.md`.
@@ -23,7 +23,7 @@ O mecanismo é o mesmo da v2 (mesmas peças impressas); muda a caixa.
 | | Versão A (garra com dentes) | Versão B (etiqueta de loja + ímãs) |
 |---|---|---|
 | MDF | `mdf/caixa_v3_A.svg`: 3 tampas (colar na ordem 3, 2, 1 de baixo para cima), prateleira, fundo, 4 paredes | `mdf/caixa_v3_B.svg`: 1 tampa, prateleira, fundo, 4 paredes |
-| PLA (`stl_v3/`) | A1 base do servo, trilho e suporte da chave · A2a + A2b lingueta (colar) · A3 braço · A4 garra · A5 dobradiça · A7 eixo da garra | B5 teste da embreagem (primeiro) · B1 base do servo · B2 braço dos ímãs · B3 cápsula · B4 anel |
+| PLA (`stl_v3/`) | A1 base do servo, trilho e suporte da chave · A2a + A2b lingueta (colar) · A3 braço · A4 garra · A5 dobradiça · A7 eixo da garra | B5 teste da embreagem (primeiro) · B1 base do servo · B2 braço dos ímãs · B3 cápsula · B4 anel · B6 suporte da chave · B7 ponteira da alavanca |
 | Comuns | C1 calços do servo · C3 cantos da tampa · C4 pés da prateleira · C5 pinos da tampa · C6 pinos do semáforo | igual |
 
 Ender (Cura): PLA, bico 0,4, camada 0,2, 20 %, 3 paredes, sem suporte.

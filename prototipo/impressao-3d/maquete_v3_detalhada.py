@@ -5,6 +5,8 @@ import tagandgo_v2 as M
 import tagandgo_v3 as C
 import comprados_detalhados as K
 import ligacoes as L
+import chave as CH
+from tagandgo_v2 import cubo, cil
 from tagandgo_v2 import uniao
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
@@ -36,14 +38,15 @@ comuns_det = [('Base de carga Qi HyperX', K.base_qi()), ('Power bank ELG 149 × 
               ('Cabo USB (power bank → micro-USB do expansor)', L.cabo_usb()), ('Servo SG90', servo), ('Cabo do servo (GPIO 13)', L.servo_cabo()),
               ('Capacitor 1000 µF (V/G do GPIO 12)', L.capacitor())]
 so_A = [('Semáforo LED (em cima da tampa)', L.semaforo(TZ_A)), ('Fios do semáforo (26, 33, 25, GND)', L.semaforo_fios(TZ_A)),
-        ('Chave fim de curso', L.chave_a()), ('Fios da chave (OUT 27, GND)', L.chave_a_fios())]
-so_B = [('Semáforo LED (em cima da tampa)', L.semaforo(TZ_B)), ('Fios do semáforo (26, 33, 25, GND)', L.semaforo_fios(TZ_B))]
+        ('Chave fim de curso', CH.A_estaticas()), ('Fios da chave (OUT 27, GND)', L.chave_a_fios())]
+so_B = [('Semáforo LED (em cima da tampa)', L.semaforo(TZ_B)), ('Fios do semáforo (26, 33, 25, GND)', L.semaforo_fios(TZ_B)),
+        ('Chave fim de curso', CH.B_estaticas()), ('Fios da chave (OUT 27, GND)', L.chave_b_fios())]
 FIOS = ('Cabo', 'Fios', 'Capacitor')
 LIBERADO = {('Cabo USB (power bank → micro-USB do expansor)', 'prateleira'), ('Cabo USB (power bank → micro-USB do expansor)', 'ESP32 no expansor'),
             ('Cabo do servo (GPIO 13)', 'ESP32 no expansor'), ('Cabo do servo (GPIO 13)', 'Servo SG90'),
             ('Capacitor 1000 µF (V/G do GPIO 12)', 'ESP32 no expansor'), ('Fios do semáforo (26, 33, 25, GND)', 'ESP32 no expansor'),
             ('Fios do semáforo (26, 33, 25, GND)', 'Semáforo LED (em cima da tampa)'), ('Fios da chave (OUT 27, GND)', 'ESP32 no expansor'),
-            ('Fios da chave (OUT 27, GND)', 'Chave fim de curso'), ('Cabo USB (power bank → micro-USB do expansor)', 'Power bank ELG 149 × 69 × 15')}
+            ('Fios da chave (OUT 27, GND)', 'Chave fim de curso'), ('Fios da chave (OUT 27, GND)', 'tampa B'), ('Cabo USB (power bank → micro-USB do expansor)', 'Power bank ELG 149 × 69 × 15')}
 
 if __name__ == '__main__':
     erros = []
@@ -52,7 +55,8 @@ if __name__ == '__main__':
     est_A = dict(est_comum, **{'tampa A': C.a_tampa(), 'base mecanismo': P(M.a_base_mecanismo()), 'dobradiça': P(M.a_dobradica()),
                                  'lingueta travada': P(M.a_lingueta(0)),
                                  'lingueta solta': P(M.a_lingueta(M.ling_off(M.ANG_SOLTA)))})
-    est_B = dict(est_comum, **{'tampa B': C.b_tampa(), 'base servo': P(M.b_base()), 'cápsula': P(M.b_capsula() + M.b_anel())})
+    est_B = dict(est_comum, **{'tampa B': C.b_tampa(), 'base servo': P(M.b_base()), 'cápsula': P(M.b_capsula() + M.b_anel()),
+                                 'suporte da chave B': CH.B_suporte()})
     det = {n: uniao([m for _, m in ps]) for n, ps in comuns_det}
     det_A = dict(det, **{n: uniao([m for _, m in ps]) for n, ps in so_A})
     det_B = dict(det, **{n: uniao([m for _, m in ps]) for n, ps in so_B})
@@ -80,6 +84,29 @@ if __name__ == '__main__':
                     x = v(g, m)
                     if x > 0.05:
                         erros.append(f'A garra {a}° x {n} = {x:.1f}')
+    # alavanca: solta com a garra aberta, apertada com a garra fechada (A); apertada com o pino dentro (B)
+    al_A_solta, al_A_apert = uniao([m for _, m in CH.A_alavanca(False)]), uniao([m for _, m in CH.A_alavanca(True)])
+    al_B_solta, al_B_apert = uniao([m for _, m in CH.B_alavanca(False)]), uniao([m for _, m in CH.B_alavanca(True)])
+    if v(P(M.a_garra_ang(0)), al_A_apert) > 0.05:
+        erros.append('A: gancho fechado ainda encosta na alavanca apertada')
+    if v(P(M.a_garra_ang(0)), al_A_solta) < 0.05:
+        erros.append('A: o gancho fechado NÃO alcança a alavanca (a chave não seria apertada)')
+    for a in range(3, 61, 6):
+        if v(P(M.a_garra_ang(a)), al_A_solta) > 0.05:
+            erros.append(f'A: garra {a}° x alavanca solta')
+    for nm, al in (('solta', al_A_solta), ('apertada', al_A_apert)):
+        for e, me in est_A.items():
+            if v(al, me) > 0.05:
+                erros.append(f'A: alavanca {nm} x {e}')
+    pinoB = uniao([m for _, m in K.pino_etiqueta()])
+    if v(pinoB, al_B_apert) > 0.05:
+        erros.append('B: cabeça do pino encosta na alavanca apertada')
+    if v(pinoB, al_B_solta) < 0.05:
+        erros.append('B: a cabeça do pino NÃO alcança a alavanca')
+    for nm, al in (('solta', al_B_solta), ('apertada', al_B_apert)):
+        for e, me in est_B.items():
+            if v(al, me) > 0.05:
+                erros.append(f'B: alavanca {nm} x {e}')
     hornm = uniao([m for _, m in K.braco_plastico()]).translate([M.SX, M.SY, M.Z_BRACO])
     for ver, base, angs in (('A', P(M.a_base_mecanismo()), range(int(M.ANG_TRAVA), int(M.ANG_SOLTA) + 1, 5)), ('B', P(M.b_base()), range(0, 121, 5))):
         for a in angs:
@@ -115,8 +142,18 @@ if __name__ == '__main__':
     comum = [parte('Caixa (MDF)', 'casca', [('#c8a77a', C.caixa())]), parte('Prateleira (MDF)', 'casca', [('#b08d5e', C.prateleira())]),
              parte('Pés da prateleira', 'impressa', [('#a16207', C.pes())])] + [parte(n, 'comprada', ps) for n, ps in comuns_det] + \
             [parte('Braço plástico do servo', 'comprada', horn, 'braco')]
-    comum_A = comum + [parte(n, 'comprada', ps) for n, ps in so_A]
-    comum_B = comum + [parte(n, 'comprada', ps) for n, ps in so_B]
+    pa, ea = CH.A_pivo()
+    pbv, eb = CH.B_pivo()
+    comum_A = comum + [parte(n, 'comprada', ps) for n, ps in so_A] + \
+        [parte('Alavanca da chave', 'comprada', [(c, m.translate([-pa[0], -pa[1], -pa[2]])) for c, m in CH.A_alavanca(False)], 'alavanca')]
+    xb, yb, zb, z_anel = CH.B_ref()
+    cxp, cyp, _ = C.P_pt(*M.CAPS, 0)
+    panoB = (cubo(cxp - 26, cyp - 20, z_anel + 0.05, cxp + 22, cyp + 20, z_anel + 0.5) - cil(cxp, cyp, z_anel - 1, z_anel + 2, 2.0)) + \
+        cubo(cxp - 26, cyp - 20, z_anel - 30, cxp - 25.5, cyp + 20, z_anel + 0.5)
+    comum_B = comum + [parte(n, 'comprada', ps) for n, ps in so_B] + \
+        [parte('Alavanca da chave', 'comprada', [(c, m.translate([-pbv[0], -pbv[1], -pbv[2]])) for c, m in CH.B_alavanca(False)], 'alavanca'),
+         parte('Suporte da chave (B6)', 'impressa', [('#a16207', CH.B_suporte())]),
+         parte('Pano (a roupa)', 'comprada', [('#3b82f6', panoB)], 'panoB')]
     A = comum_A + [parte('Tampa (3 chapas MDF)', 'casca', [('#d9bc8c', C.a_tampa())]),
                  parte('Garra com dentes', 'impressa', [('#db2777', loc(P(M.a_garra()), pg))], 'garra'),
                  parte('Dobradiça', 'impressa', [('#be185d', P(M.a_dobradica()))]),
@@ -135,7 +172,7 @@ if __name__ == '__main__':
     dados = {'centro': [C.LX / 2, C.LY / 2, C.H / 2],
              'A': {'pivo_braco': list(pb), 'pivo_garra': list(pg), 'biela': [M.SX, M.R_BIELA, M.PINO_X_TRAVA],
                    'tz': C.H + M.CAMADAS_A * M.MDF, 'gy': C.P_pt(M.A_GX, 0, 0)[1], 'furos': [[x0, x1] for x0, y0, x1, y1 in furos0],
-                   'fundo_furo': C.H - 1.5, 'partes': A},
-             'B': {'pivo_braco': list(pb), 'partes': B}}
+                   'fundo_furo': C.H - 1.5, 'partes': A, 'alavanca': {'pivo': list(pa), 'eixo': ea, 'ang': CH.ANG_APERTADA}},
+             'B': {'pivo_braco': list(pb), 'partes': B, 'alavanca': {'pivo': list(pbv), 'eixo': eb, 'ang': CH.ANG_B}}}
     open(os.path.join(AQUI, 'maquete_v3.js'), 'w', encoding='utf-8').write('window.MAQ=' + json.dumps(dados) + ';')
     print('maquete_v3.js ok', os.path.getsize(os.path.join(AQUI, 'maquete_v3.js')) // 1024, 'KB')
